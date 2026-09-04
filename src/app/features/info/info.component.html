@@ -1,0 +1,74 @@
+<section
+  class="info"
+  appScrollReveal
+  [staggerSelector]="'.anim-fade-up, .anim-fade-in'"
+  [staggerMs]="90"
+>
+  <app-section-heading eyebrow="INFORMATION" title="Wedding Day" />
+
+  <div class="info__layout anim-fade-up">
+    <div class="info__primary">
+      <div class="info__sessions">
+        @for (session of store.sessions; track session.id) {
+          <button
+            type="button"
+            class="info__session-pill"
+            [class.info__session-pill--active]="session.id === store.selectedId()"
+            (click)="store.select(session.id)"
+          >
+            {{ session.label }}　{{ session.timeDisplay }}
+          </button>
+        }
+      </div>
+
+      <p class="info__date">{{ content.weddingDateOnlyDisplay }}</p>
+      <p class="info__date-sub">{{ content.lunarDateDisplay }}</p>
+
+      <div class="info__divider"></div>
+
+      <div class="info__rows">
+        <div class="info__row">
+          <app-icon name="building" [size]="20" color="var(--color-accent-gold)" />
+          <div class="info__row-text">
+            <p class="info__row-label">宴會地點</p>
+            <p class="info__row-value">{{ content.venueName }}</p>
+          </div>
+        </div>
+        <div class="info__row">
+          <app-icon name="door-open" [size]="20" color="var(--color-accent-gold)" />
+          <div class="info__row-text">
+            <p class="info__row-label">宴會廳</p>
+            <p class="info__row-value">{{ content.venueHall }}</p>
+          </div>
+        </div>
+        <div class="info__row">
+          <app-icon name="map-pin" [size]="20" color="var(--color-accent-gold)" />
+          <div class="info__row-text">
+            <p class="info__row-label">地址</p>
+            <p class="info__row-value">台北市松山區敦化北路二段 158 號</p>
+          </div>
+        </div>
+        <div class="info__row">
+          <app-icon name="users" [size]="20" color="var(--color-accent-gold)" />
+          <div class="info__row-text">
+            <p class="info__row-label">桌次引導</p>
+            <p class="info__row-value">{{ content.seatingGuide }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="info__map-block">
+      <div class="info__map-preview">
+        <img class="info__map-preview-img info__map-preview-img--mobile" [src]="mapImageUrl" alt="宴會地點位置示意地圖" loading="lazy" />
+        <img class="info__map-preview-img info__map-preview-img--desktop" [src]="mapImageDesktopUrl" alt="宴會地點位置示意地圖" loading="lazy" />
+      </div>
+      <a class="info__nav-btn" [href]="mapsUrl" target="_blank" rel="noopener">
+        <app-icon name="navigation" [size]="16" color="var(--color-text-invert)" />
+        <span>開啟 Google 地圖導航</span>
+      </a>
+    </div>
+  </div>
+
+  <p class="info__reminder anim-fade-in">※ 宴會廳將於開席前 30 分鐘開放入場</p>
+</section>

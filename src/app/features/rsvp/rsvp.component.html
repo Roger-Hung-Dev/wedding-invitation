@@ -1,0 +1,32 @@
+<section
+  class="rsvp"
+  appScrollReveal
+  [staggerSelector]="'.anim-fade-up, .anim-fade-in'"
+  [staggerMs]="90"
+>
+  <app-section-heading eyebrow="R.S.V.P." title="Will You Join Us?" />
+
+  <div class="rsvp__intro anim-fade-up">
+    <p>您的出席是我們最珍貴的祝福，</p>
+    <p>敬請於 {{ content.rsvpDeadlineDisplay }} 前回覆。</p>
+  </div>
+
+  <div class="rsvp__card anim-fade-up">
+    <div class="rsvp__chips">
+      @for (chip of chips; track chip) {
+        <span class="rsvp__chip">{{ chip }}</span>
+      }
+    </div>
+
+    <a class="rsvp__cta" [href]="links.rsvpFormUrl" target="_blank" rel="noopener">
+      <span>填寫出席回覆表單</span>
+      <app-icon name="external-link" [size]="16" color="var(--color-text-invert)" />
+    </a>
+
+    <p class="rsvp__note">將另開新視窗前往 Google 表單</p>
+  </div>
+
+  <a class="rsvp__edit-link anim-fade-in" [href]="links.rsvpEditUrl" target="_blank" rel="noopener">
+    已經填寫過了？點此修改回覆
+  </a>
+</section>

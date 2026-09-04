@@ -1,0 +1,21 @@
+<footer
+  class="footer"
+  appScrollReveal
+  [staggerSelector]="'.anim-fade-up, .anim-fade-in'"
+  [staggerMs]="100"
+>
+  <h2 class="footer__title anim-fade-up">Thank You</h2>
+
+  <div class="footer__body anim-fade-up">
+    <p>謝謝每一位陪伴我們走到這裡的人，</p>
+    <p>期待與你分享這一天的喜悅。</p>
+  </div>
+
+  <div class="footer__monogram anim-fade-in">
+    <span>{{ content.monogram }}</span>
+  </div>
+
+  <p class="footer__date anim-fade-in">{{ weddingDateDisplay }}</p>
+
+  <p class="footer__copyright anim-fade-in">© 2026 Ethan &amp; Chloe　·　Made with love</p>
+</footer>

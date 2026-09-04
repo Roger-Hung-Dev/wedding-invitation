@@ -1,0 +1,55 @@
+# 目標應用 profile — 空白樣板
+# 複製本檔為 {你的站台}.profile.yaml，逐欄填入該站的專屬值。
+# 通用步驟在 ../SKILL.md，執行前由代理將 {{profile.xxx}} 代入下列值。
+#
+# 欄位標示：[必填] 缺了無法執行；[選用] 缺了會略過對應段落（把整個區塊刪掉或設為 null）。
+
+name: ""                                # [必填] 這份 profile 的人類可讀名稱，如 "APLog Web"
+
+# --- 站台與視窗 ---------------------------------------------------------------
+targetUrl: ""                           # [必填] 目標站台網址；也是 list_pages 中辨識分頁的依據
+debugPort: 9222                         # [選用] Chrome 遠端偵錯埠（CDP）；與站台埠是不同概念
+viewport:                               # [必填] 固定視窗尺寸，確保所有截圖尺寸一致
+  width: 1920
+  height: 1080
+
+# --- 瀏覽器啟動 --------------------------------------------------------------
+# [選用] 未連線時的啟動指令；開發環境瀏覽器多半已開，可整段刪除。
+# launchCommand: >-
+#   powershell.exe -Command "Start-Process '<你的啟動腳本路徑>'"
+
+# --- DOM 選擇器 --------------------------------------------------------------
+# [必填] 四個選擇器；用瀏覽器 devtools 或 take_snapshot 確認實際 class/id。
+selectors:
+  sidebar: ""                           # 側邊選單容器
+  activeMenuItem: ""                    # 目前選中的選單項（截圖前用來定位、展開其父選單）
+  mainContainer: ""                     # 視窗層級捲動要凍結的主容器
+  scrollPanel: ""                       # 面板層級捲動要凍結的可捲動面板；無則填 mainContainer 同值或 null
+
+# --- 選單展開機制 ------------------------------------------------------------
+# [選用] 截圖前「強制展開目前頁面父選單」用。
+#   - 適用「以 class 切換顯示」的選單（如 Bootstrap collapse）。
+#   - 若選單由框架反應式渲染（Vue/React），class hack 不可靠 → 設為 null，改在導航階段實際點擊展開。
+menuExpand:
+  type: ""                              # 說明用，如 bootstrap-collapse
+  containerSelector: ""                 # 父選單容器
+  expandedClass: ""                     # 展開時容器帶的 class
+  toggleAttr: ""                        # 對應觸發鈕的屬性（值為 #容器id）
+# menuExpand: null                      # ← 不適用時改用這行
+
+# --- Toast 機制 --------------------------------------------------------------
+# [選用] 需要截 Toast 時才填；純 UI/UX 檢視多半用不到 → 設為 null。
+#   凍結策略前提：Toast 由「可被覆寫的全域函數」觸發。若觸發函數是 import 的模組（無法覆寫），
+#   則無法凍結，只能偵測；此時 triggerFn 設 null、僅填 detectSelector，改用「觸發後即刻截圖」。
+toast:
+  triggerFn: ""                         # 觸發 Toast 的全域函數，如 window.showToast；不可覆寫則設 null
+  signature: ""                         # 該函數參數簽名，如 (message, type, options)
+  freezeExpr: ""                        # 凍結方式（讓 Toast 不自動消失），如 duration=0
+  detectSelector: ""                    # 偵測 Toast 是否出現的選擇器
+  dismissSelector: ""                   # 還原時移除殘留 Toast 用的選擇器
+# toast: null                           # ← 不需要 Toast 時改用這行
+
+# --- 導航策略 ----------------------------------------------------------------
+navigation:
+  policy: free                          # [必填] menu-click-only（僅可點選單切頁）｜ free（允許 navigate_page）
+  resetUrl: ""                          # 頁面錯誤時允許以此網址重置；一般同 targetUrl

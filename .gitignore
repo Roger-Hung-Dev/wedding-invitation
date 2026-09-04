@@ -1,0 +1,21 @@
+﻿# === 環境與密鑰（MCP server 以 ${VAR} 引用）===
+.env
+.env.local
+.env.*.local
+
+# === Claude Code 個人設定（不提交；內含 MCP 密鑰真值）===
+.claude/settings.local.json
+
+# === Angular（ng new 產生）===
+/node_modules
+/dist
+/.angular/
+npm-debug.log
+yarn-error.log
+/.idea
+.DS_Store
+Thumbs.db
+
+# === 設計稿匯出的 png（可從 .pen 重新產生，單批約 14MB）===
+# 保留 _index.md 與 _layout-spec.md —— 那兩份是文字、是下游對稿的依據
+.claude/docs/design/exports/**/*.png

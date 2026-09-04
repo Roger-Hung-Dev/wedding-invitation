@@ -1,0 +1,96 @@
+// 全站動畫語彙庫：fade-up／fade-in／reveal-mask／line-grow。
+// 由 scroll-reveal directive 或元件在進場時機加上對應 class 觸發，
+// 只動 transform／opacity／clip-path，避免觸發版面重排。
+//
+// 漸進增強：以下四種語彙的「隱藏初始態」只在 <html> 有 anim-ready（見 src/main.ts）時生效。
+// 沒有這個 class 代表捲動進場的 JS 沒能跑起來（老舊機型、內嵌瀏覽器等），
+// 這時候元素必須直接是最終可見外觀，不能維持 opacity:0 之類的隱藏樣式，否則整頁看起來像空白。
+html.anim-ready {
+  .anim-fade-up {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 700ms var(--ease-elegant), transform 700ms var(--ease-elegant);
+
+    @media (min-width: 1024px) {
+      transform: translateY(32px);
+    }
+
+    &.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .anim-fade-in {
+    opacity: 0;
+    transition: opacity 700ms var(--ease-elegant);
+
+    &.is-visible {
+      opacity: 1;
+    }
+  }
+
+  .anim-reveal-mask {
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 900ms var(--ease-elegant);
+
+    &.is-visible {
+      clip-path: inset(0 0 0 0);
+    }
+  }
+
+  .anim-line-grow {
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform 600ms var(--ease-elegant);
+
+    &.is-visible {
+      transform: scaleX(1);
+    }
+  }
+}
+
+// 持續性動畫：音樂鈕播放中的唱片旋轉、SCROLL 提示上下浮動。
+// 這兩個 class 一律由元件邏輯視狀態才加上（如「播放中」），不是預設隱藏樣式，
+// JS 沒跑起來時它們本來就不會被加到 DOM 上，不需要跟著 anim-ready gate。
+@keyframes disc-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes scroll-hint-bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(6px); }
+}
+
+.anim-disc-spin {
+  animation: disc-spin 8s linear infinite;
+}
+
+.anim-scroll-bounce {
+  animation: scroll-hint-bounce 2s ease-in-out infinite;
+}
+
+// 使用者要求減少動態效果時，全面降級為短促的純淡入，並停用持續性動畫。
+// 集中在這個媒體查詢統一覆寫，避免在 TypeScript 裡逐個判斷而漏掉某處。
+// 沒有巢狀在 html.anim-ready 底下：anim-ready 不存在時 .anim-fade-up 等本來就沒有隱藏樣式可覆寫，
+// 這裡的覆寫只是恰好無操作，維持同一份規則、不必為兩種情境各寫一份。
+@media (prefers-reduced-motion: reduce) {
+  .anim-fade-up,
+  .anim-fade-in,
+  .anim-reveal-mask {
+    transition-duration: 200ms;
+    transform: none;
+    clip-path: none;
+  }
+
+  .anim-line-grow {
+    transition-duration: 1ms;
+    transform: scaleX(1);
+  }
+
+  .anim-disc-spin,
+  .anim-scroll-bounce {
+    animation: none;
+  }
+}

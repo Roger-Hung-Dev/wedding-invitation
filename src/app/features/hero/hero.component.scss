@@ -1,0 +1,265 @@
+:host {
+  display: block;
+}
+
+.hero {
+  position: relative;
+  width: 100%;
+  height: 100svh;
+  min-height: 640px;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.hero__bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  will-change: transform;
+}
+
+.hero__bg-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.06);
+  transition: transform 1400ms var(--ease-elegant);
+}
+
+.hero__bg.is-visible .hero__bg-img {
+  transform: scale(1);
+}
+
+.hero__bg-img--desktop {
+  display: none;
+}
+
+.hero__overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.55) 100%);
+}
+
+.hero__content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding: 120px 24px 0;
+  text-align: center;
+}
+
+.hero__eyebrow {
+  margin: 0;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 4px;
+  color: var(--color-text-invert-muted);
+  transition-delay: 500ms;
+}
+
+.hero__name-en {
+  margin: 20px 0 0;
+  font-family: var(--font-script);
+  font-size: 56px;
+  font-weight: 400;
+  line-height: 1.2;
+  color: var(--color-text-invert);
+  transition-duration: 900ms;
+  transition-delay: 640ms;
+}
+
+.hero__name-zh {
+  margin: 8px 0 0;
+  font-size: 18px;
+  letter-spacing: 6px;
+  color: var(--color-text-invert);
+  transition-delay: 780ms;
+}
+
+.hero__divider {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 28px;
+  transition-delay: 900ms;
+}
+
+.hero__divider-line {
+  width: 28px;
+  height: 1px;
+  background: var(--color-gold-soft);
+}
+
+.hero__divider-diamond {
+  width: 8px;
+  height: 8px;
+  background: var(--color-gold-soft);
+  transform: rotate(45deg);
+}
+
+.hero__date {
+  margin: 28px 0 0;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 3px;
+  color: var(--color-text-invert);
+  transition-delay: 1000ms;
+}
+
+.hero__countdown {
+  display: flex;
+  gap: 12px;
+  margin-top: 40px;
+}
+
+.hero__countdown-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  width: 68px;
+  height: 80px;
+  border-radius: 14px;
+  background: var(--color-glass-fill);
+  border: 1px solid var(--color-glass-border);
+}
+
+.hero__countdown-number {
+  font-size: 26px;
+  font-weight: 600;
+  color: var(--color-text-invert);
+}
+
+.hero__countdown-label {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  color: var(--color-text-invert-muted);
+}
+
+.hero__over-message {
+  margin-top: 40px;
+  font-family: var(--font-script);
+  font-size: 24px;
+  color: var(--color-text-invert);
+  transition-delay: 1120ms;
+}
+
+.hero__scroll {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 44px;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  border: none;
+  background: transparent;
+  color: var(--color-text-invert-muted);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 3px;
+  cursor: pointer;
+  transition-delay: 1500ms;
+}
+
+.hero__scroll-icon {
+  display: inline-flex;
+}
+
+.hero__music {
+  position: absolute;
+  right: 16px;
+  bottom: 24px;
+  z-index: 3;
+  transition-delay: 1700ms;
+}
+
+.hero__bg-fade,
+.hero__overlay-fade,
+.hero__scroll-fade,
+.hero__music-fade {
+  transition-duration: 800ms;
+}
+
+@media (min-width: 1024px) {
+  .hero__bg-img--mobile {
+    display: none;
+  }
+
+  .hero__bg-img--desktop {
+    display: block;
+  }
+
+  .hero__overlay {
+    background: linear-gradient(90deg, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.5) 50%, rgba(0, 0, 0, 0.15) 100%);
+  }
+
+  .hero__content {
+    align-items: flex-start;
+    text-align: left;
+    max-width: 520px;
+    padding: 0 0 0 120px;
+    position: absolute;
+    top: 250px;
+    left: 0;
+  }
+
+  .hero__eyebrow {
+    font-size: 13px;
+    letter-spacing: 4px;
+  }
+
+  .hero__name-en {
+    margin-top: 24px;
+    font-size: 96px;
+  }
+
+  .hero__name-zh {
+    margin-top: 12px;
+    font-size: 26px;
+    letter-spacing: 8px;
+  }
+
+  .hero__divider {
+    margin-top: 32px;
+  }
+
+  .hero__divider-line {
+    width: 44px;
+  }
+
+  .hero__date {
+    margin-top: 32px;
+    font-size: 20px;
+    letter-spacing: 4px;
+  }
+
+  .hero__countdown {
+    margin-top: 48px;
+    gap: 16px;
+  }
+
+  .hero__countdown-cell {
+    width: 84px;
+    height: 96px;
+  }
+
+  .hero__countdown-number {
+    font-size: 34px;
+  }
+
+  .hero__music {
+    right: 32px;
+    bottom: 32px;
+  }
+}

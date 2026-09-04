@@ -1,0 +1,162 @@
+:host {
+  display: block;
+}
+
+.gallery {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 64px 0;
+  background: var(--color-bg-ivory);
+}
+
+.gallery__gold-line {
+  margin-top: 12px;
+  width: 40px;
+  height: 1px;
+  background: var(--color-gold-soft);
+}
+
+.gallery__quote {
+  margin: 20px 0 0;
+  width: 300px;
+  max-width: 100%;
+  text-align: center;
+  font-size: 16px;
+  font-style: italic;
+  color: var(--color-text-muted);
+
+  p {
+    margin: 0;
+  }
+}
+
+.gallery__track {
+  margin-top: 32px;
+  display: flex;
+  gap: 12px;
+  width: 100%;
+  padding: 0 21px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.gallery__card {
+  flex: 0 0 260px;
+  height: 340px;
+  border: none;
+  padding: 0;
+  border-radius: 16px;
+  overflow: hidden;
+  scroll-snap-align: center;
+  cursor: pointer;
+  opacity: 0.55;
+  transition: opacity 300ms;
+
+  &--active {
+    opacity: 1;
+    box-shadow: 0 8px 28px var(--shadow-rose);
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+}
+
+.gallery__grid {
+  // 預設（手機）隱藏，只在桌機媒體查詢中顯示；與 .gallery__track 互斥切換。
+  display: none;
+  margin-top: 48px;
+  gap: 20px;
+  width: min(1120px, 100%);
+  justify-content: center;
+}
+
+.gallery__grid-card {
+  // 360px 只在 1440 設計基準下成立，較窄的桌機視窗改用彈性寬度並用 aspect-ratio 維持比例。
+  flex: 1 1 0;
+  min-width: 0;
+  aspect-ratio: 360 / 480;
+  height: auto;
+  border: none;
+  padding: 0;
+  border-radius: 20px;
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: 0 8px 28px var(--shadow-rose);
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+}
+
+.gallery__dots {
+  margin-top: 24px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.gallery__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 4px;
+  background: var(--color-border-pill);
+  transition: width 200ms, background-color 200ms;
+
+  &--active {
+    width: 20px;
+    background: var(--color-primary);
+  }
+}
+
+.gallery__hint {
+  margin-top: 16px;
+  font-size: 11px;
+  letter-spacing: 1px;
+  color: var(--color-text-muted);
+}
+
+@media (min-width: 1024px) {
+  .gallery {
+    padding: 96px clamp(24px, 8vw, 160px);
+  }
+
+  .gallery__gold-line {
+    width: 64px;
+  }
+
+  .gallery__quote {
+    width: auto;
+    white-space: nowrap;
+    font-size: 20px;
+  }
+
+  .gallery__hint {
+    font-size: 18px;
+  }
+
+  .gallery__track {
+    display: none;
+  }
+
+  .gallery__grid {
+    display: flex;
+  }
+
+  // 桌機三張並排全部看得見，沒有「目前第幾張」的語意，頁點指示器只在手機輪播才有意義。
+  .gallery__dots {
+    display: none;
+  }
+}

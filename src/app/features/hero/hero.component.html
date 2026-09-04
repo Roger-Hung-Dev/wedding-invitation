@@ -1,0 +1,65 @@
+<section class="hero" #heroRoot>
+  <div class="hero__bg anim-fade-in hero__bg-fade" [class.is-visible]="loaded()" #heroBg>
+    <img
+      class="hero__bg-img hero__bg-img--mobile"
+      [src]="heroImageUrl"
+      alt=""
+      fetchpriority="high"
+    />
+    <img
+      class="hero__bg-img hero__bg-img--desktop"
+      [src]="heroImageDesktopUrl"
+      alt=""
+      fetchpriority="high"
+    />
+  </div>
+  <div class="hero__overlay anim-fade-in hero__overlay-fade" [class.is-visible]="loaded()"></div>
+
+  <div class="hero__content">
+    <p class="anim-fade-up hero__eyebrow" [class.is-visible]="loaded()">WE ARE GETTING MARRIED</p>
+    <h1 class="anim-fade-up hero__name-en" [class.is-visible]="loaded()">{{ content.brideGroomEn }}</h1>
+    <p class="anim-fade-up hero__name-zh" [class.is-visible]="loaded()">{{ content.brideGroomZh }}</p>
+
+    <div class="hero__divider anim-line-grow" [class.is-visible]="loaded()">
+      <span class="hero__divider-line"></span>
+      <span class="hero__divider-diamond"></span>
+      <span class="hero__divider-line"></span>
+    </div>
+
+    <p class="anim-fade-up hero__date" [class.is-visible]="loaded()">{{ content.weddingDateDisplay }}</p>
+
+    @if (!store.countdown().isOver) {
+      <div class="hero__countdown">
+        <div class="hero__countdown-cell anim-fade-up" [class.is-visible]="loaded()" style="transition-delay: 1120ms">
+          <span class="hero__countdown-number">{{ store.countdown().days }}</span>
+          <span class="hero__countdown-label">DAYS</span>
+        </div>
+        <div class="hero__countdown-cell anim-fade-up" [class.is-visible]="loaded()" style="transition-delay: 1180ms">
+          <span class="hero__countdown-number">{{ padTwoDigits(store.countdown().hours) }}</span>
+          <span class="hero__countdown-label">HOURS</span>
+        </div>
+        <div class="hero__countdown-cell anim-fade-up" [class.is-visible]="loaded()" style="transition-delay: 1240ms">
+          <span class="hero__countdown-number">{{ padTwoDigits(store.countdown().minutes) }}</span>
+          <span class="hero__countdown-label">MINS</span>
+        </div>
+        <div class="hero__countdown-cell anim-fade-up" [class.is-visible]="loaded()" style="transition-delay: 1300ms">
+          <span class="hero__countdown-number">{{ padTwoDigits(store.countdown().seconds) }}</span>
+          <span class="hero__countdown-label">SECS</span>
+        </div>
+      </div>
+    } @else {
+      <p class="anim-fade-up hero__over-message" [class.is-visible]="loaded()">Thank you for being with us</p>
+    }
+  </div>
+
+  <button type="button" class="hero__scroll anim-fade-in hero__scroll-fade" [class.is-visible]="loaded()" (click)="scrollToNext()">
+    <span>SCROLL</span>
+    <span class="anim-scroll-bounce hero__scroll-icon" aria-hidden="true">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="6 9 12 15 18 9" />
+      </svg>
+    </span>
+  </button>
+
+  <app-music-player class="hero__music anim-fade-in hero__music-fade" [class.is-visible]="loaded()" />
+</section>

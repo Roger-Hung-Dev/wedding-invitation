@@ -1,0 +1,26 @@
+// 設計色票（17 色）與字型變數，全站以 CSS 自訂屬性引用。
+// 數值來源：設計匯出 _layout-spec.md 的共用設計 token。
+:root {
+  --color-bg-blush: #FDF2F8;
+  --color-bg-ivory: #FFFBF7;
+  --color-surface: #FFFFFF;
+  --color-primary: #DB2777;
+  --color-primary-soft: #F472B6;
+  --color-accent-gold: #CA8A04;
+  --color-gold-soft: #E7C873;
+  --color-text-main: #831843;
+  --color-text-muted: #7A5560;
+  --color-text-invert: #FFFFFF;
+  --color-text-invert-muted: #FFFFFFCC;
+  --color-border-soft: #F0D9E2;
+  --color-border-pill: #E4BFCD;
+  --color-overlay-dark: #00000073;
+  --color-glass-fill: #FFFFFF26;
+  --color-glass-border: #FFFFFF4D;
+  --shadow-rose: #8318431F;
+
+  --font-script: 'Great Vibes', cursive;
+  --font-body: 'Cormorant Infant', 'Noto Serif TC', serif;
+
+  --ease-elegant: cubic-bezier(0.22, 1, 0.36, 1);
+}

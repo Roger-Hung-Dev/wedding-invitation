@@ -1,0 +1,55 @@
+<section
+  class="gallery"
+  appScrollReveal
+  [staggerSelector]="'.anim-fade-up, .anim-fade-in, .anim-reveal-mask, .anim-line-grow'"
+  [staggerMs]="90"
+>
+  <app-section-heading eyebrow="GALLERY" title="Our Moments" />
+
+  <span class="gallery__gold-line anim-line-grow" style="transition-delay: 180ms" aria-hidden="true"></span>
+
+  <div class="gallery__quote anim-fade-up">
+    @if (breakpoint.isDesktop()) {
+      <p>願我們的故事，從今天起有了共同的名字。</p>
+    } @else {
+      <p>願我們的故事，</p>
+      <p>從今天起有了共同的名字。</p>
+    }
+  </div>
+
+  <!--
+    手機／桌機兩種版式都固定渲染在 DOM 中，只用 CSS media query 切換顯示，
+    不用 @if 依斷點 signal 動態拆換節點：實測發現 @if 切換會讓 IntersectionObserver
+    在舊節點上觸發過的 is-visible 進場動畫，來不及套用到斷點切換後新建立的節點上，
+    導致桌機版照片永遠停在 clip-path 揭幕前的隱藏狀態。
+  -->
+  <div class="gallery__track anim-reveal-mask" #track (scroll)="onTrackScroll()">
+    @for (photo of store.photos; track photo.id; let i = $index) {
+      <button
+        type="button"
+        class="gallery__card"
+        [class.gallery__card--active]="i === store.activeIndex()"
+        (click)="store.openLightbox(i)"
+      >
+        <img [src]="photo.url" [alt]="photo.alt" loading="lazy" />
+      </button>
+    }
+  </div>
+  <div class="gallery__grid">
+    @for (photo of desktopPhotos(); track photo.id; let i = $index) {
+      <button type="button" class="gallery__grid-card anim-reveal-mask" [style.transition-delay.ms]="i * 140" (click)="store.openLightbox(i)">
+        <img [src]="photo.url" [alt]="photo.alt" loading="lazy" />
+      </button>
+    }
+  </div>
+
+  <div class="gallery__dots anim-fade-in">
+    @for (photo of store.photos; track photo.id; let i = $index) {
+      <span class="gallery__dot" [class.gallery__dot--active]="i === store.activeIndex()"></span>
+    }
+  </div>
+
+  <p class="gallery__hint anim-fade-in">
+    {{ breakpoint.isDesktop() ? '點擊放大檢視' : '左右滑動瀏覽・點擊放大' }}
+  </p>
+</section>

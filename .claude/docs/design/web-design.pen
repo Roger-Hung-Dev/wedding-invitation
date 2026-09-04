@@ -1,0 +1,4113 @@
+{
+  "version": "2.17",
+  "children": [
+    {
+      "type": "frame",
+      "id": "lxtQz",
+      "x": 0,
+      "y": 0,
+      "name": "裝置版-單頁全覽",
+      "width": 390,
+      "fill": "$bg-ivory",
+      "layout": "vertical",
+      "children": [
+        {
+          "type": "frame",
+          "id": "p1rjjJ",
+          "name": "裝置版-S1 Hero",
+          "clip": true,
+          "width": 390,
+          "height": 844,
+          "fill": "$bg-ivory",
+          "layout": "none",
+          "children": [
+            {
+              "type": "rectangle",
+              "id": "n7E8n",
+              "x": 0,
+              "y": 0,
+              "name": "S1-底圖",
+              "metadata": {
+                "type": "unsplash",
+                "username": "muresan113",
+                "link": "https://unsplash.com/@muresan113",
+                "author": "Marius Muresan"
+              },
+              "fill": {
+                "type": "image",
+                "enabled": true,
+                "url": "https://images.unsplash.com/photo-1683039676974-420cfd6625ca?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3ODg1MDQwNzB8&ixlib=rb-4.1.0&q=80&w=1080",
+                "mode": "fill"
+              },
+              "width": 390,
+              "height": 844
+            },
+            {
+              "type": "rectangle",
+              "id": "u3FJjy",
+              "x": 0,
+              "y": 0,
+              "name": "S1-遮罩漸層",
+              "fill": {
+                "type": "gradient",
+                "gradientType": "linear",
+                "enabled": true,
+                "rotation": 180,
+                "size": {
+                  "height": 1
+                },
+                "colors": [
+                  {
+                    "color": "#00000000",
+                    "position": 0
+                  },
+                  {
+                    "color": "#0000008C",
+                    "position": 1
+                  }
+                ]
+              },
+              "width": 390,
+              "height": 844
+            },
+            {
+              "type": "frame",
+              "id": "bwxuN",
+              "x": 0,
+              "y": 0,
+              "name": "S1-內容欄",
+              "width": 390,
+              "layout": "vertical",
+              "padding": [
+                120,
+                24,
+                0,
+                24
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "ZWsXe",
+                  "name": "S1-眉標",
+                  "fill": "$text-invert-muted",
+                  "content": "WE ARE GETTING MARRIED",
+                  "lineHeight": 1.4,
+                  "textAlign": "center",
+                  "fontFamily": "$font-body",
+                  "fontSize": 11,
+                  "fontWeight": "500",
+                  "letterSpacing": 4
+                },
+                {
+                  "type": "frame",
+                  "id": "dzBaP",
+                  "name": "spacer-20",
+                  "width": 1,
+                  "height": 20
+                },
+                {
+                  "type": "text",
+                  "id": "wRPvE",
+                  "name": "S1-英文姓名",
+                  "fill": "$text-invert",
+                  "content": "Ethan & Chloe",
+                  "lineHeight": 1.2,
+                  "textAlign": "center",
+                  "fontFamily": "$font-script",
+                  "fontSize": 56
+                },
+                {
+                  "type": "frame",
+                  "id": "S8uhK",
+                  "name": "spacer-8",
+                  "width": 1,
+                  "height": 8
+                },
+                {
+                  "type": "text",
+                  "id": "Vf6Ql",
+                  "name": "S1-中文姓名",
+                  "fill": "$text-invert",
+                  "content": "陳彥廷　✕　林思妤",
+                  "lineHeight": 1.4,
+                  "textAlign": "center",
+                  "fontFamily": "$font-body",
+                  "fontSize": 18,
+                  "letterSpacing": 6
+                },
+                {
+                  "type": "frame",
+                  "id": "aTmJj",
+                  "name": "spacer-28",
+                  "width": 1,
+                  "height": 28
+                },
+                {
+                  "type": "frame",
+                  "id": "z9JKW",
+                  "name": "S1-飾線群組",
+                  "height": 12,
+                  "gap": 8,
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "rectangle",
+                      "id": "Frflk",
+                      "name": "線-左",
+                      "fill": "$gold-soft",
+                      "width": 28,
+                      "height": 1
+                    },
+                    {
+                      "type": "polygon",
+                      "polygonCount": 4,
+                      "id": "RLglb",
+                      "name": "菱形",
+                      "fill": "$gold-soft",
+                      "width": 8,
+                      "height": 8
+                    },
+                    {
+                      "type": "rectangle",
+                      "id": "k2sxw",
+                      "name": "線-右",
+                      "fill": "$gold-soft",
+                      "width": 28,
+                      "height": 1
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "GVVeh",
+                  "name": "spacer-28",
+                  "width": 1,
+                  "height": 28
+                },
+                {
+                  "type": "text",
+                  "id": "cNJbF",
+                  "name": "S1-婚期",
+                  "fill": "$text-invert",
+                  "content": "2026 . 11 . 14　SATURDAY",
+                  "lineHeight": 1.4,
+                  "textAlign": "center",
+                  "fontFamily": "$font-body",
+                  "fontSize": 16,
+                  "fontWeight": "500",
+                  "letterSpacing": 3
+                },
+                {
+                  "type": "frame",
+                  "id": "E04lOQ",
+                  "name": "spacer-40",
+                  "width": 1,
+                  "height": 40
+                },
+                {
+                  "type": "frame",
+                  "id": "bxotT",
+                  "name": "S1-倒數群組",
+                  "width": 308,
+                  "height": 80,
+                  "gap": 12,
+                  "justifyContent": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "C4eIZ",
+                      "name": "倒數格-DAYS",
+                      "width": 68,
+                      "height": 80,
+                      "fill": "$glass-fill",
+                      "cornerRadius": 14,
+                      "stroke": "$glass-border",
+                      "strokeWidth": 1,
+                      "strokeAlignment": "inner",
+                      "layout": "vertical",
+                      "gap": 4,
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "EjtEq",
+                          "name": "數字-DAYS",
+                          "fill": "$text-invert",
+                          "content": "128",
+                          "lineHeight": 1,
+                          "textAlign": "center",
+                          "fontFamily": "$font-body",
+                          "fontSize": 26,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "text",
+                          "id": "u9t2Ge",
+                          "name": "標籤-DAYS",
+                          "fill": "$text-invert-muted",
+                          "content": "DAYS",
+                          "lineHeight": 1.4,
+                          "textAlign": "center",
+                          "fontFamily": "$font-body",
+                          "fontSize": 10,
+                          "fontWeight": "500",
+                          "letterSpacing": 2
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "qsiiT",
+                      "name": "倒數格-HOURS",
+                      "width": 68,
+                      "height": 80,
+                      "fill": "$glass-fill",
+                      "cornerRadius": 14,
+                      "stroke": "$glass-border",
+                      "strokeWidth": 1,
+                      "strokeAlignment": "inner",
+                      "layout": "vertical",
+                      "gap": 4,
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "myLGP",
+                          "name": "數字-HOURS",
+                          "fill": "$text-invert",
+                          "content": "06",
+                          "lineHeight": 1,
+                          "textAlign": "center",
+                          "fontFamily": "$font-body",
+                          "fontSize": 26,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "text",
+                          "id": "I9FDK",
+                          "name": "標籤-HOURS",
+                          "fill": "$text-invert-muted",
+                          "content": "HOURS",
+                          "lineHeight": 1.4,
+                          "textAlign": "center",
+                          "fontFamily": "$font-body",
+                          "fontSize": 10,
+                          "fontWeight": "500",
+                          "letterSpacing": 2
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "vK3OR",
+                      "name": "倒數格-MINS",
+                      "width": 68,
+                      "height": 80,
+                      "fill": "$glass-fill",
+                      "cornerRadius": 14,
+                      "stroke": "$glass-border",
+                      "strokeWidth": 1,
+                      "strokeAlignment": "inner",
+                      "layout": "vertical",
+                      "gap": 4,
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "l6tMZC",
+                          "name": "數字-MINS",
+                          "fill": "$text-invert",
+                          "content": "42",
+                          "lineHeight": 1,
+                          "textAlign": "center",
+                          "fontFamily": "$font-body",
+                          "fontSize": 26,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "text",
+                          "id": "j8U9me",
+                          "name": "標籤-MINS",
+                          "fill": "$text-invert-muted",
+                          "content": "MINS",
+                          "lineHeight": 1.4,
+                          "textAlign": "center",
+                          "fontFamily": "$font-body",
+                          "fontSize": 10,
+                          "fontWeight": "500",
+                          "letterSpacing": 2
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "iM7xk",
+                      "name": "倒數格-SECS",
+                      "width": 68,
+                      "height": 80,
+                      "fill": "$glass-fill",
+                      "cornerRadius": 14,
+                      "stroke": "$glass-border",
+                      "strokeWidth": 1,
+                      "strokeAlignment": "inner",
+                      "layout": "vertical",
+                      "gap": 4,
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "XQupU",
+                          "name": "數字-SECS",
+                          "fill": "$text-invert",
+                          "content": "19",
+                          "lineHeight": 1,
+                          "textAlign": "center",
+                          "fontFamily": "$font-body",
+                          "fontSize": 26,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "text",
+                          "id": "iovGt",
+                          "name": "標籤-SECS",
+                          "fill": "$text-invert-muted",
+                          "content": "SECS",
+                          "lineHeight": 1.4,
+                          "textAlign": "center",
+                          "fontFamily": "$font-body",
+                          "fontSize": 10,
+                          "fontWeight": "500",
+                          "letterSpacing": 2
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "I96pQV",
+              "x": 0,
+              "y": 760,
+              "name": "S1-SCROLL群組",
+              "width": 390,
+              "layout": "vertical",
+              "gap": 6,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "aRKwB",
+                  "name": "S1-SCROLL",
+                  "fill": "$text-invert-muted",
+                  "content": "SCROLL",
+                  "lineHeight": 1.4,
+                  "textAlign": "center",
+                  "fontFamily": "$font-body",
+                  "fontSize": 10,
+                  "fontWeight": "500",
+                  "letterSpacing": 3
+                },
+                {
+                  "type": "icon",
+                  "id": "iPYtW",
+                  "name": "icon-chevron-down",
+                  "width": 14,
+                  "height": 14,
+                  "icon": "chevron-down",
+                  "library": "lucide",
+                  "fill": "$text-invert-muted"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "Ja7lN",
+              "x": 318,
+              "y": 764,
+              "name": "S1-音樂鈕(尚未播放)",
+              "width": 56,
+              "height": 56,
+              "fill": "$surface",
+              "cornerRadius": 28,
+              "stroke": "#E7C87380",
+              "strokeWidth": 1,
+              "strokeAlignment": "inner",
+              "effect": {
+                "type": "shadow",
+                "shadowType": "outer",
+                "color": "$shadow-rose",
+                "offset": {
+                  "x": 0,
+                  "y": 4
+                },
+                "blur": 16
+              },
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon",
+                  "id": "Y7TkfF",
+                  "name": "icon-disc",
+                  "width": 24,
+                  "height": 24,
+                  "icon": "disc",
+                  "library": "lucide",
+                  "fill": "$primary"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "kJsg4",
+          "name": "裝置版-S2 Gallery",
+          "clip": true,
+          "width": 390,
+          "height": 720,
+          "fill": "$bg-ivory",
+          "layout": "vertical",
+          "padding": [
+            64,
+            0
+          ],
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "text",
+              "id": "Fmvlr",
+              "name": "S2-眉標",
+              "fill": "$accent-gold",
+              "content": "GALLERY",
+              "lineHeight": 1.4,
+              "textAlign": "center",
+              "fontFamily": "$font-body",
+              "fontSize": 11,
+              "fontWeight": "600",
+              "letterSpacing": 5
+            },
+            {
+              "type": "frame",
+              "id": "P2pfA",
+              "name": "spacer-10",
+              "width": 1,
+              "height": 10
+            },
+            {
+              "type": "text",
+              "id": "kMDxs",
+              "name": "S2-主標",
+              "fill": "$primary",
+              "content": "Our Moments",
+              "lineHeight": 1.2,
+              "textAlign": "center",
+              "fontFamily": "$font-script",
+              "fontSize": 34
+            },
+            {
+              "type": "frame",
+              "id": "O1ipzG",
+              "name": "spacer-12",
+              "width": 1,
+              "height": 12
+            },
+            {
+              "type": "rectangle",
+              "id": "UXSWk",
+              "name": "S2-金線",
+              "fill": "$gold-soft",
+              "width": 40,
+              "height": 1
+            },
+            {
+              "type": "frame",
+              "id": "bas3s",
+              "name": "spacer-20",
+              "width": 1,
+              "height": 20
+            },
+            {
+              "type": "text",
+              "id": "qgDZu",
+              "name": "S2-金句",
+              "fill": "$text-muted",
+              "textGrowth": "fixed-width",
+              "width": 300,
+              "content": "願我們的故事，\n從今天起有了共同的名字。",
+              "lineHeight": 1.4,
+              "textAlign": "center",
+              "fontFamily": "$font-body",
+              "fontSize": 16,
+              "fontStyle": "italic"
+            },
+            {
+              "type": "frame",
+              "id": "w8NBWe",
+              "name": "spacer-32",
+              "width": 1,
+              "height": 32
+            },
+            {
+              "type": "frame",
+              "id": "aMIGh",
+              "name": "S2-輪播列",
+              "clip": true,
+              "width": 390,
+              "height": 340,
+              "gap": 12,
+              "padding": [
+                0,
+                21
+              ],
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "J5RIuS",
+                  "name": "S2-鄰卡左",
+                  "opacity": 0.55,
+                  "metadata": {
+                    "type": "unsplash",
+                    "username": "seifkh",
+                    "link": "https://unsplash.com/@seifkh",
+                    "author": "Seif Eddin Khayat"
+                  },
+                  "width": 44,
+                  "height": 300,
+                  "fill": {
+                    "type": "image",
+                    "enabled": true,
+                    "url": "https://images.unsplash.com/photo-1613469663014-ab7a6093a13e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3ODg1MDQwOTJ8&ixlib=rb-4.1.0&q=80&w=1080",
+                    "mode": "fill"
+                  },
+                  "cornerRadius": 16
+                },
+                {
+                  "type": "frame",
+                  "id": "O7VYX",
+                  "name": "S2-主卡",
+                  "metadata": {
+                    "type": "unsplash",
+                    "username": "martzzl",
+                    "link": "https://unsplash.com/@martzzl",
+                    "author": "Marcel Strauß"
+                  },
+                  "width": 260,
+                  "height": 340,
+                  "fill": {
+                    "type": "image",
+                    "enabled": true,
+                    "url": "https://images.unsplash.com/photo-1593445831191-ccde00562535?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3ODg1MDQ2MjR8&ixlib=rb-4.1.0&q=80&w=1080",
+                    "mode": "fill"
+                  },
+                  "cornerRadius": 16,
+                  "effect": {
+                    "type": "shadow",
+                    "shadowType": "outer",
+                    "color": "$shadow-rose",
+                    "offset": {
+                      "x": 0,
+                      "y": 8
+                    },
+                    "blur": 28
+                  }
+                },
+                {
+                  "type": "frame",
+                  "id": "BPaHY",
+                  "name": "S2-鄰卡右",
+                  "opacity": 0.55,
+                  "metadata": {
+                    "type": "unsplash",
+                    "username": "alexandermassph",
+                    "link": "https://unsplash.com/@alexandermassph",
+                    "author": "Alexander Mass"
+                  },
+                  "width": 44,
+                  "height": 300,
+                  "fill": {
+                    "type": "image",
+                    "enabled": true,
+                    "url": "https://images.unsplash.com/photo-1782786661323-f81c8a4ad25d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3ODg1MDQ2MjV8&ixlib=rb-4.1.0&q=80&w=1080",
+                    "mode": "fill"
+                  },
+                  "cornerRadius": 16
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "VO8fr",
+              "name": "spacer-24",
+              "width": 1,
+              "height": 24
+            },
+            {
+              "type": "frame",
+              "id": "l6mvHq",
+              "name": "S2-頁點列",
+              "height": 8,
+              "gap": 6,
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "rectangle",
+                  "cornerRadius": 4,
+                  "id": "dgSsc",
+                  "name": "頁點-active",
+                  "fill": "$primary",
+                  "width": 20,
+                  "height": 8
+                },
+                {
+                  "type": "ellipse",
+                  "id": "hYAEU",
+                  "name": "頁點-1",
+                  "fill": "$border-pill",
+                  "width": 8,
+                  "height": 8
+                },
+                {
+                  "type": "ellipse",
+                  "id": "eLKBF",
+                  "name": "頁點-2",
+                  "fill": "$border-pill",
+                  "width": 8,
+                  "height": 8
+                },
+                {
+                  "type": "ellipse",
+                  "id": "gsyvQ",
+                  "name": "頁點-3",
+                  "fill": "$border-pill",
+                  "width": 8,
+                  "height": 8
+                },
+                {
+                  "type": "ellipse",
+                  "id": "V47sOK",
+                  "name": "頁點-4",
+                  "fill": "$border-pill",
+                  "width": 8,
+                  "height": 8
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "E8387",
+              "name": "spacer-16",
+              "width": 1,
+              "height": 16
+            },
+            {
+              "type": "text",
+              "id": "q4d7d4",
+              "name": "S2-操作提示",
+              "fill": "$text-muted",
+              "content": "左右滑動瀏覽・點擊放大",
+              "lineHeight": 1.4,
+              "textAlign": "center",
+              "fontFamily": "$font-body",
+              "fontSize": 11,
+              "letterSpacing": 1
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "PqZZU",
+          "name": "裝置版-S3 Info",
+          "clip": true,
+          "width": 390,
+          "height": 900,
+          "fill": "$bg-blush",
+          "layout": "vertical",
+          "padding": [
+            64,
+            24
+          ],
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "text",
+              "id": "h5Bo9",
+              "name": "S3-眉標",
+              "fill": "$accent-gold",
+              "content": "INFORMATION",
+              "lineHeight": 1.4,
+              "textAlign": "center",
+              "fontFamily": "$font-body",
+              "fontSize": 11,
+              "fontWeight": "600",
+              "letterSpacing": 5
+            },
+            {
+              "type": "frame",
+              "id": "Ieucf",
+              "name": "spacer-10",
+              "width": 1,
+              "height": 10
+            },
+            {
+              "type": "text",
+              "id": "Ok2GO",
+              "name": "S3-主標",
+              "fill": "$primary",
+              "content": "Wedding Day",
+              "lineHeight": 1.2,
+              "textAlign": "center",
+              "fontFamily": "$font-script",
+              "fontSize": 34
+            },
+            {
+              "type": "frame",
+              "id": "MYywA",
+              "name": "spacer-24",
+              "width": 1,
+              "height": 24
+            },
+            {
+              "type": "frame",
+              "id": "e2FJ5K",
+              "name": "S3-主卡",
+              "width": "fill_container",
+              "fill": "$surface",
+              "cornerRadius": 20,
+              "effect": {
+                "type": "shadow",
+                "shadowType": "outer",
+                "color": "$shadow-rose",
+                "offset": {
+                  "x": 0,
+                  "y": 8
+                },
+                "blur": 28
+              },
+              "layout": "vertical",
+              "padding": 24,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "JKGVq",
+                  "name": "S3-場次列",
+                  "width": "fill_container",
+                  "height": 40,
+                  "gap": 8,
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "t92Jq",
+                      "name": "膠囊-午宴(選中)",
+                      "width": 143,
+                      "height": 40,
+                      "fill": "$primary",
+                      "cornerRadius": 20,
+                      "padding": [
+                        0,
+                        20
+                      ],
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "pW5wd",
+                          "name": "label",
+                          "fill": "$text-invert",
+                          "content": "午宴　12:00",
+                          "lineHeight": 1.4,
+                          "textAlign": "center",
+                          "fontFamily": "$font-body",
+                          "fontSize": 14,
+                          "fontWeight": "600",
+                          "letterSpacing": 1
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "dXeie",
+                      "name": "膠囊-晚宴(未選)",
+                      "width": 143,
+                      "height": 40,
+                      "cornerRadius": 20,
+                      "stroke": "$border-pill",
+                      "strokeWidth": 1,
+                      "strokeAlignment": "inner",
+                      "padding": [
+                        0,
+                        20
+                      ],
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "HMtAt",
+                          "name": "label",
+                          "fill": "$text-muted",
+                          "content": "晚宴　18:00",
+                          "lineHeight": 1.4,
+                          "textAlign": "center",
+                          "fontFamily": "$font-body",
+                          "fontSize": 14,
+                          "fontWeight": "500",
+                          "letterSpacing": 1
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "kHrxp",
+                  "name": "spacer-24",
+                  "width": 1,
+                  "height": 24
+                },
+                {
+                  "type": "text",
+                  "id": "PSnHF",
+                  "name": "S3-日期大字",
+                  "fill": "$text-main",
+                  "content": "2026 . 11 . 14",
+                  "lineHeight": 1.4,
+                  "textAlign": "center",
+                  "fontFamily": "$font-body",
+                  "fontSize": 30,
+                  "fontWeight": "600",
+                  "letterSpacing": 2
+                },
+                {
+                  "type": "frame",
+                  "id": "jd4jO",
+                  "name": "spacer-6",
+                  "width": 1,
+                  "height": 6
+                },
+                {
+                  "type": "text",
+                  "id": "zT1US",
+                  "name": "S3-日期副標",
+                  "fill": "$text-muted",
+                  "content": "星期六　·　農曆十月初五",
+                  "lineHeight": 1.4,
+                  "textAlign": "center",
+                  "fontFamily": "$font-body",
+                  "fontSize": 13,
+                  "letterSpacing": 1
+                },
+                {
+                  "type": "frame",
+                  "id": "Z6HpdY",
+                  "name": "spacer-20",
+                  "width": 1,
+                  "height": 20
+                },
+                {
+                  "type": "rectangle",
+                  "id": "lGKHk",
+                  "name": "S3-分隔線",
+                  "fill": "$border-soft",
+                  "width": "fill_container",
+                  "height": 1
+                },
+                {
+                  "type": "frame",
+                  "id": "kPzke",
+                  "name": "spacer-20",
+                  "width": 1,
+                  "height": 20
+                },
+                {
+                  "type": "frame",
+                  "id": "M4s8TJ",
+                  "name": "S3-資訊列群",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 18,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "BfVI9",
+                      "name": "資訊列-宴會地點",
+                      "width": "fill_container",
+                      "gap": 12,
+                      "children": [
+                        {
+                          "type": "icon",
+                          "id": "GLQ3G",
+                          "name": "icon-building",
+                          "width": 20,
+                          "height": 20,
+                          "icon": "building",
+                          "library": "lucide",
+                          "fill": "$accent-gold"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "mwTYO",
+                          "name": "文字欄-宴會地點",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": 3,
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "L4Dnzv",
+                              "name": "標籤-宴會地點",
+                              "fill": "$text-muted",
+                              "content": "宴會地點",
+                              "lineHeight": 1.4,
+                              "fontFamily": "$font-body",
+                              "fontSize": 11,
+                              "fontWeight": "600",
+                              "letterSpacing": 2
+                            },
+                            {
+                              "type": "text",
+                              "id": "mfxyh",
+                              "name": "值-宴會地點",
+                              "fill": "$text-main",
+                              "textGrowth": "fixed-width",
+                              "width": "fill_container",
+                              "content": "台北文華東方酒店",
+                              "lineHeight": 1.4,
+                              "fontFamily": "$font-body",
+                              "fontSize": 15,
+                              "fontWeight": "500"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "YENgc",
+                      "name": "資訊列-宴會廳",
+                      "width": "fill_container",
+                      "gap": 12,
+                      "children": [
+                        {
+                          "type": "icon",
+                          "id": "d9rTl",
+                          "name": "icon-door-open",
+                          "width": 20,
+                          "height": 20,
+                          "icon": "door-open",
+                          "library": "lucide",
+                          "fill": "$accent-gold"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "GWpjD",
+                          "name": "文字欄-宴會廳",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": 3,
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "qGOGT",
+                              "name": "標籤-宴會廳",
+                              "fill": "$text-muted",
+                              "content": "宴會廳",
+                              "lineHeight": 1.4,
+                              "fontFamily": "$font-body",
+                              "fontSize": 11,
+                              "fontWeight": "600",
+                              "letterSpacing": 2
+                            },
+                            {
+                              "type": "text",
+                              "id": "FsZtm",
+                              "name": "值-宴會廳",
+                              "fill": "$text-main",
+                              "textGrowth": "fixed-width",
+                              "width": "fill_container",
+                              "content": "3F　文華廳",
+                              "lineHeight": 1.4,
+                              "fontFamily": "$font-body",
+                              "fontSize": 15,
+                              "fontWeight": "500"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "UDW1J",
+                      "name": "資訊列-地址",
+                      "width": "fill_container",
+                      "gap": 12,
+                      "children": [
+                        {
+                          "type": "icon",
+                          "id": "HFJ5e",
+                          "name": "icon-map-pin",
+                          "width": 20,
+                          "height": 20,
+                          "icon": "map-pin",
+                          "library": "lucide",
+                          "fill": "$accent-gold"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "XCbvm",
+                          "name": "文字欄-地址",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": 3,
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "v6oQV",
+                              "name": "標籤-地址",
+                              "fill": "$text-muted",
+                              "content": "地址",
+                              "lineHeight": 1.4,
+                              "fontFamily": "$font-body",
+                              "fontSize": 11,
+                              "fontWeight": "600",
+                              "letterSpacing": 2
+                            },
+                            {
+                              "type": "text",
+                              "id": "r4DKD",
+                              "name": "值-地址",
+                              "fill": "$text-main",
+                              "textGrowth": "fixed-width",
+                              "width": "fill_container",
+                              "content": "台北市松山區敦化北路二段 158 號",
+                              "lineHeight": 1.4,
+                              "fontFamily": "$font-body",
+                              "fontSize": 15,
+                              "fontWeight": "500"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "buaQy",
+                      "name": "資訊列-桌次引導",
+                      "width": "fill_container",
+                      "gap": 12,
+                      "children": [
+                        {
+                          "type": "icon",
+                          "id": "SqBkp",
+                          "name": "icon-users",
+                          "width": 20,
+                          "height": 20,
+                          "icon": "users",
+                          "library": "lucide",
+                          "fill": "$accent-gold"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "Zltcv",
+                          "name": "文字欄-桌次引導",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": 3,
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "BNfHF",
+                              "name": "標籤-桌次引導",
+                              "fill": "$text-muted",
+                              "content": "桌次引導",
+                              "lineHeight": 1.4,
+                              "fontFamily": "$font-body",
+                              "fontSize": 11,
+                              "fontWeight": "600",
+                              "letterSpacing": 2
+                            },
+                            {
+                              "type": "text",
+                              "id": "AIdS7",
+                              "name": "值-桌次引導",
+                              "fill": "$text-main",
+                              "textGrowth": "fixed-width",
+                              "width": "fill_container",
+                              "content": "入口處設有座位表，男方親友請至 A 區、女方親友請至 B 區",
+                              "lineHeight": 1.4,
+                              "fontFamily": "$font-body",
+                              "fontSize": 15,
+                              "fontWeight": "500"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "JA6ZA",
+                  "name": "spacer-22",
+                  "width": 1,
+                  "height": 22
+                },
+                {
+                  "type": "frame",
+                  "id": "Aa4b2",
+                  "name": "S3-地圖預覽",
+                  "metadata": {
+                    "type": "unsplash",
+                    "username": "pawel_czerwinski",
+                    "link": "https://unsplash.com/@pawel_czerwinski",
+                    "author": "Pawel Czerwinski"
+                  },
+                  "width": "fill_container",
+                  "height": 120,
+                  "fill": {
+                    "type": "image",
+                    "enabled": true,
+                    "url": "https://images.unsplash.com/photo-1645708313906-c4e2cd0b4daa?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3ODg1MDQ2MjZ8&ixlib=rb-4.1.0&q=80&w=1080",
+                    "mode": "fill"
+                  },
+                  "cornerRadius": 12
+                },
+                {
+                  "type": "frame",
+                  "id": "x6LMO3",
+                  "name": "spacer-16",
+                  "width": 1,
+                  "height": 16
+                },
+                {
+                  "type": "frame",
+                  "id": "aJPTM",
+                  "name": "S3-導航鈕",
+                  "width": "fill_container",
+                  "height": 52,
+                  "fill": "$accent-gold",
+                  "cornerRadius": 26,
+                  "gap": 8,
+                  "padding": [
+                    0,
+                    24
+                  ],
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "frQmQ",
+                      "name": "icon-navigation",
+                      "width": 16,
+                      "height": 16,
+                      "icon": "navigation",
+                      "library": "lucide",
+                      "fill": "$text-invert"
+                    },
+                    {
+                      "type": "text",
+                      "id": "ICINw",
+                      "name": "label",
+                      "fill": "$text-invert",
+                      "content": "開啟 Google 地圖導航",
+                      "lineHeight": 1.4,
+                      "textAlign": "center",
+                      "fontFamily": "$font-body",
+                      "fontSize": 15,
+                      "fontWeight": "600",
+                      "letterSpacing": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "ZihCd",
+              "name": "spacer-16",
+              "width": 1,
+              "height": 16
+            },
+            {
+              "type": "text",
+              "id": "Ik49s",
+              "name": "S3-入場提醒",
+              "fill": "$text-muted",
+              "content": "※ 宴會廳將於開席前 30 分鐘開放入場",
+              "lineHeight": 1.4,
+              "textAlign": "center",
+              "fontFamily": "$font-body",
+              "fontSize": 11
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "QjV72",
+          "name": "裝置版-S4 RSVP",
+          "clip": true,
+          "width": 390,
+          "height": 560,
+          "fill": {
+            "type": "gradient",
+            "gradientType": "linear",
+            "enabled": true,
+            "rotation": 180,
+            "size": {
+              "height": 1
+            },
+            "colors": [
+              {
+                "color": "#FFFBF7",
+                "position": 0
+              },
+              {
+                "color": "#FDF2F8",
+                "position": 1
+              }
+            ]
+          },
+          "layout": "vertical",
+          "padding": [
+            64,
+            24
+          ],
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "text",
+              "id": "LZ2Kv",
+              "name": "S4-眉標",
+              "fill": "$accent-gold",
+              "content": "R.S.V.P.",
+              "lineHeight": 1.4,
+              "textAlign": "center",
+              "fontFamily": "$font-body",
+              "fontSize": 11,
+              "fontWeight": "600",
+              "letterSpacing": 5
+            },
+            {
+              "type": "frame",
+              "id": "OczR0",
+              "name": "spacer-10",
+              "width": 1,
+              "height": 10
+            },
+            {
+              "type": "text",
+              "id": "lIxSs",
+              "name": "S4-主標",
+              "fill": "$primary",
+              "content": "Will You Join Us?",
+              "lineHeight": 1.2,
+              "textAlign": "center",
+              "fontFamily": "$font-script",
+              "fontSize": 34
+            },
+            {
+              "type": "frame",
+              "id": "ej26Z",
+              "name": "spacer-16",
+              "width": 1,
+              "height": 16
+            },
+            {
+              "type": "text",
+              "id": "B552d",
+              "name": "S4-說明文",
+              "fill": "$text-muted",
+              "textGrowth": "fixed-width",
+              "width": 310,
+              "content": "您的出席是我們最珍貴的祝福，\n敬請於 2026 / 10 / 15 前回覆。",
+              "lineHeight": 1.4,
+              "textAlign": "center",
+              "fontFamily": "$font-body",
+              "fontSize": 14
+            },
+            {
+              "type": "frame",
+              "id": "Jn1WJ",
+              "name": "spacer-24",
+              "width": 1,
+              "height": 24
+            },
+            {
+              "type": "frame",
+              "id": "X3VsHk",
+              "name": "S4-卡片",
+              "width": "fill_container",
+              "height": 236,
+              "fill": "$surface",
+              "cornerRadius": 20,
+              "effect": {
+                "type": "shadow",
+                "shadowType": "outer",
+                "color": "$shadow-rose",
+                "offset": {
+                  "x": 0,
+                  "y": 8
+                },
+                "blur": 28
+              },
+              "layout": "vertical",
+              "padding": 24,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "c8TOCT",
+                  "name": "S4-chips群",
+                  "width": "fill_container",
+                  "height": 68,
+                  "layout": "vertical",
+                  "gap": 8,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "L0S9t",
+                      "name": "chips列-1",
+                      "height": 30,
+                      "gap": 8,
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "h9jcx",
+                          "name": "chip-姓名",
+                          "height": 30,
+                          "fill": "$bg-blush",
+                          "cornerRadius": 15,
+                          "padding": [
+                            0,
+                            14
+                          ],
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "n3pPj",
+                              "name": "label",
+                              "fill": "$primary",
+                              "content": "姓名",
+                              "lineHeight": 1.4,
+                              "textAlign": "center",
+                              "fontFamily": "$font-body",
+                              "fontSize": 12,
+                              "fontWeight": "500"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "p6a09",
+                          "name": "chip-出席人數",
+                          "height": 30,
+                          "fill": "$bg-blush",
+                          "cornerRadius": 15,
+                          "padding": [
+                            0,
+                            14
+                          ],
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "V3u0O",
+                              "name": "label",
+                              "fill": "$primary",
+                              "content": "出席人數",
+                              "lineHeight": 1.4,
+                              "textAlign": "center",
+                              "fontFamily": "$font-body",
+                              "fontSize": 12,
+                              "fontWeight": "500"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "KUGLY",
+                          "name": "chip-素食需求",
+                          "height": 30,
+                          "fill": "$bg-blush",
+                          "cornerRadius": 15,
+                          "padding": [
+                            0,
+                            14
+                          ],
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "TV2Qc",
+                              "name": "label",
+                              "fill": "$primary",
+                              "content": "素食需求",
+                              "lineHeight": 1.4,
+                              "textAlign": "center",
+                              "fontFamily": "$font-body",
+                              "fontSize": 12,
+                              "fontWeight": "500"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "lVQfL",
+                          "name": "chip-兒童椅",
+                          "height": 30,
+                          "fill": "$bg-blush",
+                          "cornerRadius": 15,
+                          "padding": [
+                            0,
+                            14
+                          ],
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "s3pyk",
+                              "name": "label",
+                              "fill": "$primary",
+                              "content": "兒童椅",
+                              "lineHeight": 1.4,
+                              "textAlign": "center",
+                              "fontFamily": "$font-body",
+                              "fontSize": 12,
+                              "fontWeight": "500"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "s069L",
+                      "name": "chips列-2",
+                      "height": 30,
+                      "gap": 8,
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "rCYoZ",
+                          "name": "chip-喜餅領取",
+                          "height": 30,
+                          "fill": "$bg-blush",
+                          "cornerRadius": 15,
+                          "padding": [
+                            0,
+                            14
+                          ],
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "YK5Wu",
+                              "name": "label",
+                              "fill": "$primary",
+                              "content": "喜餅領取",
+                              "lineHeight": 1.4,
+                              "textAlign": "center",
+                              "fontFamily": "$font-body",
+                              "fontSize": 12,
+                              "fontWeight": "500"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "g7Dtu",
+                          "name": "chip-聯絡電話",
+                          "height": 30,
+                          "fill": "$bg-blush",
+                          "cornerRadius": 15,
+                          "padding": [
+                            0,
+                            14
+                          ],
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "eM2al",
+                              "name": "label",
+                              "fill": "$primary",
+                              "content": "聯絡電話",
+                              "lineHeight": 1.4,
+                              "textAlign": "center",
+                              "fontFamily": "$font-body",
+                              "fontSize": 12,
+                              "fontWeight": "500"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "ZqENZ",
+                          "name": "chip-祝福話語",
+                          "height": 30,
+                          "fill": "$bg-blush",
+                          "cornerRadius": 15,
+                          "padding": [
+                            0,
+                            14
+                          ],
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "noF12",
+                              "name": "label",
+                              "fill": "$primary",
+                              "content": "祝福話語",
+                              "lineHeight": 1.4,
+                              "textAlign": "center",
+                              "fontFamily": "$font-body",
+                              "fontSize": 12,
+                              "fontWeight": "500"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "sL6Kp",
+                  "name": "spacer-20",
+                  "width": 1,
+                  "height": 20
+                },
+                {
+                  "type": "frame",
+                  "id": "ziuHd",
+                  "name": "S4-表單鈕",
+                  "width": "fill_container",
+                  "height": 54,
+                  "fill": "$primary",
+                  "cornerRadius": 27,
+                  "gap": 8,
+                  "padding": [
+                    0,
+                    24
+                  ],
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "aIiIf",
+                      "name": "label",
+                      "fill": "$text-invert",
+                      "content": "填寫出席回覆表單",
+                      "lineHeight": 1.4,
+                      "textAlign": "center",
+                      "fontFamily": "$font-body",
+                      "fontSize": 15,
+                      "fontWeight": "600",
+                      "letterSpacing": 1
+                    },
+                    {
+                      "type": "icon",
+                      "id": "Kcmdx",
+                      "name": "icon-external-link",
+                      "width": 16,
+                      "height": 16,
+                      "icon": "external-link",
+                      "library": "lucide",
+                      "fill": "$text-invert"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "sQg6B",
+                  "name": "spacer-12",
+                  "width": 1,
+                  "height": 12
+                },
+                {
+                  "type": "text",
+                  "id": "cpUnF",
+                  "name": "S4-註記",
+                  "fill": "$text-muted",
+                  "content": "將另開新視窗前往 Google 表單",
+                  "lineHeight": 1.4,
+                  "textAlign": "center",
+                  "fontFamily": "$font-body",
+                  "fontSize": 11
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "xdBhd",
+              "name": "spacer-20",
+              "width": 1,
+              "height": 20
+            },
+            {
+              "type": "text",
+              "id": "WtGbe",
+              "name": "S4-修改連結",
+              "fill": "$text-muted",
+              "content": "已經填寫過了？點此修改回覆",
+              "lineHeight": 1.4,
+              "textAlign": "center",
+              "fontFamily": "$font-body",
+              "fontSize": 12,
+              "fontWeight": "500"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "PdMsp",
+          "name": "裝置版-S5 Footer",
+          "clip": true,
+          "width": 390,
+          "height": 420,
+          "fill": "$text-main",
+          "layout": "vertical",
+          "padding": [
+            64,
+            24
+          ],
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "text",
+              "id": "vHNEO",
+              "name": "S5-主標",
+              "fill": "$text-invert",
+              "content": "Thank You",
+              "lineHeight": 1.2,
+              "textAlign": "center",
+              "fontFamily": "$font-script",
+              "fontSize": 42
+            },
+            {
+              "type": "frame",
+              "id": "XJHAz",
+              "name": "spacer-18",
+              "width": 1,
+              "height": 18
+            },
+            {
+              "type": "text",
+              "id": "p93yRz",
+              "name": "S5-內文",
+              "fill": "$text-invert-muted",
+              "textGrowth": "fixed-width",
+              "width": 300,
+              "content": "謝謝每一位陪伴我們走到這裡的人，\n期待與你分享這一天的喜悅。",
+              "lineHeight": 1.4,
+              "textAlign": "center",
+              "fontFamily": "$font-body",
+              "fontSize": 14
+            },
+            {
+              "type": "frame",
+              "id": "ohMkb",
+              "name": "spacer-32",
+              "width": 1,
+              "height": 32
+            },
+            {
+              "type": "frame",
+              "id": "ZXSuR",
+              "name": "S5-monogram",
+              "width": 96,
+              "height": 96,
+              "cornerRadius": 48,
+              "stroke": "$gold-soft",
+              "strokeWidth": 1,
+              "strokeAlignment": "inner",
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "f0qbog",
+                  "name": "S5-monogram文字",
+                  "fill": "$gold-soft",
+                  "content": "E　&　C",
+                  "lineHeight": 1.4,
+                  "textAlign": "center",
+                  "fontFamily": "$font-body",
+                  "fontSize": 20,
+                  "fontWeight": "500",
+                  "letterSpacing": 2
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "HMi0o",
+              "name": "spacer-24",
+              "width": 1,
+              "height": 24
+            },
+            {
+              "type": "text",
+              "id": "Cz5sU",
+              "name": "S5-婚期",
+              "fill": "$text-invert-muted",
+              "content": "2026 . 11 . 14",
+              "lineHeight": 1.4,
+              "textAlign": "center",
+              "fontFamily": "$font-body",
+              "fontSize": 13,
+              "fontWeight": "500",
+              "letterSpacing": 3
+            },
+            {
+              "type": "frame",
+              "id": "HT3tb",
+              "name": "spacer-12",
+              "width": 1,
+              "height": 12
+            },
+            {
+              "type": "text",
+              "id": "rtZUD",
+              "name": "S5-版權",
+              "opacity": 0.7,
+              "fill": "$text-invert-muted",
+              "content": "© 2026 Ethan & Chloe　·　Made with love",
+              "lineHeight": 1.4,
+              "textAlign": "center",
+              "fontFamily": "$font-body",
+              "fontSize": 10,
+              "letterSpacing": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "a8sUM",
+      "x": 0,
+      "y": 4200,
+      "name": "裝置版-S2 燈箱",
+      "clip": true,
+      "width": 290,
+      "height": 560,
+      "fill": "$overlay-dark",
+      "layout": "none",
+      "children": [
+        {
+          "type": "frame",
+          "id": "q2XYi9",
+          "x": 20,
+          "y": 100,
+          "name": "燈箱-大圖",
+          "metadata": {
+            "type": "unsplash",
+            "username": "raflfc",
+            "link": "https://unsplash.com/@raflfc",
+            "author": "Rafael Leão"
+          },
+          "width": 250,
+          "height": 360,
+          "fill": {
+            "type": "image",
+            "enabled": true,
+            "url": "https://images.unsplash.com/photo-1572021007383-0128eeb8acac?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3ODg1MDQyNDR8&ixlib=rb-4.1.0&q=80&w=1080",
+            "mode": "fill"
+          },
+          "cornerRadius": 12
+        },
+        {
+          "type": "icon",
+          "id": "XtbnR",
+          "x": 254,
+          "y": 16,
+          "name": "燈箱-關閉icon",
+          "width": 20,
+          "height": 20,
+          "icon": "x",
+          "library": "lucide",
+          "fill": "$text-invert"
+        },
+        {
+          "type": "frame",
+          "id": "Lq4Dz",
+          "x": 0,
+          "y": 510,
+          "name": "燈箱-頁碼列",
+          "width": 290,
+          "height": 18,
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "text",
+              "id": "y8c7dF",
+              "name": "燈箱-頁碼",
+              "fill": "$text-invert",
+              "content": "3 / 5",
+              "lineHeight": 1.4,
+              "textAlign": "center",
+              "fontFamily": "$font-body",
+              "fontSize": 13,
+              "fontWeight": "500",
+              "letterSpacing": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "kouQN",
+      "x": 380,
+      "y": 4200,
+      "name": "裝置版-S6 音樂鈕狀態對照",
+      "clip": true,
+      "width": 470,
+      "height": 260,
+      "fill": "$bg-ivory",
+      "layout": "vertical",
+      "gap": 20,
+      "padding": 32,
+      "children": [
+        {
+          "type": "text",
+          "id": "h8yYLb",
+          "name": "S6-標題",
+          "fill": "$text-main",
+          "content": "音樂控制鈕 — 三種狀態",
+          "lineHeight": 1.4,
+          "textAlign": "center",
+          "fontFamily": "$font-body",
+          "fontSize": 15,
+          "fontWeight": "600"
+        },
+        {
+          "type": "frame",
+          "id": "Ce3LT",
+          "name": "S6-狀態列",
+          "width": "fill_container",
+          "gap": 40,
+          "justifyContent": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "m9dyJJ",
+              "name": "狀態組-尚未播放",
+              "layout": "vertical",
+              "gap": 12,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "euqH5",
+                  "name": "音樂鈕-尚未播放",
+                  "width": 56,
+                  "height": 56,
+                  "fill": "$surface",
+                  "cornerRadius": 28,
+                  "stroke": "#E7C87380",
+                  "strokeWidth": 1,
+                  "strokeAlignment": "inner",
+                  "effect": {
+                    "type": "shadow",
+                    "shadowType": "outer",
+                    "color": "$shadow-rose",
+                    "offset": {
+                      "x": 0,
+                      "y": 4
+                    },
+                    "blur": 16
+                  },
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "gNKew",
+                      "name": "icon-disc",
+                      "width": 24,
+                      "height": 24,
+                      "icon": "disc",
+                      "library": "lucide",
+                      "fill": "$primary"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "Za3XU",
+                  "name": "標籤-尚未播放",
+                  "fill": "$text-muted",
+                  "content": "按下播放",
+                  "lineHeight": 1.4,
+                  "textAlign": "center",
+                  "fontFamily": "$font-body",
+                  "fontSize": 12,
+                  "fontWeight": "500"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "tbPuq",
+              "name": "狀態組-播放中",
+              "layout": "vertical",
+              "gap": 12,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "q4ABzq",
+                  "name": "音樂鈕-播放中",
+                  "width": 56,
+                  "height": 56,
+                  "fill": "$surface",
+                  "cornerRadius": 28,
+                  "stroke": "$accent-gold",
+                  "strokeWidth": 2,
+                  "strokeAlignment": "inner",
+                  "effect": {
+                    "type": "shadow",
+                    "shadowType": "outer",
+                    "color": "$shadow-rose",
+                    "offset": {
+                      "x": 0,
+                      "y": 4
+                    },
+                    "blur": 16
+                  },
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "mLRqj",
+                      "name": "icon-disc",
+                      "width": 24,
+                      "height": 24,
+                      "icon": "disc",
+                      "library": "lucide",
+                      "fill": "$primary"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "a7hqoE",
+                  "name": "標籤-播放中",
+                  "fill": "$text-muted",
+                  "content": "播放中",
+                  "lineHeight": 1.4,
+                  "textAlign": "center",
+                  "fontFamily": "$font-body",
+                  "fontSize": 12,
+                  "fontWeight": "500"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "ABKr2",
+              "name": "狀態組-已靜音",
+              "opacity": 0.75,
+              "layout": "vertical",
+              "gap": 12,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "ik705",
+                  "name": "音樂鈕-已靜音",
+                  "width": 56,
+                  "height": 56,
+                  "fill": "$surface",
+                  "cornerRadius": 28,
+                  "stroke": "$border-pill",
+                  "strokeWidth": 1,
+                  "strokeAlignment": "inner",
+                  "effect": {
+                    "type": "shadow",
+                    "shadowType": "outer",
+                    "color": "$shadow-rose",
+                    "offset": {
+                      "x": 0,
+                      "y": 4
+                    },
+                    "blur": 16
+                  },
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "ZijEH",
+                      "name": "icon-volume-x",
+                      "width": 24,
+                      "height": 24,
+                      "icon": "volume-x",
+                      "library": "lucide",
+                      "fill": "$text-muted"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "J2Oiwz",
+                  "name": "標籤-已靜音",
+                  "fill": "$text-muted",
+                  "content": "已靜音",
+                  "lineHeight": 1.4,
+                  "textAlign": "center",
+                  "fontFamily": "$font-body",
+                  "fontSize": 12,
+                  "fontWeight": "500"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "J0wxV",
+      "x": 950,
+      "y": 4200,
+      "name": "裝置版-S7 LINE卡片模擬",
+      "clip": true,
+      "width": 343,
+      "height": 330,
+      "fill": "$surface",
+      "cornerRadius": 12,
+      "stroke": "$border-soft",
+      "strokeWidth": 1,
+      "strokeAlignment": "inner",
+      "layout": "vertical",
+      "children": [
+        {
+          "type": "frame",
+          "id": "YhCTM",
+          "name": "LINE卡-縮圖",
+          "metadata": {
+            "type": "unsplash",
+            "username": "550park",
+            "link": "https://unsplash.com/@550park",
+            "author": "550Park Luxury Wedding Films"
+          },
+          "width": "fill_container",
+          "height": 172,
+          "fill": {
+            "type": "image",
+            "enabled": true,
+            "url": "https://images.unsplash.com/photo-1708126756123-1c1245d26c54?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3ODg1MDQyNzd8&ixlib=rb-4.1.0&q=80&w=1080",
+            "mode": "fill"
+          }
+        },
+        {
+          "type": "frame",
+          "id": "jKpm9",
+          "name": "LINE卡-文字區",
+          "clip": true,
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": 4,
+          "padding": 12,
+          "children": [
+            {
+              "type": "text",
+              "id": "wELCP",
+              "name": "LINE卡-標題",
+              "fill": "$text-main",
+              "textGrowth": "fixed-width-height",
+              "width": "fill_container",
+              "height": 20,
+              "content": "We are Getting Married! 陳彥廷 & 林思妤 婚禮邀請函",
+              "lineHeight": 1.4,
+              "fontFamily": "$font-body",
+              "fontSize": 14,
+              "fontWeight": "600"
+            },
+            {
+              "type": "text",
+              "id": "xJW0c",
+              "name": "LINE卡-內文",
+              "fill": "$text-muted",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "誠摯邀請您參與我們的婚禮，點擊查看詳細資訊與回覆出席意願。",
+              "lineHeight": 1.4,
+              "fontFamily": "$font-body",
+              "fontSize": 12
+            },
+            {
+              "type": "text",
+              "id": "KhzFI",
+              "name": "LINE卡-網域",
+              "fill": "$text-muted",
+              "content": "ethan-chloe.wedding",
+              "lineHeight": 1.4,
+              "fontFamily": "$font-body",
+              "fontSize": 11
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "oB0o5",
+      "x": 1400,
+      "y": 4200,
+      "name": "共用-S7 OG分享圖",
+      "clip": true,
+      "width": 1200,
+      "height": 630,
+      "fill": "$bg-ivory",
+      "layout": "none",
+      "children": [
+        {
+          "type": "rectangle",
+          "id": "WWrE0",
+          "x": 0,
+          "y": 0,
+          "name": "OG-底圖",
+          "metadata": {
+            "type": "unsplash",
+            "username": "nathanhaightphotography",
+            "link": "https://unsplash.com/@nathanhaightphotography",
+            "author": "Nathan Haight"
+          },
+          "fill": {
+            "type": "image",
+            "enabled": true,
+            "url": "https://images.unsplash.com/photo-1692554502481-9e7228083e6c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3ODg1MDQ4MzR8&ixlib=rb-4.1.0&q=80&w=1080",
+            "mode": "fill"
+          },
+          "width": 1200,
+          "height": 630
+        },
+        {
+          "type": "rectangle",
+          "id": "WLai6",
+          "x": 0,
+          "y": 0,
+          "name": "OG-遮罩漸層",
+          "fill": {
+            "type": "gradient",
+            "gradientType": "linear",
+            "enabled": true,
+            "rotation": 180,
+            "size": {
+              "height": 1
+            },
+            "colors": [
+              {
+                "color": "#000000D9",
+                "position": 0
+              },
+              {
+                "color": "#00000073",
+                "position": 0.5
+              },
+              {
+                "color": "#00000026",
+                "position": 1
+              }
+            ]
+          },
+          "width": 1200,
+          "height": 630
+        },
+        {
+          "type": "frame",
+          "id": "eWqA6",
+          "x": 100,
+          "y": 190,
+          "name": "OG-內容欄",
+          "width": 600,
+          "layout": "vertical",
+          "children": [
+            {
+              "type": "text",
+              "id": "aY9ad",
+              "name": "OG-眉標",
+              "fill": "$text-invert-muted",
+              "content": "WE ARE GETTING MARRIED",
+              "lineHeight": 1.4,
+              "fontFamily": "$font-body",
+              "fontSize": 20,
+              "fontWeight": "500",
+              "letterSpacing": 4
+            },
+            {
+              "type": "frame",
+              "id": "N8KXZ",
+              "name": "spacer-24",
+              "width": 1,
+              "height": 24
+            },
+            {
+              "type": "text",
+              "id": "jFioz",
+              "name": "OG-姓名",
+              "fill": "$text-invert",
+              "content": "Ethan & Chloe",
+              "lineHeight": 1.2,
+              "fontFamily": "$font-script",
+              "fontSize": 84
+            },
+            {
+              "type": "frame",
+              "id": "F2Mgb",
+              "name": "spacer-20",
+              "width": 1,
+              "height": 20
+            },
+            {
+              "type": "frame",
+              "id": "zs3iR",
+              "name": "OG-飾線群組",
+              "height": 12,
+              "gap": 8,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "rectangle",
+                  "id": "u1lU7",
+                  "name": "線-左",
+                  "fill": "$gold-soft",
+                  "width": 36,
+                  "height": 1
+                },
+                {
+                  "type": "polygon",
+                  "polygonCount": 4,
+                  "id": "cONSC",
+                  "name": "菱形",
+                  "fill": "$gold-soft",
+                  "width": 8,
+                  "height": 8
+                },
+                {
+                  "type": "rectangle",
+                  "id": "srDfg",
+                  "name": "線-右",
+                  "fill": "$gold-soft",
+                  "width": 36,
+                  "height": 1
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "t65pG",
+              "name": "spacer-24b",
+              "width": 1,
+              "height": 24
+            },
+            {
+              "type": "text",
+              "id": "cy8jn",
+              "name": "OG-日期",
+              "fill": "$text-invert",
+              "content": "2026 . 11 . 14　SATURDAY",
+              "lineHeight": 1.4,
+              "fontFamily": "$font-body",
+              "fontSize": 22,
+              "fontWeight": "500",
+              "letterSpacing": 4
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "ZQuAX",
+      "x": 560,
+      "y": 0,
+      "name": "電腦版-單頁全覽",
+      "clip": true,
+      "width": 1440,
+      "fill": "$bg-ivory",
+      "layout": "vertical",
+      "children": [
+        {
+          "type": "frame",
+          "id": "HlNtS",
+          "name": "電腦版-段1 Hero",
+          "clip": true,
+          "width": 1440,
+          "height": 900,
+          "fill": "$bg-ivory",
+          "layout": "none",
+          "children": [
+            {
+              "type": "rectangle",
+              "id": "kvm04",
+              "x": 0,
+              "y": 0,
+              "name": "S8-底圖",
+              "metadata": {
+                "type": "unsplash",
+                "username": "cartega",
+                "link": "https://unsplash.com/@cartega",
+                "author": "Jon Cartagena"
+              },
+              "fill": {
+                "type": "image",
+                "enabled": true,
+                "url": "https://images.unsplash.com/photo-1548741954-4c3c8d7036cd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3ODg1MDQ2OTJ8&ixlib=rb-4.1.0&q=80&w=1080",
+                "mode": "fill"
+              },
+              "width": 1440,
+              "height": 900
+            },
+            {
+              "type": "rectangle",
+              "id": "P5JT8H",
+              "x": 0,
+              "y": 0,
+              "name": "S8-遮罩漸層",
+              "fill": {
+                "type": "gradient",
+                "gradientType": "linear",
+                "enabled": true,
+                "rotation": 180,
+                "size": {
+                  "height": 1
+                },
+                "colors": [
+                  {
+                    "color": "#000000D9",
+                    "position": 0
+                  },
+                  {
+                    "color": "#00000073",
+                    "position": 0.5
+                  },
+                  {
+                    "color": "#00000026",
+                    "position": 1
+                  }
+                ]
+              },
+              "width": 1440,
+              "height": 900
+            },
+            {
+              "type": "frame",
+              "id": "qtbiQ",
+              "x": 120,
+              "y": 250,
+              "name": "S8-內容欄",
+              "width": 520,
+              "layout": "vertical",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "WMy3t",
+                  "name": "S8-眉標",
+                  "fill": "$text-invert-muted",
+                  "content": "WE ARE GETTING MARRIED",
+                  "lineHeight": 1.4,
+                  "fontFamily": "$font-body",
+                  "fontSize": 13,
+                  "fontWeight": "500",
+                  "letterSpacing": 4
+                },
+                {
+                  "type": "frame",
+                  "id": "Mr4gR",
+                  "name": "spacer-24",
+                  "width": 1,
+                  "height": 24
+                },
+                {
+                  "type": "text",
+                  "id": "eJwk1",
+                  "name": "S8-英文姓名",
+                  "fill": "$text-invert",
+                  "content": "Ethan & Chloe",
+                  "lineHeight": 1.2,
+                  "fontFamily": "$font-script",
+                  "fontSize": 96
+                },
+                {
+                  "type": "frame",
+                  "id": "x3sSmH",
+                  "name": "spacer-12",
+                  "width": 1,
+                  "height": 12
+                },
+                {
+                  "type": "text",
+                  "id": "LNOpo",
+                  "name": "S8-中文姓名",
+                  "fill": "$text-invert",
+                  "content": "陳彥廷　✕　林思妤",
+                  "lineHeight": 1.4,
+                  "fontFamily": "$font-body",
+                  "fontSize": 26,
+                  "letterSpacing": 8
+                },
+                {
+                  "type": "frame",
+                  "id": "s221Tf",
+                  "name": "spacer-32",
+                  "width": 1,
+                  "height": 32
+                },
+                {
+                  "type": "frame",
+                  "id": "sruez",
+                  "name": "S8-飾線群組",
+                  "width": 96,
+                  "height": 12,
+                  "gap": 8,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "rectangle",
+                      "id": "M1s8E",
+                      "name": "線-左",
+                      "fill": "$gold-soft",
+                      "width": 36,
+                      "height": 1
+                    },
+                    {
+                      "type": "polygon",
+                      "polygonCount": 4,
+                      "id": "x77GE",
+                      "name": "菱形",
+                      "fill": "$gold-soft",
+                      "width": 8,
+                      "height": 8
+                    },
+                    {
+                      "type": "rectangle",
+                      "id": "rid23",
+                      "name": "線-右",
+                      "fill": "$gold-soft",
+                      "width": 36,
+                      "height": 1
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "wLDBP",
+                  "name": "spacer-32",
+                  "width": 1,
+                  "height": 32
+                },
+                {
+                  "type": "text",
+                  "id": "euPux",
+                  "name": "S8-婚期",
+                  "fill": "$text-invert",
+                  "content": "2026 . 11 . 14　SATURDAY",
+                  "lineHeight": 1.4,
+                  "fontFamily": "$font-body",
+                  "fontSize": 20,
+                  "fontWeight": "500",
+                  "letterSpacing": 4
+                },
+                {
+                  "type": "frame",
+                  "id": "g2uYqY",
+                  "name": "spacer-48",
+                  "width": 1,
+                  "height": 48
+                },
+                {
+                  "type": "frame",
+                  "id": "ZSmr8",
+                  "name": "S8-倒數群組",
+                  "width": 384,
+                  "height": 96,
+                  "gap": 16,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "TITbl",
+                      "name": "倒數格-DAYS",
+                      "width": 84,
+                      "height": 96,
+                      "fill": "$glass-fill",
+                      "cornerRadius": 14,
+                      "stroke": "$glass-border",
+                      "strokeWidth": 1,
+                      "strokeAlignment": "inner",
+                      "layout": "vertical",
+                      "gap": 4,
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "XGXnP",
+                          "name": "數字-DAYS",
+                          "fill": "$text-invert",
+                          "content": "128",
+                          "lineHeight": 1,
+                          "fontFamily": "$font-body",
+                          "fontSize": 34,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "text",
+                          "id": "B2lXfM",
+                          "name": "標籤-DAYS",
+                          "fill": "$text-invert-muted",
+                          "content": "DAYS",
+                          "lineHeight": 1.4,
+                          "fontFamily": "$font-body",
+                          "fontSize": 12,
+                          "fontWeight": "500",
+                          "letterSpacing": 2
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "Xw5mm",
+                      "name": "倒數格-HOURS",
+                      "width": 84,
+                      "height": 96,
+                      "fill": "$glass-fill",
+                      "cornerRadius": 14,
+                      "stroke": "$glass-border",
+                      "strokeWidth": 1,
+                      "strokeAlignment": "inner",
+                      "layout": "vertical",
+                      "gap": 4,
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "C9crV",
+                          "name": "數字-HOURS",
+                          "fill": "$text-invert",
+                          "content": "06",
+                          "lineHeight": 1,
+                          "fontFamily": "$font-body",
+                          "fontSize": 34,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "text",
+                          "id": "v3YAbI",
+                          "name": "標籤-HOURS",
+                          "fill": "$text-invert-muted",
+                          "content": "HOURS",
+                          "lineHeight": 1.4,
+                          "fontFamily": "$font-body",
+                          "fontSize": 12,
+                          "fontWeight": "500",
+                          "letterSpacing": 2
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "ysrd1",
+                      "name": "倒數格-MINS",
+                      "width": 84,
+                      "height": 96,
+                      "fill": "$glass-fill",
+                      "cornerRadius": 14,
+                      "stroke": "$glass-border",
+                      "strokeWidth": 1,
+                      "strokeAlignment": "inner",
+                      "layout": "vertical",
+                      "gap": 4,
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "Uzp5y",
+                          "name": "數字-MINS",
+                          "fill": "$text-invert",
+                          "content": "42",
+                          "lineHeight": 1,
+                          "fontFamily": "$font-body",
+                          "fontSize": 34,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "text",
+                          "id": "ddQIU",
+                          "name": "標籤-MINS",
+                          "fill": "$text-invert-muted",
+                          "content": "MINS",
+                          "lineHeight": 1.4,
+                          "fontFamily": "$font-body",
+                          "fontSize": 12,
+                          "fontWeight": "500",
+                          "letterSpacing": 2
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "tnrJu",
+                      "name": "倒數格-SECS",
+                      "width": 84,
+                      "height": 96,
+                      "fill": "$glass-fill",
+                      "cornerRadius": 14,
+                      "stroke": "$glass-border",
+                      "strokeWidth": 1,
+                      "strokeAlignment": "inner",
+                      "layout": "vertical",
+                      "gap": 4,
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "s7CcPn",
+                          "name": "數字-SECS",
+                          "fill": "$text-invert",
+                          "content": "19",
+                          "lineHeight": 1,
+                          "fontFamily": "$font-body",
+                          "fontSize": 34,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "text",
+                          "id": "la72w",
+                          "name": "標籤-SECS",
+                          "fill": "$text-invert-muted",
+                          "content": "SECS",
+                          "lineHeight": 1.4,
+                          "fontFamily": "$font-body",
+                          "fontSize": 12,
+                          "fontWeight": "500",
+                          "letterSpacing": 2
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "sb2MS",
+              "x": 1352,
+              "y": 812,
+              "name": "S8-音樂鈕(尚未播放)",
+              "width": 56,
+              "height": 56,
+              "fill": "$surface",
+              "cornerRadius": 28,
+              "stroke": "#E7C87380",
+              "strokeWidth": 1,
+              "strokeAlignment": "inner",
+              "effect": {
+                "type": "shadow",
+                "shadowType": "outer",
+                "color": "$shadow-rose",
+                "offset": {
+                  "x": 0,
+                  "y": 4
+                },
+                "blur": 16
+              },
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon",
+                  "id": "hN2KD",
+                  "name": "icon-disc",
+                  "width": 24,
+                  "height": 24,
+                  "icon": "disc",
+                  "library": "lucide",
+                  "fill": "$primary"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "O1WPh",
+          "name": "電腦版-段2 Gallery",
+          "clip": true,
+          "width": 1440,
+          "height": 980,
+          "fill": "$bg-ivory",
+          "layout": "vertical",
+          "padding": [
+            96,
+            160
+          ],
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "text",
+              "id": "esqYi",
+              "name": "眉標-GALLERY",
+              "fill": "$accent-gold",
+              "content": "GALLERY",
+              "lineHeight": 1.4,
+              "fontFamily": "$font-body",
+              "fontSize": 14,
+              "fontWeight": "600",
+              "letterSpacing": 6
+            },
+            {
+              "type": "frame",
+              "id": "S6y4jT",
+              "name": "sp-12",
+              "width": 1,
+              "height": 12
+            },
+            {
+              "type": "text",
+              "id": "yP9fi",
+              "name": "主標-Our Moments",
+              "fill": "$primary",
+              "content": "Our Moments",
+              "lineHeight": 1.2,
+              "fontFamily": "$font-script",
+              "fontSize": 56
+            },
+            {
+              "type": "frame",
+              "id": "wmyLa",
+              "name": "sp-16",
+              "width": 1,
+              "height": 16
+            },
+            {
+              "type": "rectangle",
+              "id": "RstHx",
+              "name": "金線",
+              "fill": "$gold-soft",
+              "width": 64,
+              "height": 1
+            },
+            {
+              "type": "frame",
+              "id": "rVoE4",
+              "name": "sp-24",
+              "width": 1,
+              "height": 24
+            },
+            {
+              "type": "text",
+              "id": "Wards",
+              "name": "金句",
+              "fill": "$text-muted",
+              "content": "願我們的故事，從今天起有了共同的名字。",
+              "lineHeight": 1.4,
+              "fontFamily": "$font-body",
+              "fontSize": 20,
+              "fontStyle": "italic"
+            },
+            {
+              "type": "frame",
+              "id": "euBWT",
+              "name": "sp-48",
+              "width": 1,
+              "height": 48
+            },
+            {
+              "type": "frame",
+              "id": "We3zu",
+              "name": "相片列",
+              "width": 1120,
+              "height": 480,
+              "gap": 20,
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "AXsVx",
+                  "name": "相片卡1",
+                  "metadata": {
+                    "type": "unsplash",
+                    "username": "550park",
+                    "link": "https://unsplash.com/@550park",
+                    "author": "550Park Luxury Wedding Films"
+                  },
+                  "clip": true,
+                  "width": 360,
+                  "height": 480,
+                  "fill": {
+                    "type": "image",
+                    "enabled": true,
+                    "url": "https://images.unsplash.com/photo-1708126756123-1c1245d26c54?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3ODg1MDk5NzV8&ixlib=rb-4.1.0&q=80&w=1080",
+                    "mode": "fill"
+                  },
+                  "cornerRadius": 20,
+                  "effect": {
+                    "type": "shadow",
+                    "shadowType": "outer",
+                    "color": "$shadow-rose",
+                    "offset": {
+                      "x": 0,
+                      "y": 8
+                    },
+                    "blur": 28
+                  }
+                },
+                {
+                  "type": "frame",
+                  "id": "ycZaK",
+                  "name": "相片卡2",
+                  "metadata": {
+                    "type": "unsplash",
+                    "username": "lyllarommanel",
+                    "link": "https://unsplash.com/@lyllarommanel",
+                    "author": "Dalylla Cerqueira"
+                  },
+                  "clip": true,
+                  "width": 360,
+                  "height": 480,
+                  "fill": {
+                    "type": "image",
+                    "enabled": true,
+                    "url": "https://images.unsplash.com/photo-1645748655597-19fbf4d5e991?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3ODg1MDk5NzZ8&ixlib=rb-4.1.0&q=80&w=1080",
+                    "mode": "fill"
+                  },
+                  "cornerRadius": 20,
+                  "effect": {
+                    "type": "shadow",
+                    "shadowType": "outer",
+                    "color": "$shadow-rose",
+                    "offset": {
+                      "x": 0,
+                      "y": 8
+                    },
+                    "blur": 28
+                  }
+                },
+                {
+                  "type": "frame",
+                  "id": "OQZIM",
+                  "name": "相片卡3",
+                  "metadata": {
+                    "type": "unsplash",
+                    "username": "adrienolichon",
+                    "link": "https://unsplash.com/@adrienolichon",
+                    "author": "Adrien Olichon"
+                  },
+                  "clip": true,
+                  "width": 360,
+                  "height": 480,
+                  "fill": {
+                    "type": "image",
+                    "enabled": true,
+                    "url": "https://images.unsplash.com/photo-1773994788711-69a484e31fc3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3ODg1MDk5Nzd8&ixlib=rb-4.1.0&q=80&w=1080",
+                    "mode": "fill"
+                  },
+                  "cornerRadius": 20,
+                  "effect": {
+                    "type": "shadow",
+                    "shadowType": "outer",
+                    "color": "$shadow-rose",
+                    "offset": {
+                      "x": 0,
+                      "y": 8
+                    },
+                    "blur": 28
+                  }
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "XLgvX",
+              "name": "sp-32",
+              "width": 1,
+              "height": 32
+            },
+            {
+              "type": "frame",
+              "id": "TdXtY",
+              "name": "頁點列",
+              "height": 8,
+              "gap": 6,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "rectangle",
+                  "cornerRadius": 4,
+                  "id": "EZfrD",
+                  "name": "點-active",
+                  "fill": "$primary",
+                  "width": 20,
+                  "height": 8
+                },
+                {
+                  "type": "ellipse",
+                  "id": "uWqIx",
+                  "name": "點-2",
+                  "fill": "$border-pill",
+                  "width": 8,
+                  "height": 8
+                },
+                {
+                  "type": "ellipse",
+                  "id": "Dpdbm",
+                  "name": "點-3",
+                  "fill": "$border-pill",
+                  "width": 8,
+                  "height": 8
+                },
+                {
+                  "type": "ellipse",
+                  "id": "PSNej",
+                  "name": "點-4",
+                  "fill": "$border-pill",
+                  "width": 8,
+                  "height": 8
+                },
+                {
+                  "type": "ellipse",
+                  "id": "x3lNoC",
+                  "name": "點-5",
+                  "fill": "$border-pill",
+                  "width": 8,
+                  "height": 8
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "u3mVsg",
+              "name": "sp-20",
+              "width": 1,
+              "height": 20
+            },
+            {
+              "type": "text",
+              "id": "Likkn",
+              "name": "提示",
+              "fill": "$text-muted",
+              "content": "點擊放大檢視",
+              "lineHeight": 1.4,
+              "fontFamily": "$font-body",
+              "fontSize": 11,
+              "letterSpacing": 1
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "jtA2m",
+          "name": "電腦版-段3 Info",
+          "clip": true,
+          "width": 1440,
+          "height": 970,
+          "fill": "$bg-blush",
+          "layout": "vertical",
+          "padding": [
+            96,
+            160
+          ],
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "text",
+              "id": "C7VKM",
+              "name": "眉標-INFORMATION",
+              "fill": "$accent-gold",
+              "content": "INFORMATION",
+              "lineHeight": 1.4,
+              "fontFamily": "$font-body",
+              "fontSize": 14,
+              "fontWeight": "600",
+              "letterSpacing": 6
+            },
+            {
+              "type": "frame",
+              "id": "sw5OQ",
+              "name": "sp-12",
+              "width": 1,
+              "height": 12
+            },
+            {
+              "type": "text",
+              "id": "nSjHV",
+              "name": "主標-Wedding Day",
+              "fill": "$primary",
+              "content": "Wedding Day",
+              "lineHeight": 1.2,
+              "fontFamily": "$font-script",
+              "fontSize": 56
+            },
+            {
+              "type": "frame",
+              "id": "utC2I",
+              "name": "sp-48",
+              "width": 1,
+              "height": 48
+            },
+            {
+              "type": "frame",
+              "id": "L0BMm",
+              "name": "分欄容器",
+              "width": 1120,
+              "gap": 40,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "FJGe2",
+                  "name": "主卡",
+                  "width": 540,
+                  "fill": "$surface",
+                  "cornerRadius": 24,
+                  "effect": {
+                    "type": "shadow",
+                    "shadowType": "outer",
+                    "color": "$shadow-rose",
+                    "offset": {
+                      "x": 0,
+                      "y": 8
+                    },
+                    "blur": 28
+                  },
+                  "layout": "vertical",
+                  "padding": 40,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "jVRYN",
+                      "name": "場次列",
+                      "width": 460,
+                      "height": 48,
+                      "gap": 12,
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "ifJ5W",
+                          "name": "膠囊-午宴(選中)",
+                          "width": 224,
+                          "height": 48,
+                          "fill": "$primary",
+                          "cornerRadius": 24,
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "ObOS5",
+                              "name": "label",
+                              "fill": "$text-invert",
+                              "content": "午宴　12:00",
+                              "lineHeight": 1.4,
+                              "fontFamily": "$font-body",
+                              "fontSize": 14,
+                              "fontWeight": "600",
+                              "letterSpacing": 1
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "qytYS",
+                          "name": "膠囊-晚宴(未選)",
+                          "width": 224,
+                          "height": 48,
+                          "cornerRadius": 24,
+                          "stroke": "$border-pill",
+                          "strokeWidth": 1,
+                          "strokeAlignment": "inner",
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "kZJvp",
+                              "name": "label",
+                              "fill": "$text-muted",
+                              "content": "晚宴　18:00",
+                              "lineHeight": 1.4,
+                              "fontFamily": "$font-body",
+                              "fontSize": 14,
+                              "fontWeight": "500",
+                              "letterSpacing": 1
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "wNbpE",
+                      "name": "sp-28",
+                      "width": 1,
+                      "height": 28
+                    },
+                    {
+                      "type": "text",
+                      "id": "UuAiq",
+                      "name": "日期大字",
+                      "fill": "$text-main",
+                      "content": "2026 . 11 . 14",
+                      "lineHeight": 1.4,
+                      "fontFamily": "$font-body",
+                      "fontSize": 40,
+                      "fontWeight": "600",
+                      "letterSpacing": 2
+                    },
+                    {
+                      "type": "frame",
+                      "id": "Q8Rgf",
+                      "name": "sp-8",
+                      "width": 1,
+                      "height": 8
+                    },
+                    {
+                      "type": "text",
+                      "id": "DHVmq",
+                      "name": "日期副標",
+                      "fill": "$text-muted",
+                      "content": "星期六　·　農曆十月初五",
+                      "lineHeight": 1.4,
+                      "fontFamily": "$font-body",
+                      "fontSize": 13,
+                      "letterSpacing": 1
+                    },
+                    {
+                      "type": "frame",
+                      "id": "z3nU2m",
+                      "name": "sp-24",
+                      "width": 1,
+                      "height": 24
+                    },
+                    {
+                      "type": "rectangle",
+                      "id": "o0pcd",
+                      "name": "分隔線",
+                      "fill": "$border-soft",
+                      "width": 460,
+                      "height": 1
+                    },
+                    {
+                      "type": "frame",
+                      "id": "NNUsO",
+                      "name": "sp-24",
+                      "width": 1,
+                      "height": 24
+                    },
+                    {
+                      "type": "frame",
+                      "id": "AgYWk",
+                      "name": "資訊列群",
+                      "width": 460,
+                      "layout": "vertical",
+                      "gap": 24,
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "S3MPpJ",
+                          "name": "資訊列-宴會地點",
+                          "width": "fill_container",
+                          "gap": 16,
+                          "children": [
+                            {
+                              "type": "icon",
+                              "id": "rgc0V",
+                              "name": "icon-building",
+                              "width": 24,
+                              "height": 24,
+                              "icon": "building",
+                              "library": "lucide",
+                              "fill": "$accent-gold"
+                            },
+                            {
+                              "type": "frame",
+                              "id": "dGtTH",
+                              "name": "文字欄",
+                              "width": 420,
+                              "layout": "vertical",
+                              "gap": 4,
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "WWzHC",
+                                  "name": "標籤",
+                                  "fill": "$text-muted",
+                                  "content": "宴會地點",
+                                  "lineHeight": 1.4,
+                                  "fontFamily": "$font-body",
+                                  "fontSize": 13,
+                                  "fontWeight": "600",
+                                  "letterSpacing": 2
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "iXyiD",
+                                  "name": "值",
+                                  "fill": "$text-main",
+                                  "content": "台北文華東方酒店",
+                                  "lineHeight": 1.4,
+                                  "fontFamily": "$font-body",
+                                  "fontSize": 18,
+                                  "fontWeight": "500"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "m6UX4m",
+                          "name": "資訊列-宴會廳",
+                          "width": "fill_container",
+                          "gap": 16,
+                          "children": [
+                            {
+                              "type": "icon",
+                              "id": "dWeZB",
+                              "name": "icon-door-open",
+                              "width": 24,
+                              "height": 24,
+                              "icon": "door-open",
+                              "library": "lucide",
+                              "fill": "$accent-gold"
+                            },
+                            {
+                              "type": "frame",
+                              "id": "D72jho",
+                              "name": "文字欄",
+                              "width": 420,
+                              "layout": "vertical",
+                              "gap": 4,
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "bNuLW",
+                                  "name": "標籤",
+                                  "fill": "$text-muted",
+                                  "content": "宴會廳",
+                                  "lineHeight": 1.4,
+                                  "fontFamily": "$font-body",
+                                  "fontSize": 13,
+                                  "fontWeight": "600",
+                                  "letterSpacing": 2
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "a9L0Eq",
+                                  "name": "值",
+                                  "fill": "$text-main",
+                                  "content": "3F　文華廳",
+                                  "lineHeight": 1.4,
+                                  "fontFamily": "$font-body",
+                                  "fontSize": 18,
+                                  "fontWeight": "500"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "WBTLl",
+                          "name": "資訊列-地址",
+                          "width": "fill_container",
+                          "gap": 16,
+                          "children": [
+                            {
+                              "type": "icon",
+                              "id": "THPNY",
+                              "name": "icon-map-pin",
+                              "width": 24,
+                              "height": 24,
+                              "icon": "map-pin",
+                              "library": "lucide",
+                              "fill": "$accent-gold"
+                            },
+                            {
+                              "type": "frame",
+                              "id": "mVbES",
+                              "name": "文字欄",
+                              "width": 420,
+                              "layout": "vertical",
+                              "gap": 4,
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "yiMbk",
+                                  "name": "標籤",
+                                  "fill": "$text-muted",
+                                  "content": "地址",
+                                  "lineHeight": 1.4,
+                                  "fontFamily": "$font-body",
+                                  "fontSize": 13,
+                                  "fontWeight": "600",
+                                  "letterSpacing": 2
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "OE7pJ",
+                                  "name": "值",
+                                  "fill": "$text-main",
+                                  "content": "台北市松山區敦化北路二段 158 號",
+                                  "lineHeight": 1.4,
+                                  "fontFamily": "$font-body",
+                                  "fontSize": 18,
+                                  "fontWeight": "500"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "v6JhE",
+                          "name": "資訊列-桌次引導",
+                          "width": "fill_container",
+                          "gap": 16,
+                          "children": [
+                            {
+                              "type": "icon",
+                              "id": "wko9N",
+                              "name": "icon-users",
+                              "width": 24,
+                              "height": 24,
+                              "icon": "users",
+                              "library": "lucide",
+                              "fill": "$accent-gold"
+                            },
+                            {
+                              "type": "frame",
+                              "id": "k2nu3X",
+                              "name": "文字欄",
+                              "width": 420,
+                              "layout": "vertical",
+                              "gap": 4,
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "aisWh",
+                                  "name": "標籤",
+                                  "fill": "$text-muted",
+                                  "content": "桌次引導",
+                                  "lineHeight": 1.4,
+                                  "fontFamily": "$font-body",
+                                  "fontSize": 13,
+                                  "fontWeight": "600",
+                                  "letterSpacing": 2
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "vXcAB",
+                                  "name": "值",
+                                  "fill": "$text-main",
+                                  "textGrowth": "fixed-width",
+                                  "width": "fill_container",
+                                  "content": "入口處設有座位表，男方親友請至 A 區、女方親友請至 B 區",
+                                  "lineHeight": 1.4,
+                                  "fontFamily": "$font-body",
+                                  "fontSize": 18,
+                                  "fontWeight": "500"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "jH4VO",
+                  "name": "右欄",
+                  "width": 540,
+                  "layout": "vertical",
+                  "gap": 20,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "Y5g0jZ",
+                      "name": "地圖預覽",
+                      "metadata": {
+                        "type": "unsplash",
+                        "username": "etiennegirardet",
+                        "link": "https://unsplash.com/@etiennegirardet",
+                        "author": "Etienne Girardet"
+                      },
+                      "clip": true,
+                      "width": 540,
+                      "height": 400,
+                      "fill": {
+                        "type": "image",
+                        "enabled": true,
+                        "url": "https://images.unsplash.com/photo-1736117703382-8ed6a338c3b9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3ODg1MTAwNTJ8&ixlib=rb-4.1.0&q=80&w=1080",
+                        "mode": "fill"
+                      },
+                      "cornerRadius": 24
+                    },
+                    {
+                      "type": "frame",
+                      "id": "PFuce",
+                      "name": "導航鈕",
+                      "width": 540,
+                      "height": 60,
+                      "fill": "$accent-gold",
+                      "cornerRadius": 30,
+                      "gap": 8,
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "icon",
+                          "id": "CY3O5",
+                          "name": "icon-navigation",
+                          "width": 18,
+                          "height": 18,
+                          "icon": "navigation",
+                          "library": "lucide",
+                          "fill": "$text-invert"
+                        },
+                        {
+                          "type": "text",
+                          "id": "qapPZ",
+                          "name": "label",
+                          "fill": "$text-invert",
+                          "content": "開啟 Google 地圖導航",
+                          "lineHeight": 1.4,
+                          "fontFamily": "$font-body",
+                          "fontSize": 17,
+                          "fontWeight": "600",
+                          "letterSpacing": 1
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "M048sQ",
+              "name": "sp-24",
+              "width": 1,
+              "height": 24
+            },
+            {
+              "type": "text",
+              "id": "zcPoq",
+              "name": "入場提醒",
+              "fill": "$text-muted",
+              "content": "※ 宴會廳將於開席前 30 分鐘開放入場",
+              "lineHeight": 1.4,
+              "fontFamily": "$font-body",
+              "fontSize": 11
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "l73sy",
+          "name": "電腦版-段4 RSVP",
+          "clip": true,
+          "width": 1440,
+          "height": 620,
+          "fill": {
+            "type": "gradient",
+            "gradientType": "linear",
+            "enabled": true,
+            "rotation": 180,
+            "size": {
+              "height": 1
+            },
+            "colors": [
+              {
+                "color": "$bg-ivory",
+                "position": 0
+              },
+              {
+                "color": "$bg-blush",
+                "position": 1
+              }
+            ]
+          },
+          "layout": "vertical",
+          "padding": [
+            96,
+            160
+          ],
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "text",
+              "id": "wxSyo",
+              "name": "眉標-RSVP",
+              "fill": "$accent-gold",
+              "content": "R.S.V.P.",
+              "lineHeight": 1.4,
+              "fontFamily": "$font-body",
+              "fontSize": 14,
+              "fontWeight": "600",
+              "letterSpacing": 6
+            },
+            {
+              "type": "frame",
+              "id": "JZNXG",
+              "name": "sp-12",
+              "width": 1,
+              "height": 12
+            },
+            {
+              "type": "text",
+              "id": "vpROO",
+              "name": "主標-Will You Join Us?",
+              "fill": "$primary",
+              "content": "Will You Join Us?",
+              "lineHeight": 1.2,
+              "fontFamily": "$font-script",
+              "fontSize": 56
+            },
+            {
+              "type": "frame",
+              "id": "LLBzy",
+              "name": "sp-20",
+              "width": 1,
+              "height": 20
+            },
+            {
+              "type": "text",
+              "id": "JNio2",
+              "name": "說明文",
+              "fill": "$text-muted",
+              "content": "您的出席是我們最珍貴的祝福，敬請於 2026 / 10 / 15 前回覆。",
+              "lineHeight": 1.4,
+              "fontFamily": "$font-body",
+              "fontSize": 17
+            },
+            {
+              "type": "frame",
+              "id": "x4ttF",
+              "name": "sp-40",
+              "width": 1,
+              "height": 40
+            },
+            {
+              "type": "frame",
+              "id": "bnACO",
+              "name": "chips 列",
+              "height": 36,
+              "gap": 12,
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "R8gr30",
+                  "name": "chip-姓名",
+                  "height": 36,
+                  "fill": "$bg-blush",
+                  "cornerRadius": 18,
+                  "padding": [
+                    0,
+                    18
+                  ],
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "qjAsh",
+                      "name": "label",
+                      "fill": "$primary",
+                      "content": "姓名",
+                      "lineHeight": 1.4,
+                      "fontFamily": "$font-body",
+                      "fontSize": 14,
+                      "fontWeight": "500"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "AT6na",
+                  "name": "chip-出席人數",
+                  "height": 36,
+                  "fill": "$bg-blush",
+                  "cornerRadius": 18,
+                  "padding": [
+                    0,
+                    18
+                  ],
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "GUxSZ",
+                      "name": "label",
+                      "fill": "$primary",
+                      "content": "出席人數",
+                      "lineHeight": 1.4,
+                      "fontFamily": "$font-body",
+                      "fontSize": 14,
+                      "fontWeight": "500"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "BjSqW",
+                  "name": "chip-素食需求",
+                  "height": 36,
+                  "fill": "$bg-blush",
+                  "cornerRadius": 18,
+                  "padding": [
+                    0,
+                    18
+                  ],
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "UnHjc",
+                      "name": "label",
+                      "fill": "$primary",
+                      "content": "素食需求",
+                      "lineHeight": 1.4,
+                      "fontFamily": "$font-body",
+                      "fontSize": 14,
+                      "fontWeight": "500"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "MCLnz",
+                  "name": "chip-兒童椅",
+                  "height": 36,
+                  "fill": "$bg-blush",
+                  "cornerRadius": 18,
+                  "padding": [
+                    0,
+                    18
+                  ],
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "mS8Jo",
+                      "name": "label",
+                      "fill": "$primary",
+                      "content": "兒童椅",
+                      "lineHeight": 1.4,
+                      "fontFamily": "$font-body",
+                      "fontSize": 14,
+                      "fontWeight": "500"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "TqXOl",
+                  "name": "chip-喜餅領取",
+                  "height": 36,
+                  "fill": "$bg-blush",
+                  "cornerRadius": 18,
+                  "padding": [
+                    0,
+                    18
+                  ],
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "u34GE",
+                      "name": "label",
+                      "fill": "$primary",
+                      "content": "喜餅領取",
+                      "lineHeight": 1.4,
+                      "fontFamily": "$font-body",
+                      "fontSize": 14,
+                      "fontWeight": "500"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "qZ196",
+                  "name": "chip-聯絡電話",
+                  "height": 36,
+                  "fill": "$bg-blush",
+                  "cornerRadius": 18,
+                  "padding": [
+                    0,
+                    18
+                  ],
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "R2ASmI",
+                      "name": "label",
+                      "fill": "$primary",
+                      "content": "聯絡電話",
+                      "lineHeight": 1.4,
+                      "fontFamily": "$font-body",
+                      "fontSize": 14,
+                      "fontWeight": "500"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "r7omYv",
+                  "name": "chip-祝福話語",
+                  "height": 36,
+                  "fill": "$bg-blush",
+                  "cornerRadius": 18,
+                  "padding": [
+                    0,
+                    18
+                  ],
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "eWgyD",
+                      "name": "label",
+                      "fill": "$primary",
+                      "content": "祝福話語",
+                      "lineHeight": 1.4,
+                      "fontFamily": "$font-body",
+                      "fontSize": 14,
+                      "fontWeight": "500"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "JcLHs",
+              "name": "sp-40",
+              "width": 1,
+              "height": 40
+            },
+            {
+              "type": "frame",
+              "id": "h7si45",
+              "name": "表單鈕",
+              "width": 360,
+              "height": 60,
+              "fill": "$primary",
+              "cornerRadius": 30,
+              "gap": 8,
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "lWF2A",
+                  "name": "label",
+                  "fill": "$text-invert",
+                  "content": "填寫出席回覆表單",
+                  "lineHeight": 1.4,
+                  "fontFamily": "$font-body",
+                  "fontSize": 17,
+                  "fontWeight": "600",
+                  "letterSpacing": 1
+                },
+                {
+                  "type": "icon",
+                  "id": "jvnPX",
+                  "name": "icon-external-link",
+                  "width": 18,
+                  "height": 18,
+                  "icon": "external-link",
+                  "library": "lucide",
+                  "fill": "$text-invert"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "uE68D",
+              "name": "sp-16",
+              "width": 1,
+              "height": 16
+            },
+            {
+              "type": "text",
+              "id": "IcxKO",
+              "name": "註記",
+              "fill": "$text-muted",
+              "content": "將另開新視窗前往 Google 表單",
+              "lineHeight": 1.4,
+              "fontFamily": "$font-body",
+              "fontSize": 11
+            },
+            {
+              "type": "frame",
+              "id": "OaEzN",
+              "name": "sp-24",
+              "width": 1,
+              "height": 24
+            },
+            {
+              "type": "text",
+              "id": "GLMiS",
+              "name": "修改連結",
+              "fill": "$text-muted",
+              "content": "已經填寫過了？點此修改回覆",
+              "lineHeight": 1.4,
+              "fontFamily": "$font-body",
+              "fontSize": 12,
+              "fontWeight": "500"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "QGIVK",
+          "name": "電腦版-段5 Footer",
+          "clip": true,
+          "width": 1440,
+          "height": 580,
+          "fill": "$text-main",
+          "layout": "vertical",
+          "padding": [
+            96,
+            160
+          ],
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "text",
+              "id": "G8pTO9",
+              "name": "主標-Thank You",
+              "fill": "$text-invert",
+              "content": "Thank You",
+              "lineHeight": 1.2,
+              "fontFamily": "$font-script",
+              "fontSize": 64
+            },
+            {
+              "type": "frame",
+              "id": "X2RrKg",
+              "name": "sp-24",
+              "width": 1,
+              "height": 24
+            },
+            {
+              "type": "text",
+              "id": "YNt6w",
+              "name": "內文",
+              "fill": "$text-invert-muted",
+              "content": "謝謝每一位陪伴我們走到這裡的人，期待與你分享這一天的喜悅。",
+              "lineHeight": 1.4,
+              "fontFamily": "$font-body",
+              "fontSize": 17
+            },
+            {
+              "type": "frame",
+              "id": "qKZEM",
+              "name": "sp-40",
+              "width": 1,
+              "height": 40
+            },
+            {
+              "type": "frame",
+              "id": "xTgxQ",
+              "name": "monogram",
+              "width": 120,
+              "height": 120,
+              "cornerRadius": 60,
+              "stroke": "$gold-soft",
+              "strokeWidth": 1,
+              "strokeAlignment": "inner",
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "pkkHF",
+                  "name": "label",
+                  "fill": "$gold-soft",
+                  "content": "E　&　C",
+                  "lineHeight": 1.4,
+                  "fontFamily": "$font-body",
+                  "fontSize": 24,
+                  "fontWeight": "500",
+                  "letterSpacing": 2
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "kTGpC",
+              "name": "sp-32",
+              "width": 1,
+              "height": 32
+            },
+            {
+              "type": "text",
+              "id": "piN7U",
+              "name": "婚期",
+              "fill": "$text-invert-muted",
+              "content": "2026 . 11 . 14",
+              "lineHeight": 1.4,
+              "fontFamily": "$font-body",
+              "fontSize": 13,
+              "fontWeight": "500",
+              "letterSpacing": 3
+            },
+            {
+              "type": "frame",
+              "id": "WgaGd",
+              "name": "sp-16",
+              "width": 1,
+              "height": 16
+            },
+            {
+              "type": "text",
+              "id": "dU4wM",
+              "name": "版權",
+              "opacity": 0.7,
+              "fill": "$text-invert-muted",
+              "content": "© 2026 Ethan & Chloe　·　Made with love",
+              "lineHeight": 1.4,
+              "fontFamily": "$font-body",
+              "fontSize": 10,
+              "letterSpacing": 1
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "variables": {
+    "bg-blush": {
+      "type": "color",
+      "value": "#FDF2F8"
+    },
+    "bg-ivory": {
+      "type": "color",
+      "value": "#FFFBF7"
+    },
+    "surface": {
+      "type": "color",
+      "value": "#FFFFFF"
+    },
+    "primary": {
+      "type": "color",
+      "value": "#DB2777"
+    },
+    "primary-soft": {
+      "type": "color",
+      "value": "#F472B6"
+    },
+    "accent-gold": {
+      "type": "color",
+      "value": "#CA8A04"
+    },
+    "gold-soft": {
+      "type": "color",
+      "value": "#E7C873"
+    },
+    "text-main": {
+      "type": "color",
+      "value": "#831843"
+    },
+    "text-muted": {
+      "type": "color",
+      "value": "#7A5560"
+    },
+    "text-invert": {
+      "type": "color",
+      "value": "#FFFFFF"
+    },
+    "text-invert-muted": {
+      "type": "color",
+      "value": "#FFFFFFCC"
+    },
+    "border-soft": {
+      "type": "color",
+      "value": "#F0D9E2"
+    },
+    "border-pill": {
+      "type": "color",
+      "value": "#E4BFCD"
+    },
+    "overlay-dark": {
+      "type": "color",
+      "value": "#00000073"
+    },
+    "glass-fill": {
+      "type": "color",
+      "value": "#FFFFFF26"
+    },
+    "glass-border": {
+      "type": "color",
+      "value": "#FFFFFF4D"
+    },
+    "shadow-rose": {
+      "type": "color",
+      "value": "#8318431F"
+    },
+    "font-script": {
+      "type": "string",
+      "value": "Great Vibes"
+    },
+    "font-body": {
+      "type": "string",
+      "value": "Cormorant Infant"
+    }
+  },
+  "fileToken": "1933c381-7a9f-4b3d-9c2c-8b620725a4d0"
+}

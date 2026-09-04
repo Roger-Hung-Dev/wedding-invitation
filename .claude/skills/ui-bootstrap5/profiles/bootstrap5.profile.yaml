@@ -1,0 +1,49 @@
+# 目標應用 profile — Bootstrap 5 慣例（Vue 3 / Angular 共用）
+# 用於前端子代理「檢視自己剛用 Bootstrap 5 做的頁面」（UI/UX 設計、截圖驗證）。
+# 選擇器填 Bootstrap 標準 class；實際專案若客製過版面，複製本檔覆寫對應欄位即可。
+# 本檔是 common-user-browser skill 的 profile，通用操作步驟見該 skill 的 SKILL.md；
+# 之所以放在 ui-bootstrap5 底下，是因為這些選擇器與機制都是 Bootstrap 5 專屬知識。
+
+name: Bootstrap 5 (慣例預設)
+
+# --- 站台與視窗 ---------------------------------------------------------------
+# Vite（Vue 3）預設 5173；Angular CLI 預設 4200 —— 依實際 dev server 調整
+targetUrl: http://localhost:5173
+debugPort: 9222
+viewport:
+  width: 1920
+  height: 1080
+
+# --- 瀏覽器啟動 --------------------------------------------------------------
+# 開發時瀏覽器通常已開著 dev server 分頁，無需啟動指令（故省略 launchCommand）。
+
+# --- DOM 選擇器（Bootstrap 5 標準 class）-------------------------------------
+# 標準 Layout：<nav class="navbar"> + 側欄 <ul class="nav flex-column"> + <main>
+selectors:
+  sidebar: "#sidebar, .sidebar, .navbar-nav"
+  activeMenuItem: ".nav-link.active"
+  mainContainer: "main, .main-content, [role='main']"
+  scrollPanel: null # 待確認：Bootstrap 無標準捲動容器，多為視窗層級捲動；
+                    # 若專案有自訂捲動面板（如 .sidebar 內的 overflow-auto），在此填入
+
+# --- 選單展開機制 ------------------------------------------------------------
+# 本 skill 的鐵律是「不引 Bootstrap JS」，collapse 的 .show 由框架反應式狀態控制
+# （Vue 的 v-if/:class、Angular 的 @if/[class.show]）→ 直接加 class 會在下次
+# re-render 被蓋掉，無法可靠展開 → 設 null，改在導航階段點展開按鈕。
+menuExpand: null
+
+# --- Toast 機制 --------------------------------------------------------------
+# Bootstrap 沒有命令式 toast API，專案是自寫回饋服務（useToast / ToastService），
+# 其內部 state 由框架持有、非 window 全域 → 預設無法覆寫來凍結 → 設 null。
+# 若專案有把觸發函數掛上 window（如 window.showToast），可改填：
+#   triggerFn: window.showToast
+#   detectSelector: ".toast.show, .alert"
+#   dismissSelector: ".toast .btn-close"
+toast: null
+
+# --- 導航策略 ----------------------------------------------------------------
+# 設計情境多半是檢視自己的開發頁面，可自由切換 → free。
+# 若要嚴格模擬使用者操作（只准點選單），改成 menu-click-only。
+navigation:
+  policy: free
+  resetUrl: http://localhost:5173

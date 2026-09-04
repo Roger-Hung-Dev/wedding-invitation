@@ -1,0 +1,21 @@
+{
+  "batch": "wedding-invite-20260904",
+  "createdBy": "design-lead",
+  "source": {
+    "figmaLink": "",
+    "fileKey": "",
+    "fileName": "",
+    "note": "本批次無 Figma 來源。分析檔由 design-lead 依 .claude/docs/data/rfp.md 與 ui-ux-pro-max 設計系統推薦訂定，故不含 read step。"
+  },
+  "jobs": [
+    {
+      "id": "wedding-desktop",
+      "screen": "電腦版-單頁全覽（1440 桌機長頁：Hero／Gallery／Info／RSVP／Footer 五段）",
+      "penPath": "D:\\SideProject\\wedding-invitation\\.claude\\docs\\design\\web-design.pen",
+      "analysisPath": ".claude/docs/design/wedding-invite-20260904/wedding-home.md",
+      "figmaNodeIds": [],
+      "steps": ["draw-screen"],
+      "note": "只做 §9.5.2 桌機長頁。手機長頁（裝置版-單頁全覽 lxtQz）已完成，不要動它。"
+    }
+  ]
+}

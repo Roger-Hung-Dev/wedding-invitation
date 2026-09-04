@@ -1,0 +1,4 @@
+﻿# workflow script 一律 LF —— CRLF 的 \r 會被 Workflow 工具的權限層判成控制字元而拒絕執行
+# （訊息：script contains control characters）。籌組骨架進版控後，Windows 的
+# core.autocrlf=true 會在 checkout 時換回 CRLF，所以只轉工作目錄沒有用，這一行才是持久的修法。
+.claude/workflows/*.js text eol=lf

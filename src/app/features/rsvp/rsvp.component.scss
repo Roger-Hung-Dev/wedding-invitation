@@ -1,0 +1,142 @@
+:host {
+  display: block;
+}
+
+.rsvp {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 64px 24px;
+  background: linear-gradient(180deg, var(--color-bg-ivory) 0%, var(--color-bg-blush) 100%);
+}
+
+.rsvp__intro {
+  margin: 16px 0 0;
+  width: 310px;
+  max-width: 100%;
+  text-align: center;
+  font-size: 14px;
+  color: var(--color-text-muted);
+
+  p {
+    margin: 0;
+  }
+}
+
+.rsvp__card {
+  margin-top: 24px;
+  width: 342px;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: var(--color-surface);
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 0 8px 28px var(--shadow-rose);
+}
+
+.rsvp__chips {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+}
+
+.rsvp__chip {
+  height: 30px;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 14px;
+  border-radius: 15px;
+  background: var(--color-bg-blush);
+  color: var(--color-primary);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.rsvp__cta {
+  margin-top: 20px;
+  width: 100%;
+  height: 54px;
+  border-radius: 27px;
+  background: var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-decoration: none;
+  color: var(--color-text-invert);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.rsvp__note {
+  margin: 12px 0 0;
+  font-size: 11px;
+  color: var(--color-text-muted);
+}
+
+.rsvp__edit-link {
+  margin-top: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  text-decoration: underline;
+}
+
+@media (min-width: 1024px) {
+  .rsvp {
+    padding: 96px clamp(24px, 8vw, 160px);
+  }
+
+  .rsvp__intro {
+    margin-top: 20px;
+    width: auto;
+    white-space: nowrap;
+    font-size: 17px;
+
+    p {
+      display: inline;
+    }
+  }
+
+  .rsvp__card {
+    margin-top: 40px;
+    width: auto;
+    background: transparent;
+    box-shadow: none;
+    padding: 0;
+  }
+
+  .rsvp__chips {
+    // 七顆桌機一行排列（設計稿明訂不換行），但視窗窄於 1440 時允許換行以避免橫向溢出。
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .rsvp__chip {
+    height: 36px;
+    border-radius: 18px;
+    padding: 0 18px;
+    font-size: 14px;
+  }
+
+  .rsvp__cta {
+    margin-top: 40px;
+    width: 360px;
+    height: 60px;
+    border-radius: 30px;
+    font-size: 17px;
+  }
+
+  .rsvp__note {
+    font-size: 15px;
+  }
+
+  .rsvp__edit-link {
+    margin-top: 24px;
+    font-size: 14px;
+  }
+}
