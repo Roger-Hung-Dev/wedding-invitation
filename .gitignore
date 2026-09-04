@@ -1,4 +1,4 @@
-﻿# === 環境與密鑰（MCP server 以 ${VAR} 引用）===
+# === 環境與密鑰（MCP server 以 ${VAR} 引用）===
 .env
 .env.local
 .env.*.local
