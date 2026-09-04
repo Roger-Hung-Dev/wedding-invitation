@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, ElementRef, afterNextRender, inject, signal, viewChild } from '@angular/core'
 import { BreakpointService } from '../../shared/breakpoint.service'
 import { ReducedMotionService } from '../../shared/reduced-motion.service'
-import { WEDDING_CONTENT, HERO_IMAGE_DESKTOP_URL, HERO_IMAGE_URL } from '../../core/config/wedding-content'
+import { HERO_IMAGE_DESKTOP_URL, HERO_IMAGE_URL, HERO_TEXT, WEDDING_CONTENT } from '../../core/config/wedding-content'
 import { padTwoDigits } from '../../core/date.util'
 import { HeroStore } from './hero.store'
 import { MusicPlayerComponent } from '../music-player/music-player.component'
@@ -25,6 +25,7 @@ export class HeroComponent {
   protected readonly heroImageUrl = HERO_IMAGE_URL
   protected readonly heroImageDesktopUrl = HERO_IMAGE_DESKTOP_URL
   protected readonly content = WEDDING_CONTENT
+  protected readonly text = HERO_TEXT
   protected readonly padTwoDigits = padTwoDigits
 
   private readonly root = viewChild.required<ElementRef<HTMLElement>>('heroRoot')

@@ -1,8 +1,8 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core'
+import { ChangeDetectionStrategy, Component, computed } from '@angular/core'
 import { IconComponent } from '../../shared/icon/icon.component'
 import { ScrollRevealDirective } from '../../shared/scroll-reveal.directive'
 import { SectionHeadingComponent } from '../../shared/section-heading/section-heading.component'
-import { WEDDING_CONTENT } from '../../core/config/wedding-content'
+import { RSVP_TEXT, WEDDING_CONTENT } from '../../core/config/wedding-content'
 import { WEDDING_LINKS } from '../../core/config/wedding-links'
 
 /**
@@ -18,6 +18,10 @@ import { WEDDING_LINKS } from '../../core/config/wedding-links'
 export class RsvpComponent {
   protected readonly content = WEDDING_CONTENT
   protected readonly links = WEDDING_LINKS
+  protected readonly text = RSVP_TEXT
 
-  protected readonly chips = ['姓名', '出席人數', '素食需求', '兒童椅', '喜餅領取', '聯絡電話', '祝福話語']
+  /** 說明文第二行的 {{deadline}} 佔位字串換成截止日，日期只有 WEDDING_CONTENT.rsvpDeadlineDisplay 這一個來源。 */
+  protected readonly introLines = computed(() =>
+    this.text.introLines.map((line) => line.replace('{{deadline}}', this.content.rsvpDeadlineDisplay)),
+  )
 }

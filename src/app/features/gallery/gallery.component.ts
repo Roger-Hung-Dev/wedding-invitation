@@ -4,6 +4,7 @@ import { ChangeDetectionStrategy, Component, ComponentRef, DestroyRef, ElementRe
 import { BreakpointService } from '../../shared/breakpoint.service'
 import { ScrollRevealDirective } from '../../shared/scroll-reveal.directive'
 import { SectionHeadingComponent } from '../../shared/section-heading/section-heading.component'
+import { GALLERY_TEXT } from '../../core/config/wedding-content'
 import { GalleryStore } from './gallery.store'
 import { LightboxComponent } from './lightbox/lightbox.component'
 
@@ -21,6 +22,7 @@ import { LightboxComponent } from './lightbox/lightbox.component'
 export class GalleryComponent {
   protected readonly store = inject(GalleryStore)
   protected readonly breakpoint = inject(BreakpointService)
+  protected readonly text = GALLERY_TEXT
   private readonly overlay = inject(Overlay)
   private readonly destroyRef = inject(DestroyRef)
 

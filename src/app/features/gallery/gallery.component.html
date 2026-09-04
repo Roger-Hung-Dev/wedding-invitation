@@ -4,16 +4,17 @@
   [staggerSelector]="'.anim-fade-up, .anim-fade-in, .anim-reveal-mask, .anim-line-grow'"
   [staggerMs]="90"
 >
-  <app-section-heading eyebrow="GALLERY" title="Our Moments" />
+  <app-section-heading [eyebrow]="text.eyebrow" [title]="text.title" />
 
   <span class="gallery__gold-line anim-line-grow" style="transition-delay: 180ms" aria-hidden="true"></span>
 
   <div class="gallery__quote anim-fade-up">
     @if (breakpoint.isDesktop()) {
-      <p>願我們的故事，從今天起有了共同的名字。</p>
+      <p>{{ text.quote.full }}</p>
     } @else {
-      <p>願我們的故事，</p>
-      <p>從今天起有了共同的名字。</p>
+      @for (line of text.quote.lines; track line) {
+        <p>{{ line }}</p>
+      }
     }
   </div>
 
@@ -50,6 +51,6 @@
   </div>
 
   <p class="gallery__hint anim-fade-in">
-    {{ breakpoint.isDesktop() ? '點擊放大檢視' : '左右滑動瀏覽・點擊放大' }}
+    {{ breakpoint.isDesktop() ? text.hint.desktop : text.hint.mobile }}
   </p>
 </section>

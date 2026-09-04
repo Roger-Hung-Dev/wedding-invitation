@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core'
 import { IconComponent } from '../../shared/icon/icon.component'
 import { ScrollRevealDirective } from '../../shared/scroll-reveal.directive'
 import { SectionHeadingComponent } from '../../shared/section-heading/section-heading.component'
-import { MAP_PREVIEW_IMAGE_DESKTOP_URL, MAP_PREVIEW_IMAGE_URL, WEDDING_CONTENT } from '../../core/config/wedding-content'
+import { INFO_TEXT, MAP_PREVIEW_IMAGE_DESKTOP_URL, MAP_PREVIEW_IMAGE_URL, WEDDING_CONTENT } from '../../core/config/wedding-content'
 import { WEDDING_LINKS, buildGoogleMapsDirectionUrl } from '../../core/config/wedding-links'
 import { InfoStore } from './info.store'
 
@@ -19,6 +19,8 @@ import { InfoStore } from './info.store'
 export class InfoComponent {
   protected readonly store = inject(InfoStore)
   protected readonly content = WEDDING_CONTENT
+  protected readonly text = INFO_TEXT
+  protected readonly links = WEDDING_LINKS
 
   protected readonly mapsUrl = buildGoogleMapsDirectionUrl(WEDDING_LINKS.venueAddress)
   protected readonly mapImageUrl = MAP_PREVIEW_IMAGE_URL

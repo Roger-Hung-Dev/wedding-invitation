@@ -1,6 +1,7 @@
 import { isPlatformBrowser } from '@angular/common'
 import { ChangeDetectionStrategy, Component, ElementRef, PLATFORM_ID, effect, inject, viewChild } from '@angular/core'
 import { IconComponent } from '../../shared/icon/icon.component'
+import { MUSIC_PLAYER_TEXT } from '../../core/config/wedding-content'
 import { MusicPlayerStore } from './music-player.store'
 
 /**
@@ -18,7 +19,7 @@ import { MusicPlayerStore } from './music-player.store'
       [class.music-btn--idle]="store.state() === 'idle'"
       [class.music-btn--playing]="store.state() === 'playing'"
       [class.music-btn--muted]="store.state() === 'muted'"
-      [attr.aria-label]="store.state() === 'muted' ? '取消靜音並播放背景音樂' : store.state() === 'playing' ? '靜音背景音樂' : '播放背景音樂'"
+      [attr.aria-label]="store.state() === 'muted' ? text.ariaLabelMuted : store.state() === 'playing' ? text.ariaLabelPlaying : text.ariaLabelIdle"
       (click)="toggle()"
     >
       <span class="music-btn__disc" [class.anim-disc-spin]="store.state() === 'playing'">
@@ -71,6 +72,7 @@ import { MusicPlayerStore } from './music-player.store'
 })
 export class MusicPlayerComponent {
   protected readonly store = inject(MusicPlayerStore)
+  protected readonly text = MUSIC_PLAYER_TEXT
   private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID))
   private readonly audioEl = viewChild.required<ElementRef<HTMLAudioElement>>('audioEl')
 

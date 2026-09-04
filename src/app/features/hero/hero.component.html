@@ -16,7 +16,7 @@
   <div class="hero__overlay anim-fade-in hero__overlay-fade" [class.is-visible]="loaded()"></div>
 
   <div class="hero__content">
-    <p class="anim-fade-up hero__eyebrow" [class.is-visible]="loaded()">WE ARE GETTING MARRIED</p>
+    <p class="anim-fade-up hero__eyebrow" [class.is-visible]="loaded()">{{ text.eyebrow }}</p>
     <h1 class="anim-fade-up hero__name-en" [class.is-visible]="loaded()">{{ content.brideGroomEn }}</h1>
     <p class="anim-fade-up hero__name-zh" [class.is-visible]="loaded()">{{ content.brideGroomZh }}</p>
 
@@ -32,28 +32,28 @@
       <div class="hero__countdown">
         <div class="hero__countdown-cell anim-fade-up" [class.is-visible]="loaded()" style="transition-delay: 1120ms">
           <span class="hero__countdown-number">{{ store.countdown().days }}</span>
-          <span class="hero__countdown-label">DAYS</span>
+          <span class="hero__countdown-label">{{ text.countdownLabels.days }}</span>
         </div>
         <div class="hero__countdown-cell anim-fade-up" [class.is-visible]="loaded()" style="transition-delay: 1180ms">
           <span class="hero__countdown-number">{{ padTwoDigits(store.countdown().hours) }}</span>
-          <span class="hero__countdown-label">HOURS</span>
+          <span class="hero__countdown-label">{{ text.countdownLabels.hours }}</span>
         </div>
         <div class="hero__countdown-cell anim-fade-up" [class.is-visible]="loaded()" style="transition-delay: 1240ms">
           <span class="hero__countdown-number">{{ padTwoDigits(store.countdown().minutes) }}</span>
-          <span class="hero__countdown-label">MINS</span>
+          <span class="hero__countdown-label">{{ text.countdownLabels.minutes }}</span>
         </div>
         <div class="hero__countdown-cell anim-fade-up" [class.is-visible]="loaded()" style="transition-delay: 1300ms">
           <span class="hero__countdown-number">{{ padTwoDigits(store.countdown().seconds) }}</span>
-          <span class="hero__countdown-label">SECS</span>
+          <span class="hero__countdown-label">{{ text.countdownLabels.seconds }}</span>
         </div>
       </div>
     } @else {
-      <p class="anim-fade-up hero__over-message" [class.is-visible]="loaded()">Thank you for being with us</p>
+      <p class="anim-fade-up hero__over-message" [class.is-visible]="loaded()">{{ text.countdownOverMessage }}</p>
     }
   </div>
 
   <button type="button" class="hero__scroll anim-fade-in hero__scroll-fade" [class.is-visible]="loaded()" (click)="scrollToNext()">
-    <span>SCROLL</span>
+    <span>{{ text.scrollHint }}</span>
     <span class="anim-scroll-bounce hero__scroll-icon" aria-hidden="true">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <polyline points="6 9 12 15 18 9" />
