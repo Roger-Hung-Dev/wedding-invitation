@@ -36,8 +36,30 @@
       </button>
     }
   </div>
+  <!--
+    桌機預設版式：無縫自動橫向捲動。照片序列在 marqueeItems() 已複製成兩份（共 10 張），
+    這裡只負責渲染，複製份對螢幕報讀軟體隱藏並移出 Tab 順序（見下方 aria-hidden／tabindex），
+    避免同一張照片在無障礙樹裡被唸兩次。
+  -->
+  <div class="gallery__marquee">
+    <div class="gallery__marquee-track">
+      @for (item of marqueeItems(); track item.key) {
+        <button
+          type="button"
+          class="gallery__marquee-card"
+          [attr.aria-hidden]="item.isDuplicate ? 'true' : null"
+          [attr.tabindex]="item.isDuplicate ? -1 : null"
+          (click)="store.openLightbox(item.originalIndex)"
+        >
+          <img [src]="item.photo.url" [alt]="item.photo.alt" loading="lazy" />
+        </button>
+      }
+    </div>
+  </div>
+
+  <!-- 桌機 prefers-reduced-motion 降級版式：靜態 3＋2 兩列，五張一次全部可見，不停用動畫就看不到後面幾張。 -->
   <div class="gallery__grid">
-    @for (photo of desktopPhotos(); track photo.id; let i = $index) {
+    @for (photo of store.photos; track photo.id; let i = $index) {
       <button type="button" class="gallery__grid-card anim-reveal-mask" [style.transition-delay.ms]="i * 140" (click)="store.openLightbox(i)">
         <img [src]="photo.url" [alt]="photo.alt" loading="lazy" />
       </button>

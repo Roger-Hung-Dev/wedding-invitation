@@ -4,13 +4,25 @@ import { ChangeDetectionStrategy, Component, ComponentRef, DestroyRef, ElementRe
 import { BreakpointService } from '../../shared/breakpoint.service'
 import { ScrollRevealDirective } from '../../shared/scroll-reveal.directive'
 import { SectionHeadingComponent } from '../../shared/section-heading/section-heading.component'
-import { GALLERY_TEXT } from '../../core/config/wedding-content'
+import { GALLERY_TEXT, GalleryPhoto } from '../../core/config/wedding-content'
 import { GalleryStore } from './gallery.store'
 import { LightboxComponent } from './lightbox/lightbox.component'
 
+export interface MarqueeItem {
+  readonly key: string
+  readonly photo: GalleryPhoto
+  /** 對應 store.photos 的原始索引，複製份也要指回原始索引，開燈箱才不會開錯張。 */
+  readonly originalIndex: number
+  /** 複製份不接受鍵盤焦點、對螢幕報讀軟體隱藏，避免同一張照片在無障礙樹裡被唸兩次。 */
+  readonly isDuplicate: boolean
+}
+
 /**
- * S2 婚紗藝廊區。手機為橫向滑動輪播（scroll-snap，僅可見主卡與左右鄰卡邊緣），
- * 桌機改為三張並排靜態展示、無滑動手勢。兩種版式皆可點擊照片開啟燈箱。
+ * S2 婚紗藝廊區。手機為橫向滑動輪播（scroll-snap，僅可見主卡與左右鄰卡邊緣）。
+ * 桌機預設為無縫自動橫向捲動（CSS animation，滑鼠停留或鍵盤聚焦時暫停）；
+ * 使用者要求減少動態效果時，改用靜態 3＋2 兩列展示（見 gallery.component.scss 的
+ * prefers-reduced-motion 覆寫），確保五張照片仍然全部一次看得到，不會因為捲動停用
+ * 而永遠只看得到當下那幾張。兩種版式皆可點擊照片開啟燈箱。
  */
 @Component({
   selector: 'app-gallery',
@@ -28,8 +40,19 @@ export class GalleryComponent {
 
   private readonly track = viewChild<ElementRef<HTMLElement>>('track')
 
-  /** 桌機並排展示只取前 3 張（分析檔桌機分鏡明訂三張並排，不是輪播）。 */
-  protected readonly desktopPhotos = computed(() => this.store.photos.slice(0, 3))
+  /**
+   * 桌機自動捲動軌道：把照片序列複製一份接在後面做成 10 張，動畫跑完第一份的寬度就重置，
+   * 視覺上看不出接縫。複製份的 originalIndex 指回 0～4，點擊才會開對照片。
+   */
+  protected readonly marqueeItems = computed<MarqueeItem[]>(() => {
+    const photos = this.store.photos
+    return [...photos, ...photos].map((photo, i) => ({
+      key: `${photo.id}-${i < photos.length ? 'a' : 'b'}`,
+      photo,
+      originalIndex: i % photos.length,
+      isDuplicate: i >= photos.length,
+    }))
+  })
 
   private overlayRef: OverlayRef | null = null
   private lightboxRef: ComponentRef<LightboxComponent> | null = null

@@ -71,9 +71,81 @@
   }
 }
 
-.gallery__grid {
-  // 預設（手機）隱藏，只在桌機媒體查詢中顯示；與 .gallery__track 互斥切換。
+// 桌機預設版式：無縫自動橫向捲動。
+// 一份序列（5 張）總寬 = 5 × 360 + 5 × 20 gap = 1900px（含卡片間與「銜接下一輪第一張」那個 gap），
+// 這正是 keyframe 位移的距離：跑完 -1900px，畫面上第 6 張（複製份第 1 張）剛好落在第 1 張原本的
+// 起始位置，接著瞬間重置回 0 繼續下一輪，因為第 6～10 張跟第 1～5 張像素级相同，肉眼看不出接縫。
+// 速度基準每秒 30px：1900 / 30 ≈ 63s 跑完一輪。
+$gallery-marquee-distance: 1900px;
+
+.gallery__marquee {
+  // 預設（手機）隱藏，只在桌機媒體查詢中顯示。
+  // 滿版 1440 出血，不受 .gallery 的左右內距限制：照片若限制在內容欄寬裡，
+  // 會在畫面中間憑空出現與消失，看起來像破圖而不是捲動；只有從畫面邊緣進出才有延伸出去的感覺。
+  //
+  // 實作方式：.gallery 是 flex column + align-items:center，用 100vw + left:50% 的傳統出血手法
+  // 在這種情境下會被 flex 置中運算干擾、算出來的偏移量對不齊視窗邊緣（實測過，確實偏移）。
+  // 改用 align-self:flex-start 讓它脫離置中，寬度用 100%（貼齊 .gallery 的 content box），
+  // 再用與 .gallery 內距共用的 --gallery-inline-padding 自訂屬性，左右各扣掉等量負 margin，
+  // 精準補回內距吃掉的寬度，兩處數值連動、不會脫鉤。
   display: none;
+  align-self: flex-start;
+  width: calc(100% + 2 * var(--gallery-inline-padding, 0px));
+  margin-inline: calc(-1 * var(--gallery-inline-padding, 0px));
+  overflow: hidden;
+  margin-top: 48px;
+}
+
+.gallery__marquee-track {
+  display: flex;
+  gap: 20px;
+  width: max-content;
+  animation: gallery-marquee 63s linear infinite;
+  // will-change 只在會動的軌道本身加，範圍小，不是整頁常駐。
+  will-change: transform;
+}
+
+@keyframes gallery-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-#{$gallery-marquee-distance});
+  }
+}
+
+// 滑鼠停留在相片區任一處就暫停，移開恢復；:focus-within 讓鍵盤使用者也能停下來——
+// WCAG 2.2.2 要求任何自動移動超過 5 秒的內容要能暫停，hover 只服務得到滑鼠使用者。
+.gallery__marquee:hover .gallery__marquee-track,
+.gallery__marquee:focus-within .gallery__marquee-track {
+  animation-play-state: paused;
+}
+
+.gallery__marquee-card {
+  flex: 0 0 360px;
+  width: 360px;
+  height: 480px;
+  border: none;
+  padding: 0;
+  border-radius: 20px;
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: 0 8px 28px var(--shadow-rose);
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+}
+
+.gallery__grid {
+  // 預設隱藏：桌機正常情況下是上面的自動捲動版式，這裡只在 prefers-reduced-motion 時當降級版式顯示。
+  // 5 張照片以 flex-wrap 排成 3＋2 兩列：每張卡固定佔滿版寬的三分之一（扣掉 gap），
+  // 版寬只放得下 3 張，第 4、5 張自然換到第二列，且 justify-content: center 讓兩列都置中。
+  display: none;
+  flex-wrap: wrap;
   margin-top: 48px;
   gap: 20px;
   width: min(1120px, 100%);
@@ -81,9 +153,11 @@
 }
 
 .gallery__grid-card {
-  // 360px 只在 1440 設計基準下成立，較窄的桌機視窗改用彈性寬度並用 aspect-ratio 維持比例。
-  flex: 1 1 0;
+  // 360px 只在 1440 設計基準下成立，較窄的桌機視窗改用彈性寬度並用 aspect-ratio 維持比例；
+  // flex-basis 用「(容器寬 - 2 個 gap) / 3」確保固定三欄一列，不會因為視窗變寬變成一列塞更多張。
+  flex: 0 1 calc((100% - 40px) / 3);
   min-width: 0;
+  max-width: 360px;
   aspect-ratio: 360 / 480;
   height: auto;
   border: none;
@@ -130,7 +204,9 @@
 
 @media (min-width: 1024px) {
   .gallery {
-    padding: 96px clamp(24px, 8vw, 160px);
+    // 存成自訂屬性，讓 .gallery__marquee 用同一個值算出血負邊界，兩處不會脫鉤。
+    --gallery-inline-padding: clamp(24px, 8vw, 160px);
+    padding: 96px var(--gallery-inline-padding);
   }
 
   .gallery__gold-line {
@@ -151,12 +227,25 @@
     display: none;
   }
 
-  .gallery__grid {
-    display: flex;
+  // 桌機預設顯示自動捲動版式。
+  .gallery__marquee {
+    display: block;
   }
 
   // 桌機三張並排全部看得見，沒有「目前第幾張」的語意，頁點指示器只在手機輪播才有意義。
   .gallery__dots {
     display: none;
+  }
+
+  // 使用者要求減少動態效果時，停用自動捲動、改回靜態 3＋2 兩列——
+  // 這條降級不能只是「停住不動」，停住只看得到當下那幾張，必須換成能一次看完五張的排列。
+  @media (prefers-reduced-motion: reduce) {
+    .gallery__marquee {
+      display: none;
+    }
+
+    .gallery__grid {
+      display: flex;
+    }
   }
 }

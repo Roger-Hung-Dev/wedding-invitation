@@ -1,14 +1,15 @@
 import { A11yModule } from '@angular/cdk/a11y'
-import { ChangeDetectionStrategy, Component, HostListener, input, output } from '@angular/core'
+import { ChangeDetectionStrategy, Component, HostListener, computed, input, output } from '@angular/core'
 import { IconComponent } from '../../../shared/icon/icon.component'
 import { GalleryPhoto } from '../../../core/config/wedding-content'
 
 /**
- * 相簿燈箱本體：全視窗滿版遮罩，鍵盤左右鍵／滑動切圖、Esc 關閉，
- * 焦點以 cdkTrapFocus 鎖在燈箱內。由 GalleryComponent 透過 CDK Overlay 掛載。
+ * 相簿燈箱本體：全視窗滿版遮罩，左右箭頭鈕／鍵盤左右鍵／滑動手勢三種方式皆可切圖，
+ * Esc 關閉，焦點以 cdkTrapFocus 鎖在燈箱內。由 GalleryComponent 透過 CDK Overlay 掛載。
  *
- * 換圖方式未於設計稿定義，本站採「滑動手勢 + 鍵盤左右鍵」、不加額外箭頭 icon 以維持視覺乾淨，
- * 屬工程假設而非既定規格。
+ * 箭頭鈕桌機與手機都顯示——滑動手勢不是人人知道，鍵盤操作又沒有任何視覺提示，
+ * 賓客單靠這兩者猜不到怎麼換圖。第一張／最後一張時對應箭頭用 disabled 停用並降低透明度，
+ * 不用 display:none 隱藏，否則鍵盤 Tab 的焦點順序會在首末張之間跳動。
  */
 @Component({
   selector: 'app-lightbox',
@@ -20,6 +21,17 @@ import { GalleryPhoto } from '../../../core/config/wedding-content'
         <app-icon name="x" [size]="24" color="#FFFFFF" />
       </button>
 
+      <button
+        type="button"
+        class="lightbox__arrow lightbox__arrow--prev"
+        aria-label="上一張"
+        [attr.aria-disabled]="isFirst() ? 'true' : null"
+        [disabled]="isFirst()"
+        (click)="prev.emit()"
+      >
+        <app-icon name="chevron-left" [size]="24" color="#FFFFFF" />
+      </button>
+
       <img
         class="lightbox__image"
         [src]="photo().url"
@@ -28,7 +40,18 @@ import { GalleryPhoto } from '../../../core/config/wedding-content'
         (touchend)="onTouchEnd($event)"
       />
 
-      <p class="lightbox__page">{{ index() + 1 }} / {{ total() }}</p>
+      <button
+        type="button"
+        class="lightbox__arrow lightbox__arrow--next"
+        aria-label="下一張"
+        [attr.aria-disabled]="isLast() ? 'true' : null"
+        [disabled]="isLast()"
+        (click)="next.emit()"
+      >
+        <app-icon name="chevron-right" [size]="24" color="#FFFFFF" />
+      </button>
+
+      <p class="lightbox__page" aria-live="polite">{{ index() + 1 }} / {{ total() }}</p>
     </div>
   `,
   styles: `
@@ -54,6 +77,40 @@ import { GalleryPhoto } from '../../../core/config/wedding-content'
       border: none;
       background: transparent;
       cursor: pointer;
+    }
+
+    .lightbox__arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 44px;
+      height: 44px;
+      border-radius: 22px;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--color-overlay-dark);
+      cursor: pointer;
+      transition: opacity 200ms;
+
+      &:disabled {
+        opacity: 0.35;
+        cursor: default;
+      }
+
+      &:focus-visible {
+        outline: 2px solid var(--color-text-invert);
+        outline-offset: 2px;
+      }
+    }
+
+    .lightbox__arrow--prev {
+      left: 16px;
+    }
+
+    .lightbox__arrow--next {
+      right: 16px;
     }
 
     .lightbox__image {
@@ -86,6 +143,9 @@ export class LightboxComponent {
   readonly close = output<void>()
   readonly next = output<void>()
   readonly prev = output<void>()
+
+  protected readonly isFirst = computed(() => this.index() === 0)
+  protected readonly isLast = computed(() => this.index() === this.total() - 1)
 
   private touchStartX = 0
 

@@ -26,11 +26,13 @@ export class GalleryStore {
     this._lightboxIndex.set(null)
   }
 
+  /** 到最後一張時停住，不循環回第一張——燈箱箭頭鈕在邊界要能正確顯示停用態。 */
   showNext(): void {
-    this._lightboxIndex.update((i) => (i === null ? i : (i + 1) % this.photos.length))
+    this._lightboxIndex.update((i) => (i === null ? i : Math.min(i + 1, this.photos.length - 1)))
   }
 
+  /** 到第一張時停住，不循環回最後一張，理由同 showNext。 */
   showPrev(): void {
-    this._lightboxIndex.update((i) => (i === null ? i : (i - 1 + this.photos.length) % this.photos.length))
+    this._lightboxIndex.update((i) => (i === null ? i : Math.max(i - 1, 0)))
   }
 }

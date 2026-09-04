@@ -2,6 +2,8 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core'
 
 export type IconName =
   | 'chevron-down'
+  | 'chevron-left'
+  | 'chevron-right'
   | 'disc'
   | 'volume-x'
   | 'x'
@@ -14,7 +16,7 @@ export type IconName =
 
 /**
  * 全站唯一的圖示來源，手刻線性圖示（stroke-based，24×24 viewBox），
- * 不引入任何第三方圖示套件。畫面上只會用到分析檔列出的這十種，不自行增補。
+ * 不引入任何第三方圖示套件。畫面上只會用到分析檔列出的這幾種，不自行增補。
  */
 @Component({
   selector: 'app-icon',
@@ -35,6 +37,12 @@ export type IconName =
       @switch (name()) {
         @case ('chevron-down') {
           <polyline points="6 9 12 15 18 9" />
+        }
+        @case ('chevron-left') {
+          <polyline points="15 6 9 12 15 18" />
+        }
+        @case ('chevron-right') {
+          <polyline points="9 6 15 12 9 18" />
         }
         @case ('disc') {
           <circle cx="12" cy="12" r="9" />
