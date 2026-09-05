@@ -2775,7 +2775,7 @@
           "name": "電腦版-段2 Gallery",
           "clip": true,
           "width": 1440,
-          "height": 980,
+          "height": 942,
           "fill": "$bg-ivory",
           "layout": "vertical",
           "padding": [
@@ -2856,11 +2856,11 @@
             {
               "type": "frame",
               "id": "We3zu",
-              "name": "相片列",
-              "width": 1120,
+              "name": "相片跑馬帶（自動捲動）",
+              "clip": true,
+              "width": 1440,
               "height": 480,
               "gap": 20,
-              "justifyContent": "center",
               "alignItems": "center",
               "children": [
                 {
@@ -2955,6 +2955,68 @@
                     },
                     "blur": 28
                   }
+                },
+                {
+                  "type": "frame",
+                  "id": "Q9G9y",
+                  "name": "相片卡4",
+                  "metadata": {
+                    "type": "unsplash",
+                    "username": "corneliusventures",
+                    "link": "https://unsplash.com/@corneliusventures",
+                    "author": "Cornelius Ventures"
+                  },
+                  "clip": true,
+                  "width": 360,
+                  "height": 480,
+                  "fill": {
+                    "type": "image",
+                    "enabled": true,
+                    "url": "https://images.unsplash.com/photo-1592107704270-3fef4d7c4c3e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3ODg1MjQxNjl8&ixlib=rb-4.1.0&q=80&w=1080",
+                    "mode": "fill"
+                  },
+                  "cornerRadius": 20,
+                  "effect": {
+                    "type": "shadow",
+                    "shadowType": "outer",
+                    "color": "$shadow-rose",
+                    "offset": {
+                      "x": 0,
+                      "y": 8
+                    },
+                    "blur": 28
+                  }
+                },
+                {
+                  "type": "frame",
+                  "id": "Fi3WC",
+                  "name": "相片卡5",
+                  "metadata": {
+                    "type": "unsplash",
+                    "username": "jessica_hearn",
+                    "link": "https://unsplash.com/@jessica_hearn",
+                    "author": "Jessica Hearn"
+                  },
+                  "clip": true,
+                  "width": 360,
+                  "height": 480,
+                  "fill": {
+                    "type": "image",
+                    "enabled": true,
+                    "url": "https://images.unsplash.com/photo-1662624915160-af38b1599dd4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3ODg1MjQxNzB8&ixlib=rb-4.1.0&q=80&w=1080",
+                    "mode": "fill"
+                  },
+                  "cornerRadius": 20,
+                  "effect": {
+                    "type": "shadow",
+                    "shadowType": "outer",
+                    "color": "$shadow-rose",
+                    "offset": {
+                      "x": 0,
+                      "y": 8
+                    },
+                    "blur": 28
+                  }
                 }
               ]
             },
@@ -2964,64 +3026,6 @@
               "name": "sp-32",
               "width": 1,
               "height": 32
-            },
-            {
-              "type": "frame",
-              "id": "TdXtY",
-              "name": "頁點列",
-              "height": 8,
-              "gap": 6,
-              "alignItems": "center",
-              "children": [
-                {
-                  "type": "rectangle",
-                  "cornerRadius": 4,
-                  "id": "EZfrD",
-                  "name": "點-active",
-                  "fill": "$primary",
-                  "width": 20,
-                  "height": 8
-                },
-                {
-                  "type": "ellipse",
-                  "id": "uWqIx",
-                  "name": "點-2",
-                  "fill": "$border-pill",
-                  "width": 8,
-                  "height": 8
-                },
-                {
-                  "type": "ellipse",
-                  "id": "Dpdbm",
-                  "name": "點-3",
-                  "fill": "$border-pill",
-                  "width": 8,
-                  "height": 8
-                },
-                {
-                  "type": "ellipse",
-                  "id": "PSNej",
-                  "name": "點-4",
-                  "fill": "$border-pill",
-                  "width": 8,
-                  "height": 8
-                },
-                {
-                  "type": "ellipse",
-                  "id": "x3lNoC",
-                  "name": "點-5",
-                  "fill": "$border-pill",
-                  "width": 8,
-                  "height": 8
-                }
-              ]
-            },
-            {
-              "type": "frame",
-              "id": "u3mVsg",
-              "name": "sp-20",
-              "width": 1,
-              "height": 20
             },
             {
               "type": "text",
