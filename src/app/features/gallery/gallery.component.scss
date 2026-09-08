@@ -72,11 +72,16 @@
 }
 
 // 桌機預設版式：無縫自動橫向捲動。
-// 一份序列（5 張）總寬 = 5 × 360 + 5 × 20 gap = 1900px（含卡片間與「銜接下一輪第一張」那個 gap），
-// 這正是 keyframe 位移的距離：跑完 -1900px，畫面上第 6 張（複製份第 1 張）剛好落在第 1 張原本的
-// 起始位置，接著瞬間重置回 0 繼續下一輪，因為第 6～10 張跟第 1～5 張像素级相同，肉眼看不出接縫。
-// 速度基準每秒 30px：1900 / 30 ≈ 63s 跑完一輪。
-$gallery-marquee-distance: 1900px;
+// 位移距離＝一份序列的總寬（張數 × (卡寬 + gap)，含「銜接下一輪第一張」那個 gap）。
+// 跑完這段距離時，畫面上的複製份第 1 張剛好落在原始第 1 張的起始位置，兩者像素相同，
+// 動畫瞬間重置回 0 時肉眼看不出接縫。
+//
+// ⚠️ 這個距離與播放時長都由 gallery.component.ts 依實際張數算出，透過
+// --gallery-marquee-shift／--gallery-marquee-duration 兩個自訂屬性傳進來，不在這裡寫死。
+// 曾經寫死成 5 張的 1900px，照片加到 8 張後就會跑到一半瞬間跳回開頭（看起來像閃一下重播）。
+// 下面兩個 SCSS 變數是版面數值的單一來源，TS 端的常數要跟著改。
+$gallery-marquee-card-width: 360px;
+$gallery-marquee-gap: 20px;
 
 .gallery__marquee {
   // 預設（手機）隱藏，只在桌機媒體查詢中顯示。
@@ -98,9 +103,10 @@ $gallery-marquee-distance: 1900px;
 
 .gallery__marquee-track {
   display: flex;
-  gap: 20px;
+  gap: $gallery-marquee-gap;
   width: max-content;
-  animation: gallery-marquee 63s linear infinite;
+  // fallback 值對應 8 張照片，僅在自訂屬性尚未套上（例如樣式先於繫結生效的瞬間）時頂替。
+  animation: gallery-marquee var(--gallery-marquee-duration, 101s) linear infinite;
   // will-change 只在會動的軌道本身加，範圍小，不是整頁常駐。
   will-change: transform;
 }
@@ -110,7 +116,7 @@ $gallery-marquee-distance: 1900px;
     transform: translateX(0);
   }
   to {
-    transform: translateX(-#{$gallery-marquee-distance});
+    transform: translateX(calc(-1 * var(--gallery-marquee-shift, 3040px)));
   }
 }
 
@@ -122,8 +128,8 @@ $gallery-marquee-distance: 1900px;
 }
 
 .gallery__marquee-card {
-  flex: 0 0 360px;
-  width: 360px;
+  flex: 0 0 $gallery-marquee-card-width;
+  width: $gallery-marquee-card-width;
   height: 480px;
   border: none;
   padding: 0;
@@ -142,8 +148,8 @@ $gallery-marquee-distance: 1900px;
 
 .gallery__grid {
   // 預設隱藏：桌機正常情況下是上面的自動捲動版式，這裡只在 prefers-reduced-motion 時當降級版式顯示。
-  // 5 張照片以 flex-wrap 排成 3＋2 兩列：每張卡固定佔滿版寬的三分之一（扣掉 gap），
-  // 版寬只放得下 3 張，第 4、5 張自然換到第二列，且 justify-content: center 讓兩列都置中。
+  // 照片以 flex-wrap 每列三張排下去（每張卡固定佔滿版寬的三分之一，扣掉 gap），
+  // 張數不滿三的倍數時最後一列會少幾張，justify-content: center 讓每一列都置中。
   display: none;
   flex-wrap: wrap;
   margin-top: 48px;
@@ -237,8 +243,8 @@ $gallery-marquee-distance: 1900px;
     display: none;
   }
 
-  // 使用者要求減少動態效果時，停用自動捲動、改回靜態 3＋2 兩列——
-  // 這條降級不能只是「停住不動」，停住只看得到當下那幾張，必須換成能一次看完五張的排列。
+  // 使用者要求減少動態效果時，停用自動捲動、改回每列三張的靜態網格——
+  // 這條降級不能只是「停住不動」，停住只看得到當下那幾張，必須換成能一次看完所有照片的排列。
   @media (prefers-reduced-motion: reduce) {
     .gallery__marquee {
       display: none;

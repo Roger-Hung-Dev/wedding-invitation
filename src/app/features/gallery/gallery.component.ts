@@ -8,6 +8,16 @@ import { GALLERY_TEXT, GalleryPhoto } from '../../core/config/wedding-content'
 import { GalleryStore } from './gallery.store'
 import { LightboxComponent } from './lightbox/lightbox.component'
 
+/**
+ * 自動捲動軌道的版面數值，與 gallery.component.scss 的 $gallery-marquee-card-width／
+ * $gallery-marquee-gap 為同一組數字，改樣式時兩邊要一起改，否則接縫會對不齊。
+ */
+const MARQUEE_CARD_WIDTH_PX = 360
+const MARQUEE_GAP_PX = 20
+
+/** 捲動速度，每秒位移的像素。 */
+const MARQUEE_SPEED_PX_PER_SEC = 30
+
 export interface MarqueeItem {
   readonly key: string
   readonly photo: GalleryPhoto
@@ -19,9 +29,10 @@ export interface MarqueeItem {
 
 /**
  * S2 婚紗藝廊區。手機為橫向滑動輪播（scroll-snap，僅可見主卡與左右鄰卡邊緣）。
- * 桌機預設為無縫自動橫向捲動（CSS animation，滑鼠停留或鍵盤聚焦時暫停）；
- * 使用者要求減少動態效果時，改用靜態 3＋2 兩列展示（見 gallery.component.scss 的
- * prefers-reduced-motion 覆寫），確保五張照片仍然全部一次看得到，不會因為捲動停用
+ * 桌機預設為無縫自動橫向捲動（CSS animation，滑鼠停留或鍵盤聚焦時暫停），
+ * 捲動距離與時長依實際照片張數算出，增減照片不必改樣式；
+ * 使用者要求減少動態效果時，改用每列三張的靜態網格（見 gallery.component.scss 的
+ * prefers-reduced-motion 覆寫），確保所有照片仍然一次看得到，不會因為捲動停用
  * 而永遠只看得到當下那幾張。兩種版式皆可點擊照片開啟燈箱。
  */
 @Component({
@@ -41,8 +52,8 @@ export class GalleryComponent {
   private readonly track = viewChild<ElementRef<HTMLElement>>('track')
 
   /**
-   * 桌機自動捲動軌道：把照片序列複製一份接在後面做成 10 張，動畫跑完第一份的寬度就重置，
-   * 視覺上看不出接縫。複製份的 originalIndex 指回 0～4，點擊才會開對照片。
+   * 桌機自動捲動軌道：把照片序列複製一份接在後面，動畫跑完第一份的寬度就重置，
+   * 視覺上看不出接縫。複製份的 originalIndex 指回原始索引，點擊才會開對照片。
    */
   protected readonly marqueeItems = computed<MarqueeItem[]>(() => {
     const photos = this.store.photos
@@ -53,6 +64,23 @@ export class GalleryComponent {
       isDuplicate: i >= photos.length,
     }))
   })
+
+  /**
+   * 自動捲動一份序列要位移的距離，即「張數 × (卡寬 + 卡間距)」——
+   * 位移到這個距離時，複製份的第一張正好落在原始第一張的起始位置，重置回 0 才沒有接縫。
+   * 必須依實際張數算，寫死會在增減照片後跑到一半就跳回開頭（看起來像閃一下重播）。
+   */
+  protected readonly marqueeShift = computed(
+    () => `${this.store.photos.length * (MARQUEE_CARD_WIDTH_PX + MARQUEE_GAP_PX)}px`,
+  )
+
+  /** 播放時長由位移距離與固定速度推得，照片增減時捲動快慢維持一致。 */
+  protected readonly marqueeDuration = computed(
+    () =>
+      `${Math.round(
+        (this.store.photos.length * (MARQUEE_CARD_WIDTH_PX + MARQUEE_GAP_PX)) / MARQUEE_SPEED_PX_PER_SEC,
+      )}s`,
+  )
 
   private overlayRef: OverlayRef | null = null
   private lightboxRef: ComponentRef<LightboxComponent> | null = null
