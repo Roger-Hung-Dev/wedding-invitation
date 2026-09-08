@@ -28,7 +28,7 @@ export class HeroComponent {
   protected readonly text = HERO_TEXT
   protected readonly padTwoDigits = padTwoDigits
 
-  private readonly root = viewChild.required<ElementRef<HTMLElement>>('heroRoot')
+  private readonly host = inject<ElementRef<HTMLElement>>(ElementRef)
   private readonly bgImage = viewChild.required<ElementRef<HTMLElement>>('heroBg')
 
   /** Hero 入場序列不等捲動觸發，載入後立刻切成 true 播放一次；各元素的交錯延遲寫在樣板與樣式表。 */
@@ -41,9 +41,13 @@ export class HeroComponent {
     })
   }
 
+  /**
+   * 捲到下一個區塊。取的是宿主元素 <app-hero> 的下一個兄弟（也就是 <app-gallery>）——
+   * 不能取 section.hero 的兄弟，那個 section 是元件內唯一的子元素，往下找不到東西。
+   */
   scrollToNext(): void {
-    const next = this.root().nativeElement.nextElementSibling
-    next?.scrollIntoView({ behavior: 'smooth' })
+    const next = this.host.nativeElement.nextElementSibling
+    next?.scrollIntoView({ behavior: this.reducedMotion.prefersReduced() ? 'auto' : 'smooth' })
   }
 
   /**
