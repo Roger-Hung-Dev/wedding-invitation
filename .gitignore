@@ -19,3 +19,11 @@ Thumbs.db
 # === 設計稿匯出的 png（可從 .pen 重新產生，單批約 14MB）===
 # 保留 _index.md 與 _layout-spec.md —— 那兩份是文字、是下游對稿的依據
 .claude/docs/design/exports/**/*.png
+
+# === 攝影原始檔（每張 7～15MB，網頁只用壓縮後的版本）===
+# 壓縮版進版控：src/assets/gallery/、hero-*.jpg、map-preview.jpg、og-share.jpg、wedding-bgm.mp3
+/src/assets/weddingphotos/
+/src/assets/images/dobe-*.jpg
+/src/assets/images/map.png
+/src/assets/audio/background.mp3
+/src/assets/audio/background_zip.mp3

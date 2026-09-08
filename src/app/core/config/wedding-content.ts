@@ -8,29 +8,29 @@
  *    MUSIC_PLAYER_TEXT）：純顯示用的標籤、提示語、按鈕文字，依畫面由上到下的區塊順序排列，
  *    每個區塊對應網站上的一個段落，找文字時比對頁面滾動位置即可定位到對應常數。
  *
- * 姓名、日期、場地皆為設計階段標註的示意值，正式資料到位後於此檔一次替換即可。
+ * 姓名、日期、場地為新人提供的正式資料，異動時於此檔一次替換即可。
  */
 export const WEDDING_CONTENT = {
-  brideGroomEn: 'Ethan & Chloe',
-  brideGroomZh: '陳彥廷　✕　林思妤',
+  brideGroomEn: 'Roger & Amy',
+  brideGroomZh: '洪承孝　✕　李怡安',
   /** 婚期（ISO 日期，不含時間）。 */
-  weddingDate: '2026-11-14',
-  weddingDateDisplay: '2026 . 11 . 14　SATURDAY',
+  weddingDate: '2026-12-12',
+  weddingDateDisplay: '2026 . 12 . 12　SATURDAY',
   /** 不含星期的純日期顯示，S3 宴客資訊區日期大字專用（S1 Hero 才帶 SATURDAY）。 */
-  weddingDateOnlyDisplay: '2026 . 11 . 14',
-  lunarDateDisplay: '星期六　·　農曆十月初五',
-  venueName: '台北文華東方酒店',
-  venueHall: '3F　文華廳',
+  weddingDateOnlyDisplay: '2026 . 12 . 12',
+  /** S3 日期大字下方的小字。新人選擇不顯示農曆，僅留星期。 */
+  dateSubDisplay: '星期六',
+  venueName: '臻愛花園酒店',
+  venueHall: '2F　東方明珠',
   seatingGuide: '入口處設有座位表，男方親友請至 A 區、女方親友請至 B 區',
-  monogram: 'E　&　C',
-  rsvpDeadlineDisplay: '2026 / 10 / 15',
+  monogram: 'R　&　A',
+  rsvpDeadlineDisplay: '2026 / 11 / 08',
 } as const
 
 /**
- * 倒數計時目標時間。婚期只定到日期，時分未定，先取當天午宴開席時間 12:00 為暫定值。
- * 正式時間確認後只需改這裡的字面時分。
+ * 倒數計時目標時間，即宴席開席時間；歸零後 Hero 的四格倒數會換成致謝句。
  */
-export const WEDDING_COUNTDOWN_TARGET_ISO = '2026-11-14T12:00:00+08:00'
+export const WEDDING_COUNTDOWN_TARGET_ISO = '2026-12-12T18:00:00+08:00'
 
 export interface WeddingSession {
   readonly id: 'lunch' | 'dinner'
@@ -38,8 +38,11 @@ export interface WeddingSession {
   readonly timeDisplay: string
 }
 
+/**
+ * 宴席場次。本場婚宴只辦晚宴一場，故僅一筆；S3 的場次切換膠囊會依此只顯示一顆。
+ * 日後若加辦午宴，補一筆 id: 'lunch' 即可，切換行為不必改。
+ */
 export const WEDDING_SESSIONS: readonly WeddingSession[] = [
-  { id: 'lunch', label: '午宴', timeDisplay: '12:00' },
   { id: 'dinner', label: '晚宴', timeDisplay: '18:00' },
 ]
 
@@ -50,49 +53,62 @@ export interface GalleryPhoto {
 }
 
 /**
- * 婚紗照。目前沿用 Unsplash 示意圖，張數依設計初稿假設為 5 張。
+ * 婚紗照 8 張，依拍攝場景由白天外景走到黃昏海邊排序，即畫面上的瀏覽順序。
+ * 圖檔為原始檔縮至寬 1000 的網頁版本；手機版頁點指示器在 8 張以內仍清晰，再增量需改為數字式。
+ * 路徑不加開頭斜線 —— 網站部署在 GitHub Pages 子路徑下，絕對路徑會在上線後 404。
  */
 export const GALLERY_PHOTOS: readonly GalleryPhoto[] = [
   {
     id: 'photo-1',
-    url: 'https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=800&q=80',
-    alt: '新人牽手特寫，底片色調',
+    url: 'assets/gallery/photo-1.jpg',
+    alt: '新人牽手走在林蔭道上，新娘身著粉色紗裙',
   },
   {
     id: 'photo-2',
-    url: 'https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=800&q=80',
-    alt: '婚紗細節與粉色花束',
+    url: 'assets/gallery/photo-2.jpg',
+    alt: '日式老屋前，新郎將身著黑色禮服的新娘抱起',
   },
   {
     id: 'photo-3',
-    url: 'https://images.unsplash.com/photo-1606216794074-735e91aa2c92?auto=format&fit=crop&w=800&q=80',
-    alt: '新人於金色夕陽下漫步的背影',
+    url: 'assets/gallery/photo-3.jpg',
+    alt: '公園草地上相擁而笑的新人特寫',
   },
   {
     id: 'photo-4',
-    url: 'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=800&q=80',
-    alt: '婚禮儀式現場',
+    url: 'assets/gallery/photo-4.jpg',
+    alt: '藍天草原上，新人戴著愛心墨鏡舉著「我們結婚了」手牌',
   },
   {
     id: 'photo-5',
-    url: 'https://images.unsplash.com/photo-1544078751-58fee2d8a03b?auto=format&fit=crop&w=800&q=80',
-    alt: '新娘微笑肖像',
+    url: 'assets/gallery/photo-5.jpg',
+    alt: '黃昏河床上，新娘白紗長裙鋪展、與新郎相望',
+  },
+  {
+    id: 'photo-6',
+    url: 'assets/gallery/photo-6.jpg',
+    alt: '新娘背影，長頭紗隨風揚起於溪谷之上',
+  },
+  {
+    id: 'photo-7',
+    url: 'assets/gallery/photo-7.jpg',
+    alt: '海邊夕陽下，新郎輕吻新娘的手，手中捧著粉色花束',
+  },
+  {
+    id: 'photo-8',
+    url: 'assets/gallery/photo-8.jpg',
+    alt: '沙灘上新郎將新娘橫抱起，兩人相視而笑',
   },
 ]
 
-/** Hero 滿版底圖。是 LCP 元素，於 index.html 另外 preload。 */
-export const HERO_IMAGE_URL =
-  'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=80'
+/** Hero 滿版底圖。是 LCP 元素，於 index.html 另外 preload（換圖時兩處要一起改）。 */
+export const HERO_IMAGE_URL = 'assets/images/hero-mobile.jpg'
 
-export const HERO_IMAGE_DESKTOP_URL =
-  'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=2400&q=80'
+export const HERO_IMAGE_DESKTOP_URL = 'assets/images/hero-desktop.jpg'
 
-/** S3 地圖預覽圖，沿用設計稿上手機版與桌機版節點各自的 Unsplash 圖檔。 */
-export const MAP_PREVIEW_IMAGE_URL =
-  'https://images.unsplash.com/photo-1645708313906-c4e2cd0b4daa?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080'
+/** S3 地圖預覽圖。原圖近正方形，已裁成 16:9 並保留中央的場地標記，手機與桌機共用同一張。 */
+export const MAP_PREVIEW_IMAGE_URL = 'assets/images/map-preview.jpg'
 
-export const MAP_PREVIEW_IMAGE_DESKTOP_URL =
-  'https://images.unsplash.com/photo-1736117703382-8ed6a338c3b9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080'
+export const MAP_PREVIEW_IMAGE_DESKTOP_URL = 'assets/images/map-preview.jpg'
 
 /**
  * S1 主視覺封面區的固定文案（新人姓名、日期見 WEDDING_CONTENT，這裡只放版面上的標籤字）。
@@ -169,14 +185,15 @@ export const RSVP_TEXT = {
   title: 'Will You Join Us?',
   /** 說明文兩行，第二行的 {{deadline}} 會被換成 WEDDING_CONTENT.rsvpDeadlineDisplay。 */
   introLines: ['您的出席是我們最珍貴的祝福，', '敬請於 {{deadline}} 前回覆。'] as readonly string[],
-  /** 表單會收集的七個欄位預告，畫面上以 chip 呈現，順序即畫面順序。 */
-  fieldChips: ['姓名', '出席人數', '素食需求', '兒童椅', '喜餅領取', '聯絡電話', '祝福話語'] as readonly string[],
+  /**
+   * 表單會收集的欄位預告，畫面上以 chip 呈現，順序即畫面順序。
+   * 這幾顆必須與實際 Google 表單的題目對得上，否則賓客會看到預告了卻沒被問的欄位。
+   */
+  fieldChips: ['姓名', '出席人數', '素食需求', '兒童椅', '聯絡電話'] as readonly string[],
   /** 主要 CTA 按鈕文字。 */
   ctaLabel: '填寫出席回覆表單',
   /** CTA 按鈕下方的小字註記。 */
   ctaNote: '將另開新視窗前往 Google 表單',
-  /** 已回覆賓客可點擊修改回覆的連結文字。 */
-  editLinkLabel: '已經填寫過了？點此修改回覆',
 } as const
 
 /**
@@ -188,7 +205,7 @@ export const FOOTER_TEXT = {
   title: 'Thank You',
   /** 致謝內文，手機兩行、桌機同一行顯示（見上方說明）。 */
   bodyLines: ['謝謝每一位陪伴我們走到這裡的人，', '期待與你分享這一天的喜悅。'] as readonly string[],
-  copyright: '© 2026 Ethan & Chloe　·　Made with love',
+  copyright: '© 2026 Roger & Amy　·　Made with love',
 } as const
 
 /**

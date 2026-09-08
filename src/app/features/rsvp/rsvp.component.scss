@@ -78,14 +78,6 @@
   color: var(--color-text-muted);
 }
 
-.rsvp__edit-link {
-  margin-top: 20px;
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--color-text-muted);
-  text-decoration: underline;
-}
-
 @media (min-width: 1024px) {
   .rsvp {
     padding: 96px clamp(24px, 8vw, 160px);
@@ -133,10 +125,5 @@
 
   .rsvp__note {
     font-size: 15px;
-  }
-
-  .rsvp__edit-link {
-    margin-top: 24px;
-    font-size: 14px;
   }
 }

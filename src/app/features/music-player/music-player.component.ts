@@ -27,7 +27,7 @@ import { MusicPlayerStore } from './music-player.store'
       </span>
     </button>
     <audio #audioEl loop preload="none">
-      <!-- 實際婚禮背景音樂檔尚未取得，先留空來源；有正式音檔後補上 src 即可 -->
+      <source src="assets/audio/wedding-bgm.mp3" type="audio/mpeg">
     </audio>
   `,
   styles: `
