@@ -24,6 +24,7 @@ Thumbs.db
 # 壓縮版進版控：src/assets/gallery/、hero-*.jpg、map-preview.jpg、og-share.jpg、wedding-bgm.mp3
 /src/assets/weddingphotos/
 /src/assets/images/dobe-*.jpg
+# （壓縮版 groom.jpg／bride.jpg 進版控，原始檔 dobe-5329／dobe-5557 由上面那行忽略）
 /src/assets/images/map.png
 /src/assets/audio/background.mp3
 /src/assets/audio/background_zip.mp3

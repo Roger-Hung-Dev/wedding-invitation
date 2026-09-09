@@ -115,7 +115,8 @@
                   "lineHeight": 1.2,
                   "textAlign": "center",
                   "fontFamily": "$font-script",
-                  "fontSize": 56
+                  "fontSize": 56,
+                  "fontWeight": "normal"
                 },
                 {
                   "type": "frame",
@@ -134,6 +135,7 @@
                   "textAlign": "center",
                   "fontFamily": "$font-body",
                   "fontSize": 18,
+                  "fontWeight": "normal",
                   "letterSpacing": 6
                 },
                 {
@@ -469,6 +471,820 @@
         },
         {
           "type": "frame",
+          "id": "k9CXWE",
+          "name": "裝置版-S9 About",
+          "clip": true,
+          "width": 390,
+          "height": 820,
+          "fill": "$bg-blush",
+          "layout": "vertical",
+          "padding": [
+            64,
+            24
+          ],
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "text",
+              "id": "beFvC",
+              "name": "S9-眉標",
+              "fill": "$accent-gold",
+              "content": "ABOUT US",
+              "lineHeight": 1.4,
+              "textAlign": "center",
+              "fontFamily": "$font-body",
+              "fontSize": 11,
+              "fontWeight": "600",
+              "letterSpacing": 5
+            },
+            {
+              "type": "frame",
+              "id": "GO1oC",
+              "name": "spacer-10",
+              "width": 1,
+              "height": 10
+            },
+            {
+              "type": "text",
+              "id": "f9Z7WP",
+              "name": "S9-主標",
+              "fill": "$primary",
+              "content": "The Two of Us",
+              "lineHeight": 1.2,
+              "textAlign": "center",
+              "fontFamily": "$font-script",
+              "fontSize": 34,
+              "fontWeight": "normal"
+            },
+            {
+              "type": "frame",
+              "id": "A0gbxO",
+              "name": "spacer-12",
+              "width": 1,
+              "height": 12
+            },
+            {
+              "type": "rectangle",
+              "id": "JJAQK",
+              "name": "S9-金線",
+              "fill": "$gold-soft",
+              "width": 40,
+              "height": 1
+            },
+            {
+              "type": "frame",
+              "id": "M0i4QB",
+              "name": "spacer-20",
+              "width": 1,
+              "height": 20
+            },
+            {
+              "type": "text",
+              "id": "AojCh",
+              "name": "S9-引言",
+              "fill": "$text-muted",
+              "textGrowth": "fixed-width",
+              "width": 300,
+              "content": "在遇見彼此之前，\n我們各自過著很不一樣的日子。",
+              "lineHeight": 1.4,
+              "textAlign": "center",
+              "fontFamily": "$font-body",
+              "fontSize": 16,
+              "fontWeight": "normal",
+              "fontStyle": "italic"
+            },
+            {
+              "type": "frame",
+              "id": "poVcc",
+              "name": "spacer-36",
+              "width": 1,
+              "height": 36
+            },
+            {
+              "type": "frame",
+              "id": "E3FIFU",
+              "name": "S9-人物卡-新郎",
+              "width": 342,
+              "height": 176,
+              "gap": 16,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "yqhn4",
+                  "name": "S9-照片-新郎",
+                  "metadata": {
+                    "type": "unsplash",
+                    "username": "amirabbaspoor",
+                    "link": "https://unsplash.com/@amirabbaspoor",
+                    "author": "Amir Abbaspoor"
+                  },
+                  "width": 132,
+                  "height": 176,
+                  "fill": {
+                    "type": "image",
+                    "enabled": true,
+                    "url": "https://images.unsplash.com/photo-1725567005742-20be6a2865a2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3ODg4ODY0NjF8&ixlib=rb-4.1.0&q=80&w=1080",
+                    "mode": "fill"
+                  },
+                  "cornerRadius": 16,
+                  "effect": {
+                    "type": "shadow",
+                    "shadowType": "outer",
+                    "color": "$shadow-rose",
+                    "offset": {
+                      "x": 0,
+                      "y": 8
+                    },
+                    "blur": 28
+                  }
+                },
+                {
+                  "type": "frame",
+                  "id": "r5FDL",
+                  "name": "S9-文字欄-新郎",
+                  "width": 194,
+                  "layout": "vertical",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "C8TK1W",
+                      "name": "S9-角色標籤-新郎",
+                      "fill": "$accent-gold",
+                      "content": "GROOM",
+                      "lineHeight": 1.4,
+                      "fontFamily": "$font-body",
+                      "fontSize": 10,
+                      "fontWeight": "600",
+                      "letterSpacing": 3
+                    },
+                    {
+                      "type": "frame",
+                      "id": "JMtFv",
+                      "name": "spacer-6",
+                      "width": 1,
+                      "height": 6
+                    },
+                    {
+                      "type": "text",
+                      "id": "K52AI",
+                      "name": "S9-姓名-新郎",
+                      "fill": "$text-main",
+                      "content": "洪承孝",
+                      "lineHeight": 1.4,
+                      "fontFamily": "$font-body",
+                      "fontSize": 22,
+                      "fontWeight": "500",
+                      "letterSpacing": 2
+                    },
+                    {
+                      "type": "frame",
+                      "id": "EjgQS",
+                      "name": "spacer-4",
+                      "width": 1,
+                      "height": 4
+                    },
+                    {
+                      "type": "frame",
+                      "id": "HuS42",
+                      "name": "S9-職業chip-新郎",
+                      "height": 26,
+                      "fill": "$bg-ivory",
+                      "cornerRadius": 13,
+                      "padding": [
+                        0,
+                        12
+                      ],
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "fhS5W",
+                          "name": "S9-職業-新郎",
+                          "fill": "$primary",
+                          "content": "軟體工程師",
+                          "lineHeight": 1.4,
+                          "fontFamily": "$font-body",
+                          "fontSize": 12,
+                          "fontWeight": "500"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "I9C11",
+                      "name": "spacer-12",
+                      "width": 1,
+                      "height": 12
+                    },
+                    {
+                      "type": "text",
+                      "id": "Zxwyz",
+                      "name": "S9-描述-新郎",
+                      "fill": "$text-muted",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "靠一行行程式碼過日子，習慣把複雜的問題拆開來、一個一個解決。話不多，但答應的事情一定做到。",
+                      "lineHeight": 1.6,
+                      "fontFamily": "$font-body",
+                      "fontSize": 13,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "a5mltH",
+              "name": "spacer-20",
+              "width": 1,
+              "height": 20
+            },
+            {
+              "type": "frame",
+              "id": "MjkCn",
+              "name": "S9-中央連結列",
+              "width": 342,
+              "height": 12,
+              "gap": 8,
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "rectangle",
+                  "id": "Xlxj4",
+                  "name": "S9-連結線-左",
+                  "fill": "$gold-soft",
+                  "width": 100,
+                  "height": 1
+                },
+                {
+                  "type": "text",
+                  "id": "EtGCI",
+                  "name": "S9-連結符號",
+                  "fill": "$gold-soft",
+                  "content": "&",
+                  "lineHeight": 1.2,
+                  "fontFamily": "$font-script",
+                  "fontSize": 20,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "rectangle",
+                  "id": "SD11B",
+                  "name": "S9-連結線-右",
+                  "fill": "$gold-soft",
+                  "width": 100,
+                  "height": 1
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "v7ezVS",
+              "name": "spacer-20",
+              "width": 1,
+              "height": 20
+            },
+            {
+              "type": "frame",
+              "id": "kiwh5",
+              "name": "S9-人物卡-新娘",
+              "width": 342,
+              "height": 176,
+              "gap": 16,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "SNM8M",
+                  "name": "S9-文字欄-新娘",
+                  "width": 194,
+                  "layout": "vertical",
+                  "alignItems": "end",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "RuZNL",
+                      "name": "S9-角色標籤-新娘",
+                      "fill": "$accent-gold",
+                      "content": "BRIDE",
+                      "lineHeight": 1.4,
+                      "textAlign": "right",
+                      "fontFamily": "$font-body",
+                      "fontSize": 10,
+                      "fontWeight": "600",
+                      "letterSpacing": 3
+                    },
+                    {
+                      "type": "frame",
+                      "id": "XuEaR",
+                      "name": "spacer-6",
+                      "width": 1,
+                      "height": 6
+                    },
+                    {
+                      "type": "text",
+                      "id": "me6rS",
+                      "name": "S9-姓名-新娘",
+                      "fill": "$text-main",
+                      "content": "李怡安",
+                      "lineHeight": 1.4,
+                      "textAlign": "right",
+                      "fontFamily": "$font-body",
+                      "fontSize": 22,
+                      "fontWeight": "500",
+                      "letterSpacing": 2
+                    },
+                    {
+                      "type": "frame",
+                      "id": "tFvJv",
+                      "name": "spacer-4",
+                      "width": 1,
+                      "height": 4
+                    },
+                    {
+                      "type": "frame",
+                      "id": "u4Wug",
+                      "name": "S9-職業chip-新娘",
+                      "height": 26,
+                      "fill": "$bg-ivory",
+                      "cornerRadius": 13,
+                      "padding": [
+                        0,
+                        12
+                      ],
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "wty7s",
+                          "name": "S9-職業-新娘",
+                          "fill": "$primary",
+                          "content": "餐飲服務業",
+                          "lineHeight": 1.4,
+                          "fontFamily": "$font-body",
+                          "fontSize": 12,
+                          "fontWeight": "500"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "Z9GDe",
+                      "name": "spacer-12",
+                      "width": 1,
+                      "height": 12
+                    },
+                    {
+                      "type": "text",
+                      "id": "fNC1M",
+                      "name": "S9-描述-新娘",
+                      "fill": "$text-muted",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "在餐飲業裡練就一身照顧人的本事，記得誰不吃什麼、誰想多要一點醬。她相信好好吃一頓飯，能讓人重新有力氣。",
+                      "lineHeight": 1.6,
+                      "textAlign": "right",
+                      "fontFamily": "$font-body",
+                      "fontSize": 13,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "cGGmE",
+                  "name": "S9-照片-新娘",
+                  "metadata": {
+                    "type": "unsplash",
+                    "username": "beaverfernandez",
+                    "link": "https://unsplash.com/@beaverfernandez",
+                    "author": "Beaver Fernandez"
+                  },
+                  "width": 132,
+                  "height": 176,
+                  "fill": {
+                    "type": "image",
+                    "enabled": true,
+                    "url": "https://images.unsplash.com/photo-1785162347226-8952e0de209c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3ODg4ODY5Mzd8&ixlib=rb-4.1.0&q=80&w=1080",
+                    "mode": "fill"
+                  },
+                  "cornerRadius": 16,
+                  "effect": {
+                    "type": "shadow",
+                    "shadowType": "outer",
+                    "color": "$shadow-rose",
+                    "offset": {
+                      "x": 0,
+                      "y": 8
+                    },
+                    "blur": 28
+                  }
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "K8rmX",
+              "name": "spacer-32",
+              "width": 1,
+              "height": 32
+            },
+            {
+              "type": "text",
+              "id": "HD5v0",
+              "name": "S9-收尾句",
+              "fill": "$text-muted",
+              "textGrowth": "fixed-width",
+              "width": 310,
+              "content": "一個把日子過成邏輯，一個把日子過成溫度，\n從 2026 . 12 . 12 起，我們一起過。",
+              "lineHeight": 1.4,
+              "textAlign": "center",
+              "fontFamily": "$font-body",
+              "fontSize": 14,
+              "fontWeight": "normal",
+              "fontStyle": "italic"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "wbUtn",
+          "name": "裝置版-S10 Story",
+          "clip": true,
+          "width": 390,
+          "height": 738,
+          "fill": "$bg-ivory",
+          "layout": "vertical",
+          "padding": [
+            64,
+            24
+          ],
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "text",
+              "id": "Z0bur",
+              "name": "S10-眉標",
+              "fill": "$accent-gold",
+              "content": "OUR STORY",
+              "lineHeight": 1.4,
+              "textAlign": "center",
+              "fontFamily": "$font-body",
+              "fontSize": 11,
+              "fontWeight": "600",
+              "letterSpacing": 5
+            },
+            {
+              "type": "frame",
+              "id": "Tic7b",
+              "name": "spacer-10",
+              "width": 1,
+              "height": 10
+            },
+            {
+              "type": "text",
+              "id": "fZuLh",
+              "name": "S10-主標",
+              "fill": "$primary",
+              "content": "How We Met",
+              "lineHeight": 1.2,
+              "textAlign": "center",
+              "fontFamily": "$font-script",
+              "fontSize": 34,
+              "fontWeight": "normal"
+            },
+            {
+              "type": "frame",
+              "id": "gKJCR",
+              "name": "spacer-12",
+              "width": 1,
+              "height": 12
+            },
+            {
+              "type": "rectangle",
+              "id": "B2VPE",
+              "name": "S10-金線",
+              "fill": "$gold-soft",
+              "width": 40,
+              "height": 1
+            },
+            {
+              "type": "frame",
+              "id": "eXMpa",
+              "name": "spacer-20",
+              "width": 1,
+              "height": 20
+            },
+            {
+              "type": "frame",
+              "id": "shoHW",
+              "name": "S10-書本（書皮）",
+              "width": 342,
+              "height": 414,
+              "fill": {
+                "type": "gradient",
+                "gradientType": "linear",
+                "enabled": true,
+                "rotation": 180,
+                "size": {
+                  "height": 1
+                },
+                "colors": [
+                  {
+                    "color": "#BE9068",
+                    "position": 0
+                  },
+                  {
+                    "color": "#8A6544",
+                    "position": 1
+                  }
+                ]
+              },
+              "cornerRadius": 20,
+              "stroke": "#D4B48C",
+              "strokeWidth": 1,
+              "strokeAlignment": "inner",
+              "effect": {
+                "type": "shadow",
+                "shadowType": "outer",
+                "color": "$shadow-rose",
+                "offset": {
+                  "x": 0,
+                  "y": 10
+                },
+                "blur": 32
+              },
+              "padding": 12,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "RK3GT",
+                  "name": "S10-內頁",
+                  "width": 318,
+                  "height": 390,
+                  "fill": "$surface",
+                  "cornerRadius": 8,
+                  "layout": "vertical",
+                  "padding": 20,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "NxfTr",
+                      "name": "S10-照片-第1頁",
+                      "metadata": {
+                        "type": "unsplash",
+                        "username": "nicicul",
+                        "link": "https://unsplash.com/@nicicul",
+                        "author": "Nikita"
+                      },
+                      "width": 278,
+                      "height": 208,
+                      "fill": {
+                        "type": "image",
+                        "enabled": true,
+                        "url": "https://images.unsplash.com/photo-1759866614103-376bde0fc66f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3ODg5MTYwNjF8&ixlib=rb-4.1.0&q=80&w=1080",
+                        "mode": "fill"
+                      },
+                      "cornerRadius": 12
+                    },
+                    {
+                      "type": "frame",
+                      "id": "w7Cr6J",
+                      "name": "spacer-18",
+                      "width": 1,
+                      "height": 18
+                    },
+                    {
+                      "type": "text",
+                      "id": "vhusd",
+                      "name": "S10-年份標籤",
+                      "fill": "$accent-gold",
+                      "content": "2019 秋",
+                      "lineHeight": 1.4,
+                      "fontFamily": "$font-body",
+                      "fontSize": 11,
+                      "fontWeight": "600",
+                      "letterSpacing": 3
+                    },
+                    {
+                      "type": "frame",
+                      "id": "KNh1x",
+                      "name": "spacer-8",
+                      "width": 1,
+                      "height": 8
+                    },
+                    {
+                      "type": "text",
+                      "id": "k5xK5",
+                      "name": "S10-段落標題",
+                      "fill": "$text-main",
+                      "content": "初次見面",
+                      "lineHeight": 1.4,
+                      "fontFamily": "$font-body",
+                      "fontSize": 18,
+                      "fontWeight": "500"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "yRQHS",
+                      "name": "spacer-8",
+                      "width": 1,
+                      "height": 8
+                    },
+                    {
+                      "type": "text",
+                      "id": "v9XAif",
+                      "name": "S10-故事文字",
+                      "fill": "$text-muted",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "那年秋天，在朋友的一場聚會上第一次見到彼此。那天散場之後才發現，我們是聊到最後才離開的兩個人，連要回家的方向都一樣。",
+                      "lineHeight": 1.7,
+                      "fontFamily": "$font-body",
+                      "fontSize": 13,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "rectangle",
+                      "id": "F3w0xR",
+                      "layoutPosition": "absolute",
+                      "x": 8,
+                      "y": 0,
+                      "name": "S10-內頁上緣暗線",
+                      "fill": "#00000020",
+                      "width": 302,
+                      "height": 2
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "MAgjq",
+              "name": "spacer-20",
+              "width": 1,
+              "height": 20
+            },
+            {
+              "type": "frame",
+              "id": "u3yQw3",
+              "name": "S10-控制列",
+              "width": 204,
+              "height": 40,
+              "gap": 24,
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "VbtbV",
+                  "name": "S10-翻頁鈕-上一頁(停用)",
+                  "width": 40,
+                  "height": 40,
+                  "fill": "$surface",
+                  "cornerRadius": 20,
+                  "effect": {
+                    "type": "shadow",
+                    "shadowType": "outer",
+                    "color": "$shadow-rose",
+                    "offset": {
+                      "x": 0,
+                      "y": 4
+                    },
+                    "blur": 16
+                  },
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "BSjI3",
+                      "name": "icon-chevron-left",
+                      "opacity": 0.4,
+                      "width": 16,
+                      "height": 16,
+                      "icon": "chevron-left",
+                      "library": "lucide",
+                      "fill": "$text-muted"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "By7TO",
+                  "name": "S10-頁點列",
+                  "height": 8,
+                  "gap": 6,
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": 4,
+                      "id": "X9XQB",
+                      "name": "頁點-active",
+                      "fill": "$primary",
+                      "width": 20,
+                      "height": 8
+                    },
+                    {
+                      "type": "ellipse",
+                      "id": "vl8W8",
+                      "name": "頁點-1",
+                      "fill": "$border-pill",
+                      "width": 8,
+                      "height": 8
+                    },
+                    {
+                      "type": "ellipse",
+                      "id": "mAEsN",
+                      "name": "頁點-2",
+                      "fill": "$border-pill",
+                      "width": 8,
+                      "height": 8
+                    },
+                    {
+                      "type": "ellipse",
+                      "id": "kzVGU",
+                      "name": "頁點-3",
+                      "fill": "$border-pill",
+                      "width": 8,
+                      "height": 8
+                    },
+                    {
+                      "type": "ellipse",
+                      "id": "Osg0T",
+                      "name": "頁點-4",
+                      "fill": "$border-pill",
+                      "width": 8,
+                      "height": 8
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "Z4ql9V",
+                  "name": "S10-翻頁鈕-下一頁",
+                  "width": 40,
+                  "height": 40,
+                  "fill": "$surface",
+                  "cornerRadius": 20,
+                  "effect": {
+                    "type": "shadow",
+                    "shadowType": "outer",
+                    "color": "$shadow-rose",
+                    "offset": {
+                      "x": 0,
+                      "y": 4
+                    },
+                    "blur": 16
+                  },
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "J3wo7Z",
+                      "name": "icon-chevron-right",
+                      "width": 16,
+                      "height": 16,
+                      "icon": "chevron-right",
+                      "library": "lucide",
+                      "fill": "$text-main"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "SwVb9",
+              "name": "spacer-20",
+              "width": 1,
+              "height": 20
+            },
+            {
+              "type": "text",
+              "id": "LI4rq",
+              "name": "S10-操作提示",
+              "fill": "$text-muted",
+              "content": "點兩側箭頭翻頁",
+              "lineHeight": 1.4,
+              "textAlign": "center",
+              "fontFamily": "$font-body",
+              "fontSize": 11,
+              "fontWeight": "normal",
+              "letterSpacing": 1
+            }
+          ]
+        },
+        {
+          "type": "frame",
           "id": "kJsg4",
           "name": "裝置版-S2 Gallery",
           "clip": true,
@@ -511,7 +1327,8 @@
               "lineHeight": 1.2,
               "textAlign": "center",
               "fontFamily": "$font-script",
-              "fontSize": 34
+              "fontSize": 34,
+              "fontWeight": "normal"
             },
             {
               "type": "frame",
@@ -547,6 +1364,7 @@
               "textAlign": "center",
               "fontFamily": "$font-body",
               "fontSize": 16,
+              "fontWeight": "normal",
               "fontStyle": "italic"
             },
             {
@@ -721,6 +1539,7 @@
               "textAlign": "center",
               "fontFamily": "$font-body",
               "fontSize": 11,
+              "fontWeight": "normal",
               "letterSpacing": 1
             }
           ]
@@ -769,7 +1588,8 @@
               "lineHeight": 1.2,
               "textAlign": "center",
               "fontFamily": "$font-script",
-              "fontSize": 34
+              "fontSize": 34,
+              "fontWeight": "normal"
             },
             {
               "type": "frame",
@@ -910,6 +1730,7 @@
                   "textAlign": "center",
                   "fontFamily": "$font-body",
                   "fontSize": 13,
+                  "fontWeight": "normal",
                   "letterSpacing": 1
                 },
                 {
@@ -1253,7 +2074,8 @@
               "lineHeight": 1.4,
               "textAlign": "center",
               "fontFamily": "$font-body",
-              "fontSize": 11
+              "fontSize": 11,
+              "fontWeight": "normal"
             }
           ]
         },
@@ -1319,7 +2141,8 @@
               "lineHeight": 1.2,
               "textAlign": "center",
               "fontFamily": "$font-script",
-              "fontSize": 34
+              "fontSize": 34,
+              "fontWeight": "normal"
             },
             {
               "type": "frame",
@@ -1339,7 +2162,8 @@
               "lineHeight": 1.4,
               "textAlign": "center",
               "fontFamily": "$font-body",
-              "fontSize": 14
+              "fontSize": 14,
+              "fontWeight": "normal"
             },
             {
               "type": "frame",
@@ -1664,7 +2488,8 @@
                   "lineHeight": 1.4,
                   "textAlign": "center",
                   "fontFamily": "$font-body",
-                  "fontSize": 11
+                  "fontSize": 11,
+                  "fontWeight": "normal"
                 }
               ]
             },
@@ -1713,7 +2538,8 @@
               "lineHeight": 1.2,
               "textAlign": "center",
               "fontFamily": "$font-script",
-              "fontSize": 42
+              "fontSize": 42,
+              "fontWeight": "normal"
             },
             {
               "type": "frame",
@@ -1733,7 +2559,8 @@
               "lineHeight": 1.4,
               "textAlign": "center",
               "fontFamily": "$font-body",
-              "fontSize": 14
+              "fontSize": 14,
+              "fontWeight": "normal"
             },
             {
               "type": "frame",
@@ -1808,6 +2635,7 @@
               "textAlign": "center",
               "fontFamily": "$font-body",
               "fontSize": 10,
+              "fontWeight": "normal",
               "letterSpacing": 1
             }
           ]
@@ -1818,7 +2646,7 @@
       "type": "frame",
       "id": "a8sUM",
       "x": 0,
-      "y": 4200,
+      "y": 5900,
       "name": "裝置版-S2 燈箱",
       "clip": true,
       "width": 290,
@@ -1892,7 +2720,7 @@
       "type": "frame",
       "id": "kouQN",
       "x": 380,
-      "y": 4200,
+      "y": 5900,
       "name": "裝置版-S6 音樂鈕狀態對照",
       "clip": true,
       "width": 470,
@@ -2105,7 +2933,7 @@
       "type": "frame",
       "id": "J0wxV",
       "x": 950,
-      "y": 4200,
+      "y": 5900,
       "name": "裝置版-S7 LINE卡片模擬",
       "clip": true,
       "width": 343,
@@ -2170,7 +2998,8 @@
               "content": "誠摯邀請您參與我們的婚禮，點擊查看詳細資訊與回覆出席意願。",
               "lineHeight": 1.4,
               "fontFamily": "$font-body",
-              "fontSize": 12
+              "fontSize": 12,
+              "fontWeight": "normal"
             },
             {
               "type": "text",
@@ -2180,7 +3009,8 @@
               "content": "ethan-chloe.wedding",
               "lineHeight": 1.4,
               "fontFamily": "$font-body",
-              "fontSize": 11
+              "fontSize": 11,
+              "fontWeight": "normal"
             }
           ]
         }
@@ -2190,7 +3020,7 @@
       "type": "frame",
       "id": "oB0o5",
       "x": 1400,
-      "y": 4200,
+      "y": 5900,
       "name": "共用-S7 OG分享圖",
       "clip": true,
       "width": 1200,
@@ -2287,7 +3117,8 @@
               "content": "Ethan & Chloe",
               "lineHeight": 1.2,
               "fontFamily": "$font-script",
-              "fontSize": 84
+              "fontSize": 84,
+              "fontWeight": "normal"
             },
             {
               "type": "frame",
@@ -2464,7 +3295,8 @@
                   "content": "Ethan & Chloe",
                   "lineHeight": 1.2,
                   "fontFamily": "$font-script",
-                  "fontSize": 96
+                  "fontSize": 96,
+                  "fontWeight": "normal"
                 },
                 {
                   "type": "frame",
@@ -2482,6 +3314,7 @@
                   "lineHeight": 1.4,
                   "fontFamily": "$font-body",
                   "fontSize": 26,
+                  "fontWeight": "normal",
                   "letterSpacing": 8
                 },
                 {
@@ -2771,6 +3604,957 @@
         },
         {
           "type": "frame",
+          "id": "tgAQJ",
+          "name": "電腦版-段1.5 About",
+          "clip": true,
+          "width": 1440,
+          "height": 772,
+          "fill": "$bg-blush",
+          "layout": "vertical",
+          "padding": [
+            96,
+            160
+          ],
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "text",
+              "id": "kmnA7",
+              "name": "D9-眉標",
+              "fill": "$accent-gold",
+              "content": "ABOUT US",
+              "lineHeight": 1.4,
+              "textAlign": "center",
+              "fontFamily": "$font-body",
+              "fontSize": 13,
+              "fontWeight": "600",
+              "letterSpacing": 5
+            },
+            {
+              "type": "frame",
+              "id": "hvfA9",
+              "name": "spacer-12",
+              "width": 1,
+              "height": 12
+            },
+            {
+              "type": "text",
+              "id": "SsZxO",
+              "name": "D9-主標",
+              "fill": "$primary",
+              "content": "The Two of Us",
+              "lineHeight": 1.2,
+              "textAlign": "center",
+              "fontFamily": "$font-script",
+              "fontSize": 44,
+              "fontWeight": "normal"
+            },
+            {
+              "type": "frame",
+              "id": "uvo6u",
+              "name": "spacer-14",
+              "width": 1,
+              "height": 14
+            },
+            {
+              "type": "rectangle",
+              "id": "af7fk",
+              "name": "D9-金線",
+              "fill": "$gold-soft",
+              "width": 64,
+              "height": 1
+            },
+            {
+              "type": "frame",
+              "id": "G20bg",
+              "name": "spacer-24",
+              "width": 1,
+              "height": 24
+            },
+            {
+              "type": "text",
+              "id": "Z4AaHl",
+              "name": "D9-引言",
+              "fill": "$text-muted",
+              "content": "在遇見彼此之前，我們各自過著很不一樣的日子。",
+              "lineHeight": 1.4,
+              "fontFamily": "$font-body",
+              "fontSize": 20,
+              "fontWeight": "normal",
+              "fontStyle": "italic"
+            },
+            {
+              "type": "frame",
+              "id": "H1M2q",
+              "name": "spacer-56",
+              "width": 1,
+              "height": 56
+            },
+            {
+              "type": "frame",
+              "id": "JFctj",
+              "name": "D9-兩人列",
+              "width": 1120,
+              "height": 300,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "A1ITBb",
+                  "name": "D9-新郎欄",
+                  "width": 520,
+                  "height": 300,
+                  "gap": 24,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "X4k7HR",
+                      "name": "D9-照片-新郎",
+                      "metadata": {
+                        "type": "unsplash",
+                        "username": "amirabbaspoor",
+                        "link": "https://unsplash.com/@amirabbaspoor",
+                        "author": "Amir Abbaspoor"
+                      },
+                      "width": 220,
+                      "height": 300,
+                      "fill": {
+                        "type": "image",
+                        "enabled": true,
+                        "url": "https://images.unsplash.com/photo-1725567005742-20be6a2865a2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3ODg4ODY0NjF8&ixlib=rb-4.1.0&q=80&w=1080",
+                        "mode": "fill"
+                      },
+                      "cornerRadius": 20,
+                      "effect": {
+                        "type": "shadow",
+                        "shadowType": "outer",
+                        "color": "$shadow-rose",
+                        "offset": {
+                          "x": 0,
+                          "y": 8
+                        },
+                        "blur": 28
+                      }
+                    },
+                    {
+                      "type": "frame",
+                      "id": "qZGQJ",
+                      "name": "D9-文字欄-新郎",
+                      "width": 276,
+                      "layout": "vertical",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "cFtTy",
+                          "name": "D9-角色標籤-新郎",
+                          "fill": "$accent-gold",
+                          "content": "GROOM",
+                          "lineHeight": 1.4,
+                          "fontFamily": "$font-body",
+                          "fontSize": 12,
+                          "fontWeight": "600",
+                          "letterSpacing": 3
+                        },
+                        {
+                          "type": "frame",
+                          "id": "KFWHA",
+                          "name": "spacer-8",
+                          "width": 1,
+                          "height": 8
+                        },
+                        {
+                          "type": "text",
+                          "id": "DTOGp",
+                          "name": "D9-姓名-新郎",
+                          "fill": "$text-main",
+                          "content": "洪承孝",
+                          "lineHeight": 1.4,
+                          "fontFamily": "$font-body",
+                          "fontSize": 26,
+                          "fontWeight": "500",
+                          "letterSpacing": 2
+                        },
+                        {
+                          "type": "frame",
+                          "id": "UZHuR",
+                          "name": "spacer-8",
+                          "width": 1,
+                          "height": 8
+                        },
+                        {
+                          "type": "frame",
+                          "id": "Mi2pq",
+                          "name": "D9-職業chip-新郎",
+                          "height": 28,
+                          "fill": "$bg-ivory",
+                          "cornerRadius": 14,
+                          "padding": [
+                            0,
+                            12
+                          ],
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "DI7Q5",
+                              "name": "D9-職業-新郎",
+                              "fill": "$primary",
+                              "content": "軟體工程師",
+                              "lineHeight": 1.4,
+                              "fontFamily": "$font-body",
+                              "fontSize": 13,
+                              "fontWeight": "500"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "cFnxb",
+                          "name": "spacer-14",
+                          "width": 1,
+                          "height": 14
+                        },
+                        {
+                          "type": "text",
+                          "id": "NqJZ6",
+                          "name": "D9-描述-新郎",
+                          "fill": "$text-muted",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "靠一行行程式碼過日子，習慣把複雜的問題拆開來、一個一個解決。話不多，但答應的事情一定做到。",
+                          "lineHeight": 1.7,
+                          "fontFamily": "$font-body",
+                          "fontSize": 15,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "mi3QY",
+                  "name": "D9-中央分隔",
+                  "width": 80,
+                  "height": 300,
+                  "layout": "vertical",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "rectangle",
+                      "id": "XcOFN",
+                      "name": "D9-分隔線-上",
+                      "fill": "$gold-soft",
+                      "width": 1,
+                      "height": 90
+                    },
+                    {
+                      "type": "frame",
+                      "id": "kkc2N",
+                      "name": "D9-分隔符號區",
+                      "width": 80,
+                      "height": 120,
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "mcheO",
+                          "name": "D9-連結符號",
+                          "fill": "$gold-soft",
+                          "content": "&",
+                          "lineHeight": 1.2,
+                          "fontFamily": "$font-script",
+                          "fontSize": 28,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "rectangle",
+                      "id": "td2zK",
+                      "name": "D9-分隔線-下",
+                      "fill": "$gold-soft",
+                      "width": 1,
+                      "height": 90
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "v5aeal",
+                  "name": "D9-新娘欄",
+                  "width": 520,
+                  "height": 300,
+                  "gap": 24,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "h7n3c8",
+                      "name": "D9-文字欄-新娘",
+                      "width": 276,
+                      "layout": "vertical",
+                      "alignItems": "end",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "fQZem",
+                          "name": "D9-角色標籤-新娘",
+                          "fill": "$accent-gold",
+                          "content": "BRIDE",
+                          "lineHeight": 1.4,
+                          "textAlign": "right",
+                          "fontFamily": "$font-body",
+                          "fontSize": 12,
+                          "fontWeight": "600",
+                          "letterSpacing": 3
+                        },
+                        {
+                          "type": "frame",
+                          "id": "qZhLv",
+                          "name": "spacer-8",
+                          "width": 1,
+                          "height": 8
+                        },
+                        {
+                          "type": "text",
+                          "id": "Q5W16",
+                          "name": "D9-姓名-新娘",
+                          "fill": "$text-main",
+                          "content": "李怡安",
+                          "lineHeight": 1.4,
+                          "textAlign": "right",
+                          "fontFamily": "$font-body",
+                          "fontSize": 26,
+                          "fontWeight": "500",
+                          "letterSpacing": 2
+                        },
+                        {
+                          "type": "frame",
+                          "id": "gAlXN",
+                          "name": "spacer-8",
+                          "width": 1,
+                          "height": 8
+                        },
+                        {
+                          "type": "frame",
+                          "id": "N4wPyL",
+                          "name": "D9-職業chip-新娘",
+                          "height": 28,
+                          "fill": "$bg-ivory",
+                          "cornerRadius": 14,
+                          "padding": [
+                            0,
+                            12
+                          ],
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "h7k7wX",
+                              "name": "D9-職業-新娘",
+                              "fill": "$primary",
+                              "content": "餐飲服務業",
+                              "lineHeight": 1.4,
+                              "fontFamily": "$font-body",
+                              "fontSize": 13,
+                              "fontWeight": "500"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "gcBWI",
+                          "name": "spacer-14",
+                          "width": 1,
+                          "height": 14
+                        },
+                        {
+                          "type": "text",
+                          "id": "WH1JL",
+                          "name": "D9-描述-新娘",
+                          "fill": "$text-muted",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "在餐飲業裡練就一身照顧人的本事，記得誰不吃什麼、誰想多要一點醬。她相信好好吃一頓飯，能讓人重新有力氣。",
+                          "lineHeight": 1.7,
+                          "textAlign": "right",
+                          "fontFamily": "$font-body",
+                          "fontSize": 15,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "EldLJ",
+                      "name": "D9-照片-新娘",
+                      "metadata": {
+                        "type": "unsplash",
+                        "username": "beaverfernandez",
+                        "link": "https://unsplash.com/@beaverfernandez",
+                        "author": "Beaver Fernandez"
+                      },
+                      "width": 220,
+                      "height": 300,
+                      "fill": {
+                        "type": "image",
+                        "enabled": true,
+                        "url": "https://images.unsplash.com/photo-1785162347226-8952e0de209c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3ODg4ODY5Mzd8&ixlib=rb-4.1.0&q=80&w=1080",
+                        "mode": "fill"
+                      },
+                      "cornerRadius": 20,
+                      "effect": {
+                        "type": "shadow",
+                        "shadowType": "outer",
+                        "color": "$shadow-rose",
+                        "offset": {
+                          "x": 0,
+                          "y": 8
+                        },
+                        "blur": 28
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "ANuzE",
+              "name": "spacer-48",
+              "width": 1,
+              "height": 48
+            },
+            {
+              "type": "text",
+              "id": "c06DK",
+              "name": "D9-收尾句",
+              "fill": "$text-muted",
+              "content": "一個把日子過成邏輯，一個把日子過成溫度，從 2026 . 12 . 12 起，我們一起過。",
+              "lineHeight": 1.4,
+              "fontFamily": "$font-body",
+              "fontSize": 17,
+              "fontWeight": "normal",
+              "fontStyle": "italic"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "fAw6F",
+          "name": "電腦版-段1.6 Story",
+          "clip": true,
+          "width": 1440,
+          "height": 972,
+          "fill": "$bg-ivory",
+          "layout": "vertical",
+          "padding": [
+            96,
+            120
+          ],
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "text",
+              "id": "a6M8NC",
+              "name": "D10-眉標",
+              "fill": "$accent-gold",
+              "content": "OUR STORY",
+              "lineHeight": 1.4,
+              "textAlign": "center",
+              "fontFamily": "$font-body",
+              "fontSize": 13,
+              "fontWeight": "600",
+              "letterSpacing": 5
+            },
+            {
+              "type": "frame",
+              "id": "yh9fg",
+              "name": "spacer-12",
+              "width": 1,
+              "height": 12
+            },
+            {
+              "type": "text",
+              "id": "SeEnO",
+              "name": "D10-主標",
+              "fill": "$primary",
+              "content": "How We Met",
+              "lineHeight": 1.2,
+              "textAlign": "center",
+              "fontFamily": "$font-script",
+              "fontSize": 44,
+              "fontWeight": "normal"
+            },
+            {
+              "type": "frame",
+              "id": "dt0Nv",
+              "name": "spacer-14",
+              "width": 1,
+              "height": 14
+            },
+            {
+              "type": "rectangle",
+              "id": "dnRdn",
+              "name": "D10-金線",
+              "fill": "$gold-soft",
+              "width": 64,
+              "height": 1
+            },
+            {
+              "type": "frame",
+              "id": "OOHZC",
+              "name": "spacer-24",
+              "width": 1,
+              "height": 24
+            },
+            {
+              "type": "frame",
+              "id": "u3HAX",
+              "name": "D10-書本列",
+              "width": 1192,
+              "height": 580,
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "dTiVp",
+                  "name": "D10-翻頁鈕-上一頁(停用)",
+                  "width": 56,
+                  "height": 56,
+                  "fill": "$surface",
+                  "cornerRadius": 28,
+                  "effect": {
+                    "type": "shadow",
+                    "shadowType": "outer",
+                    "color": "$shadow-rose",
+                    "offset": {
+                      "x": 0,
+                      "y": 4
+                    },
+                    "blur": 16
+                  },
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "V9MvoI",
+                      "name": "icon-chevron-left",
+                      "opacity": 0.4,
+                      "width": 20,
+                      "height": 20,
+                      "icon": "chevron-left",
+                      "library": "lucide",
+                      "fill": "$text-muted"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "XKqWe",
+                  "name": "spacer-h40",
+                  "width": 40,
+                  "height": 1
+                },
+                {
+                  "type": "frame",
+                  "id": "OSper",
+                  "name": "D10-書本",
+                  "clip": true,
+                  "width": 1000,
+                  "height": 580,
+                  "fill": {
+                    "type": "gradient",
+                    "gradientType": "linear",
+                    "enabled": true,
+                    "rotation": 180,
+                    "size": {
+                      "height": 1
+                    },
+                    "colors": [
+                      {
+                        "color": "#BE9068",
+                        "position": 0
+                      },
+                      {
+                        "color": "#8A6544",
+                        "position": 1
+                      }
+                    ]
+                  },
+                  "cornerRadius": 20,
+                  "stroke": "#D4B48C",
+                  "strokeWidth": 1,
+                  "strokeAlignment": "inner",
+                  "effect": {
+                    "type": "shadow",
+                    "shadowType": "outer",
+                    "color": "$shadow-rose",
+                    "offset": {
+                      "x": 0,
+                      "y": 16
+                    },
+                    "blur": 48
+                  },
+                  "padding": 12,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "E0qLqu",
+                      "name": "D10-左頁",
+                      "width": 488,
+                      "height": 556,
+                      "fill": "$surface",
+                      "cornerRadius": [
+                        8,
+                        0,
+                        0,
+                        8
+                      ],
+                      "padding": 24,
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "vwrx1",
+                          "name": "D10-左頁照片",
+                          "metadata": {
+                            "type": "unsplash",
+                            "username": "nicicul",
+                            "link": "https://unsplash.com/@nicicul",
+                            "author": "Nikita"
+                          },
+                          "width": 440,
+                          "height": 508,
+                          "fill": {
+                            "type": "image",
+                            "enabled": true,
+                            "url": "https://images.unsplash.com/photo-1759866614103-376bde0fc66f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3ODg5MTYwNjF8&ixlib=rb-4.1.0&q=80&w=1080",
+                            "mode": "fill"
+                          },
+                          "cornerRadius": 12
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "bvCVJ",
+                      "name": "D10-右頁",
+                      "width": 488,
+                      "height": 556,
+                      "fill": "$surface",
+                      "cornerRadius": [
+                        0,
+                        8,
+                        8,
+                        0
+                      ],
+                      "layout": "vertical",
+                      "padding": [
+                        24,
+                        48,
+                        48,
+                        48
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "GuQyq",
+                          "name": "D10-年份標籤",
+                          "fill": "$accent-gold",
+                          "content": "2019 秋",
+                          "lineHeight": 1.4,
+                          "fontFamily": "$font-body",
+                          "fontSize": 14,
+                          "fontWeight": "600",
+                          "letterSpacing": 3
+                        },
+                        {
+                          "type": "frame",
+                          "id": "BeKUr",
+                          "name": "spacer-10",
+                          "width": 1,
+                          "height": 10
+                        },
+                        {
+                          "type": "text",
+                          "id": "JXYQE",
+                          "name": "D10-段落標題",
+                          "fill": "$text-main",
+                          "content": "初次見面",
+                          "lineHeight": 1.4,
+                          "fontFamily": "$font-body",
+                          "fontSize": 28,
+                          "fontWeight": "500",
+                          "letterSpacing": 1
+                        },
+                        {
+                          "type": "frame",
+                          "id": "ShgZZ",
+                          "name": "spacer-14",
+                          "width": 1,
+                          "height": 14
+                        },
+                        {
+                          "type": "text",
+                          "id": "joM75",
+                          "name": "D10-故事文字",
+                          "fill": "$text-muted",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "那年秋天，在朋友的一場聚會上第一次見到彼此。那天散場之後才發現，我們是聊到最後才離開的兩個人，連要回家的方向都一樣。",
+                          "lineHeight": 1.8,
+                          "fontFamily": "$font-body",
+                          "fontSize": 17,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "Z9Y4i",
+                          "layoutPosition": "absolute",
+                          "x": 0,
+                          "y": 504,
+                          "name": "D10-頁碼列",
+                          "width": 488,
+                          "height": 20,
+                          "padding": [
+                            0,
+                            48
+                          ],
+                          "justifyContent": "end",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "uHQYU",
+                              "name": "D10-頁碼",
+                              "fill": "$text-muted",
+                              "content": "01",
+                              "lineHeight": 1.4,
+                              "fontFamily": "$font-body",
+                              "fontSize": 14,
+                              "fontWeight": "normal",
+                              "letterSpacing": 2
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "rectangle",
+                      "id": "Uh5q5",
+                      "layoutPosition": "absolute",
+                      "x": 444,
+                      "y": 12,
+                      "name": "D10-書脊暗部-左",
+                      "fill": {
+                        "type": "gradient",
+                        "gradientType": "linear",
+                        "enabled": true,
+                        "rotation": 270,
+                        "size": {
+                          "height": 1
+                        },
+                        "colors": [
+                          {
+                            "color": "#83184300",
+                            "position": 0
+                          },
+                          {
+                            "color": "#83184326",
+                            "position": 1
+                          }
+                        ]
+                      },
+                      "width": 56,
+                      "height": 556
+                    },
+                    {
+                      "type": "rectangle",
+                      "id": "j1mYSi",
+                      "layoutPosition": "absolute",
+                      "x": 500,
+                      "y": 12,
+                      "name": "D10-書脊暗部-右",
+                      "fill": {
+                        "type": "gradient",
+                        "gradientType": "linear",
+                        "enabled": true,
+                        "rotation": 270,
+                        "size": {
+                          "height": 1
+                        },
+                        "colors": [
+                          {
+                            "color": "#83184326",
+                            "position": 0
+                          },
+                          {
+                            "color": "#83184300",
+                            "position": 1
+                          }
+                        ]
+                      },
+                      "width": 56,
+                      "height": 556
+                    },
+                    {
+                      "type": "rectangle",
+                      "id": "MnAfx",
+                      "layoutPosition": "absolute",
+                      "x": 500,
+                      "y": 12,
+                      "name": "D10-書脊",
+                      "fill": "$border-soft",
+                      "width": 1,
+                      "height": 556
+                    },
+                    {
+                      "type": "rectangle",
+                      "id": "dkEAp",
+                      "layoutPosition": "absolute",
+                      "x": 20,
+                      "y": 12,
+                      "name": "D10-內頁上緣暗線",
+                      "fill": "#00000020",
+                      "width": 960,
+                      "height": 2
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "z8dJT",
+                  "name": "spacer-h40",
+                  "width": 40,
+                  "height": 1
+                },
+                {
+                  "type": "frame",
+                  "id": "wbqUy",
+                  "name": "D10-翻頁鈕-下一頁",
+                  "width": 56,
+                  "height": 56,
+                  "fill": "$surface",
+                  "cornerRadius": 28,
+                  "effect": {
+                    "type": "shadow",
+                    "shadowType": "outer",
+                    "color": "$shadow-rose",
+                    "offset": {
+                      "x": 0,
+                      "y": 4
+                    },
+                    "blur": 16
+                  },
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "JkmZh",
+                      "name": "icon-chevron-right",
+                      "width": 20,
+                      "height": 20,
+                      "icon": "chevron-right",
+                      "library": "lucide",
+                      "fill": "$text-main"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "mwwni",
+              "name": "spacer-29",
+              "width": 1,
+              "height": 29
+            },
+            {
+              "type": "frame",
+              "id": "AIhWQ",
+              "name": "D10-頁點列",
+              "height": 10,
+              "gap": 6,
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "rectangle",
+                  "cornerRadius": 5,
+                  "id": "yU47P",
+                  "name": "頁點-active",
+                  "fill": "$primary",
+                  "width": 25,
+                  "height": 10
+                },
+                {
+                  "type": "ellipse",
+                  "id": "BZWg1",
+                  "name": "頁點-1",
+                  "fill": "$border-pill",
+                  "width": 10,
+                  "height": 10
+                },
+                {
+                  "type": "ellipse",
+                  "id": "PEbEr",
+                  "name": "頁點-2",
+                  "fill": "$border-pill",
+                  "width": 10,
+                  "height": 10
+                },
+                {
+                  "type": "ellipse",
+                  "id": "ffX4j",
+                  "name": "頁點-3",
+                  "fill": "$border-pill",
+                  "width": 10,
+                  "height": 10
+                },
+                {
+                  "type": "ellipse",
+                  "id": "Pg4nc",
+                  "name": "頁點-4",
+                  "fill": "$border-pill",
+                  "width": 10,
+                  "height": 10
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "b6IlwD",
+              "name": "spacer-18",
+              "width": 1,
+              "height": 18
+            },
+            {
+              "type": "text",
+              "id": "YrnWO",
+              "name": "D10-操作提示",
+              "fill": "$text-muted",
+              "content": "點兩側箭頭翻頁",
+              "lineHeight": 1.4,
+              "textAlign": "center",
+              "fontFamily": "$font-body",
+              "fontSize": 15,
+              "fontWeight": "normal",
+              "letterSpacing": 1
+            }
+          ]
+        },
+        {
+          "type": "frame",
           "id": "O1WPh",
           "name": "電腦版-段2 Gallery",
           "clip": true,
@@ -2811,7 +4595,8 @@
               "content": "Our Moments",
               "lineHeight": 1.2,
               "fontFamily": "$font-script",
-              "fontSize": 56
+              "fontSize": 56,
+              "fontWeight": "normal"
             },
             {
               "type": "frame",
@@ -2844,6 +4629,7 @@
               "lineHeight": 1.4,
               "fontFamily": "$font-body",
               "fontSize": 20,
+              "fontWeight": "normal",
               "fontStyle": "italic"
             },
             {
@@ -3036,6 +4822,7 @@
               "lineHeight": 1.4,
               "fontFamily": "$font-body",
               "fontSize": 11,
+              "fontWeight": "normal",
               "letterSpacing": 1
             }
           ]
@@ -3082,7 +4869,8 @@
               "content": "Wedding Day",
               "lineHeight": 1.2,
               "fontFamily": "$font-script",
-              "fontSize": 56
+              "fontSize": 56,
+              "fontWeight": "normal"
             },
             {
               "type": "frame",
@@ -3216,6 +5004,7 @@
                       "lineHeight": 1.4,
                       "fontFamily": "$font-body",
                       "fontSize": 13,
+                      "fontWeight": "normal",
                       "letterSpacing": 1
                     },
                     {
@@ -3546,7 +5335,8 @@
               "content": "※ 宴會廳將於開席前 30 分鐘開放入場",
               "lineHeight": 1.4,
               "fontFamily": "$font-body",
-              "fontSize": 11
+              "fontSize": 11,
+              "fontWeight": "normal"
             }
           ]
         },
@@ -3610,7 +5400,8 @@
               "content": "Will You Join Us?",
               "lineHeight": 1.2,
               "fontFamily": "$font-script",
-              "fontSize": 56
+              "fontSize": 56,
+              "fontWeight": "normal"
             },
             {
               "type": "frame",
@@ -3627,7 +5418,8 @@
               "content": "您的出席是我們最珍貴的祝福，敬請於 2026 / 10 / 15 前回覆。",
               "lineHeight": 1.4,
               "fontFamily": "$font-body",
-              "fontSize": 17
+              "fontSize": 17,
+              "fontWeight": "normal"
             },
             {
               "type": "frame",
@@ -3894,7 +5686,8 @@
               "content": "將另開新視窗前往 Google 表單",
               "lineHeight": 1.4,
               "fontFamily": "$font-body",
-              "fontSize": 11
+              "fontSize": 11,
+              "fontWeight": "normal"
             },
             {
               "type": "frame",
@@ -3939,7 +5732,8 @@
               "content": "Thank You",
               "lineHeight": 1.2,
               "fontFamily": "$font-script",
-              "fontSize": 64
+              "fontSize": 64,
+              "fontWeight": "normal"
             },
             {
               "type": "frame",
@@ -3956,7 +5750,8 @@
               "content": "謝謝每一位陪伴我們走到這裡的人，期待與你分享這一天的喜悅。",
               "lineHeight": 1.4,
               "fontFamily": "$font-body",
-              "fontSize": 17
+              "fontSize": 17,
+              "fontWeight": "normal"
             },
             {
               "type": "frame",
@@ -4028,6 +5823,7 @@
               "lineHeight": 1.4,
               "fontFamily": "$font-body",
               "fontSize": 10,
+              "fontWeight": "normal",
               "letterSpacing": 1
             }
           ]
@@ -4111,6 +5907,10 @@
     "font-body": {
       "type": "string",
       "value": "Cormorant Infant"
+    },
+    "book-wood": {
+      "type": "color",
+      "value": "#A67C52"
     }
   },
   "fileToken": "1933c381-7a9f-4b3d-9c2c-8b620725a4d0"
