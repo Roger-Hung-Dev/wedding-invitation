@@ -82,6 +82,11 @@ import { IntroGateStore } from './intro-gate.store'
       background: linear-gradient(180deg, #00000073 0%, #000000b3 100%);
     }
 
+    /*
+      整組文字往上 120px：底圖的人物在畫面中央偏下，文字若也置中就會壓在臉上。
+      用 transform 而不是改 flex 對齊，是因為它不影響佈局計算，
+      子元素各自的進場動畫也不受影響。
+    */
     .gate__content {
       position: relative;
       display: flex;
@@ -89,6 +94,7 @@ import { IntroGateStore } from './intro-gate.store'
       align-items: center;
       padding: 0 24px;
       text-align: center;
+      transform: translateY(-120px);
     }
 
     .gate__name-en {
