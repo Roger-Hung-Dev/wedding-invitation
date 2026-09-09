@@ -24,6 +24,15 @@ import { IntroGateStore } from './intro-gate.store'
         <span class="gate__veil" aria-hidden="true"></span>
 
         <span class="gate__content">
+          <span class="gate__title" aria-hidden="true">
+            <svg viewBox="0 0 220 46" width="220" height="46">
+              <path id="gateTitleArc" d="M 12 46 Q 110 -8 208 46" fill="none" />
+              <text>
+                <textPath href="#gateTitleArc" startOffset="50%" text-anchor="middle">{{ text.title }}</textPath>
+              </text>
+            </svg>
+          </span>
+
           <span class="gate__name-en">{{ content.brideGroomEn }}</span>
           <span class="gate__name-zh">{{ content.brideGroomZh }}</span>
 
@@ -87,12 +96,17 @@ import { IntroGateStore } from './intro-gate.store'
       用 transform 而不是改 flex 對齊，是因為它不影響佈局計算，
       子元素各自的進場動畫也不受影響。
 
-      ⛔ 手機的 -110 與 .gate__action 的 margin-top 36 是一組，不要單獨調其中一個。
-      要的效果是「飾線與它上面的兩行往下 20，輕觸開啟留在原位」。但這一層是垂直置中的，
-      把 action 的 margin 縮短 20 會讓內容整體變矮，置中後整組又往回彈 10 ——
-      所以位移只給 10，另外 10 由高度變化自己補上。兩個數字要一起動，
-      改法是：飾線要下移 N，則位移 = -120 + N/2、action 的 margin = 56 - N。
-      桌機的排版不同（字級大、action 的 margin 是 52），維持原本的 -120。
+      這一層垂直置中，所以位移不能單獨算 —— 內容的總高一變，整組就會自己跑掉一半。
+      手機的 -137 是兩件事疊起來的：
+
+      1. 飾線與它上面兩行往下 20（.gate__action 的 margin 56 → 36）。內容因此變矮 20，
+         置中後整組往回彈 10，所以位移只需給 10 → -110。
+      2. 上方加了弧形標題（高 46 + margin 8 = 54）。新元素加在上方時，內容頂端上移 27，
+         但標題以下的元素相對頂端又往下 54，淨往下 27 —— 要抵銷得往上補 27 → -137。
+
+      ⚠️ 補償方向很容易搞反：加在上方的元素要往「上」補，不是往下。
+      改動任一項的通則是：位移 = -120 + (action 少掉的 margin)/2 − (上方新增的高度)/2。
+      桌機的排版不同（字級大、action 的 margin 是 52、標題也放大），數值另外算。
     */
     .gate__content {
       position: relative;
@@ -101,7 +115,35 @@ import { IntroGateStore } from './intro-gate.store'
       align-items: center;
       padding: 0 24px;
       text-align: center;
-      transform: translateY(-110px);
+      transform: translateY(-137px);
+    }
+
+    /*
+      弧形標題。CSS 排不出弧形文字，逐字旋轉又會讓中文字歪掉，
+      所以走 SVG 的 textPath —— 字形保持完整，只是整個字順著曲線轉。
+
+      SVG 的佈局高度固定在 46，字靠 overflow: visible 溢出框外，
+      所以調弧度（path 的控制點）不會動到下面的排版。
+      弧線兩端越陡，最外側的字被轉得越多 —— 目前的弧度下「函」會比其他字略低，
+      這是選定的樣式，不是沒對齊。
+    */
+    .gate__title {
+      display: block;
+      line-height: 0;
+      margin-bottom: 8px;
+      animation: gate-rise 900ms var(--ease-elegant) 80ms both;
+    }
+
+    .gate__title svg {
+      display: block;
+      overflow: visible;
+    }
+
+    .gate__title text {
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 5px;
+      fill: var(--color-text-invert);
     }
 
     .gate__name-en {
@@ -199,9 +241,18 @@ import { IntroGateStore } from './intro-gate.store'
         display: block;
       }
 
-      /* 手機把整組往下讓了 10，桌機的排版不同，維持原本的位移。 */
+      /*
+        桌機不套用手機那 10px 的下讓，但同樣要抵銷弧形標題撐出來的高度。
+        標題等比放大到 254×53（＝220×15/13，讓字看起來是 15px，與 .gate__action 同級），
+        所以補償是 -120 − (53+8)/2 ≈ -150。
+      */
       .gate__content {
-        transform: translateY(-120px);
+        transform: translateY(-150px);
+      }
+
+      .gate__title svg {
+        width: 254px;
+        height: 53px;
       }
 
       .gate__name-en {
