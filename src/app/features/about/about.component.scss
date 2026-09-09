@@ -93,13 +93,12 @@
     color: var(--color-accent-gold);
   }
 
-  // 名字與職業標籤的共同容器：寬度貼合兩者中較寬的那一個（inline-flex ＋ column），
-  // 內部 align-items: center 讓兩者以中線對齊。容器本身仍隨 text-align 靠左／靠右，
-  // 所以新郎新娘的鏡像版式不受影響。
+  // 名字與職業標籤的共同容器。兩者靠同一側對齊：新郎靠左（與姓名第一個字左緣貼齊）、
+  // 新娘靠右（與姓名最後一個字右緣貼齊），與整張卡的鏡像方向一致。
   .about__identity {
-    display: inline-flex;
+    display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     margin: 6px 0 0;
   }
 
@@ -110,6 +109,10 @@
     letter-spacing: 2px;
     line-height: 1.4;
     color: var(--color-text-main);
+  }
+
+  .about__card--bride & .about__identity {
+    align-items: flex-end;
   }
 
   .about__chip {
