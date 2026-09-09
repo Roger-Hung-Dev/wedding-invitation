@@ -112,6 +112,20 @@
   transition-delay: 1000ms;
 }
 
+/*
+  宴客地點緊接在婚期之後：賓客看完「哪一天」下一個要問的就是「在哪裡」。
+  字級與亮度都比婚期低一階 —— 日期是主角，地點是它的補充，
+  兩行同樣大小會讓這一區變成兩個並列的重點，反而都不突出。
+*/
+.hero__venue {
+  margin: 12px 0 0;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 3px;
+  color: var(--color-text-invert-muted);
+  transition-delay: 1060ms;
+}
+
 .hero__countdown {
   display: flex;
   gap: 12px;
@@ -241,6 +255,12 @@
   .hero__date {
     margin-top: 32px;
     font-size: 20px;
+    letter-spacing: 4px;
+  }
+
+  .hero__venue {
+    margin-top: 14px;
+    font-size: 17px;
     letter-spacing: 4px;
   }
 

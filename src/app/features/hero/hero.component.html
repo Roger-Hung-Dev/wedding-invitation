@@ -27,6 +27,7 @@
     </div>
 
     <p class="anim-fade-up hero__date" [class.is-visible]="loaded()">{{ content.weddingDateDisplay }}</p>
+    <p class="anim-fade-up hero__venue" [class.is-visible]="loaded()">{{ content.venueName }}　{{ content.venueHall }}</p>
 
     @if (!store.countdown().isOver) {
       <div class="hero__countdown">

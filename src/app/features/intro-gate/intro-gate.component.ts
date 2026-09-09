@@ -33,8 +33,6 @@ import { IntroGateStore } from './intro-gate.store'
             <span class="gate__divider-line"></span>
           </span>
 
-          <span class="gate__venue">{{ content.venueName }}　{{ content.venueHall }}</span>
-
           <span class="gate__action">{{ text.action }}</span>
         </span>
       </button>
@@ -136,24 +134,8 @@ import { IntroGateStore } from './intro-gate.store'
       這行字是整層唯一要賓客做的事，所以給它緩慢的呼吸感把視線帶過去。
       節奏刻意訂得比全站其他動畫慢，讀起來像等待而不是催促。
     */
-    /*
-      宴客地點放在開場層，賓客第一眼就知道要去哪 ——
-      這是喜帖最常被回頭查的資訊，放在進場畫面等於少一次捲動。
-      亮度刻意低於「輕觸開啟」：那行才是這一層要賓客做的事，地點是附帶資訊。
-    */
-    .gate__venue {
-      margin-top: 26px;
-      font-size: 14px;
-      font-weight: 400;
-      letter-spacing: 3px;
-      line-height: 1.6;
-      color: var(--color-text-invert-muted);
-      text-shadow: 0 1px 6px #00000099;
-      animation: gate-rise 900ms var(--ease-elegant) 560ms both;
-    }
-
     .gate__action {
-      margin-top: 44px;
+      margin-top: 56px;
       font-size: 13px;
       font-weight: 500;
       letter-spacing: 5px;
@@ -161,8 +143,8 @@ import { IntroGateStore } from './intro-gate.store'
       /* 底圖亮處（天空、白紗）會吃掉金色字，加一層暗影確保任何一張封面都讀得到 */
       text-shadow: 0 1px 6px #00000099;
       animation:
-        gate-rise 900ms var(--ease-elegant) 700ms both,
-        gate-breathe 2600ms ease-in-out 1600ms infinite;
+        gate-rise 900ms var(--ease-elegant) 640ms both,
+        gate-breathe 2600ms ease-in-out 1500ms infinite;
     }
 
     @keyframes gate-in {
@@ -214,12 +196,6 @@ import { IntroGateStore } from './intro-gate.store'
         letter-spacing: 8px;
       }
 
-      .gate__venue {
-        margin-top: 32px;
-        font-size: 17px;
-        letter-spacing: 4px;
-      }
-
       .gate__action {
         margin-top: 52px;
         font-size: 15px;
@@ -235,7 +211,6 @@ import { IntroGateStore } from './intro-gate.store'
       .gate__name-en,
       .gate__name-zh,
       .gate__divider,
-      .gate__venue,
       .gate__action {
         animation: none;
         opacity: 1;
