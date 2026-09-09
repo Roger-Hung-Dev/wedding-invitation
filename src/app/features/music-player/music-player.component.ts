@@ -211,18 +211,29 @@ export class MusicPlayerComponent {
     if (!this.isBrowser || this.store.state() !== 'idle') return
     const audio = this.audioEl().nativeElement
     this.note(`手勢 ${event?.type ?? '?'} 前：paused=${audio.paused} muted=${audio.muted}`)
-    // 靜音預播可能已經跑了幾十秒，這時解除靜音會從曲子中間切進來。
-    // 賓客實際「聽到」音樂的起點就是這一刻，所以倒回開頭讓他聽到完整的曲子。
-    audio.currentTime = 0
+
+    // ⛔ **媒體已經在播的時候，絕對不要再呼叫 play()。**
+    // 靜音預播成功時 paused 已經是 false，這時只要 muted = false 就會出聲；
+    // 多呼叫的那次 play() 反而會重新觸發自動播放檢查而被拒（實機回報 NotAllowedError），
+    // 然後被 catch 轉回靜音 —— 等於自己把好不容易播起來的音樂關掉。
     audio.muted = false
+
+    if (!audio.paused) {
+      this.store.play()
+      this.note('解除靜音（已在播，未呼叫 play）→ 成功')
+      return
+    }
+
+    // 只有靜音預播沒成功（或被系統暫停）時，才真的需要發出播放請求。
+    // ⚠️ 必須在這個同步呼叫堆疊裡發出 —— iOS 只認「手勢當下」的播放請求。
     audio.play().then(
       () => {
         this.store.play()
-        this.note('解除靜音 → 成功')
+        this.note('play() → 成功')
       },
       (e: DOMException) => {
         audio.muted = true
-        this.note(`解除靜音 → 被拒 ${e.name}`)
+        this.note(`play() → 被拒 ${e.name}`)
       },
     )
   }
