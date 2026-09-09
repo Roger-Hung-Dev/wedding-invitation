@@ -243,7 +243,7 @@ export interface StoryPage {
 export const STORY_PAGES: readonly StoryPage[] = [
   {
     id: 'story-1',
-    year: '2019 秋',
+    year: '2019 10月',
     title: '初次見面',
     body: '那年秋天，在朋友的一場聚會上第一次見到彼此。那天散場之後才發現，我們是聊到最後才離開的兩個人，連要回家的方向都一樣。',
     photoUrl: 'assets/gallery/photo-1.jpg',
@@ -251,7 +251,7 @@ export const STORY_PAGES: readonly StoryPage[] = [
   },
   {
     id: 'story-2',
-    year: '2020 春',
+    year: '2020 3月',
     title: '熟悉起來',
     body: '開始習慣生活裡有對方的日常。她下班傳訊息說今天很累，他就把宵夜送到樓下，說剛好順路——其實那天他整整繞了半座城市才到。',
     photoUrl: 'assets/gallery/photo-2.jpg',
@@ -259,7 +259,7 @@ export const STORY_PAGES: readonly StoryPage[] = [
   },
   {
     id: 'story-3',
-    year: '2020 夏',
+    year: '2020 7月',
     title: '在一起',
     body: '其實那天沒有誰正式開口說什麼。只是某一天散步回家的路上，牽起來的手就沒有再放開；後來想想，那條路我們一走就走了好多年。',
     photoUrl: 'assets/gallery/photo-3.jpg',
@@ -275,7 +275,7 @@ export const STORY_PAGES: readonly StoryPage[] = [
   },
   {
     id: 'story-5',
-    year: '2026 春',
+    year: '2026 3月',
     title: '他問，她說好',
     body: '就在第一次見面的那家店門口，他單膝跪下。她一邊哭一邊點頭，然後說了一句：你怎麼這麼慢。那天整間店的人全都站起來鼓掌。',
     photoUrl: 'assets/gallery/photo-5.jpg',
