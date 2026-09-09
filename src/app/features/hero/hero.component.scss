@@ -43,6 +43,19 @@
   background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.55) 100%);
 }
 
+/*
+  手機版的四個間距（本區塊的 padding-top、飾線／婚期的 margin-top、倒數的 margin-top）
+  是一組互相牽制的數字，不要單獨調其中一個。
+
+  背景照片裡兩人的臉落在畫面 y 305–347 之間，原本的排版正好讓婚期與宴客地點
+  壓在臉上。做法是把「眉標 → 宴客地點」整組上移 85px，讓地點底部停在 295
+  （頭頂之上 10px），倒數格則留在原處 —— 於是空出來的 85px 全部累加到
+  倒數的 margin-top（40 → 125），臉的周圍因此是一片乾淨的留白。
+  之後再把飾線以上的三個元素往下讓 12px，避免整組貼著畫面頂端。
+
+  ⛔ 照片的裁切位置會隨視窗尺寸改變，臉的位置也跟著跑。這組數字是照
+  337×556（賓客手機開了「放大顯示」時的等效尺寸）量出來的，換一個尺寸要重量。
+*/
 .hero__content {
   position: relative;
   z-index: 2;
@@ -50,7 +63,7 @@
   flex-direction: column;
   align-items: center;
   width: 100%;
-  padding: 120px 24px 0;
+  padding: 59px 24px 0;
   text-align: center;
 }
 
@@ -86,7 +99,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-top: 28px;
+  margin-top: 16px;
   transition-delay: 900ms;
 }
 
@@ -104,7 +117,7 @@
 }
 
 .hero__date {
-  margin: 28px 0 0;
+  margin: 16px 0 0;
   font-size: 16px;
   font-weight: 500;
   letter-spacing: 3px;
@@ -126,10 +139,11 @@
   transition-delay: 1060ms;
 }
 
+/* margin-top 吃掉了上面那組上移的 85px，倒數格才會停在原本的位置。 */
 .hero__countdown {
   display: flex;
   gap: 12px;
-  margin-top: 40px;
+  margin-top: 125px;
 }
 
 .hero__countdown-cell {
