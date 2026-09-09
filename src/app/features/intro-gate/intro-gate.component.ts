@@ -83,9 +83,16 @@ import { IntroGateStore } from './intro-gate.store'
     }
 
     /*
-      整組文字往上 120px：底圖的人物在畫面中央偏下，文字若也置中就會壓在臉上。
+      整組文字往上：底圖的人物在畫面中央偏下，文字若也置中就會壓在臉上。
       用 transform 而不是改 flex 對齊，是因為它不影響佈局計算，
       子元素各自的進場動畫也不受影響。
+
+      ⛔ 手機的 -110 與 .gate__action 的 margin-top 36 是一組，不要單獨調其中一個。
+      要的效果是「飾線與它上面的兩行往下 20，輕觸開啟留在原位」。但這一層是垂直置中的，
+      把 action 的 margin 縮短 20 會讓內容整體變矮，置中後整組又往回彈 10 ——
+      所以位移只給 10，另外 10 由高度變化自己補上。兩個數字要一起動，
+      改法是：飾線要下移 N，則位移 = -120 + N/2、action 的 margin = 56 - N。
+      桌機的排版不同（字級大、action 的 margin 是 52），維持原本的 -120。
     */
     .gate__content {
       position: relative;
@@ -94,7 +101,7 @@ import { IntroGateStore } from './intro-gate.store'
       align-items: center;
       padding: 0 24px;
       text-align: center;
-      transform: translateY(-120px);
+      transform: translateY(-110px);
     }
 
     .gate__name-en {
@@ -141,7 +148,7 @@ import { IntroGateStore } from './intro-gate.store'
       節奏刻意訂得比全站其他動畫慢，讀起來像等待而不是催促。
     */
     .gate__action {
-      margin-top: 56px;
+      margin-top: 36px;
       font-size: 13px;
       font-weight: 500;
       letter-spacing: 5px;
@@ -190,6 +197,11 @@ import { IntroGateStore } from './intro-gate.store'
 
       .gate__bg--desktop {
         display: block;
+      }
+
+      /* 手機把整組往下讓了 10，桌機的排版不同，維持原本的位移。 */
+      .gate__content {
+        transform: translateY(-120px);
       }
 
       .gate__name-en {
