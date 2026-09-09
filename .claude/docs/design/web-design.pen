@@ -982,29 +982,11 @@
               "type": "frame",
               "id": "shoHW",
               "name": "S10-書本（書皮）",
+              "clip": true,
               "width": 342,
               "height": 414,
-              "fill": {
-                "type": "gradient",
-                "gradientType": "linear",
-                "enabled": true,
-                "rotation": 180,
-                "size": {
-                  "height": 1
-                },
-                "colors": [
-                  {
-                    "color": "#BE9068",
-                    "position": 0
-                  },
-                  {
-                    "color": "#8A6544",
-                    "position": 1
-                  }
-                ]
-              },
               "cornerRadius": 20,
-              "stroke": "#D4B48C",
+              "stroke": "#CAAF94",
               "strokeWidth": 1,
               "strokeAlignment": "inner",
               "effect": {
@@ -1118,8 +1100,63 @@
                       "fill": "#00000020",
                       "width": 302,
                       "height": 2
+                    },
+                    {
+                      "type": "rectangle",
+                      "id": "ocZfh",
+                      "layoutPosition": "absolute",
+                      "x": 8,
+                      "y": 389,
+                      "name": "S10-內頁下緣反光",
+                      "fill": "#FFFFFF66",
+                      "width": 302,
+                      "height": 1
                     }
                   ]
+                },
+                {
+                  "type": "rectangle",
+                  "id": "CJo2Q",
+                  "layoutPosition": "absolute",
+                  "x": 0,
+                  "y": 0,
+                  "name": "S10-書皮-上",
+                  "fill": "#BD9B79",
+                  "width": 342,
+                  "height": 12
+                },
+                {
+                  "type": "rectangle",
+                  "id": "B09TC",
+                  "layoutPosition": "absolute",
+                  "x": 0,
+                  "y": 402,
+                  "name": "S10-書皮-下",
+                  "fill": "#7D5D3E",
+                  "width": 342,
+                  "height": 12
+                },
+                {
+                  "type": "rectangle",
+                  "id": "J2Lkkx",
+                  "layoutPosition": "absolute",
+                  "x": 0,
+                  "y": 12,
+                  "name": "S10-書皮-左",
+                  "fill": "#B18961",
+                  "width": 12,
+                  "height": 390
+                },
+                {
+                  "type": "rectangle",
+                  "id": "lE7mW",
+                  "layoutPosition": "absolute",
+                  "x": 330,
+                  "y": 12,
+                  "name": "S10-書皮-右",
+                  "fill": "#956F4A",
+                  "width": 12,
+                  "height": 390
                 }
               ]
             },
@@ -4170,27 +4207,8 @@
                   "clip": true,
                   "width": 1000,
                   "height": 580,
-                  "fill": {
-                    "type": "gradient",
-                    "gradientType": "linear",
-                    "enabled": true,
-                    "rotation": 180,
-                    "size": {
-                      "height": 1
-                    },
-                    "colors": [
-                      {
-                        "color": "#BE9068",
-                        "position": 0
-                      },
-                      {
-                        "color": "#8A6544",
-                        "position": 1
-                      }
-                    ]
-                  },
                   "cornerRadius": 20,
-                  "stroke": "#D4B48C",
+                  "stroke": "#CAAF94",
                   "strokeWidth": 1,
                   "strokeAlignment": "inner",
                   "effect": {
@@ -4427,6 +4445,61 @@
                       "fill": "#00000020",
                       "width": 960,
                       "height": 2
+                    },
+                    {
+                      "type": "rectangle",
+                      "id": "qb22u",
+                      "layoutPosition": "absolute",
+                      "x": 0,
+                      "y": 0,
+                      "name": "D10-書皮-上",
+                      "fill": "#BD9B79",
+                      "width": 1000,
+                      "height": 12
+                    },
+                    {
+                      "type": "rectangle",
+                      "id": "JL7ci",
+                      "layoutPosition": "absolute",
+                      "x": 0,
+                      "y": 568,
+                      "name": "D10-書皮-下",
+                      "fill": "#7D5D3E",
+                      "width": 1000,
+                      "height": 12
+                    },
+                    {
+                      "type": "rectangle",
+                      "id": "yDZao",
+                      "layoutPosition": "absolute",
+                      "x": 0,
+                      "y": 12,
+                      "name": "D10-書皮-左",
+                      "fill": "#B18961",
+                      "width": 12,
+                      "height": 556
+                    },
+                    {
+                      "type": "rectangle",
+                      "id": "XiOAh",
+                      "layoutPosition": "absolute",
+                      "x": 988,
+                      "y": 12,
+                      "name": "D10-書皮-右",
+                      "fill": "#956F4A",
+                      "width": 12,
+                      "height": 556
+                    },
+                    {
+                      "type": "rectangle",
+                      "id": "MqPf0",
+                      "layoutPosition": "absolute",
+                      "x": 20,
+                      "y": 567,
+                      "name": "D10-內頁下緣反光",
+                      "fill": "#FFFFFF66",
+                      "width": 960,
+                      "height": 1
                     }
                   ]
                 },
