@@ -1,9 +1,10 @@
-import { ChangeDetectionStrategy, Component, computed } from '@angular/core'
+import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core'
 import { IconComponent } from '../../shared/icon/icon.component'
 import { ScrollRevealDirective } from '../../shared/scroll-reveal.directive'
 import { SectionHeadingComponent } from '../../shared/section-heading/section-heading.component'
 import { RSVP_TEXT, WEDDING_CONTENT } from '../../core/config/wedding-content'
 import { WEDDING_LINKS } from '../../core/config/wedding-links'
+import { DietStore } from '../../core/diet.store'
 
 /**
  * S4 意願調查區。全站沒有內嵌表單，一律外連 Google 表單，符合專案範圍界線。
@@ -17,6 +18,8 @@ import { WEDDING_LINKS } from '../../core/config/wedding-links'
 })
 export class RsvpComponent {
   protected readonly content = WEDDING_CONTENT
+  /** 表單網址與欄位預告兩版不同：分開的表單讓回覆自然分開統計。 */
+  protected readonly diet = inject(DietStore)
   protected readonly links = WEDDING_LINKS
   protected readonly text = RSVP_TEXT
 

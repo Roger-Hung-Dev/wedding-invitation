@@ -118,6 +118,37 @@ export const MAP_PREVIEW_IMAGE_DESKTOP_URL = 'assets/images/map-preview.jpg'
  * 進站開場層的文案。這一層存在的理由是技術性的：行動瀏覽器不允許沒有點擊就播放有聲音樂，
  * 賓客的那一下輕觸就是音樂的啟動許可。文案要讓那個動作看起來是儀式而不是障礙。
  */
+/** 宴席類型。葷食是預設版本，素食由 /vegetarian 這個網址進入。 */
+export type DietType = 'regular' | 'vegetarian'
+
+/**
+ * 兩種宴席版本之間唯一有差異的內容。
+ *
+ * 為什麼要分兩個網址而不是在表單裡問：素食賓客的座位通常是集中安排的，
+ * 桌次引導這句話對兩邊本來就不一樣；分開之後也不必再請賓客自己勾選飲食需求。
+ * 除了這裡列出的三項，兩版的所有內容完全相同。
+ */
+export const DIET_VARIANTS = {
+  regular: {
+    /** 桌次引導。 */
+    seatingGuide: '入口處設有座位表，男方親友請至 A 區、女方親友請至 B 區',
+    /** 出席回覆表單會收集的欄位預告。 */
+    fieldChips: ['姓名', '出席人數', '素食需求', '兒童椅', '聯絡電話'] as readonly string[],
+  },
+  vegetarian: {
+    /**
+     * 桌次引導（素食版）。
+     * ⚠️ 這句是暫定值 —— 新人尚未告知素食席位實際安排在哪一區，上線前必須替換。
+     */
+    seatingGuide: '入口處設有座位表，素食席位已為您安排於 C 區',
+    /**
+     * 素食版不需要「素食需求」這一欄 —— 賓客是從素食專屬連結進來的，
+     * 再問一次會讓人以為自己拿錯連結。
+     */
+    fieldChips: ['姓名', '出席人數', '兒童椅', '聯絡電話'] as readonly string[],
+  },
+} as const
+
 export const INTRO_GATE_TEXT = {
   /** 提示文字，動詞開頭讓賓客知道要做什麼。 */
   action: '輕觸開啟',

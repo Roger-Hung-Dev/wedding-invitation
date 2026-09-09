@@ -153,8 +153,25 @@ git push
 
 | 常數名 | 現在的值 | 狀態 |
 | --- | --- | --- |
-| `rsvpFormUrl` | `https://forms.gle/PLACEHOLDER_RSVP_FORM` | ⚠️ **還是假網址** |
+| `rsvpFormUrl` | `https://forms.gle/PLACEHOLDER_RSVP_FORM` | ⚠️ **還是假網址**（葷食版）|
+| `rsvpFormUrlVegetarian` | `https://forms.gle/PLACEHOLDER_RSVP_FORM_VEG` | ⚠️ **還是假網址**（素食版）|
 | `venueAddress` | `台中市烏日區高鐵路三段 168 號` | ✅ 已是正式地址 |
+
+### 5.0 網站有兩個版本，網址不同
+
+| 版本 | 網址 | 給誰 |
+| --- | --- | --- |
+| 葷食（預設）| `https://roger-hung-dev.github.io/wedding-invitation/` | 絕大多數賓客 |
+| 素食 | `https://roger-hung-dev.github.io/wedding-invitation/vegetarian` | 吃素的賓客 |
+
+兩版**只差三個地方**：桌次引導、出席回覆表單網址、表單欄位預告
+（素食版不再顯示「素食需求」那一顆，因為賓客是從素食連結進來的）。
+其餘內容完全相同，改一次兩版都會變。
+
+**要改兩版的差異**：`src/app/core/config/wedding-content.ts` 的 `DIET_VARIANTS`。
+
+⚠️ **素食版的桌次引導目前是暫定值**（「素食席位已為您安排於 C 區」）——
+新人尚未告知素食席位實際安排在哪一區，上線前必須替換。
 
 ### 5.1 ⚠️ 表單網址還沒填，這是目前唯一擋著上線的東西
 

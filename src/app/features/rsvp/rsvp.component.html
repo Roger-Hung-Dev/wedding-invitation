@@ -14,12 +14,12 @@
 
   <div class="rsvp__card anim-fade-up">
     <div class="rsvp__chips">
-      @for (chip of text.fieldChips; track chip) {
+      @for (chip of diet.fieldChips(); track chip) {
         <span class="rsvp__chip">{{ chip }}</span>
       }
     </div>
 
-    <a class="rsvp__cta" [href]="links.rsvpFormUrl" target="_blank" rel="noopener">
+    <a class="rsvp__cta" [href]="diet.rsvpFormUrl()" target="_blank" rel="noopener">
       <span>{{ text.ctaLabel }}</span>
       <app-icon name="external-link" [size]="16" color="var(--color-text-invert)" />
     </a>

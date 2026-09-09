@@ -1,20 +1,17 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core'
-import { HeroComponent } from './features/hero/hero.component'
-import { AboutComponent } from './features/about/about.component'
-import { StoryComponent } from './features/story/story.component'
-import { GalleryComponent } from './features/gallery/gallery.component'
-import { InfoComponent } from './features/info/info.component'
-import { RsvpComponent } from './features/rsvp/rsvp.component'
-import { FooterComponent } from './features/footer/footer.component'
+import { RouterOutlet } from '@angular/router'
 import { IntroGateComponent } from './features/intro-gate/intro-gate.component'
 import { ToastContainerComponent } from './shared/toast-container.component'
 
 /**
- * 全站唯一頁面：單頁垂直捲動的七個區塊依序串接，段與段之間沒有間隙。
+ * 應用外殼。喜帖本體在 HomeComponent，由路由依宴席版本載入。
+ *
+ * 開場層與訊息容器留在外殼、不進 router-outlet：兩個版本共用同一個開場，
+ * 放進去會在切換版本時被重建，開場層就會再蓋一次。
  */
 @Component({
   selector: 'app-root',
-  imports: [IntroGateComponent, HeroComponent, AboutComponent, StoryComponent, GalleryComponent, InfoComponent, RsvpComponent, FooterComponent, ToastContainerComponent],
+  imports: [RouterOutlet, IntroGateComponent, ToastContainerComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
