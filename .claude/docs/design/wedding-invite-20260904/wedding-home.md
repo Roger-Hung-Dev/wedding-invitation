@@ -635,13 +635,19 @@ S1 Hero 390×844   fill=stock 圖 + 疊一層 $overlay-dark 漸層（上 0% → 
   ├ 飾線群組 80×12  layout=horizontal alignItems=center gap 8   ← 28+8+8+8+28 = 80（原寫 72，算錯）
   │ ├ 線 28×1 ／ 菱形 8×8（旋轉 45°，可用 polygon） ／ 線 28×1
   ├ (spacer 28)
-  ├ 婚期 "2026 . 11 . 14　SATURDAY" h=22
+  ├ 婚期 "2026 . 12 . 12　SATURDAY" h=22
+  ├ (spacer 12)
+  ├ 宴客地點 "臻愛花園酒店"          h=20   ← 只放酒店名，樓廳留給 S3
   ├ (spacer 40)
   └ 倒數群組 308×80  layout=horizontal gap 12
     └ 格×4 68×80  layout=vertical alignItems=center justifyContent=center gap 4
       ├ 數字 h=34
       └ 標籤 h=12
-高度驗算：120+16+20+72+8+26+28+12+28+22+40+80 = 472（內容底 y=472；實測文字高略小，餘量落在底部留白）
+高度驗算：120+16+20+72+8+26+28+12+28+22+12+20+40+80 = 504（內容底 y=504；實測文字高略小，餘量落在底部留白）
+
+⚠️ **宴客地點的字級與亮度都比婚期低一階**（手機 14／桌機 17，色 `$text-invert-muted`）。
+日期是主角、地點是它的補充；兩行同樣大小會讓這一區變成兩個並列的重點，反而都不突出。
+⛔ 這裡只放酒店名 —— 樓廳是到場當下才需要的細節，S3 宴客資訊區已經有。
 浮動於底：SCROLL 群組 y=760（文字 h=12 + gap 6 + chevron 14）；音樂鈕 y=764 x=318
 
 S2 Gallery 390×720  fill=$bg-ivory  layout=vertical alignItems=center pad [64,0]  gap 0
