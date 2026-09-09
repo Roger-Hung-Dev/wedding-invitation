@@ -1,0 +1,507 @@
+:host {
+  display: block;
+  // 抬頭字級比其他段落小，理由同新人介紹區：這一段的主體是書本，抬頭不該搶走版面。
+}
+
+.story {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 64px 24px;
+  background: var(--color-bg-ivory);
+}
+
+.story__gold-line {
+  margin-top: 12px;
+  width: 40px;
+  height: 1px;
+  background: var(--color-gold-soft);
+}
+
+// 書本、翻頁鈕、頁點與提示排成一個格：手機是「書 ／ 鈕-點-鈕 ／ 提示」三列，
+// 桌機改成「鈕-書-鈕 ／ 點 ／ 提示」。手機 390 寬扣掉書頁卡 342 只剩兩側各 24，
+// 放不下卡片兩側的按鈕，硬放就得把書縮到 286 以下、照片與文字跟著縮水。
+.story__stage {
+  display: grid;
+  grid-template-areas:
+    'slot slot slot'
+    'prev dots next'
+    'hint hint hint';
+  grid-template-columns: auto auto auto;
+  justify-content: center;
+  align-items: center;
+  justify-items: center;
+  column-gap: 24px;
+  margin-top: 20px;
+
+  &:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 6px;
+    border-radius: 4px;
+  }
+}
+
+.story__slot {
+  grid-area: slot;
+  position: relative;
+}
+
+.story__sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  clip-path: inset(50%);
+}
+
+.story__card {
+  position: relative;
+  width: 342px;
+  max-width: 100%;
+  height: 414px;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 10px 32px var(--shadow-rose);
+}
+
+.story__book {
+  display: none;
+}
+
+// 木色書皮的四條邊各自不同的明暗（光從正上方偏左來），這是它看起來有厚度的原因；
+// 整框同一個顏色或同一道漸層讀起來就是一張貼上去的色紙。四條邊是方角，
+// 所以外層一定要裁切，否則會戳出圓角之外。
+.story__cover {
+  position: absolute;
+}
+
+.story__cover--top {
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 12px;
+  background: var(--color-book-wood-top);
+}
+
+.story__cover--bottom {
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 12px;
+  background: var(--color-book-wood-bottom);
+}
+
+.story__cover--left {
+  top: 12px;
+  bottom: 12px;
+  left: 0;
+  width: 12px;
+  background: var(--color-book-wood-left);
+}
+
+.story__cover--right {
+  top: 12px;
+  bottom: 12px;
+  right: 0;
+  width: 12px;
+  background: var(--color-book-wood-right);
+}
+
+// 內緣上暗下亮，與外框的上亮下暗剛好相反——這正是「凹進去」的視覺定義，
+// 兩者方向做成一樣的話立體感會直接抵消掉。
+.story__inner-shade,
+.story__inner-glow {
+  position: absolute;
+  left: 20px;
+  right: 20px;
+  z-index: 4;
+  pointer-events: none;
+}
+
+.story__inner-shade {
+  top: 12px;
+  height: 2px;
+  background: #00000020;
+}
+
+.story__inner-glow {
+  bottom: 12px;
+  height: 1px;
+  background: #FFFFFF66;
+}
+
+// 書皮最外緣的一線反光，畫在所有內容之上才不會被書皮蓋掉。
+.story__card::after,
+.story__book::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  border-radius: inherit;
+  box-shadow: inset 0 0 0 1px var(--color-book-edge-light);
+  pointer-events: none;
+}
+
+.story__card-inner {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  bottom: 12px;
+  left: 12px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--color-surface);
+  perspective: 1200px;
+}
+
+.story__card-inner .story__live {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.story__page {
+  transform-origin: left center;
+  backface-visibility: hidden;
+}
+
+// 翻出去的舊頁疊在新頁上面，翻到一半才把新頁露出來。
+.story__page--outgoing {
+  z-index: 2;
+}
+
+.story__page--in-prev,
+.story__page--out-prev {
+  transform-origin: right center;
+}
+
+// 手機沒有書脊，翻頁改為整頁替換：舊頁沿左緣轉出去並淡出，新頁同時從側面轉正。
+@keyframes story-page-out-next {
+  from {
+    transform: rotateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: rotateY(-90deg);
+    opacity: 0;
+  }
+}
+
+@keyframes story-page-in-next {
+  from {
+    transform: rotateY(90deg);
+  }
+  to {
+    transform: rotateY(0);
+  }
+}
+
+@keyframes story-page-out-prev {
+  from {
+    transform: rotateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: rotateY(90deg);
+    opacity: 0;
+  }
+}
+
+@keyframes story-page-in-prev {
+  from {
+    transform: rotateY(-90deg);
+  }
+  to {
+    transform: rotateY(0);
+  }
+}
+
+// 桌機的右頁沿書脊翻過去，正面是舊頁的文字、背面是新頁的照片；往回翻則是左頁繞右緣轉。
+@keyframes story-turn-next {
+  from {
+    transform: rotateY(0);
+  }
+  to {
+    transform: rotateY(-180deg);
+  }
+}
+
+@keyframes story-turn-prev {
+  from {
+    transform: rotateY(0);
+  }
+  to {
+    transform: rotateY(180deg);
+  }
+}
+
+@keyframes story-cross-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes story-cross-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.story__page--out-next {
+  animation: story-page-out-next 600ms var(--ease-elegant) forwards;
+}
+
+.story__page--in-next {
+  animation: story-page-in-next 600ms var(--ease-elegant) forwards;
+}
+
+.story__page--out-prev {
+  animation: story-page-out-prev 600ms var(--ease-elegant) forwards;
+}
+
+.story__page--in-prev {
+  animation: story-page-in-prev 600ms var(--ease-elegant) forwards;
+}
+
+.story__nav {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: var(--color-surface);
+  box-shadow: 0 4px 16px var(--shadow-rose);
+  color: var(--color-text-main);
+  cursor: pointer;
+}
+
+.story__nav--prev {
+  grid-area: prev;
+}
+
+.story__nav--next {
+  grid-area: next;
+}
+
+// 邊界的停用態只讓箭頭變淡、鈕底維持不變：整顆變淡會讓鈕在某些背景上直接消失，
+// 「讓賓客看出故事翻完了」的目的反而落空。
+.story__nav:disabled {
+  cursor: default;
+  color: var(--color-text-muted);
+
+  app-icon {
+    opacity: 0.4;
+  }
+}
+
+.story__dots {
+  grid-area: dots;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 20px;
+}
+
+.story__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-border-pill);
+  transition: width 300ms var(--ease-elegant);
+}
+
+.story__dot--active {
+  width: 20px;
+  border-radius: 4px;
+  background: var(--color-primary);
+}
+
+.story__hint {
+  grid-area: hint;
+  margin: 20px 0 0;
+  font-size: 11px;
+  letter-spacing: 1px;
+  color: var(--color-text-muted);
+}
+
+@media (min-width: 1024px) {
+  .story {
+    padding: 96px 120px;
+  }
+
+  .story__gold-line {
+    margin-top: 14px;
+    width: 64px;
+  }
+
+  .story__stage {
+    grid-template-areas:
+      'prev slot next'
+      'dots dots dots'
+      'hint hint hint';
+    column-gap: 40px;
+    margin-top: 24px;
+  }
+
+  .story__card {
+    display: none;
+  }
+
+  // 書本 1000×580：木色書皮 12 ＋ 左頁 488 ＋ 右頁 488。
+  // perspective 放在書本上，翻頁的那一頁才有透視深度。
+  .story__book {
+    display: block;
+    position: relative;
+    width: 1000px;
+    height: 580px;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 16px 48px var(--shadow-rose);
+    perspective: 2000px;
+  }
+
+  .story__spread {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    display: flex;
+    width: 976px;
+    height: 556px;
+    z-index: 1;
+  }
+
+  .story__spread-page {
+    display: block;
+    flex: 0 0 488px;
+    height: 100%;
+  }
+
+  // 書縫的陰影是寬而淺的，不是窄而深的：加寬只會讓彎曲看起來更緩，加深則會變成兩頁中間一條黑帶。
+  .story__spine {
+    position: absolute;
+    top: 12px;
+    height: 556px;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .story__spine--left {
+    left: 444px;
+    width: 56px;
+    background: linear-gradient(to right, #83184300, #83184326);
+  }
+
+  .story__spine--center {
+    left: 500px;
+    width: 1px;
+    background: var(--color-border-soft);
+  }
+
+  .story__spine--right {
+    left: 501px;
+    width: 56px;
+    background: linear-gradient(to right, #83184326, #83184300);
+  }
+
+  .story__flip {
+    position: absolute;
+    top: 12px;
+    width: 488px;
+    height: 556px;
+    transform-style: preserve-3d;
+    z-index: 3;
+  }
+
+  .story__flip--next {
+    left: 500px;
+    transform-origin: left center;
+    animation: story-turn-next 600ms var(--ease-elegant) forwards;
+  }
+
+  .story__flip--prev {
+    left: 12px;
+    transform-origin: right center;
+    animation: story-turn-prev 600ms var(--ease-elegant) forwards;
+  }
+
+  .story__flip-face {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    backface-visibility: hidden;
+    background: var(--color-surface);
+
+    app-story-page {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  .story__flip-face--back {
+    transform: rotateY(180deg);
+  }
+
+  .story__crossfade {
+    z-index: 3;
+    animation: story-cross-out 200ms linear forwards;
+  }
+
+  .story__nav {
+    margin-top: 0;
+    width: 56px;
+    height: 56px;
+  }
+
+  .story__dots {
+    gap: 6px;
+    margin-top: 29px;
+  }
+
+  .story__dot {
+    width: 10px;
+    height: 10px;
+  }
+
+  .story__dot--active {
+    width: 25px;
+    border-radius: 5px;
+  }
+
+  .story__hint {
+    margin-top: 18px;
+    font-size: 15px;
+  }
+}
+
+// 3D 旋轉對前庭敏感的人是實質不適，不是美感偏好：翻頁一律降成 200ms 的交叉淡入淡出，
+// 版面與翻頁功能本身都不變。桌機的立體翻頁在這個情況下根本不會被渲染（見樣板的分支）。
+@media (prefers-reduced-motion: reduce) {
+  .story__page--in-next,
+  .story__page--in-prev {
+    animation: story-cross-in 200ms linear forwards;
+  }
+
+  .story__page--out-next,
+  .story__page--out-prev {
+    animation: story-cross-out 200ms linear forwards;
+  }
+
+  .story__dot {
+    transition-duration: 1ms;
+  }
+}

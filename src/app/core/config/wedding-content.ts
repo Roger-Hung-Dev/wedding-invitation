@@ -4,8 +4,8 @@
  *
  * 檔案分兩類：
  * 1. WEDDING_CONTENT：會員資料型的內容（新人姓名、日期、場地），本身已有語意明確的欄位名。
- * 2. 依畫面區塊分組的 XXX_TEXT 常數（HERO_TEXT／GALLERY_TEXT／INFO_TEXT／RSVP_TEXT／FOOTER_TEXT／
- *    MUSIC_PLAYER_TEXT）：純顯示用的標籤、提示語、按鈕文字，依畫面由上到下的區塊順序排列，
+ * 2. 依畫面區塊分組的 XXX_TEXT 常數（HERO_TEXT／ABOUT_TEXT／STORY_TEXT／GALLERY_TEXT／INFO_TEXT／
+ *    RSVP_TEXT／FOOTER_TEXT／MUSIC_PLAYER_TEXT）：純顯示用的標籤、提示語、按鈕文字，依畫面由上到下的區塊順序排列，
  *    每個區塊對應網站上的一個段落，找文字時比對頁面滾動位置即可定位到對應常數。
  *
  * 姓名、日期、場地為新人提供的正式資料，異動時於此檔一次替換即可。
@@ -129,6 +129,159 @@ export const HERO_TEXT = {
   /** 畫面最下方「往下滑」提示的文字。 */
   scrollHint: 'SCROLL',
 } as const
+
+/**
+ * S9 新人介紹區文案。引言與收尾句在手機刻意斷成兩行、桌機不斷行，兩種版本各自維護
+ * （作法同 GALLERY_TEXT.quote），不要合併成一句再靠程式斷行。
+ */
+export const ABOUT_TEXT = {
+  eyebrow: 'ABOUT US',
+  title: 'The Two of Us',
+  intro: {
+    /** 桌機單行不斷行。 */
+    full: '在遇見彼此之前，我們各自過著很不一樣的日子。',
+    /** 手機刻意斷成兩行，順序即畫面順序。 */
+    lines: ['在遇見彼此之前，', '我們各自過著很不一樣的日子。'] as readonly string[],
+  },
+  /** 兩張人物卡中間的連結符號，兩側各有一條金色細線。 */
+  connector: '&',
+  outro: {
+    full: '一個把日子過成邏輯，一個把日子過成溫度，從 2026 . 12 . 12 起，我們一起過。',
+    lines: [
+      '一個把日子過成邏輯，一個把日子過成溫度，',
+      '從 2026 . 12 . 12 起，我們一起過。',
+    ] as readonly string[],
+  },
+} as const
+
+export interface AboutProfile {
+  readonly id: 'groom' | 'bride'
+  /** 卡片最上方的英文角色標籤。 */
+  readonly role: string
+  readonly name: string
+  /** 姓名下方的職業膠囊。 */
+  readonly occupation: string
+  readonly description: string
+  readonly photoUrl: string
+  readonly photoAlt: string
+}
+
+/**
+ * S9 兩張人物卡的內容。順序即畫面順序（新郎在上／左，新娘在下／右）。
+ *
+ * 待替換：description 裡的性格描寫是撰稿推測，不是新人提供的事實，上線前必須由新人確認或改寫。
+ * 職業與姓名是新人提供的事實，性格描寫不是——喜帖是公開的，寫錯個性比空著更糟。
+ * 兩段描述請維持 42～48 字，字數跑掉兩張卡會不等高、中央的 & 會失去對稱。
+ *
+ * 照片為新人提供的真實單人照（4480×6720 原始檔上下各裁 374px 置中後縮至 600×800）。
+ * 路徑不加開頭斜線 —— 網站部署在 GitHub Pages 子路徑下，絕對路徑會在上線後 404。
+ */
+export const ABOUT_PROFILES: readonly AboutProfile[] = [
+  {
+    id: 'groom',
+    role: 'GROOM',
+    name: '洪承孝',
+    occupation: '軟體工程師',
+    description:
+      '靠一行行程式碼過日子，習慣把複雜的問題拆開來、一個一個解決。話不多，但答應的事情一定做到。',
+    photoUrl: 'assets/images/groom.jpg',
+    photoAlt: '新郎洪承孝身著米色西裝，於公園綠蔭前回眸',
+  },
+  {
+    id: 'bride',
+    role: 'BRIDE',
+    name: '李怡安',
+    occupation: '餐飲服務業',
+    description:
+      '在餐飲業裡練就一身照顧人的本事，記得誰不吃什麼、誰想多要一點醬。她相信好好吃一頓飯，能讓人重新有力氣。',
+    photoUrl: 'assets/images/bride.jpg',
+    photoAlt: '新娘李怡安身著白紗、手持捧花，於海邊夕陽下回眸',
+  },
+]
+
+/**
+ * S10 交往故事書區的固定文案（五頁故事內容見 STORY_PAGES）。
+ * 翻頁鈕與頁碼的無障礙標籤都在這裡，畫面上不會直接顯示這幾句，但螢幕報讀器會唸出來。
+ */
+export const STORY_TEXT = {
+  eyebrow: 'OUR STORY',
+  title: 'How We Met',
+  /** 書頁卡下方的操作提示，手機與桌機共用同一句。 */
+  hint: '點兩側箭頭翻頁',
+  prevLabel: '上一頁',
+  nextLabel: '下一頁',
+  /** 書本區的無障礙名稱，鍵盤使用者聚焦到書本時報讀器會唸出來。 */
+  bookLabel: '交往故事書，可用左右方向鍵翻頁',
+  /** 視覺隱藏的頁碼狀態句，{{current}}／{{total}} 會被換成實際頁碼。 */
+  pageStatus: '第 {{current}} 頁，共 {{total}} 頁',
+} as const
+
+export interface StoryPage {
+  readonly id: string
+  /** 照片下方的年份標籤，例如「2019 秋」。 */
+  readonly year: string
+  readonly title: string
+  readonly body: string
+  readonly photoUrl: string
+  readonly photoAlt: string
+}
+
+/**
+ * S10 交往故事書的五頁內容，順序即翻頁順序。
+ *
+ * 待替換（一）：這五段故事沒有一句是真的，全部是為了把版面做出來而寫的示範文案，上線前必須整批替換。
+ * 季節、地點、對話、繞半座城市送宵夜、搬三次家等細節全是編的——
+ * 這是全站最不能留著假內容的地方，賓客會當真。
+ *
+ * 待替換（二）：photoUrl 目前全部是佔位圖，借用婚紗藝廊的照片，但婚紗照與「2019 秋」的時間軸對不上，
+ * 正式應換成交往期間的生活照。五張需維持同一色調傾向（暖調、柔和），
+ * 否則翻頁時每頁色溫跳動會很明顯。
+ *
+ * body 每段維持 58～64 字：手機一行約 21.4 字、桌機約 23.1 字，皆排成 3 行；
+ * 超過 64 字手機會變成 4 行、撐爆固定高度的書頁卡。
+ */
+export const STORY_PAGES: readonly StoryPage[] = [
+  {
+    id: 'story-1',
+    year: '2019 秋',
+    title: '初次見面',
+    body: '那年秋天，在朋友的一場聚會上第一次見到彼此。那天散場之後才發現，我們是聊到最後才離開的兩個人，連要回家的方向都一樣。',
+    photoUrl: 'assets/gallery/photo-1.jpg',
+    photoAlt: '新人牽手走在林蔭道上，新娘身著粉色紗裙',
+  },
+  {
+    id: 'story-2',
+    year: '2020 春',
+    title: '熟悉起來',
+    body: '開始習慣生活裡有對方的日常。她下班傳訊息說今天很累，他就把宵夜送到樓下，說剛好順路——其實那天他整整繞了半座城市才到。',
+    photoUrl: 'assets/gallery/photo-2.jpg',
+    photoAlt: '日式老屋前，新郎將身著黑色禮服的新娘抱起',
+  },
+  {
+    id: 'story-3',
+    year: '2020 夏',
+    title: '在一起',
+    body: '其實那天沒有誰正式開口說什麼。只是某一天散步回家的路上，牽起來的手就沒有再放開；後來想想，那條路我們一走就走了好多年。',
+    photoUrl: 'assets/gallery/photo-3.jpg',
+    photoAlt: '公園草地上相擁而笑的新人特寫',
+  },
+  {
+    id: 'story-4',
+    year: '2021 – 2025',
+    title: '一起走過的日子',
+    body: '我們一起搬過三次家，一起吵過架也一起道過歉。日子說不上轟轟烈烈，但每一天都比前一天更確定一點，確定要一直這樣走下去。',
+    photoUrl: 'assets/gallery/photo-4.jpg',
+    photoAlt: '藍天草原上，新人戴著愛心墨鏡舉著「我們結婚了」手牌',
+  },
+  {
+    id: 'story-5',
+    year: '2026 春',
+    title: '他問，她說好',
+    body: '就在第一次見面的那家店門口，他單膝跪下。她一邊哭一邊點頭，然後說了一句：你怎麼這麼慢。那天整間店的人全都站起來鼓掌。',
+    photoUrl: 'assets/gallery/photo-5.jpg',
+    photoAlt: '黃昏河床上，新娘白紗長裙鋪展、與新郎相望',
+  },
+]
 
 /**
  * S2 婚紗藝廊區文案。金句與操作提示在手機／桌機顯示不同的斷句或措辭，是設計刻意決定的，

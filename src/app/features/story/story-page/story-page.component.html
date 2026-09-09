@@ -1,0 +1,27 @@
+@if (variant() !== 'text') {
+  <!-- 照片是翻頁觸控區，不開燈箱（與婚紗藝廊不同），所以點擊沒有其他語意衝突。 -->
+  <div
+    class="page__photo"
+    [class.anim-reveal-mask]="animated()"
+    [style.transitionDelay.ms]="animated() ? photoDelayMs : null"
+    (click)="photoClick.emit($event)"
+  >
+    <img [src]="page().photoUrl" [alt]="page().photoAlt" loading="lazy" />
+  </div>
+}
+
+@if (variant() !== 'photo') {
+  <p class="page__year" [class.anim-fade-up]="animated()" [style.transitionDelay.ms]="animated() ? yearDelayMs : null">
+    {{ page().year }}
+  </p>
+  <p class="page__title" [class.anim-fade-up]="animated()" [style.transitionDelay.ms]="animated() ? titleDelayMs : null">
+    {{ page().title }}
+  </p>
+  <p class="page__body" [class.anim-fade-up]="animated()" [style.transitionDelay.ms]="animated() ? bodyDelayMs : null">
+    {{ page().body }}
+  </p>
+
+  @if (pageNumber()) {
+    <p class="page__number">{{ pageNumber() }}</p>
+  }
+}

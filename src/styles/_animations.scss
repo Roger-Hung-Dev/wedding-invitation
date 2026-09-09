@@ -30,6 +30,36 @@ html.anim-ready {
     }
   }
 
+  // 只用在新人介紹區的兩張人物卡：新郎由左、新娘由右往中央的 & 靠攏。
+  // fade-up 表達的是「浮現」，說不出「從兩邊走向彼此」，而那是這一段唯一想說的事。
+  // 其他段落一律不要用這兩個 class。
+  .anim-fade-side-left,
+  .anim-fade-side-right {
+    opacity: 0;
+    transition: opacity 700ms var(--ease-elegant), transform 700ms var(--ease-elegant);
+
+    &.is-visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  .anim-fade-side-left {
+    transform: translateX(-32px);
+
+    @media (min-width: 1024px) {
+      transform: translateX(-48px);
+    }
+  }
+
+  .anim-fade-side-right {
+    transform: translateX(32px);
+
+    @media (min-width: 1024px) {
+      transform: translateX(48px);
+    }
+  }
+
   .anim-reveal-mask {
     clip-path: inset(100% 0 0 0);
     transition: clip-path 900ms var(--ease-elegant);
@@ -78,6 +108,8 @@ html.anim-ready {
 @media (prefers-reduced-motion: reduce) {
   .anim-fade-up,
   .anim-fade-in,
+  .anim-fade-side-left,
+  .anim-fade-side-right,
   .anim-reveal-mask {
     transition-duration: 200ms;
     transform: none;

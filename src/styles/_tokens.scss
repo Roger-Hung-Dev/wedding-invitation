@@ -19,6 +19,17 @@
   --color-glass-border: #FFFFFF4D;
   --shadow-rose: #8318431F;
 
+  // 故事書的木色書皮。四邊各用不同明度模擬「光從正上方偏左來」的厚度感：
+  // 上邊最亮、左邊次之、右邊偏暗、下邊最暗，四個值是基色 #A67C52 的明度增減。
+  // 整框同一個顏色或同一道漸層都會讀成「一張貼上去的色紙」，立體感就沒了。
+  --color-book-wood: #A67C52;
+  --color-book-wood-top: #BD9B79;
+  --color-book-wood-left: #B18961;
+  --color-book-wood-right: #956F4A;
+  --color-book-wood-bottom: #7D5D3E;
+  // 書皮最外緣的一線反光。
+  --color-book-edge-light: #CAAF94;
+
   --font-script: 'Great Vibes', cursive;
   --font-body: 'Cormorant Infant', 'Noto Serif TC', serif;
 

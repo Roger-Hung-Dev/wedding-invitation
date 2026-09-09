@@ -39,15 +39,18 @@ import { ScrollRevealDirective } from '../scroll-reveal.directive'
       color: var(--color-primary);
     }
 
+    // 桌機字級開放給使用端以自訂屬性覆寫：多數段落沿用預設的 14／56，
+    // 新人介紹與交往故事書兩段的設計稿訂的是較小的 13／44（那兩段主體是卡片而非抬頭），
+    // 由該段自己在 :host 設定這兩個變數，其餘段落不必知道有這回事。
     @media (min-width: 1024px) {
       .heading__eyebrow {
-        font-size: 14px;
-        letter-spacing: 6px;
+        font-size: var(--section-heading-eyebrow-size, 14px);
+        letter-spacing: var(--section-heading-eyebrow-spacing, 6px);
       }
 
       .heading__title {
         margin-top: 12px;
-        font-size: 56px;
+        font-size: var(--section-heading-title-size, 56px);
       }
     }
   `,

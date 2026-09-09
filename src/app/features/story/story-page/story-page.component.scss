@@ -1,0 +1,115 @@
+:host {
+  display: block;
+  background: var(--color-surface);
+}
+
+.page__photo {
+  overflow: hidden;
+  border-radius: 12px;
+  cursor: pointer;
+
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.page__year {
+  margin: 0;
+  font-weight: 600;
+  color: var(--color-accent-gold);
+}
+
+.page__title {
+  margin: 0;
+  font-weight: 500;
+  color: var(--color-text-main);
+}
+
+// 行高 1.7 以上是這一段與新人介紹區才有的例外：整頁最長的連續中文，1.4 會擠成一團。
+.page__body {
+  margin: 0;
+  color: var(--color-text-muted);
+}
+
+// 手機單頁：照片在上、文字在下，一頁看完一段故事。
+:host(.page--single) {
+  position: absolute;
+  inset: 0;
+  padding: 20px;
+
+  .page__photo {
+    height: 208px;
+  }
+
+  .page__year {
+    margin-top: 18px;
+    font-size: 11px;
+    letter-spacing: 3px;
+    line-height: 1.4;
+  }
+
+  .page__title {
+    margin-top: 8px;
+    font-size: 18px;
+    line-height: 1.4;
+  }
+
+  .page__body {
+    margin-top: 8px;
+    font-size: 13px;
+    line-height: 1.7;
+  }
+}
+
+// 桌機左頁：只有照片，四周留白 24——照片滿版的話書脊會被深色照片與白底的交界吃掉，
+// 書就被切成兩張卡片了。
+:host(.page--photo) {
+  height: 100%;
+  padding: 24px;
+  border-radius: 8px 0 0 8px;
+
+  .page__photo {
+    height: 100%;
+  }
+}
+
+// 桌機右頁：文字靠上排（真書的一頁是從頂端排下來的，留白自然落在下方），
+// 上內距 24 而非 48，才與左頁照片的頂端齊平。
+:host(.page--text) {
+  position: relative;
+  height: 100%;
+  padding: 24px 48px 48px;
+  border-radius: 0 8px 8px 0;
+
+  .page__year {
+    font-size: 14px;
+    letter-spacing: 3px;
+    line-height: 1.4;
+  }
+
+  .page__title {
+    margin-top: 10px;
+    font-size: 28px;
+    letter-spacing: 1px;
+    line-height: 1.4;
+  }
+
+  .page__body {
+    margin-top: 14px;
+    font-size: 17px;
+    line-height: 1.8;
+  }
+
+  .page__number {
+    position: absolute;
+    right: 48px;
+    bottom: 32px;
+    margin: 0;
+    font-size: 14px;
+    letter-spacing: 2px;
+    color: var(--color-text-muted);
+  }
+}

@@ -1,0 +1,61 @@
+<section
+  class="about"
+  appScrollReveal
+  [staggerSelector]="
+    '.anim-fade-up, .anim-fade-in, .anim-reveal-mask, .anim-line-grow, .anim-fade-side-left, .anim-fade-side-right'
+  "
+>
+  <app-section-heading [eyebrow]="text.eyebrow" [title]="text.title" />
+
+  <span class="about__gold-line anim-line-grow" style="transition-delay: 180ms" aria-hidden="true"></span>
+
+  <div class="about__intro anim-fade-up" style="transition-delay: 270ms">
+    @if (breakpoint.isDesktop()) {
+      <p>{{ text.intro.full }}</p>
+    } @else {
+      @for (line of text.intro.lines; track line) {
+        <p>{{ line }}</p>
+      }
+    }
+  </div>
+
+  <div class="about__people">
+    @for (profile of profiles; track profile.id; let i = $index) {
+      <article class="about__card" [class.about__card--bride]="profile.id === 'bride'">
+        <div class="about__photo anim-reveal-mask" [style.transitionDelay.ms]="photoDelayMs(i)">
+          <img [src]="profile.photoUrl" [alt]="profile.photoAlt" loading="lazy" />
+        </div>
+        <div
+          class="about__text"
+          [class.anim-fade-side-left]="profile.id === 'groom'"
+          [class.anim-fade-side-right]="profile.id === 'bride'"
+          [style.transitionDelay.ms]="textDelayMs(i)"
+        >
+          <p class="about__role">{{ profile.role }}</p>
+          <p class="about__name">{{ profile.name }}</p>
+          <p class="about__chip">{{ profile.occupation }}</p>
+          <p class="about__desc">{{ profile.description }}</p>
+        </div>
+      </article>
+
+      <!-- 連結列夾在兩張卡中間：手機是「線 ─ & ─ 線」的橫列，桌機轉成書脊般的直向分隔。 -->
+      @if (i === 0) {
+        <div class="about__connector" aria-hidden="true">
+          <span class="about__connector-line anim-line-grow" style="transition-delay: 760ms"></span>
+          <span class="about__connector-mark anim-fade-in" style="transition-delay: 760ms">{{ text.connector }}</span>
+          <span class="about__connector-line anim-line-grow" style="transition-delay: 760ms"></span>
+        </div>
+      }
+    }
+  </div>
+
+  <div class="about__outro anim-fade-up" style="transition-delay: 1200ms">
+    @if (breakpoint.isDesktop()) {
+      <p>{{ text.outro.full }}</p>
+    } @else {
+      @for (line of text.outro.lines; track line) {
+        <p>{{ line }}</p>
+      }
+    }
+  </div>
+</section>

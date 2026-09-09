@@ -1,0 +1,264 @@
+:host {
+  display: block;
+  // 這一段的抬頭字級比其他段落小：主體是兩張人物卡，抬頭放到 56px 會把卡片壓下去。
+}
+
+.about {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  // 下內距比上多 36：設計稿的段高是 820，內容實高只有 784，多出來的餘白留在段落底部。
+  padding: 64px 24px 100px;
+  background: var(--color-bg-blush);
+}
+
+.about__gold-line {
+  margin-top: 12px;
+  width: 40px;
+  height: 1px;
+  background: var(--color-gold-soft);
+}
+
+.about__intro {
+  margin: 20px 0 0;
+  width: 300px;
+  max-width: 100%;
+  text-align: center;
+  font-size: 16px;
+  font-style: italic;
+  line-height: 1.4;
+  color: var(--color-text-muted);
+
+  p {
+    margin: 0;
+  }
+}
+
+.about__people {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 36px;
+  width: 342px;
+  max-width: 100%;
+}
+
+.about__card {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  width: 100%;
+  height: 176px;
+}
+
+// 新娘卡是鏡像：照片換到右邊，文字欄連同角色標籤與職業膠囊一起靠右對齊。
+.about__card--bride {
+  flex-direction: row-reverse;
+  text-align: right;
+
+  .about__text {
+    align-items: flex-end;
+  }
+}
+
+.about__photo {
+  flex: 0 0 132px;
+  width: 132px;
+  height: 176px;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 28px var(--shadow-rose);
+
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.about__text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex: 1 1 auto;
+  min-width: 0;
+
+  .about__role {
+    margin: 0;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    line-height: 1.4;
+    color: var(--color-accent-gold);
+  }
+
+  .about__name {
+    margin: 6px 0 0;
+    font-size: 22px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    line-height: 1.4;
+    color: var(--color-text-main);
+  }
+
+  .about__chip {
+    display: inline-flex;
+    align-items: center;
+    margin: 4px 0 0;
+    height: 26px;
+    padding: 0 12px;
+    border-radius: 13px;
+    background: var(--color-bg-ivory);
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--color-primary);
+  }
+
+  // 全站唯一用 1.6 以上行高的兩個地方之一：這兩段是最長的連續中文，1.4 在 13px 下會擠成一團。
+  .about__desc {
+    margin: 12px 0 0;
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--color-text-muted);
+  }
+}
+
+.about__connector {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 20px 0;
+  width: 100%;
+  height: 12px;
+}
+
+.about__connector-line {
+  width: 100px;
+  height: 1px;
+  background: var(--color-gold-soft);
+}
+
+.about__connector-mark {
+  font-family: var(--font-script);
+  font-size: 20px;
+  // 連結列的列高是 12，字大於列高是刻意的：& 的字面本來就比行框小，撐高列高會讓兩張卡的間距跑掉。
+  line-height: 12px;
+  color: var(--color-gold-soft);
+}
+
+.about__outro {
+  margin: 32px 0 0;
+  width: 310px;
+  max-width: 100%;
+  text-align: center;
+  font-size: 14px;
+  font-style: italic;
+  line-height: 1.4;
+  color: var(--color-text-muted);
+
+  p {
+    margin: 0;
+  }
+}
+
+@media (min-width: 1024px) {
+  .about {
+    padding: 96px 160px;
+  }
+
+  .about__gold-line {
+    margin-top: 14px;
+    width: 64px;
+  }
+
+  .about__intro {
+    margin-top: 24px;
+    width: auto;
+    font-size: 20px;
+  }
+
+  // 桌機把兩張卡與中央分隔排成一列：520 + 80 + 520 = 1120，與內容欄同寬。
+  .about__people {
+    flex-direction: row;
+    align-items: center;
+    margin-top: 56px;
+    width: 1120px;
+  }
+
+  .about__card {
+    flex: 0 0 520px;
+    gap: 24px;
+    align-items: center;
+    height: 300px;
+  }
+
+  .about__photo {
+    flex: 0 0 220px;
+    width: 220px;
+    height: 300px;
+    border-radius: 20px;
+  }
+
+  .about__text {
+    .about__role {
+      font-size: 12px;
+    }
+
+    .about__name {
+      margin-top: 8px;
+      font-size: 26px;
+    }
+
+    .about__chip {
+      margin-top: 8px;
+      height: 28px;
+      font-size: 13px;
+    }
+
+    .about__desc {
+      margin-top: 14px;
+      font-size: 15px;
+      line-height: 1.7;
+    }
+  }
+
+  // 直向分隔的線是上下兩段，中間留給 & ——
+  // 畫成一整條再把 & 疊上去的話，線會從文字中間穿過去。
+  .about__connector {
+    flex: 0 0 80px;
+    flex-direction: column;
+    gap: 0;
+    margin: 0;
+    width: 80px;
+    height: 300px;
+  }
+
+  .about__connector-line {
+    width: 1px;
+    height: 90px;
+  }
+
+  // 直立的線要沿著自己的長邊長出來，沿用共用語彙的 scaleX 只會讓 1px 寬的線瞬間出現。
+  html.anim-ready .about__connector-line {
+    transform: scaleY(0);
+
+    &.is-visible {
+      transform: scaleY(1);
+    }
+  }
+
+  .about__connector-mark {
+    display: flex;
+    align-items: center;
+    height: 120px;
+    font-size: 28px;
+  }
+
+  .about__outro {
+    margin-top: 48px;
+    width: auto;
+    font-size: 17px;
+  }
+}
