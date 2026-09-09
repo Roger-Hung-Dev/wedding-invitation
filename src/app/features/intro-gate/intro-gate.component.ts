@@ -108,7 +108,7 @@ import { IntroGateStore } from './intro-gate.store'
     }
 
     .gate__name-en {
-      margin-top: 18px;
+      margin-top: 40px;
       font-family: var(--font-script);
       font-size: 52px;
       line-height: 1.2;
@@ -209,7 +209,7 @@ import { IntroGateStore } from './intro-gate.store'
       }
 
       .gate__name-en {
-        margin-top: 24px;
+        margin-top: 52px;
         font-size: 88px;
       }
 
