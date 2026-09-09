@@ -1,5 +1,5 @@
 import { isPlatformBrowser } from '@angular/common'
-import { ChangeDetectionStrategy, Component, ElementRef, HostListener, PLATFORM_ID, afterNextRender, effect, inject, signal, viewChild } from '@angular/core'
+import { ChangeDetectionStrategy, Component, ElementRef, HostListener, PLATFORM_ID, afterNextRender, effect, inject, viewChild } from '@angular/core'
 import { IconComponent } from '../../shared/icon/icon.component'
 import { MUSIC_PLAYER_TEXT } from '../../core/config/wedding-content'
 import { MusicPlayerStore } from './music-player.store'
@@ -26,9 +26,6 @@ import { MusicPlayerStore } from './music-player.store'
         <app-icon [name]="store.state() === 'muted' ? 'volume-x' : 'disc'" [size]="24" />
       </span>
     </button>
-    @if (debug()) {
-      <pre class="music-debug">{{ debugText() }}</pre>
-    }
     <!--
       ⚠️ 背景音樂用 <video> 而不是 <audio>，這不是筆誤。
       Chrome 的自動播放政策對兩者不同：<audio> 即使靜音也一律拒絕自動播放
@@ -59,24 +56,6 @@ import { MusicPlayerStore } from './music-player.store'
     // ⛔ 不要用 display: none 或 visibility: hidden 藏這個 video ——
     // 部分瀏覽器會把「不可見的媒體」視為可回收而停止播放。
     // 縮到 1px、透明、移出點擊範圍，是既看不見又確保會播的作法。
-    // 只在網址帶 ?debug 時出現，用於在真實手機上回報播放狀態（本機無法遠端偵錯）
-    .music-debug {
-      position: fixed;
-      left: 8px;
-      right: 8px;
-      bottom: 8px;
-      z-index: 99;
-      margin: 0;
-      padding: 10px 12px;
-      border-radius: 10px;
-      background: #000000D9;
-      color: #fff;
-      font-size: 12px;
-      line-height: 1.6;
-      white-space: pre-wrap;
-      pointer-events: none;
-    }
-
     .music-media {
       position: fixed;
       left: 0;
@@ -128,14 +107,6 @@ export class MusicPlayerComponent {
   private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID))
   private readonly audioEl = viewChild.required<ElementRef<HTMLVideoElement>>('audioEl')
 
-  /**
-   * 診斷面板：只在網址帶 ?debug 時顯示。
-   * 自動播放的行為在每台手機、每種瀏覽器設定下都不同，而這些狀態在開發機上重現不出來 ——
-   * 讓使用者開一次 ?debug 把畫面截給我，比猜十次有效。
-   */
-  protected readonly debug = signal(false)
-  protected readonly debugText = signal('')
-  private readonly debugLog: string[] = []
 
   constructor() {
     // 進站即「靜音」播放。瀏覽器只禁止**有聲**的自動播放，靜音播放是允許的 ——
@@ -144,11 +115,6 @@ export class MusicPlayerComponent {
     afterNextRender(() => {
       if (!this.isBrowser) return
       const audio = this.audioEl().nativeElement
-      if (new URLSearchParams(location.search).has('debug')) {
-        this.debug.set(true)
-        this.note('面板啟動')
-        setInterval(() => this.note(''), 1000)
-      }
       audio.muted = true
 
       // ⚠️ 靜音自動播放要靠 <audio> 上的 muted ＋ autoplay **屬性**，
@@ -158,11 +124,9 @@ export class MusicPlayerComponent {
       // ⛔ 不要先等 canplay：preload="metadata" 只載到 readyState 1，
       // 而 canplay 要 readyState 3 才發出，等它就是等一個永遠不會來的事件。
       const startSilently = (): void => {
-        this.note(`靜音預播 play() muted=${audio.muted} ready=${audio.readyState}`)
-        audio.play().then(
-          () => this.note('靜音預播 → 成功'),
-          (e: DOMException) => this.note(`靜音預播 → 被拒 ${e.name}`),
-        )
+        audio.play().catch(() => {
+          // 靜音播放都被拒（少數瀏覽器設定），那就完全等賓客輕觸開場層
+        })
       }
 
       // 延到首屏載入完成才開始抓音檔 —— 2MB 的音檔與 Hero 底圖搶頻寬的話，
@@ -214,7 +178,6 @@ export class MusicPlayerComponent {
   onFirstGesture(event?: Event): void {
     if (!this.isBrowser || this.store.state() !== 'idle') return
     const audio = this.audioEl().nativeElement
-    this.note(`手勢 ${event?.type ?? '?'} 前：paused=${audio.paused} muted=${audio.muted}`)
 
     // ⛔ **媒體已經在播的時候，絕對不要再呼叫 play()。**
     // 靜音預播成功時 paused 已經是 false，這時只要 muted = false 就會出聲；
@@ -224,35 +187,17 @@ export class MusicPlayerComponent {
 
     if (!audio.paused) {
       this.store.play()
-      this.note('解除靜音（已在播，未呼叫 play）→ 成功')
       return
     }
+
 
     // 只有靜音預播沒成功（或被系統暫停）時，才真的需要發出播放請求。
     // ⚠️ 必須在這個同步呼叫堆疊裡發出 —— iOS 只認「手勢當下」的播放請求。
     audio.play().then(
+      () => this.store.play(),
       () => {
-        this.store.play()
-        this.note('play() → 成功')
-      },
-      (e: DOMException) => {
         audio.muted = true
-        this.note(`play() → 被拒 ${e.name}`)
       },
-    )
-  }
-
-  /** 把一行診斷訊息加進面板（只在 ?debug 時看得到）。 */
-  private note(line: string): void {
-    if (!this.debug()) return
-    if (line) this.debugLog.push(line)
-    const audio = this.audioEl().nativeElement
-    this.debugText.set(
-      [
-        `狀態=${this.store.state()}  標籤=${audio.tagName}`,
-        `muted=${audio.muted} paused=${audio.paused} t=${audio.currentTime.toFixed(1)} ready=${audio.readyState}`,
-        ...this.debugLog.slice(-6),
-      ].join(String.fromCharCode(10)),
     )
   }
 
