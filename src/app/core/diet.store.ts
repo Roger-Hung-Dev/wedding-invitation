@@ -14,11 +14,14 @@ export class DietStore {
 
   readonly diet = this._diet.asReadonly()
 
-  /** 桌次引導。素食席位通常集中安排，這句話兩版本來就不同。 */
+  /** 桌次引導。蔬食席位是分散安排的，這句話兩版本來就不同。 */
   readonly seatingGuide = computed(() => DIET_VARIANTS[this._diet()].seatingGuide)
 
   /** 出席回覆表單會收集的欄位預告。 */
   readonly fieldChips = computed(() => DIET_VARIANTS[this._diet()].fieldChips)
+
+  /** 餐點說明。葷食版為 null，樣板據此決定要不要渲染整段。 */
+  readonly dietNote = computed(() => DIET_VARIANTS[this._diet()].dietNote)
 
   /** 出席回覆表單網址。兩版分開，回覆才會自然分開統計。 */
   readonly rsvpFormUrl = computed(() =>

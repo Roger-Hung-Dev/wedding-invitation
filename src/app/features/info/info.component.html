@@ -70,5 +70,14 @@
     </div>
   </div>
 
+  @if (diet.dietNote(); as note) {
+    <div class="info__diet-note anim-fade-up">
+      <p class="info__diet-note-title">{{ note.title }}</p>
+      @for (line of note.lines; track line) {
+        <p class="info__diet-note-line">{{ line }}</p>
+      }
+    </div>
+  }
+
   <p class="info__reminder anim-fade-in">{{ text.reminder }}</p>
 </section>
