@@ -11,7 +11,7 @@
  * 姓名、日期、場地為新人提供的正式資料，異動時於此檔一次替換即可。
  */
 export const WEDDING_CONTENT = {
-  brideGroomEn: 'Roger & Amy',
+  brideGroomEn: 'Roger & Ann',
   brideGroomZh: '洪承孝　✕　李怡安',
   /** 婚期（ISO 日期，不含時間）。 */
   weddingDate: '2026-12-12',
@@ -358,7 +358,7 @@ export const FOOTER_TEXT = {
   title: 'Thank You',
   /** 致謝內文，手機兩行、桌機同一行顯示（見上方說明）。 */
   bodyLines: ['謝謝每一位陪伴我們走到這裡的人，', '期待與你分享這一天的喜悅。'] as readonly string[],
-  copyright: '© 2026 Roger & Amy　·　Made with love',
+  copyright: '© 2026 Roger & Ann　·　Made with love',
 } as const
 
 /**
