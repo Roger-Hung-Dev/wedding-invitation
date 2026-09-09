@@ -258,19 +258,19 @@
 }
 
 .story__page--out-next {
-  animation: story-page-out-next 600ms var(--ease-elegant) forwards;
+  animation: story-page-out-next 900ms var(--ease-elegant) forwards;
 }
 
 .story__page--in-next {
-  animation: story-page-in-next 600ms var(--ease-elegant) forwards;
+  animation: story-page-in-next 900ms var(--ease-elegant) forwards;
 }
 
 .story__page--out-prev {
-  animation: story-page-out-prev 600ms var(--ease-elegant) forwards;
+  animation: story-page-out-prev 900ms var(--ease-elegant) forwards;
 }
 
 .story__page--in-prev {
-  animation: story-page-in-prev 600ms var(--ease-elegant) forwards;
+  animation: story-page-in-prev 900ms var(--ease-elegant) forwards;
 }
 
 .story__nav {
@@ -362,7 +362,6 @@
   }
 
   // 書本 1000×580：木色書皮 12 ＋ 左頁 488 ＋ 右頁 488。
-  // perspective 放在書本上，翻頁的那一頁才有透視深度。
   .story__book {
     display: block;
     position: relative;
@@ -371,7 +370,22 @@
     border-radius: 20px;
     overflow: hidden;
     box-shadow: 0 16px 48px var(--shadow-rose);
+  }
+
+  // 翻頁那一頁繞垂直軸轉的時候，離觀察者近的一側會被透視放大，上下邊會超出 556 而蓋到木色書皮上
+  // （看起來就是翻頁時書皮先閃一塊白）。這一層只負責把它裁回內頁範圍。
+  // 透視也必須設在這一層：翻頁元素是它的子節點，設在更外層的書本上不會作用到孫節點。
+  // 這一層不得設 transform-style: preserve-3d —— 與 overflow: hidden 同時存在會把 3D 壓平，
+  // 翻頁會變成平面滑動。3D 上下文留在翻頁元素自己身上。
+  .story__flip-clip {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    width: 976px;
+    height: 556px;
+    overflow: hidden;
     perspective: 2000px;
+    z-index: 3;
   }
 
   .story__spread {
@@ -417,25 +431,25 @@
     background: linear-gradient(to right, #83184326, #83184300);
   }
 
+  // 座標相對於裁切層（原點在書本的 12,12），所以右頁是 488、左頁是 0。
   .story__flip {
     position: absolute;
-    top: 12px;
+    top: 0;
     width: 488px;
     height: 556px;
     transform-style: preserve-3d;
-    z-index: 3;
   }
 
   .story__flip--next {
-    left: 500px;
+    left: 488px;
     transform-origin: left center;
-    animation: story-turn-next 600ms var(--ease-elegant) forwards;
+    animation: story-turn-next 900ms var(--ease-elegant) forwards;
   }
 
   .story__flip--prev {
-    left: 12px;
+    left: 0;
     transform-origin: right center;
-    animation: story-turn-prev 600ms var(--ease-elegant) forwards;
+    animation: story-turn-prev 900ms var(--ease-elegant) forwards;
   }
 
   .story__flip-face {

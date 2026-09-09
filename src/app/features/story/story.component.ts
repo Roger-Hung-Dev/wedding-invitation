@@ -12,7 +12,7 @@ import { StoryStore, StoryTurnDirection } from './story.store'
  * 翻頁動畫時長，與 story.component.scss 的 story-turn-*／story-page-* 動畫時長為同一組數字，
  * 改一邊就要改另一邊，否則畫面已經翻完了卻還鎖著輸入（或反過來，翻到一半就能再點）。
  */
-const TURN_DURATION_MS = 600
+const TURN_DURATION_MS = 900
 
 /** 要求減少動態效果時改成交叉淡入淡出，時長同步縮短。 */
 const REDUCED_TURN_DURATION_MS = 200

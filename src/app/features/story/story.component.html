@@ -95,29 +95,32 @@
               />
             </div>
           } @else {
-            <div
-              class="story__flip"
-              [class.story__flip--next]="store.direction() === 'next'"
-              [class.story__flip--prev]="store.direction() === 'prev'"
-              aria-hidden="true"
-            >
-              <div class="story__flip-face story__flip-face--front">
-                @if (store.direction() === 'next') {
-                  <app-story-page [page]="outgoing" [variant]="'text'" [pageNumber]="store.outgoingPageNumber()" />
-                } @else {
-                  <app-story-page [page]="outgoing" [variant]="'photo'" />
-                }
-              </div>
-              <div class="story__flip-face story__flip-face--back">
-                @if (store.direction() === 'next') {
-                  <app-story-page [page]="store.currentPage()" [variant]="'photo'" />
-                } @else {
-                  <app-story-page
-                    [page]="store.currentPage()"
-                    [variant]="'text'"
-                    [pageNumber]="store.currentPageNumber()"
-                  />
-                }
+            <!-- 翻頁元素被透視放大的上下邊必須裁回內頁範圍，否則會蓋到木色書皮上（翻頁時閃一塊白）。 -->
+            <div class="story__flip-clip">
+              <div
+                class="story__flip"
+                [class.story__flip--next]="store.direction() === 'next'"
+                [class.story__flip--prev]="store.direction() === 'prev'"
+                aria-hidden="true"
+              >
+                <div class="story__flip-face story__flip-face--front">
+                  @if (store.direction() === 'next') {
+                    <app-story-page [page]="outgoing" [variant]="'text'" [pageNumber]="store.outgoingPageNumber()" />
+                  } @else {
+                    <app-story-page [page]="outgoing" [variant]="'photo'" />
+                  }
+                </div>
+                <div class="story__flip-face story__flip-face--back">
+                  @if (store.direction() === 'next') {
+                    <app-story-page [page]="store.currentPage()" [variant]="'photo'" />
+                  } @else {
+                    <app-story-page
+                      [page]="store.currentPage()"
+                      [variant]="'text'"
+                      [pageNumber]="store.currentPageNumber()"
+                    />
+                  }
+                </div>
               </div>
             </div>
           }
