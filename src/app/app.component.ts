@@ -23,10 +23,21 @@ export class AppComponent {
   private readonly musicPlayerStore = inject(MusicPlayerStore)
 
   /**
-   * 行動瀏覽器禁止無使用者手勢的自動播放，故以「首次點擊頁面任一處」啟動背景音樂。
-   * 監聽整份文件而非只在 Hero 內，因為賓客可能先滑動頁面才點擊。
+   * 行動瀏覽器禁止無使用者手勢的自動播放，故以「首次使用者手勢」啟動背景音樂。
+   *
+   * ⚠️ 只監聽 click 是不夠的：**手機上滑動頁面不會產生 click**
+   * （click 需要按下與放開在同一位置），賓客一進站就往下滑的話，音樂永遠不會開始。
+   *
+   * 依 HTML 規範，會授予「使用者啟用（user activation）」的是
+   * keydown／mousedown／pointerdown／pointerup／touchend —— 其中 **touchend 涵蓋了滑動**，
+   * 因為一次滑動的最後仍會送出 touchend。scroll 本身不在清單裡，監聽它沒有用。
+   *
+   * 四個事件都掛上，先到的那一個生效；play() 內有 idle 判斷，重複觸發不會有副作用。
    */
   @HostListener('document:click')
+  @HostListener('document:touchend')
+  @HostListener('document:pointerup')
+  @HostListener('document:keydown')
   onFirstInteraction(): void {
     if (this.musicPlayerStore.state() === 'idle') {
       this.musicPlayerStore.play()

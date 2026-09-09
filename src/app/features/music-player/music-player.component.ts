@@ -85,7 +85,9 @@ export class MusicPlayerComponent {
       const audio = this.audioEl().nativeElement
       if (this.store.state() === 'playing') {
         audio.play().catch(() => {
-          // 沒有實際音檔可播放時 play() 會 reject，仍維持狀態切換的互動回饋
+          // play() 被拒的兩種情況：瀏覽器判定尚無使用者手勢，或音檔載入失敗。
+          // 兩者都要退回 idle —— 留在 playing 會讓鈕顯示「播放中」卻沒有聲音。
+          this.store.resetToIdle()
         })
       } else {
         audio.pause()
