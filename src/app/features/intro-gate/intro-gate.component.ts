@@ -93,7 +93,7 @@ import { IntroGateStore } from './intro-gate.store'
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 0 24px 18vh;
+      padding: 0 24px 30vh;
       text-align: center;
     }
 
@@ -152,7 +152,7 @@ import { IntroGateStore } from './intro-gate.store'
       節奏刻意訂得比全站其他動畫慢，讀起來像等待而不是催促。
     */
     .gate__action {
-      margin-top: 56px;
+      margin-top: 36px;
       font-size: 13px;
       font-weight: 500;
       letter-spacing: 5px;
@@ -220,7 +220,7 @@ import { IntroGateStore } from './intro-gate.store'
       }
 
       .gate__action {
-        margin-top: 52px;
+        margin-top: 40px;
         font-size: 15px;
       }
     }
