@@ -24,6 +24,7 @@ import { IntroGateStore } from './intro-gate.store'
         <span class="gate__veil" aria-hidden="true"></span>
 
         <span class="gate__content">
+          <span class="gate__label">{{ text.label }}</span>
           <span class="gate__name-en">{{ content.brideGroomEn }}</span>
           <span class="gate__name-zh">{{ content.brideGroomZh }}</span>
 
@@ -82,21 +83,37 @@ import { IntroGateStore } from './intro-gate.store'
       background: linear-gradient(180deg, #00000073 0%, #000000b3 100%);
     }
 
+    /*
+      內容整體往上偏：底圖的人物在畫面中央偏下，文字若也置中就會壓在臉上。
+      用 padding-bottom 把內容盒撐高、在 flex 置中之後自然往上推，
+      比寫死 translateY 好——不同高度的螢幕都會等比例偏移。
+    */
     .gate__content {
       position: relative;
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 0 24px;
+      padding: 0 24px 18vh;
       text-align: center;
     }
 
+    .gate__label {
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 6px;
+      line-height: 1.4;
+      color: var(--color-text-invert-muted);
+      text-shadow: 0 1px 6px #00000099;
+      animation: gate-rise 900ms var(--ease-elegant) 120ms both;
+    }
+
     .gate__name-en {
+      margin-top: 18px;
       font-family: var(--font-script);
       font-size: 52px;
       line-height: 1.2;
       color: var(--color-text-invert);
-      animation: gate-rise 900ms var(--ease-elegant) 200ms both;
+      animation: gate-rise 900ms var(--ease-elegant) 280ms both;
     }
 
     .gate__name-zh {
@@ -106,7 +123,7 @@ import { IntroGateStore } from './intro-gate.store'
       letter-spacing: 6px;
       line-height: 1.4;
       color: var(--color-text-invert);
-      animation: gate-rise 900ms var(--ease-elegant) 340ms both;
+      animation: gate-rise 900ms var(--ease-elegant) 420ms both;
     }
 
     .gate__divider {
@@ -114,7 +131,7 @@ import { IntroGateStore } from './intro-gate.store'
       align-items: center;
       gap: 8px;
       margin-top: 28px;
-      animation: gate-rise 900ms var(--ease-elegant) 480ms both;
+      animation: gate-rise 900ms var(--ease-elegant) 560ms both;
     }
 
     .gate__divider-line {
@@ -143,8 +160,8 @@ import { IntroGateStore } from './intro-gate.store'
       /* 底圖亮處（天空、白紗）會吃掉金色字，加一層暗影確保任何一張封面都讀得到 */
       text-shadow: 0 1px 6px #00000099;
       animation:
-        gate-rise 900ms var(--ease-elegant) 640ms both,
-        gate-breathe 2600ms ease-in-out 1500ms infinite;
+        gate-rise 900ms var(--ease-elegant) 720ms both,
+        gate-breathe 2600ms ease-in-out 1600ms infinite;
     }
 
     @keyframes gate-in {
@@ -186,7 +203,13 @@ import { IntroGateStore } from './intro-gate.store'
         display: block;
       }
 
+      .gate__label {
+        font-size: 14px;
+        letter-spacing: 8px;
+      }
+
       .gate__name-en {
+        margin-top: 24px;
         font-size: 88px;
       }
 
@@ -208,6 +231,7 @@ import { IntroGateStore } from './intro-gate.store'
     */
     @media (prefers-reduced-motion: reduce) {
       .gate,
+      .gate__label,
       .gate__name-en,
       .gate__name-zh,
       .gate__divider,
