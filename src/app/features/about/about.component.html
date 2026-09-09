@@ -32,8 +32,15 @@
           [style.transitionDelay.ms]="textDelayMs(i)"
         >
           <p class="about__role">{{ profile.role }}</p>
-          <p class="about__name">{{ profile.name }}</p>
-          <p class="about__chip">{{ profile.occupation }}</p>
+          <!--
+            名字與職業標籤包成一組：容器寬度貼合兩者中較寬的那一個，內部再置中，
+            兩者的中線才會對齊。分開放的話它們只會各自靠左（或靠右）對齊，
+            寬度不同時看起來就是歪的。
+          -->
+          <span class="about__identity">
+            <span class="about__name">{{ profile.name }}</span>
+            <span class="about__chip">{{ profile.occupation }}</span>
+          </span>
           <p class="about__desc">{{ profile.description }}</p>
         </div>
       </article>

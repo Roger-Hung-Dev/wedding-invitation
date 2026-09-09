@@ -191,7 +191,7 @@ export const ABOUT_PROFILES: readonly AboutProfile[] = [
     id: 'bride',
     role: 'BRIDE',
     name: '李怡安',
-    occupation: '餐飲服務業',
+    occupation: '服務業',
     description:
       '在餐飲業裡練就一身照顧人的本事，記得誰不吃什麼、誰想多要一點醬。她相信好好吃一頓飯，能讓人重新有力氣。',
     photoUrl: 'assets/images/bride.jpg',

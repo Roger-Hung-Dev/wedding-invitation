@@ -93,8 +93,18 @@
     color: var(--color-accent-gold);
   }
 
-  .about__name {
+  // 名字與職業標籤的共同容器：寬度貼合兩者中較寬的那一個（inline-flex ＋ column），
+  // 內部 align-items: center 讓兩者以中線對齊。容器本身仍隨 text-align 靠左／靠右，
+  // 所以新郎新娘的鏡像版式不受影響。
+  .about__identity {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
     margin: 6px 0 0;
+  }
+
+  .about__name {
+    margin: 0;
     font-size: 22px;
     font-weight: 500;
     letter-spacing: 2px;
@@ -105,9 +115,10 @@
   .about__chip {
     display: inline-flex;
     align-items: center;
-    margin: 4px 0 0;
+    margin: 6px 0 0;
     height: 26px;
     padding: 0 12px;
+    border: 1px solid var(--color-border-pill);
     border-radius: 13px;
     background: var(--color-bg-ivory);
     font-size: 12px;
@@ -206,8 +217,11 @@
       font-size: 12px;
     }
 
-    .about__name {
+    .about__identity {
       margin-top: 8px;
+    }
+
+    .about__name {
       font-size: 26px;
     }
 
