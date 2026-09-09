@@ -23,7 +23,12 @@ export const WEDDING_CONTENT = {
   venueName: '臻愛花園酒店',
   venueHall: '2F　東方明珠',
   seatingGuide: '入口處設有座位表，男方親友請至 A 區、女方親友請至 B 區',
-  monogram: 'R　&　A',
+  /**
+   * 頁尾金色圓環內的縮寫。
+   * ⛔ 這裡用半形空白，不是全形 —— 全形空白的寬度等同一個字，
+   * 在 20px 字級下會讓 R 與 A 各離 & 二十多 px，圓環裡看起來是散開的三個字母。
+   */
+  monogram: 'R & A',
   rsvpDeadlineDisplay: '2026 / 11 / 08',
 } as const
 
