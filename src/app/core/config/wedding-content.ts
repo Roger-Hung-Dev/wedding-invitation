@@ -114,6 +114,17 @@ export const MAP_PREVIEW_IMAGE_DESKTOP_URL = 'assets/images/map-preview.jpg'
  * S1 主視覺封面區的固定文案（新人姓名、日期見 WEDDING_CONTENT，這裡只放版面上的標籤字）。
  * 倒數計時四格的英文標籤與婚期已過時顯示的致謝句都在畫面最上方、第一屏可見。
  */
+/**
+ * 進站開場層的文案。這一層存在的理由是技術性的：行動瀏覽器不允許沒有點擊就播放有聲音樂，
+ * 賓客的那一下輕觸就是音樂的啟動許可。文案要讓那個動作看起來是儀式而不是障礙。
+ */
+export const INTRO_GATE_TEXT = {
+  /** 提示文字，動詞開頭讓賓客知道要做什麼。 */
+  action: '輕觸開啟',
+  /** 螢幕報讀軟體會唸出來的按鈕說明（畫面上不顯示）。 */
+  ariaLabel: '輕觸開啟喜帖，並開始播放背景音樂',
+} as const
+
 export const HERO_TEXT = {
   /** 姓名上方的小字眉標，全大寫、字距展開。 */
   eyebrow: 'WE ARE GETTING MARRIED',

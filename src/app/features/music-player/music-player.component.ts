@@ -179,6 +179,10 @@ export class MusicPlayerComponent {
       const state = this.store.state()
       if (state === 'playing') {
         audio.muted = false
+        // 靜音預播在開場層顯示期間可能已經跑了幾十秒，這時解除靜音會從曲子中間切進來。
+        // 賓客「聽到」音樂的起點是輕觸的那一刻，所以倒回開頭讓他聽到完整的前奏。
+        // 開場層的輕觸是完整的使用者授權，這裡的 seek 不會像先前那樣導致媒體被暫停。
+        if (audio.currentTime > 2) audio.currentTime = 0
         audio.play().catch(() => {
           // 被拒的兩種情況：瀏覽器判定手勢不足，或音檔載入失敗。
           // 都要退回 idle 並轉回靜音 —— 留在 playing 會讓鈕顯示「播放中」卻沒有聲音。

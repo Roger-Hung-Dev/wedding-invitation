@@ -1,9 +1,10 @@
-import { ChangeDetectionStrategy, Component, ElementRef, afterNextRender, inject, signal, viewChild } from '@angular/core'
+import { ChangeDetectionStrategy, Component, ElementRef, afterNextRender, computed, inject, signal, viewChild } from '@angular/core'
 import { BreakpointService } from '../../shared/breakpoint.service'
 import { ReducedMotionService } from '../../shared/reduced-motion.service'
 import { HERO_IMAGE_DESKTOP_URL, HERO_IMAGE_URL, HERO_TEXT, WEDDING_CONTENT } from '../../core/config/wedding-content'
 import { padTwoDigits } from '../../core/date.util'
 import { HeroStore } from './hero.store'
+import { IntroGateStore } from '../intro-gate/intro-gate.store'
 import { MusicPlayerComponent } from '../music-player/music-player.component'
 
 /**
@@ -31,12 +32,19 @@ export class HeroComponent {
   private readonly host = inject<ElementRef<HTMLElement>>(ElementRef)
   private readonly bgImage = viewChild.required<ElementRef<HTMLElement>>('heroBg')
 
-  /** Hero 入場序列不等捲動觸發，載入後立刻切成 true 播放一次；各元素的交錯延遲寫在樣板與樣式表。 */
-  protected readonly loaded = signal(false)
+  private readonly introGate = inject(IntroGateStore)
+
+  /**
+   * Hero 入場序列不等捲動觸發，但要等賓客把開場層點開才播。
+   * 開場層蓋著的時候就播完的話，那 2.4 秒的入場序列賓客一眼都看不到。
+   */
+  protected readonly loaded = computed(() => this.rendered() && this.introGate.entered())
+
+  private readonly rendered = signal(false)
 
   constructor() {
     afterNextRender(() => {
-      requestAnimationFrame(() => this.loaded.set(true))
+      requestAnimationFrame(() => this.rendered.set(true))
       this.bindParallax()
     })
   }

@@ -6,6 +6,7 @@ import { GalleryComponent } from './features/gallery/gallery.component'
 import { InfoComponent } from './features/info/info.component'
 import { RsvpComponent } from './features/rsvp/rsvp.component'
 import { FooterComponent } from './features/footer/footer.component'
+import { IntroGateComponent } from './features/intro-gate/intro-gate.component'
 import { ToastContainerComponent } from './shared/toast-container.component'
 
 /**
@@ -13,7 +14,7 @@ import { ToastContainerComponent } from './shared/toast-container.component'
  */
 @Component({
   selector: 'app-root',
-  imports: [HeroComponent, AboutComponent, StoryComponent, GalleryComponent, InfoComponent, RsvpComponent, FooterComponent, ToastContainerComponent],
+  imports: [IntroGateComponent, HeroComponent, AboutComponent, StoryComponent, GalleryComponent, InfoComponent, RsvpComponent, FooterComponent, ToastContainerComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
