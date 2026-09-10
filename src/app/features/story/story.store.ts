@@ -26,6 +26,12 @@ export class StoryStore {
   private readonly _direction = signal<StoryTurnDirection>('next')
   readonly direction = this._direction.asReadonly()
 
+  /**
+   * 翻過來的那張紙是否已經蓋住底層該換頁的那一半。
+   * 由元件在動畫進行到淡出起點時設起來，見 story.component.ts 的 BASE_SWAP_RATIO。
+   */
+  private readonly _covered = signal(false)
+
   readonly isTurning = computed(() => this._outgoingIndex() !== null)
   readonly canPrev = computed(() => this._index() > 0)
   readonly canNext = computed(() => this._index() < this.pages.length - 1)
@@ -51,24 +57,33 @@ export class StoryStore {
     | 往前 | 紙離開後露出 → 換新頁     | 被翻過來的紙背面蓋上 → 留舊頁 |
 
     兩邊都直接換成新頁的話，會看到「還沒翻，另外半邊就先變成下一張」。
+
+    ⛔ 但「留舊頁」不能留到翻頁結束。翻頁層在最後 15% 會淡出、由底層接手
+    （見 story.component.scss 的 story-flip-fade），底層那時還是舊頁的話，
+    淡出就會露出舊頁、等翻頁結束才跳成新頁 —— 那是「翻完後閃一下」。
+    所以要在紙蓋住、而且還沒開始淡出的那一刻換，也就是 _covered 被設起來的時候。
   */
 
-  /** 左頁（照片）。往後翻時要留著舊頁，等翻過來的紙把它蓋掉。 */
+  /** 左頁（照片）。往後翻時要留著舊頁，等翻過來的紙蓋上了才換。 */
   readonly spreadPhotoPage = computed(() => {
     const outgoing = this._outgoingIndex()
-    return outgoing !== null && this._direction() === 'next' ? this.pages[outgoing] : this.currentPage()
+    return outgoing !== null && this._direction() === 'next' && !this._covered()
+      ? this.pages[outgoing]
+      : this.currentPage()
   })
 
   /** 右頁（文字）。往前翻時要留著舊頁，理由同上。 */
   readonly spreadTextPage = computed(() => {
     const outgoing = this._outgoingIndex()
-    return outgoing !== null && this._direction() === 'prev' ? this.pages[outgoing] : this.currentPage()
+    return outgoing !== null && this._direction() === 'prev' && !this._covered()
+      ? this.pages[outgoing]
+      : this.currentPage()
   })
 
   /** 右頁的頁碼要跟著右頁的內容走，否則翻到一半會出現「舊內容配新頁碼」。 */
   readonly spreadTextPageNumber = computed(() => {
     const outgoing = this._outgoingIndex()
-    return outgoing !== null && this._direction() === 'prev'
+    return outgoing !== null && this._direction() === 'prev' && !this._covered()
       ? formatPageNumber(outgoing)
       : this.currentPageNumber()
   })
@@ -85,12 +100,19 @@ export class StoryStore {
     if (to < 0 || to > this.pages.length - 1) return false
 
     this._direction.set(direction)
+    this._covered.set(false)
     this._outgoingIndex.set(from)
     this._index.set(to)
     return true
   }
 
+  /** 紙已經蓋住底層該換頁的那一半，可以換了。 */
+  markCovered(): void {
+    this._covered.set(true)
+  }
+
   endTurn(): void {
     this._outgoingIndex.set(null)
+    this._covered.set(false)
   }
 }

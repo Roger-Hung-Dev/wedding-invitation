@@ -17,6 +17,15 @@ const TURN_DURATION_MS = 900
 /** 要求減少動態效果時改成交叉淡入淡出，時長同步縮短。 */
 const REDUCED_TURN_DURATION_MS = 200
 
+/**
+ * 底層那一半換成新頁的時機，佔整段翻頁的比例。
+ *
+ * 必須等於 story.component.scss 的 story-flip-fade 開始淡出的那個百分比（85%），不可以各改各的。
+ * 早於它換，紙還沒完全蓋住底層，換頁會被看見；
+ * 晚於它換，翻頁層已經開始淡出、露出的還是舊頁，翻完才跳成新頁 —— 那是「翻完後閃一下」。
+ */
+const BASE_SWAP_RATIO = 0.85
+
 /** 翻頁鈕內箭頭的尺寸，手機 16、桌機 20。 */
 const ICON_SIZE_MOBILE = 16
 const ICON_SIZE_DESKTOP = 20
@@ -43,6 +52,7 @@ export class StoryComponent {
 
   private readonly destroyRef = inject(DestroyRef)
   private turnTimer: ReturnType<typeof setTimeout> | null = null
+  private swapTimer: ReturnType<typeof setTimeout> | null = null
 
   /** 頁點列對報讀器隱藏，改由這一句視覺隱藏的文字報出目前頁次。 */
   protected readonly pageStatus = computed(() =>
@@ -63,11 +73,26 @@ export class StoryComponent {
     if (!this.store.startTurn(direction)) return
 
     this.clearTimer()
-    const duration = this.reducedMotion.prefersReduced() ? REDUCED_TURN_DURATION_MS : TURN_DURATION_MS
+
+    if (this.reducedMotion.prefersReduced()) {
+      // 降級版是整份舊跨頁疊上來淡出，底層全程被蓋住，不需要等時機。
+      this.store.markCovered()
+      this.turnTimer = setTimeout(() => {
+        this.turnTimer = null
+        this.store.endTurn()
+      }, REDUCED_TURN_DURATION_MS)
+      return
+    }
+
+    this.swapTimer = setTimeout(() => {
+      this.swapTimer = null
+      this.store.markCovered()
+    }, Math.round(TURN_DURATION_MS * BASE_SWAP_RATIO))
+
     this.turnTimer = setTimeout(() => {
       this.turnTimer = null
       this.store.endTurn()
-    }, duration)
+    }, TURN_DURATION_MS)
   }
 
   /**
@@ -95,6 +120,10 @@ export class StoryComponent {
     if (this.turnTimer !== null) {
       clearTimeout(this.turnTimer)
       this.turnTimer = null
+    }
+    if (this.swapTimer !== null) {
+      clearTimeout(this.swapTimer)
+      this.swapTimer = null
     }
   }
 }
