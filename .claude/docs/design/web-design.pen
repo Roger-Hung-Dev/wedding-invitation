@@ -79,7 +79,7 @@
               "width": 390,
               "layout": "vertical",
               "padding": [
-                120,
+                59,
                 24,
                 0,
                 24
@@ -141,9 +141,9 @@
                 {
                   "type": "frame",
                   "id": "aTmJj",
-                  "name": "spacer-28",
+                  "name": "spacer-16",
                   "width": 1,
-                  "height": 28
+                  "height": 16
                 },
                 {
                   "type": "frame",
@@ -184,9 +184,9 @@
                 {
                   "type": "frame",
                   "id": "GVVeh",
-                  "name": "spacer-28",
+                  "name": "spacer-16",
                   "width": 1,
-                  "height": 28
+                  "height": 16
                 },
                 {
                   "type": "text",
@@ -203,10 +203,30 @@
                 },
                 {
                   "type": "frame",
-                  "id": "E04lOQ",
-                  "name": "spacer-40",
+                  "id": "GaVGh",
+                  "name": "spacer-12",
                   "width": 1,
-                  "height": 40
+                  "height": 12
+                },
+                {
+                  "type": "text",
+                  "id": "yqpFC",
+                  "name": "S1-宴客地點",
+                  "fill": "$text-invert-muted",
+                  "content": "臻愛花園酒店",
+                  "lineHeight": 1.4,
+                  "textAlign": "center",
+                  "fontFamily": "$font-body",
+                  "fontSize": 14,
+                  "fontWeight": "500",
+                  "letterSpacing": 3
+                },
+                {
+                  "type": "frame",
+                  "id": "E04lOQ",
+                  "name": "spacer-141",
+                  "width": 1,
+                  "height": 141
                 },
                 {
                   "type": "frame",
