@@ -48,13 +48,10 @@
             <p class="info__row-value">{{ links.venueAddress }}</p>
           </div>
         </div>
-        <div class="info__row">
-          <app-icon name="users" [size]="20" color="var(--color-accent-gold)" />
-          <div class="info__row-text">
-            <p class="info__row-label">{{ text.rowLabels.seating }}</p>
-            <p class="info__row-value">{{ diet.seatingGuide() }}</p>
-          </div>
-        </div>
+        <!--
+          餐點安排排在桌次引導之前：吃素的賓客最想確認的是「有沒有我吃的」，
+          確認之後才會關心坐哪裡。只有蔬食版會出現這一列。
+        -->
         @if (diet.dietNote(); as note) {
           <div class="info__row">
             <app-icon name="leaf" [size]="20" color="var(--color-accent-gold)" />
@@ -64,6 +61,13 @@
             </div>
           </div>
         }
+        <div class="info__row">
+          <app-icon name="users" [size]="20" color="var(--color-accent-gold)" />
+          <div class="info__row-text">
+            <p class="info__row-label">{{ text.rowLabels.seating }}</p>
+            <p class="info__row-value">{{ diet.seatingGuide() }}</p>
+          </div>
+        </div>
       </div>
     </div>
 

@@ -168,7 +168,7 @@ export const DIET_VARIANTS = {
      */
     dietNote: {
       label: '餐點安排',
-      text: '我們已為您安排蔬食席位，餐點由飯店主廚特別設計',
+      text: '女方親友宴席採用蔬食料理，由飯店主廚特別設計，期待與您共享這一席',
     },
   },
 } as const
