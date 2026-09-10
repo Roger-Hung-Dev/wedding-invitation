@@ -120,10 +120,18 @@ $gallery-marquee-gap: 20px;
   }
 }
 
-// 滑鼠停留在相片區任一處就暫停，移開恢復；:focus-within 讓鍵盤使用者也能停下來——
-// WCAG 2.2.2 要求任何自動移動超過 5 秒的內容要能暫停，hover 只服務得到滑鼠使用者。
+// 三種暫停時機：滑鼠停留（這裡）、鍵盤聚焦與燈箱開著（都由 --paused 這個類別帶進來）。
+// WCAG 2.2.2 要求任何自動移動超過 5 秒的內容要能暫停，hover 只服務得到滑鼠使用者，
+// 所以鍵盤那一路也要有。
+//
+// ⛔ 鍵盤那一路不可以用 :focus-within 或 :has(:focus-visible)。
+// 滑鼠點一張照片會讓那顆 button 取得焦點，關掉燈箱時 CDK 又把焦點還原回它，
+// 於是輪播卡在暫停，要再點一次別的地方才會動 —— 那正是這裡修掉的 bug。
+// :focus-visible 也擋不住：實測還原焦點時 Chrome 仍判定它是 focus-visible。
+// CSS 偽類分不出「使用者按 Tab 進來」與「程式把焦點還原回去」，
+// 所以改由元件用 CDK 的 FocusMonitor 判斷焦點來源，只有 keyboard 才加上 --paused。
 .gallery__marquee:hover .gallery__marquee-track,
-.gallery__marquee:focus-within .gallery__marquee-track {
+.gallery__marquee--paused .gallery__marquee-track {
   animation-play-state: paused;
 }
 

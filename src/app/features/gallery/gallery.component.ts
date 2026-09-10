@@ -1,6 +1,6 @@
 import { ComponentType, Overlay, OverlayRef } from '@angular/cdk/overlay'
 import { ComponentPortal } from '@angular/cdk/portal'
-import { ChangeDetectionStrategy, Component, ComponentRef, DestroyRef, ElementRef, computed, effect, inject, viewChild } from '@angular/core'
+import { ChangeDetectionStrategy, Component, ComponentRef, DestroyRef, ElementRef, afterNextRender, computed, effect, inject, signal, viewChild } from '@angular/core'
 import { BreakpointService } from '../../shared/breakpoint.service'
 import { ScrollRevealDirective } from '../../shared/scroll-reveal.directive'
 import { SectionHeadingComponent } from '../../shared/section-heading/section-heading.component'
@@ -29,7 +29,7 @@ export interface MarqueeItem {
 
 /**
  * S2 婚紗藝廊區。手機為橫向滑動輪播（scroll-snap，僅可見主卡與左右鄰卡邊緣）。
- * 桌機預設為無縫自動橫向捲動（CSS animation，滑鼠停留或鍵盤聚焦時暫停），
+ * 桌機預設為無縫自動橫向捲動（CSS animation，滑鼠停留、鍵盤走訪或燈箱開著時暫停），
  * 捲動距離與時長依實際照片張數算出，增減照片不必改樣式；
  * 使用者要求減少動態效果時，改用每列三張的靜態網格（見 gallery.component.scss 的
  * prefers-reduced-motion 覆寫），確保所有照片仍然一次看得到，不會因為捲動停用
@@ -50,6 +50,27 @@ export class GalleryComponent {
   private readonly destroyRef = inject(DestroyRef)
 
   private readonly track = viewChild<ElementRef<HTMLElement>>('track')
+
+  /**
+   * 焦點是不是「使用者按 Tab 走進來」的。
+   *
+   * 不能用 CSS 的 :focus-within 或 :has(:focus-visible) —— 那兩個偽類分不出
+   * 「使用者按 Tab 進來」與「程式把焦點還原回去」。滑鼠點一張照片會讓那顆 button 取得焦點，
+   * 關掉燈箱時 CDK 又把焦點還原回它，輪播就卡在暫停，要再點一次別處才會動。
+   * （:focus-visible 也擋不住，實測還原焦點時 Chrome 仍判定它是 focus-visible。）
+   *
+   * 所以改追蹤「進入焦點前的最後一次互動是不是 Tab」：滑鼠點擊與關閉燈箱的焦點還原
+   * 都不算，只有鍵盤走訪會讓輪播停下來。
+   */
+  private readonly keyboardFocused = signal(false)
+
+  /** 進入焦點前的最後一次互動是不是按 Tab。純旗標，不需要觸發變更偵測。 */
+  private lastInputWasTab = false
+
+  /** 燈箱開著時背景不該繼續跑；鍵盤走訪時要能停下來（WCAG 2.2.2）。滑鼠停留那一路留在 CSS。 */
+  protected readonly marqueePaused = computed(
+    () => this.store.lightboxIndex() !== null || this.keyboardFocused(),
+  )
 
   /**
    * 桌機自動捲動軌道：把照片序列複製一份接在後面，動畫跑完第一份的寬度就重置，
@@ -104,6 +125,23 @@ export class GalleryComponent {
       this.lightboxRef.setInput('index', index)
       this.lightboxRef.setInput('total', this.store.photos.length)
     })
+    // 直接掛在 document 上而不是用樣板的事件綁定：這兩個只是更新一個旗標，
+    // 走 Angular 的事件綁定會讓每一次按鍵都跑一輪變更偵測。
+    afterNextRender(() => {
+      const onKeydown = (event: KeyboardEvent) => {
+        if (event.key === 'Tab') this.lastInputWasTab = true
+      }
+      const onPointerDown = () => {
+        this.lastInputWasTab = false
+      }
+      document.addEventListener('keydown', onKeydown, true)
+      document.addEventListener('pointerdown', onPointerDown, true)
+      this.destroyRef.onDestroy(() => {
+        document.removeEventListener('keydown', onKeydown, true)
+        document.removeEventListener('pointerdown', onPointerDown, true)
+      })
+    })
+
     this.destroyRef.onDestroy(() => this.overlayRef?.dispose())
   }
 
@@ -122,6 +160,15 @@ export class GalleryComponent {
     componentRef.instance.prev.subscribe(() => this.store.showPrev())
 
     return componentRef
+  }
+
+  /** 焦點走進相片區。只有這一步之前剛按過 Tab 才算鍵盤走訪。 */
+  onMarqueeFocusIn(): void {
+    this.keyboardFocused.set(this.lastInputWasTab)
+  }
+
+  onMarqueeFocusOut(): void {
+    this.keyboardFocused.set(false)
   }
 
   onTrackScroll(): void {

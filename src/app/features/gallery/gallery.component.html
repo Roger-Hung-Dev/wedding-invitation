@@ -41,7 +41,12 @@
     這裡只負責渲染，複製份對螢幕報讀軟體隱藏並移出 Tab 順序（見下方 aria-hidden／tabindex），
     避免同一張照片在無障礙樹裡被唸兩次。
   -->
-  <div class="gallery__marquee">
+  <div
+    class="gallery__marquee"
+    [class.gallery__marquee--paused]="marqueePaused()"
+    (focusin)="onMarqueeFocusIn()"
+    (focusout)="onMarqueeFocusOut()"
+  >
     <div
       class="gallery__marquee-track"
       [style.--gallery-marquee-shift]="marqueeShift()"
