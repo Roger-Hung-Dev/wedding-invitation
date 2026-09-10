@@ -9,10 +9,16 @@ import { StoryPageComponent } from './story-page/story-page.component'
 import { StoryStore, StoryTurnDirection } from './story.store'
 
 /**
- * 翻頁動畫時長，與 story.component.scss 的 story-turn-*／story-page-* 動畫時長為同一組數字，
+ * 桌機雙頁的翻頁時長，與 story.component.scss 的 story-turn-* 動畫時長為同一組數字，
  * 改一邊就要改另一邊，否則畫面已經翻完了卻還鎖著輸入（或反過來，翻到一半就能再點）。
  */
 const TURN_DURATION_MS = 900
+
+/**
+ * 手機單頁的翻頁時長，對應 scss 的 story-card-flip-*。
+ * 比桌機短：紙在原地翻，視覺移動距離比桌機那張橫跨書脊的紙小得多，用 900ms 會拖。
+ */
+const CARD_TURN_DURATION_MS = 600
 
 /** 要求減少動態效果時改成交叉淡入淡出，時長同步縮短。 */
 const REDUCED_TURN_DURATION_MS = 200
@@ -20,9 +26,12 @@ const REDUCED_TURN_DURATION_MS = 200
 /**
  * 底層那一半換成新頁的時機，佔整段翻頁的比例。
  *
- * 必須等於 story.component.scss 的 story-flip-fade 開始淡出的那個百分比（85%），不可以各改各的。
+ * 桌機：必須等於 story.component.scss 的 story-flip-fade 開始淡出的那個百分比（85%），不可以各改各的。
  * 早於它換，紙還沒完全蓋住底層，換頁會被看見；
  * 晚於它換，翻頁層已經開始淡出、露出的還是舊頁，翻完才跳成新頁 —— 那是「翻完後閃一下」。
+ *
+ * 手機沒有淡出那一段，紙直接翻到底再移除，這個比例代表「紙已經轉得夠開、幾乎蓋滿底層」，
+ * 同樣是換頁不會被看見的時機，所以共用同一個值。
  */
 const BASE_SWAP_RATIO = 0.85
 
@@ -84,15 +93,17 @@ export class StoryComponent {
       return
     }
 
+    const duration = this.breakpoint.isDesktop() ? TURN_DURATION_MS : CARD_TURN_DURATION_MS
+
     this.swapTimer = setTimeout(() => {
       this.swapTimer = null
       this.store.markCovered()
-    }, Math.round(TURN_DURATION_MS * BASE_SWAP_RATIO))
+    }, Math.round(duration * BASE_SWAP_RATIO))
 
     this.turnTimer = setTimeout(() => {
       this.turnTimer = null
       this.store.endTurn()
-    }, TURN_DURATION_MS)
+    }, duration)
   }
 
   /**

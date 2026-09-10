@@ -168,58 +168,76 @@
 }
 
 .story__page {
-  transform-origin: left center;
   backface-visibility: hidden;
 }
 
-// 翻出去的舊頁疊在新頁上面，翻到一半才把新頁露出來。
+// 疊在底層之上的那一份（降級版的舊頁）。
 .story__page--outgoing {
   z-index: 2;
 }
 
-.story__page--in-prev,
-.story__page--out-prev {
-  transform-origin: right center;
+/*
+  手機單頁的翻頁：一整張紙繞垂直中軸原地翻面，正面舊頁、背面新頁。
+
+  為什麼不繞左緣翻（那才像掀書頁）：單頁沒有左半頁可以讓紙躺下去，
+  紙轉過 90 度之後整片落在畫面左側外被裁掉，後半段畫面完全靜止 ——
+  實測 900ms 的動畫只有前 360ms 看得到東西，翻起來會覺得遲鈍。
+  原地翻面則全程都有東西在動。
+
+  ⛔ .story__card-inner 只設 perspective 與 overflow，不可以再設 transform-style: preserve-3d
+  —— 那兩者併用會把 3D 壓平，背面就會變成正面反過來的鏡像文字。
+  裁切交給 card-inner 的 overflow，翻頁元素本身不設 overflow。
+*/
+.story__card-flip {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  transform-style: preserve-3d;
+  will-change: transform;
 }
 
-// 手機沒有書脊，翻頁改為整頁替換：舊頁沿左緣轉出去並淡出，新頁同時從側面轉正。
-@keyframes story-page-out-next {
+.story__card-flip-face {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: var(--color-surface);
+  backface-visibility: hidden;
+}
+
+// 背面固定預轉 180 度：往左翻（-180）與往右翻（+180）算下來都回到 0，才不會是鏡像。
+.story__card-flip-face--back {
+  transform: rotateY(180deg);
+}
+
+// 紙的左右兩緣壓暗，看起來才有厚度；沒有這一層，翻動中的紙像一張漂浮的圖片。
+.story__card-flip-shade {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.18) 0%,
+    rgba(0, 0, 0, 0) 30%,
+    rgba(0, 0, 0, 0) 70%,
+    rgba(0, 0, 0, 0.18) 100%
+  );
+}
+
+@keyframes story-card-flip-next {
   from {
     transform: rotateY(0);
-    opacity: 1;
   }
   to {
-    transform: rotateY(-90deg);
-    opacity: 0;
+    transform: rotateY(-180deg);
   }
 }
 
-@keyframes story-page-in-next {
-  from {
-    transform: rotateY(90deg);
-  }
-  to {
-    transform: rotateY(0);
-  }
-}
-
-@keyframes story-page-out-prev {
+@keyframes story-card-flip-prev {
   from {
     transform: rotateY(0);
-    opacity: 1;
   }
   to {
-    transform: rotateY(90deg);
-    opacity: 0;
-  }
-}
-
-@keyframes story-page-in-prev {
-  from {
-    transform: rotateY(-90deg);
-  }
-  to {
-    transform: rotateY(0);
+    transform: rotateY(180deg);
   }
 }
 
@@ -291,20 +309,14 @@
   }
 }
 
-.story__page--out-next {
-  animation: story-page-out-next 900ms var(--ease-elegant) forwards;
+// 手機單頁的翻頁時長比桌機短：紙在原地翻，視覺移動距離比桌機那張橫跨書脊的紙小得多，
+// 用桌機的 900ms 會拖。這個數字與 story.component.ts 的 CARD_TURN_DURATION_MS 是同一組。
+.story__card-flip--next {
+  animation: story-card-flip-next 600ms var(--ease-elegant) forwards;
 }
 
-.story__page--in-next {
-  animation: story-page-in-next 900ms var(--ease-elegant) forwards;
-}
-
-.story__page--out-prev {
-  animation: story-page-out-prev 900ms var(--ease-elegant) forwards;
-}
-
-.story__page--in-prev {
-  animation: story-page-in-prev 900ms var(--ease-elegant) forwards;
+.story__card-flip--prev {
+  animation: story-card-flip-prev 600ms var(--ease-elegant) forwards;
 }
 
 .story__nav {
@@ -545,17 +557,14 @@
 // 3D 旋轉對前庭敏感的人是實質不適，不是美感偏好：翻頁一律降成 200ms 的交叉淡入淡出，
 // 版面與翻頁功能本身都不變。桌機的立體翻頁在這個情況下根本不會被渲染（見樣板的分支）。
 @media (prefers-reduced-motion: reduce) {
-  .story__page--in-next,
-  .story__page--in-prev {
-    animation: story-cross-in 200ms linear forwards;
-  }
-
-  .story__page--out-next,
-  .story__page--out-prev {
-    animation: story-cross-out 200ms linear forwards;
-  }
-
   .story__dot {
     transition-duration: 1ms;
   }
+}
+
+// 手機的降級版：舊頁整份疊上來淡出，底層已經是新頁，變成交叉淡入淡出。
+// 不放在 prefers-reduced-motion 的 media query 裡，是因為樣板已經用 reducedMotion 判斷過了
+// 才渲染這個節點——寫在 media query 裡會多一層條件，兩邊判斷不一致時反而難查。
+.story__page--crossfade {
+  animation: story-cross-out 200ms linear forwards;
 }

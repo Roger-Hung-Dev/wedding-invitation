@@ -64,6 +64,18 @@ export class StoryStore {
     所以要在紙蓋住、而且還沒開始淡出的那一刻換，也就是 _covered 被設起來的時候。
   */
 
+  /**
+   * 手機單頁的底層。翻頁時留著舊頁，等翻過來的紙蓋上了才換。
+   *
+   * 手機是一整張紙原地翻面（正面舊頁、背面新頁），紙轉動時兩側會露出底層。
+   * 底層若直接換成新頁，畫面會變成「新頁｜正在翻的舊頁｜新頁」三段；留著舊頁，
+   * 看起來才是同一張紙在翻。
+   */
+  readonly cardPage = computed(() => {
+    const outgoing = this._outgoingIndex()
+    return outgoing !== null && !this._covered() ? this.pages[outgoing] : this.currentPage()
+  })
+
   /** 左頁（照片）。往後翻時要留著舊頁，等翻過來的紙蓋上了才換。 */
   readonly spreadPhotoPage = computed(() => {
     const outgoing = this._outgoingIndex()

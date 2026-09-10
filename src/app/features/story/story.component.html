@@ -21,13 +21,15 @@
         <span class="story__cover story__cover--right" aria-hidden="true"></span>
 
         <div class="story__card-inner">
+          <!--
+            底層綁 cardPage() 而不是 currentPage()：翻頁時要留著舊頁，等翻過來的紙蓋上了才換。
+            直接換的話，紙轉動時兩側露出的會是新頁，畫面變成「新頁｜正在翻的舊頁｜新頁」三段。
+          -->
           <div class="story__live" aria-live="polite">
             <span class="story__sr-only">{{ pageStatus() }}</span>
             <app-story-page
               class="story__page"
-              [class.story__page--in-next]="store.isTurning() && store.direction() === 'next'"
-              [class.story__page--in-prev]="store.isTurning() && store.direction() === 'prev'"
-              [page]="store.currentPage()"
+              [page]="store.cardPage()"
               [variant]="'single'"
               [animated]="true"
               (photoClick)="onPhotoClick($event)"
@@ -35,14 +37,35 @@
           </div>
 
           @if (store.outgoingPage(); as outgoing) {
-            <app-story-page
-              class="story__page story__page--outgoing"
-              [class.story__page--out-next]="store.direction() === 'next'"
-              [class.story__page--out-prev]="store.direction() === 'prev'"
-              [page]="outgoing"
-              [variant]="'single'"
-              aria-hidden="true"
-            />
+            @if (reducedMotion.prefersReduced()) {
+              <!-- 降級版不做 3D 旋轉：舊頁整份疊上來淡出。 -->
+              <app-story-page
+                class="story__page story__page--outgoing story__page--crossfade"
+                [page]="outgoing"
+                [variant]="'single'"
+                aria-hidden="true"
+              />
+            } @else {
+              <!--
+                一整張紙原地翻面：正面是舊頁、背面是新頁，繞垂直中軸轉 180 度。
+                背面固定預轉 180 度，往左翻（-180）與往右翻（+180）才都不會變成鏡像。
+              -->
+              <div
+                class="story__card-flip"
+                [class.story__card-flip--next]="store.direction() === 'next'"
+                [class.story__card-flip--prev]="store.direction() === 'prev'"
+                aria-hidden="true"
+              >
+                <div class="story__card-flip-face">
+                  <app-story-page [page]="outgoing" [variant]="'single'" />
+                  <span class="story__card-flip-shade"></span>
+                </div>
+                <div class="story__card-flip-face story__card-flip-face--back">
+                  <app-story-page [page]="store.currentPage()" [variant]="'single'" />
+                  <span class="story__card-flip-shade"></span>
+                </div>
+              </div>
+            }
           }
         </div>
 
