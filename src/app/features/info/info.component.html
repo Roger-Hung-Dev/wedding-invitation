@@ -55,6 +55,15 @@
             <p class="info__row-value">{{ diet.seatingGuide() }}</p>
           </div>
         </div>
+        @if (diet.dietNote(); as note) {
+          <div class="info__row">
+            <app-icon name="leaf" [size]="20" color="var(--color-accent-gold)" />
+            <div class="info__row-text">
+              <p class="info__row-label">{{ note.label }}</p>
+              <p class="info__row-value">{{ note.text }}</p>
+            </div>
+          </div>
+        }
       </div>
     </div>
 
@@ -69,15 +78,6 @@
       </a>
     </div>
   </div>
-
-  @if (diet.dietNote(); as note) {
-    <div class="info__diet-note anim-fade-up">
-      <p class="info__diet-note-title">{{ note.title }}</p>
-      @for (line of note.lines; track line) {
-        <p class="info__diet-note-line">{{ line }}</p>
-      }
-    </div>
-  }
 
   <p class="info__reminder anim-fade-in">{{ text.reminder }}</p>
 </section>

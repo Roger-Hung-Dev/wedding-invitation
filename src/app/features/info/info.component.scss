@@ -149,35 +149,6 @@
   letter-spacing: 1px;
 }
 
-/*
-  餐點說明只有素食版會出現，放在主卡與入場提醒之間：
-  它是「這場宴席為你做了什麼安排」的補充，不屬於卡片裡那幾條硬資訊，
-  但比入場提醒重要，所以排在提醒之前。
-*/
-.info__diet-note {
-  margin-top: 28px;
-  text-align: center;
-}
-
-.info__diet-note-title {
-  margin: 0;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 4px;
-  color: var(--color-accent-gold);
-}
-
-.info__diet-note-line {
-  margin: 10px 0 0;
-  font-size: 13px;
-  line-height: 1.7;
-  color: var(--color-text-muted);
-}
-
-.info__diet-note-line + .info__diet-note-line {
-  margin-top: 2px;
-}
-
 .info__reminder {
   margin: 16px 0 0;
   font-size: 11px;
@@ -265,20 +236,6 @@
     height: 60px;
     border-radius: 30px;
     font-size: 17px;
-  }
-
-  .info__diet-note {
-    margin-top: 36px;
-  }
-
-  .info__diet-note-title {
-    font-size: 13px;
-    letter-spacing: 5px;
-  }
-
-  .info__diet-note-line {
-    margin-top: 14px;
-    font-size: 16px;
   }
 
   .info__reminder {

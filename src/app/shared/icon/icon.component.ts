@@ -13,6 +13,7 @@ export type IconName =
   | 'door-open'
   | 'map-pin'
   | 'users'
+  | 'leaf'
 
 /**
  * 全站唯一的圖示來源，手刻線性圖示（stroke-based，24×24 viewBox），
@@ -87,6 +88,10 @@ export type IconName =
           <circle cx="8.5" cy="8" r="3" />
           <path d="M21 19v-1.5a3.5 3.5 0 0 0-2.5-3.36" />
           <path d="M15.5 4.6a3 3 0 0 1 0 5.8" />
+        }
+        @case ('leaf') {
+          <path d="M4 20c0-8 5-13 16-14 0 11-5 15-11 15a5 5 0 0 1-5-1Z" />
+          <path d="M9 15c1.8-3 4.2-5.2 7-6.4" />
         }
       }
     </svg>
