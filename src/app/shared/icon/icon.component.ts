@@ -14,6 +14,7 @@ export type IconName =
   | 'map-pin'
   | 'users'
   | 'leaf'
+  | 'heart'
 
 /**
  * 全站唯一的圖示來源，手刻線性圖示（stroke-based，24×24 viewBox），
@@ -92,6 +93,9 @@ export type IconName =
         @case ('leaf') {
           <path d="M4 20c0-8 5-13 16-14 0 11-5 15-11 15a5 5 0 0 1-5-1Z" />
           <path d="M9 15c1.8-3 4.2-5.2 7-6.4" />
+        }
+        @case ('heart') {
+          <path d="M12 20.4s-7.5-4.6-7.5-10a4.3 4.3 0 0 1 7.5-2.6 4.3 4.3 0 0 1 7.5 2.6c0 5.4-7.5 10-7.5 10Z" />
         }
       }
     </svg>

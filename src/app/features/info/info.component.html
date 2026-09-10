@@ -49,9 +49,18 @@
           </div>
         </div>
         <!--
-          餐點安排排在桌次引導之前：吃素的賓客最想確認的是「有沒有我吃的」，
-          確認之後才會關心坐哪裡。只有蔬食版會出現這一列。
+          最後兩列的順序是「禮金 → 餐點安排 → 桌次引導」，兩列都只有蔬食版會出現。
+          餐點安排排在桌次引導之前：賓客最想確認的是「有沒有我吃的」，確認之後才會關心坐哪裡。
         -->
+        @if (diet.cashGiftNote(); as gift) {
+          <div class="info__row">
+            <app-icon name="heart" [size]="20" color="var(--color-accent-gold)" />
+            <div class="info__row-text">
+              <p class="info__row-label">{{ gift.label }}</p>
+              <p class="info__row-value">{{ gift.text }}</p>
+            </div>
+          </div>
+        }
         @if (diet.dietNote(); as note) {
           <div class="info__row">
             <app-icon name="leaf" [size]="20" color="var(--color-accent-gold)" />

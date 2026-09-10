@@ -23,6 +23,9 @@ export class DietStore {
   /** 餐點說明。葷食版為 null，樣板據此決定要不要渲染整段。 */
   readonly dietNote = computed(() => DIET_VARIANTS[this._diet()].dietNote)
 
+  /** 不收禮金。只對女方親戚桌，所以葷食版為 null。 */
+  readonly cashGiftNote = computed(() => DIET_VARIANTS[this._diet()].cashGiftNote)
+
   /** 出席回覆表單網址。兩版分開，回覆才會自然分開統計。 */
   readonly rsvpFormUrl = computed(() =>
     this._diet() === 'vegetarian' ? WEDDING_LINKS.rsvpFormUrlVegetarian : WEDDING_LINKS.rsvpFormUrl,
