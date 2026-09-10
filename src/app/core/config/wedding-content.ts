@@ -20,9 +20,8 @@ export const WEDDING_CONTENT = {
   weddingDateOnlyDisplay: '2026 . 12 . 12',
   /** S3 日期大字下方的小字。新人選擇不顯示農曆，僅留星期。 */
   dateSubDisplay: '星期六',
-  venueName: '臻愛花園酒店',
+  venueName: '臻愛花園飯店',
   venueHall: '2F　東方明珠',
-  seatingGuide: '入口處設有座位表，男方親友請至 A 區、女方親友請至 B 區',
   /**
    * 頁尾金色圓環內的縮寫。
    * 這裡用半形空白，不是全形 —— 全形空白的寬度等同一個字，
@@ -114,8 +113,14 @@ export const HERO_IMAGE_URL = 'assets/images/hero-mobile.jpg'
 
 export const HERO_IMAGE_DESKTOP_URL = 'assets/images/hero-desktop.jpg'
 
-/** S3 地圖預覽圖。原圖近正方形，已裁成 16:9 並保留中央的場地標記，手機與桌機共用同一張。 */
-export const MAP_PREVIEW_IMAGE_URL = 'assets/images/map-preview.jpg'
+/**
+ * S3 地圖預覽圖。手機與桌機的顯示框比例差很多，共用一張會讓其中一邊被 object-fit: cover
+ * 裁掉大半，場地標記跟著被切走——所以各自一張。
+ *
+ * 手機版是從桌機版那張裁出來的（760×524，以場地標記為中心），比例接近手機的顯示框，
+ * 幾乎不會再被裁，等於同樣的框裡看到更大的範圍與更清楚的路名。
+ */
+export const MAP_PREVIEW_IMAGE_URL = 'assets/images/map-preview-mobile.jpg'
 
 export const MAP_PREVIEW_IMAGE_DESKTOP_URL = 'assets/images/map-preview.jpg'
 
@@ -131,16 +136,15 @@ export const MAP_PREVIEW_IMAGE_DESKTOP_URL = 'assets/images/map-preview.jpg'
 export type DietType = 'regular' | 'vegetarian'
 
 /**
- * 兩種宴席版本之間唯一有差異的內容。
+ * 兩種宴席版本之間唯一有差異的內容。除了這裡列出的欄位，兩版完全相同。
  *
- * 為什麼要分兩個網址而不是在表單裡問：素食賓客的座位通常是集中安排的，
- * 桌次引導這句話對兩邊本來就不一樣；分開之後也不必再請賓客自己勾選飲食需求。
- * 除了這裡列出的三項，兩版的所有內容完全相同。
+ * 注意：實際的分流不是「吃葷／吃素」，而是「女方親戚桌／其他所有人」——
+ * 女方親戚整桌全蔬食，拿 /vegetarian；女方朋友與男方賓客都拿預設網址。
+ * 這是禮金與餐點兩句能寫得這麼直接的前提：讀者範圍與那兩句話的對象完全吻合。
+ * 分兩個網址而不是在表單裡問，也讓賓客不必自己勾選飲食需求。
  */
 export const DIET_VARIANTS = {
   regular: {
-    /** 桌次引導。 */
-    seatingGuide: '入口處設有座位表，男方親友請至 A 區、女方親友請至 B 區',
     /** 出席回覆表單會收集的欄位預告。 */
     fieldChips: ['姓名', '出席人數', '素食需求', '兒童椅', '聯絡電話'] as readonly string[],
     /** 餐點說明只有素食版需要。 */
@@ -149,12 +153,6 @@ export const DIET_VARIANTS = {
     cashGiftNote: null,
   },
   vegetarian: {
-    /**
-     * 桌次引導（素食版）。
-     * 不要寫成「安排於某某區」—— 實際安排是女方親戚桌全蔬食、朋友桌葷素混合，
-     * 蔬食席位是分散的。指定區域會讓賓客到現場找不到那一區。
-     */
-    seatingGuide: '入口處設有座位表，我們已為您預留蔬食席位',
     /**
      * 素食版問的不是「吃不吃素」而是「吃哪一種素」——
      * 賓客是從素食專屬連結進來的，再問一次是否素食會讓人以為自己拿錯連結；
@@ -399,19 +397,16 @@ export const GALLERY_TEXT = {
 export const INFO_TEXT = {
   eyebrow: 'INFORMATION',
   title: 'Wedding Day',
-  /** 卡片內四條資訊列各自的標籤字，順序固定：宴會地點／宴會廳／地址／桌次引導。 */
+  /** 卡片內資訊列各自的標籤字，順序固定：宴會地點／宴會廳／地址。 */
   rowLabels: {
     venue: '宴會地點',
     hall: '宴會廳',
     address: '地址',
-    seating: '桌次引導',
   },
   /** 地圖圖片的無障礙替代文字（螢幕報讀器會唸出來，畫面上不會直接顯示）。 */
   mapImageAlt: '宴會地點位置示意地圖',
   /** 導航按鈕文字。 */
   navButtonLabel: '開啟 Google 地圖導航',
-  /** 卡片外、入場相關的提醒句。 */
-  reminder: '※ 宴會廳將於開席前 30 分鐘開放入場',
 } as const
 
 /**

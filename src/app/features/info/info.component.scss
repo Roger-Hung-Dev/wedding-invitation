@@ -117,8 +117,12 @@
   gap: 16px;
 }
 
+/*
+  120px 太矮，賓客認不出這是哪裡——那個高度只夠顯示原圖中間三分之一，
+  路名與場地標記全擠在一條窄帶裡。220 配上手機專用的裁切圖，比例幾乎吻合、不再被裁。
+*/
 .info__map-preview {
-  height: 120px;
+  height: 220px;
   border-radius: 12px;
   overflow: hidden;
   background: var(--color-bg-ivory);
@@ -150,12 +154,6 @@
   letter-spacing: 1px;
 }
 
-.info__reminder {
-  margin: 16px 0 0;
-  font-size: 11px;
-  color: var(--color-text-muted);
-  text-align: center;
-}
 
 @media (min-width: 1024px) {
   .info {
@@ -239,8 +237,4 @@
     font-size: 17px;
   }
 
-  .info__reminder {
-    margin-top: 24px;
-    font-size: 15px;
-  }
 }

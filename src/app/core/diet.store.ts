@@ -14,9 +14,6 @@ export class DietStore {
 
   readonly diet = this._diet.asReadonly()
 
-  /** 桌次引導。蔬食席位是分散安排的，這句話兩版本來就不同。 */
-  readonly seatingGuide = computed(() => DIET_VARIANTS[this._diet()].seatingGuide)
-
   /** 出席回覆表單會收集的欄位預告。 */
   readonly fieldChips = computed(() => DIET_VARIANTS[this._diet()].fieldChips)
 

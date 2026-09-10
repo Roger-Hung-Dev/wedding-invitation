@@ -38,7 +38,7 @@ git push
 | `weddingDateDisplay` | `2026 . 12 . 12　SATURDAY` | 封面顯示用 |
 | `weddingDateOnlyDisplay` | `2026 . 12 . 12` | 宴客資訊區的日期大字、頁尾 |
 | `dateSubDisplay` | `星期六` | 日期下方的小字（新人選擇不顯示農曆） |
-| `venueName` | `臻愛花園酒店` | 宴客資訊區 |
+| `venueName` | `臻愛花園飯店` | 宴客資訊區 |
 | `venueHall` | `2F　東方明珠` | 宴客資訊區 |
 | `seatingGuide` | `入口處設有座位表，男方親友請至 A 區、女方親友請至 B 區` | 宴客資訊區 |
 | `monogram` | `R & A` | 頁尾的金色圓環內（⛔ 這個用半形空白）|
@@ -143,7 +143,7 @@ git push
 
 ### 4.4 地圖圖片
 
-`map-preview.jpg` 是新人提供的 Google 地圖截圖（臻愛花園酒店，高鐵台中站旁）。
+`map-preview.jpg` 是新人提供的 Google 地圖截圖（臻愛花園飯店，高鐵台中站旁）。
 原圖近正方形，已裁成 16:9 並保留中央的紅色場地標記。
 
 換圖時記得：**紅色標記要落在圖片中央附近**，因為版面是橫式的，上下會被裁掉。
@@ -288,7 +288,7 @@ git push
 | 標籤 | 現在的值 | 說明 |
 | --- | --- | --- |
 | `og:title` | `We are Getting Married! 洪承孝 & 李怡安 婚禮邀請函` | 卡片標題 |
-| `og:description` | `2026 . 12 . 12 星期六　臻愛花園酒店　⋯` | 卡片內文 |
+| `og:description` | `2026 . 12 . 12 星期六　臻愛花園飯店　⋯` | 卡片內文 |
 | `og:image` | `https://roger-hung-dev.github.io/wedding-invitation/assets/images/og-share.jpg` | 卡片縮圖 |
 | `twitter:title` / `twitter:description` / `twitter:image` | 同上 | 給 X（Twitter）用，**要跟上面同步改** |
 

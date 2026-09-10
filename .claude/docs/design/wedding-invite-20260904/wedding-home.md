@@ -585,7 +585,7 @@ RFP §2 意願調查區。
 
 | 節點名稱 | pen 節點 ID | 型態 |
 | --- | --- | --- |
-| S1-宴客地點（`bwxuN` 第 10 個子節點，「臻愛花園酒店」） | `yqpFC` | screen |
+| S1-宴客地點（`bwxuN` 第 10 個子節點，「臻愛花園飯店」） | `yqpFC` | screen |
 | spacer-12（婚期 `cNJbF` → 宴客地點 `yqpFC` 之間） | `GaVGh` | screen |
 
 同輪只改數值、未新增節點者（供對位）：內容欄 `bwxuN` padding-top 120→59、
@@ -695,7 +695,7 @@ S1 Hero 390×844   fill=stock 圖 + 疊一層 $overlay-dark 漸層（上 0% → 
   ├ (spacer 16)
   ├ 婚期 "2026 . 12 . 12　SATURDAY" h=22
   ├ (spacer 12)
-  ├ 宴客地點 "臻愛花園酒店"          h=20   ← 只放酒店名，樓廳留給 S3
+  ├ 宴客地點 "臻愛花園飯店"          h=20   ← 只放酒店名，樓廳留給 S3
   ├ (spacer 141)                            ← 空的，讓臉露出來，見下方說明
   └ 倒數群組 308×80  layout=horizontal gap 12
     └ 格×4 68×80  layout=vertical alignItems=center justifyContent=center gap 4
