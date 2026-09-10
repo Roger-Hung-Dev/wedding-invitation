@@ -58,18 +58,23 @@
 
         <div class="story__spread story__live" aria-live="polite">
           <span class="story__sr-only">{{ pageStatus() }}</span>
+          <!--
+            這裡用 spread* 而不是 currentPage()：翻頁時被翻過來的那張紙會蓋住其中一半，
+            底下那半要留著舊頁等它蓋上，否則會看到「還沒翻，另外半邊就先變成下一張」。
+            判斷寫在 store，見 spreadPhotoPage 上方的表格。
+          -->
           <app-story-page
             class="story__spread-page"
-            [page]="store.currentPage()"
+            [page]="store.spreadPhotoPage()"
             [variant]="'photo'"
             [animated]="true"
             (photoClick)="onPhotoClick($event)"
           />
           <app-story-page
             class="story__spread-page"
-            [page]="store.currentPage()"
+            [page]="store.spreadTextPage()"
             [variant]="'text'"
-            [pageNumber]="store.currentPageNumber()"
+            [pageNumber]="store.spreadTextPageNumber()"
             [animated]="true"
           />
         </div>
