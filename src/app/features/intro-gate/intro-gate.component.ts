@@ -57,7 +57,7 @@ import { IntroGateStore } from './intro-gate.store'
       justify-content: center;
       padding: 0;
       border: none;
-      background: var(--color-text-main);
+      background: var(--color-gate-backdrop);
       cursor: pointer;
       animation: gate-in 600ms var(--ease-elegant) both;
     }

@@ -28,8 +28,13 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Infant:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
 
-  <!-- Hero 底圖是 LCP 元素，preload 避免延遲首次繪製 -->
-  <link rel="preload" as="image" href="assets/images/hero-mobile.jpg" fetchpriority="high">
+  <!--
+    封面底圖是 LCP 元素，preload 避免延遲首次繪製 —— 它晚到的話，開場層會先露出一段純底色。
+    media 要跟 CSS 切換兩張圖的斷點（1024px）一致：沒有 media 的話兩張都會被下載，
+    而桌機那張比手機的大一倍。
+  -->
+  <link rel="preload" as="image" href="assets/images/hero-mobile.jpg" media="(max-width: 1023px)" fetchpriority="high">
+  <link rel="preload" as="image" href="assets/images/hero-desktop.jpg" media="(min-width: 1024px)" fetchpriority="high">
 </head>
 <body>
   <app-root></app-root>
