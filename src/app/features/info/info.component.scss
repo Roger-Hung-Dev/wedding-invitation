@@ -40,7 +40,8 @@
   border: 1px solid var(--color-border-pill);
   background: transparent;
   color: var(--color-text-muted);
-  font-size: 14px;
+  // 這顆膠囊帶的是「幾點該到」，是整段資訊裡賓客最先要找的一句，字級比其他控制項高一階。
+  font-size: 16px;
   font-weight: 500;
   letter-spacing: 1px;
   cursor: pointer;
@@ -189,7 +190,7 @@
 
   .info__session-pill {
     height: 48px;
-    font-size: 15px;
+    font-size: 17px;
   }
 
   .info__date {

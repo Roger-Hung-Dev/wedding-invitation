@@ -40,6 +40,10 @@ export const WEDDING_COUNTDOWN_TARGET_ISO = '2026-12-12T18:00:00+08:00'
 export interface WeddingSession {
   readonly id: 'lunch' | 'dinner'
   readonly label: string
+  /**
+   * 膠囊上時間那一段的完整字串，含「入席」這類說明詞。
+   * 賓客真正要知道的是幾點該到，光寫 18:00 會被讀成開席時間而算錯出門時間。
+   */
   readonly timeDisplay: string
 }
 
@@ -48,7 +52,7 @@ export interface WeddingSession {
  * 日後若加辦午宴，補一筆 id: 'lunch' 即可，切換行為不必改。
  */
 export const WEDDING_SESSIONS: readonly WeddingSession[] = [
-  { id: 'dinner', label: '晚宴', timeDisplay: '18:00' },
+  { id: 'dinner', label: '晚宴', timeDisplay: '18:00 入席' },
 ]
 
 export interface GalleryPhoto {

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- SVG 是 XML：文字裡的「and」符號一定要寫成實體 &amp;，寫成裸的會讓整份解析失敗、圖示變破圖。 -->
+  <title>Roger &amp; Amy 婚禮邀請函</title>
+  <rect width="64" height="64" rx="14" fill="#831843"/>
+  <path d="M32 15 L49 32 L32 49 L15 32 Z" fill="#E7C873"/>
+  <path d="M32 24 L40 32 L32 40 L24 32 Z" fill="#831843" opacity="0.35"/>
+</svg>
