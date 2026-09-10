@@ -9,7 +9,12 @@
 
   <!-- 鍵盤的左右方向鍵在整個書本區內都能翻頁，焦點在翻頁鈕上時同樣有效（事件會冒泡上來）。 -->
   <div class="story__stage" role="group" [attr.aria-label]="text.bookLabel" tabindex="0" (keydown)="onKeydown($event)">
-    <div class="story__slot">
+    <div
+      class="story__slot"
+      (pointerdown)="onSwipeStart($event)"
+      (pointerup)="onSwipeEnd($event)"
+      (pointercancel)="onSwipeEnd($event)"
+    >
       <!--
         手機單頁版式與桌機雙頁版式都固定渲染在 DOM 中，只用 CSS media query 切換顯示，
         不用 @if 依斷點 signal 動態拆換節點（理由同婚紗藝廊：進場動畫會套不上斷點切換後的新節點）。
@@ -183,6 +188,6 @@
       }
     </div>
 
-    <p class="story__hint anim-fade-in" style="transition-delay: 900ms">{{ text.hint }}</p>
+    <p class="story__hint anim-fade-in" style="transition-delay: 900ms">{{ hint() }}</p>
   </div>
 </section>

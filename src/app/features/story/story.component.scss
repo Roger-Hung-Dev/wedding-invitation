@@ -44,6 +44,9 @@
 .story__slot {
   grid-area: slot;
   position: relative;
+  // pan-y：垂直捲動照常交給瀏覽器，水平方向留給翻頁手勢。
+  // 不設的話瀏覽器會先觀望手指要不要捲動，水平滑動的判定會慢半拍。
+  touch-action: pan-y;
 }
 
 .story__sr-only {
@@ -312,19 +315,24 @@
   animation: story-card-flip-prev 600ms var(--ease-elegant) forwards;
 }
 
+/*
+  手機有了滑動手勢之後，翻頁鈕退居備援：尺寸與陰影都收斂一階，讓手勢成為主要操作。
+  ⛔ 但不能拿掉 —— 手勢對鍵盤使用者與螢幕報讀器完全不可用，而且桌機沒有觸控。
+  它同時還是「這裡可以翻頁」的視覺提示，賓客大多只看一次，不會主動去試探能不能滑。
+*/
 .story__nav {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   margin-top: 20px;
-  width: 40px;
-  height: 40px;
+  width: 36px;
+  height: 36px;
   padding: 0;
   border: none;
   border-radius: 50%;
   background: var(--color-surface);
-  box-shadow: 0 4px 16px var(--shadow-rose);
-  color: var(--color-text-main);
+  box-shadow: 0 2px 10px var(--shadow-rose);
+  color: var(--color-text-muted);
   cursor: pointer;
 }
 
@@ -520,10 +528,13 @@
     animation: story-cross-out 200ms linear forwards;
   }
 
+  // 桌機沒有觸控，翻頁鈕是唯一的操作方式，不套用手機那組收斂過的分量。
   .story__nav {
     margin-top: 0;
     width: 56px;
     height: 56px;
+    box-shadow: 0 4px 16px var(--shadow-rose);
+    color: var(--color-text-main);
   }
 
   .story__dots {

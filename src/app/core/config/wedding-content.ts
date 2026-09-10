@@ -270,8 +270,12 @@ export const ABOUT_PROFILES: readonly AboutProfile[] = [
 export const STORY_TEXT = {
   eyebrow: 'OUR STORY',
   title: 'How We Met',
-  /** 書頁卡下方的操作提示，手機與桌機共用同一句。 */
-  hint: '點兩側箭頭翻頁',
+  /**
+   * 書頁卡下方的操作提示。手機可以左右滑，桌機沒有觸控只能點箭頭，所以兩句分開。
+   * 手機把「滑動」放前面：那是主要的操作方式，箭頭是備援。
+   */
+  hint: '左右滑動或點箭頭翻頁',
+  hintDesktop: '點兩側箭頭翻頁',
   prevLabel: '上一頁',
   nextLabel: '下一頁',
   /** 書本區的無障礙名稱，鍵盤使用者聚焦到書本時報讀器會唸出來。 */
