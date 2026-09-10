@@ -19,8 +19,10 @@ import { IntroGateStore } from './intro-gate.store'
   template: `
     @if (!store.entered()) {
       <button type="button" class="gate" [attr.aria-label]="text.ariaLabel" (click)="enter()">
-        <img class="gate__bg gate__bg--mobile" [src]="heroImageUrl" alt="" aria-hidden="true" />
-        <img class="gate__bg gate__bg--desktop" [src]="heroImageDesktopUrl" alt="" aria-hidden="true" />
+        <picture class="gate__bg">
+          <source media="(min-width: 1024px)" [srcset]="heroImageDesktopUrl" />
+          <img class="gate__bg-img" [src]="heroImageUrl" alt="" aria-hidden="true" />
+        </picture>
         <span class="gate__veil" aria-hidden="true"></span>
 
         <span class="gate__content">
@@ -68,16 +70,22 @@ import { IntroGateStore } from './intro-gate.store'
       而這個網站部署在子路徑下，絕對路徑上線就會 404（本機卻完全正常）。
       走 img 就能沿用與 Hero 相同的常數，換圖時也不會漏掉這一層。
     */
+    /*
+      用 picture + source 而不是兩個 img 靠 display 切換：display: none 的 img
+      瀏覽器照樣會下載，等於手機也吃掉桌機那張（大一倍）的流量。
+      picture 只會取用第一個符合 media 的來源，另一張完全不會發出請求。
+      media 的斷點要與 index.html 的兩行 preload 一致，否則 preload 會抓錯那張。
+    */
     .gate__bg {
       position: absolute;
       inset: 0;
+      display: block;
+    }
+
+    .gate__bg-img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-    }
-
-    .gate__bg--desktop {
-      display: none;
     }
 
     /*
@@ -233,14 +241,6 @@ import { IntroGateStore } from './intro-gate.store'
     }
 
     @media (min-width: 1024px) {
-      .gate__bg--mobile {
-        display: none;
-      }
-
-      .gate__bg--desktop {
-        display: block;
-      }
-
       /*
         桌機不套用手機那 10px 的下讓，但同樣要抵銷弧形標題撐出來的高度。
         標題等比放大到 254×53（＝220×15/13，讓字看起來是 15px，與 .gate__action 同級），

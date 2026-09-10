@@ -1,17 +1,9 @@
 <section class="hero">
   <div class="hero__bg anim-fade-in hero__bg-fade" [class.is-visible]="loaded()" #heroBg>
-    <img
-      class="hero__bg-img hero__bg-img--mobile"
-      [src]="heroImageUrl"
-      alt=""
-      fetchpriority="high"
-    />
-    <img
-      class="hero__bg-img hero__bg-img--desktop"
-      [src]="heroImageDesktopUrl"
-      alt=""
-      fetchpriority="high"
-    />
+    <picture>
+      <source media="(min-width: 1024px)" [srcset]="heroImageDesktopUrl" />
+      <img class="hero__bg-img" [src]="heroImageUrl" alt="" fetchpriority="high" />
+    </picture>
   </div>
   <div class="hero__overlay anim-fade-in hero__overlay-fade" [class.is-visible]="loaded()"></div>
 

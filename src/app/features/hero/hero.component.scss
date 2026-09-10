@@ -18,6 +18,12 @@
   will-change: transform;
 }
 
+/*
+  用 picture + source 而不是兩個 img 靠 display 切換：display: none 的 img
+  瀏覽器照樣會下載，等於手機也吃掉桌機那張（大一倍）的流量。
+  picture 只取用第一個符合 media 的來源，另一張完全不會發出請求。
+  media 的斷點要與 index.html 的兩行 preload 一致，否則 preload 會抓錯那張。
+*/
 .hero__bg-img {
   position: absolute;
   inset: 0;
@@ -30,10 +36,6 @@
 
 .hero__bg.is-visible .hero__bg-img {
   transform: scale(1);
-}
-
-.hero__bg-img--desktop {
-  display: none;
 }
 
 .hero__overlay {
@@ -223,14 +225,6 @@
 }
 
 @media (min-width: 1024px) {
-  .hero__bg-img--mobile {
-    display: none;
-  }
-
-  .hero__bg-img--desktop {
-    display: block;
-  }
-
   .hero__overlay {
     background: linear-gradient(90deg, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.5) 50%, rgba(0, 0, 0, 0.15) 100%);
   }
