@@ -308,11 +308,11 @@
 // 手機單頁的翻頁時長比桌機短：紙在原地翻，視覺移動距離比桌機那張橫跨書脊的紙小得多，
 // 用桌機的 900ms 會拖。這個數字與 story.component.ts 的 CARD_TURN_DURATION_MS 是同一組。
 .story__card-flip--next {
-  animation: story-card-flip-next 600ms var(--ease-elegant) forwards;
+  animation: story-card-flip-next 800ms var(--ease-elegant) forwards;
 }
 
 .story__card-flip--prev {
-  animation: story-card-flip-prev 600ms var(--ease-elegant) forwards;
+  animation: story-card-flip-prev 800ms var(--ease-elegant) forwards;
 }
 
 /*

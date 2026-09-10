@@ -18,7 +18,7 @@ const TURN_DURATION_MS = 900
  * 手機單頁的翻頁時長，對應 scss 的 story-card-flip-*。
  * 比桌機短：紙在原地翻，視覺移動距離比桌機那張橫跨書脊的紙小得多，用 900ms 會拖。
  */
-const CARD_TURN_DURATION_MS = 600
+const CARD_TURN_DURATION_MS = 800
 
 /** 要求減少動態效果時改成交叉淡入淡出，時長同步縮短。 */
 const REDUCED_TURN_DURATION_MS = 200
