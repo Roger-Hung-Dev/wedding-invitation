@@ -16,8 +16,11 @@ export const WEDDING_CONTENT = {
   /** 婚期（ISO 日期，不含時間）。 */
   weddingDate: '2026-12-12',
   weddingDateDisplay: '2026 . 12 . 12　SATURDAY',
-  /** 不含星期的純日期顯示，S3 宴客資訊區日期大字專用（S1 Hero 才帶 SATURDAY）。 */
-  weddingDateOnlyDisplay: '2026 . 12 . 12',
+  /**
+   * 不含星期的純日期顯示，S3 宴客資訊區燙金框裡的日期大字專用（S1 Hero 才帶 SATURDAY）。
+   * 不像 Hero 那樣在點號兩側留空白：框內扣掉雙線與內距後，手機只剩約 260px，帶空白的寫法會貼到框線。
+   */
+  weddingDateOnlyDisplay: '2026.12.12',
   /** S3 日期大字下方的小字。新人選擇不顯示農曆，僅留星期。 */
   dateSubDisplay: '星期六',
   venueName: '臻愛花園飯店',
@@ -47,8 +50,8 @@ export interface WeddingSession {
 }
 
 /**
- * 宴席場次。本場婚宴只辦晚宴一場，故僅一筆；S3 的場次切換膠囊會依此只顯示一顆。
- * 日後若加辦午宴，補一筆 id: 'lunch' 即可，切換行為不必改。
+ * 宴席場次。本場婚宴只辦晚宴一場，故僅一筆；S3 燙金框底部每場各顯示一行「場次　時間」。
+ * 日後若加辦午宴，補一筆 id: 'lunch' 即可，框內會多一行。
  */
 export const WEDDING_SESSIONS: readonly WeddingSession[] = [
   { id: 'dinner', label: '晚宴', timeDisplay: '18:00 入席' },
@@ -411,6 +414,8 @@ export const GALLERY_TEXT = {
 export const INFO_TEXT = {
   eyebrow: 'INFORMATION',
   title: 'Wedding Day',
+  /** 燙金框最上方的小字眉標。 */
+  dateEyebrow: 'THE WEDDING DAY',
   /** 卡片內資訊列各自的標籤字，順序固定：宴會地點／宴會廳／地址。 */
   rowLabels: {
     venue: '宴會地點',

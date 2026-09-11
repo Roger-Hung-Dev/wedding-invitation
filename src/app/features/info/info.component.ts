@@ -3,9 +3,8 @@ import { DomSanitizer } from '@angular/platform-browser'
 import { IconComponent } from '../../shared/icon/icon.component'
 import { ScrollRevealDirective } from '../../shared/scroll-reveal.directive'
 import { SectionHeadingComponent } from '../../shared/section-heading/section-heading.component'
-import { INFO_TEXT, WEDDING_CONTENT } from '../../core/config/wedding-content'
+import { INFO_TEXT, WEDDING_CONTENT, WEDDING_SESSIONS } from '../../core/config/wedding-content'
 import { WEDDING_LINKS, buildGoogleMapsDirectionUrl, buildGoogleMapsEmbedUrl } from '../../core/config/wedding-links'
-import { InfoStore } from './info.store'
 
 /**
  * S3 宴客資訊區。地圖為內嵌的 Google 地圖（預設定位在飯店），導航鈕另開分頁前往 Google 地圖。
@@ -18,7 +17,8 @@ import { InfoStore } from './info.store'
   styleUrl: './info.component.scss',
 })
 export class InfoComponent {
-  protected readonly store = inject(InfoStore)
+  /** 只辦一場時框內就一行；原本的場次切換膠囊已移除——只有一場時它點了不會有任何反應。 */
+  protected readonly sessions = WEDDING_SESSIONS
   protected readonly content = WEDDING_CONTENT
   protected readonly text = INFO_TEXT
   protected readonly links = WEDDING_LINKS

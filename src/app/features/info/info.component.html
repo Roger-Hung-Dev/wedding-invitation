@@ -8,21 +8,19 @@
 
   <div class="info__layout anim-fade-up">
     <div class="info__primary">
-      <div class="info__sessions">
-        @for (session of store.sessions; track session.id) {
-          <button
-            type="button"
-            class="info__session-pill"
-            [class.info__session-pill--active]="session.id === store.selectedId()"
-            (click)="store.select(session.id)"
-          >
-            {{ session.label }}　{{ session.timeDisplay }}
-          </button>
+      <div class="info__date-frame">
+        <p class="info__date-eyebrow">{{ text.dateEyebrow }}</p>
+        <p class="info__date">{{ content.weddingDateOnlyDisplay }}</p>
+        <p class="info__date-sub">{{ content.dateSubDisplay }}</p>
+        <div class="info__ornament" aria-hidden="true">
+          <span class="info__ornament-line"></span>
+          <span class="info__ornament-diamond"></span>
+          <span class="info__ornament-line"></span>
+        </div>
+        @for (session of sessions; track session.id) {
+          <p class="info__session">{{ session.label }}　{{ session.timeDisplay }}</p>
         }
       </div>
-
-      <p class="info__date">{{ content.weddingDateOnlyDisplay }}</p>
-      <p class="info__date-sub">{{ content.dateSubDisplay }}</p>
 
       <div class="info__divider"></div>
 

@@ -28,47 +28,77 @@
   flex-direction: column;
 }
 
-.info__sessions {
+/*
+  燙金雙框：外框一條金線、往內 4px 再一條，兩線之間露出卡片的白。
+  用三層 inset 陰影畫而不是兩層 border，才不必為了畫框多包一層元素。
+*/
+.info__date-frame {
   display: flex;
-  gap: 8px;
+  flex-direction: column;
+  align-items: center;
+  padding: 22px 16px;
+  border-radius: 6px;
+  text-align: center;
+  box-shadow:
+    inset 0 0 0 1px var(--color-gold-soft),
+    inset 0 0 0 5px var(--color-surface),
+    inset 0 0 0 6px var(--color-gold-soft);
 }
 
-.info__session-pill {
-  flex: 1;
-  height: 40px;
-  border-radius: 20px;
-  border: 1px solid var(--color-border-pill);
-  background: transparent;
-  color: var(--color-text-muted);
-  // 這顆膠囊帶的是「幾點該到」，是整段資訊裡賓客最先要找的一句，字級比其他控制項高一階。
-  font-size: 16px;
-  font-weight: 500;
-  letter-spacing: 1px;
-  cursor: pointer;
-  transition: background-color 200ms, color 200ms, border-color 200ms;
-
-  &--active {
-    background: var(--color-primary);
-    border-color: var(--color-primary);
-    color: var(--color-text-invert);
-    font-weight: 600;
-  }
+.info__date-eyebrow {
+  margin: 0;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 4px;
+  color: var(--color-accent-gold);
 }
 
 .info__date {
-  margin: 24px 0 0;
-  text-align: center;
+  margin: 10px 0 0;
   font-size: 30px;
   font-weight: 600;
-  letter-spacing: 2px;
+  letter-spacing: 3px;
+  line-height: 1.1;
   color: var(--color-text-main);
 }
 
 .info__date-sub {
-  margin: 6px 0 0;
-  text-align: center;
+  margin: 4px 0 0;
   font-size: 13px;
+  letter-spacing: 3px;
   color: var(--color-text-muted);
+}
+
+.info__ornament {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 14px 0 12px;
+}
+
+.info__ornament-line {
+  width: 36px;
+  height: 1px;
+  background: var(--color-gold-soft);
+}
+
+.info__ornament-diamond {
+  width: 6px;
+  height: 6px;
+  background: var(--color-gold-soft);
+  transform: rotate(45deg);
+}
+
+// 這一行帶的是「幾點該到」，是整段資訊裡賓客最先要找的一句，所以用主色而不是次要的灰。
+.info__session {
+  margin: 0;
+  font-size: 15px;
+  letter-spacing: 2px;
+  color: var(--color-text-main);
+
+  & + & {
+    margin-top: 4px;
+  }
 }
 
 .info__divider {
@@ -194,22 +224,30 @@
     box-shadow: 0 8px 28px var(--shadow-rose);
   }
 
-  .info__sessions {
-    gap: 12px;
+  .info__date-frame {
+    padding: 34px 24px;
+    box-shadow:
+      inset 0 0 0 1px var(--color-gold-soft),
+      inset 0 0 0 6px var(--color-surface),
+      inset 0 0 0 7px var(--color-gold-soft);
   }
 
-  .info__session-pill {
-    height: 48px;
-    font-size: 17px;
+  .info__date-eyebrow {
+    font-size: 13px;
+    letter-spacing: 5px;
   }
 
   .info__date {
-    margin-top: 28px;
-    font-size: 40px;
+    margin-top: 12px;
+    font-size: 44px;
   }
 
   .info__date-sub {
     font-size: 15px;
+  }
+
+  .info__session {
+    font-size: 18px;
   }
 
   .info__rows {
