@@ -6,7 +6,6 @@ import { SectionHeadingComponent } from '../../shared/section-heading/section-he
 import { INFO_TEXT, WEDDING_CONTENT } from '../../core/config/wedding-content'
 import { WEDDING_LINKS, buildGoogleMapsDirectionUrl, buildGoogleMapsEmbedUrl } from '../../core/config/wedding-links'
 import { InfoStore } from './info.store'
-import { DietStore } from '../../core/diet.store'
 
 /**
  * S3 宴客資訊區。地圖為內嵌的 Google 地圖（預設定位在飯店），導航鈕另開分頁前往 Google 地圖。
@@ -20,8 +19,6 @@ import { DietStore } from '../../core/diet.store'
 })
 export class InfoComponent {
   protected readonly store = inject(InfoStore)
-  /** 桌次引導兩版不同：素食席位通常集中安排。 */
-  protected readonly diet = inject(DietStore)
   protected readonly content = WEDDING_CONTENT
   protected readonly text = INFO_TEXT
   protected readonly links = WEDDING_LINKS

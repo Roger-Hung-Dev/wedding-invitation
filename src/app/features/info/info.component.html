@@ -48,25 +48,6 @@
             <p class="info__row-value">{{ links.venueAddress }}</p>
           </div>
         </div>
-        <!-- 禮金與餐點安排都只有蔬食版會出現，禮金排在前面，是資訊列裡的第一件心意。 -->
-        @if (diet.cashGiftNote(); as gift) {
-          <div class="info__row">
-            <app-icon name="heart" [size]="20" color="var(--color-accent-gold)" />
-            <div class="info__row-text">
-              <p class="info__row-label">{{ gift.label }}</p>
-              <p class="info__row-value">{{ gift.text }}</p>
-            </div>
-          </div>
-        }
-        @if (diet.dietNote(); as note) {
-          <div class="info__row">
-            <app-icon name="leaf" [size]="20" color="var(--color-accent-gold)" />
-            <div class="info__row-text">
-              <p class="info__row-label">{{ note.label }}</p>
-              <p class="info__row-value">{{ note.text }}</p>
-            </div>
-          </div>
-        }
       </div>
     </div>
 

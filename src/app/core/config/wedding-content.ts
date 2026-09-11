@@ -124,22 +124,32 @@ export const HERO_IMAGE_DESKTOP_URL = 'assets/images/hero-desktop.jpg'
 /** 宴席類型。葷食是預設版本，素食由 /vegetarian 這個網址進入。 */
 export type DietType = 'regular' | 'vegetarian'
 
+/** 蔬食心意區的一則：左側文字、右側線稿插圖。 */
+export interface DietNote {
+  readonly id: string
+  /** 金色小標籤（全大寫英文）。 */
+  readonly tag: string
+  /** 標籤下方的英文大字，是中文標題的英譯。 */
+  readonly headlineEn: string
+  readonly title: string
+  readonly text: string
+  readonly illustrationUrl: string
+}
+
 /**
  * 兩種宴席版本之間唯一有差異的內容。除了這裡列出的欄位，兩版完全相同。
  *
  * 注意：實際的分流不是「吃葷／吃素」，而是「女方親戚桌／其他所有人」——
  * 女方親戚整桌全蔬食，拿 /vegetarian；女方朋友與男方賓客都拿預設網址。
- * 這是禮金與餐點兩句能寫得這麼直接的前提：讀者範圍與那兩句話的對象完全吻合。
+ * 這是蔬食心意區的禮金與餐點能寫得這麼直接的前提：讀者範圍與那兩則的對象完全吻合。
  * 分兩個網址而不是在表單裡問，也讓賓客不必自己勾選飲食需求。
  */
 export const DIET_VARIANTS = {
   regular: {
     /** 出席回覆表單會收集的欄位預告。 */
     fieldChips: ['姓名', '出席人數', '素食需求', '兒童椅', '聯絡電話'] as readonly string[],
-    /** 餐點說明只有素食版需要。 */
-    dietNote: null,
-    /** 不收禮金只對女方親戚桌，也就是只有素食版需要。 */
-    cashGiftNote: null,
+    /** 禮金與餐點兩則心意只對女方親戚桌說，葷食版不渲染整個蔬食心意區。 */
+    dietNotes: [] as readonly DietNote[],
   },
   vegetarian: {
     /**
@@ -149,29 +159,44 @@ export const DIET_VARIANTS = {
      */
     fieldChips: ['姓名', '出席人數', '兒童椅', '聯絡電話', '蔬食備註'] as readonly string[],
     /**
-     * 餐點說明。站在「收到這個連結的吃素賓客」的角度寫：
-     * 他要知道的是「有我的餐、位子也安排好了」，而不是整場的葷素分佈。
+     * 蔬食心意區的兩則，順序即畫面由上到下。
      *
-     * label 是資訊列的欄位名，跟「桌次引導」同樣採四字名詞，長度才不會破壞那一欄的對齊。
-     * 內文原本拆成兩行，是為了當時獨立置中區塊的斷句；併進資訊列之後跟其他列一樣是一段。
-     */
-    dietNote: {
-      label: '餐點安排',
-      text: '女方親友席宴請蔬食料理，由飯店主廚特別設計，期待與您共享蔬食盛宴',
-    },
-    /**
-     * 不收禮金。這一版的連結只發給女方親戚桌，所以這句話的對象與讀者完全吻合，
+     * 禮金排第一：這一版的連結只發給女方親戚桌，對象與讀者完全吻合，
      * 不會讓其他賓客看到後困惑自己該不該包。
-     *
-     * 排在餐點安排之前，是整組資訊列裡的第一件「心意」。
      * 刻意不寫「現場不設禮金桌」—— 那要現場真的沒有那張桌子才成立，
      * 賓客到場看到桌子會覺得跟喜帖說的不一樣，反而更猶豫。
+     *
+     * 餐點站在「收到這個連結的吃素賓客」的角度寫：他要知道的是「有我的餐」，
+     * 而不是整場的葷素分佈。英文大字放中文標題的英譯而不是開席時間——
+     * 時間在宴客資訊區已經寫過，這裡重複一次反而像是另一個場次。
      */
-    cashGiftNote: {
-      label: '禮金',
-      text: '女方親友席不收禮金，敬請入座，您的到來就是我們最珍貴的祝福',
-    },
+    dietNotes: [
+      {
+        id: 'gift',
+        tag: 'GIFT',
+        headlineEn: 'YOUR PRESENCE',
+        title: '不收禮金',
+        text: '女方親友席不收禮金，敬請入座，您的到來就是我們最珍貴的祝福',
+        illustrationUrl: 'assets/images/diet-note-gift.png',
+      },
+      {
+        id: 'dinner',
+        tag: 'DINNER',
+        headlineEn: 'PLANT-BASED FEAST',
+        title: '蔬食盛宴',
+        text: '女方親友席宴請蔬食料理，由飯店主廚特別設計，期待與您共享蔬食盛宴',
+        illustrationUrl: 'assets/images/diet-note-dinner.png',
+      },
+    ] as readonly DietNote[],
   },
+} as const
+
+/**
+ * 蔬食心意區（只在 /vegetarian 出現）的抬頭。兩則內容本身在 DIET_VARIANTS.vegetarian.dietNotes。
+ */
+export const DIET_NOTES_TEXT = {
+  eyebrow: 'WITH LOVE',
+  title: 'A Little Note',
 } as const
 
 export const INTRO_GATE_TEXT = {

@@ -1,0 +1,25 @@
+<section
+  class="notes"
+  appScrollReveal
+  [staggerSelector]="'.anim-fade-up, .anim-line-grow'"
+  [staggerMs]="90"
+>
+  <app-section-heading [eyebrow]="text.eyebrow" [title]="text.title" />
+
+  <span class="notes__gold-line anim-line-grow" aria-hidden="true"></span>
+
+  <ul class="notes__list">
+    @for (note of diet.dietNotes(); track note.id) {
+      <li class="notes__item anim-fade-up">
+        <div class="notes__text">
+          <p class="notes__tag">{{ note.tag }}</p>
+          <p class="notes__headline-en" lang="en">{{ note.headlineEn }}</p>
+          <h3 class="notes__title">{{ note.title }}</h3>
+          <p class="notes__body">{{ note.text }}</p>
+        </div>
+        <!-- 插圖只是氣氛，意思已由文字完整表達，所以對螢幕報讀器隱藏。 -->
+        <img class="notes__illustration" [src]="note.illustrationUrl" alt="" loading="lazy" />
+      </li>
+    }
+  </ul>
+</section>

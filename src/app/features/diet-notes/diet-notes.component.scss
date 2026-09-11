@@ -1,0 +1,146 @@
+// 數值來源：設計稿「裝置版-S3.5 蔬食心意」「電腦版-段3.5 蔬食心意」。
+// 版型取自新人提供的參考圖（左文右圖、每則下方一條通欄細線），配色與字級沿用全站：
+// 中文標題對齊交往故事書頁標題（手機 18），內文對齊新人介紹描述（13／15）。
+
+:host {
+  display: block;
+}
+
+.notes {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 64px 24px;
+  // 上一段宴客資訊是純 blush，這一段若同色會黏成一整片看不出分段。
+  background: var(--color-bg-ivory);
+}
+
+.notes__gold-line {
+  margin-top: 12px;
+  width: 40px;
+  height: 1px;
+  background: var(--color-gold-soft);
+}
+
+.notes__list {
+  margin: 40px 0 0;
+  padding: 0;
+  list-style: none;
+  width: 342px;
+  max-width: 100%;
+}
+
+// 每則下方都有一條細線，最後一則也有——參考圖以線收尾，少了最後一條會像內容被截斷。
+.notes__item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding-bottom: 28px;
+  border-bottom: 1px solid var(--color-gold-soft);
+
+  & + & {
+    margin-top: 32px;
+  }
+}
+
+.notes__text {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.notes__tag {
+  margin: 0;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 5px;
+  line-height: 1.4;
+  color: var(--color-accent-gold);
+}
+
+.notes__headline-en {
+  margin: 6px 0 0;
+  font-size: 15px;
+  font-weight: 400;
+  letter-spacing: 2px;
+  line-height: 1.2;
+  color: var(--color-text-main);
+}
+
+.notes__title {
+  margin: 4px 0 0;
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  line-height: 1.4;
+  color: var(--color-text-main);
+}
+
+.notes__body {
+  margin: 10px 0 0;
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--color-text-muted);
+}
+
+.notes__illustration {
+  flex: none;
+  width: 120px;
+  height: 120px;
+  display: block;
+}
+
+@media (min-width: 1024px) {
+  :host {
+    // 抬頭比照新人介紹與交往故事書的較小字級（13／44）：這一段主體只有兩則，放 56px 會頭重腳輕。
+    --section-heading-eyebrow-size: 13px;
+    --section-heading-eyebrow-spacing: 5px;
+    --section-heading-title-size: 44px;
+  }
+
+  .notes {
+    padding: 96px 160px;
+  }
+
+  .notes__gold-line {
+    margin-top: 14px;
+    width: 64px;
+  }
+
+  .notes__list {
+    margin-top: 56px;
+    width: 720px;
+  }
+
+  .notes__item {
+    gap: 40px;
+    padding-bottom: 36px;
+
+    & + & {
+      margin-top: 40px;
+    }
+  }
+
+  .notes__tag {
+    font-size: 12px;
+  }
+
+  .notes__headline-en {
+    margin-top: 8px;
+    font-size: 17px;
+  }
+
+  .notes__title {
+    margin-top: 6px;
+    font-size: 20px;
+  }
+
+  .notes__body {
+    margin-top: 12px;
+    font-size: 15px;
+  }
+
+  .notes__illustration {
+    width: 180px;
+    height: 180px;
+  }
+}
