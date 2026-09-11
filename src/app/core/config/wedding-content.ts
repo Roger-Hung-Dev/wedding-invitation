@@ -114,17 +114,6 @@ export const HERO_IMAGE_URL = 'assets/images/hero-mobile.jpg'
 export const HERO_IMAGE_DESKTOP_URL = 'assets/images/hero-desktop.jpg'
 
 /**
- * S3 地圖預覽圖。手機與桌機的顯示框比例差很多，共用一張會讓其中一邊被 object-fit: cover
- * 裁掉大半，場地標記跟著被切走——所以各自一張。
- *
- * 手機版是從桌機版那張裁出來的（760×524，以場地標記為中心），比例接近手機的顯示框，
- * 幾乎不會再被裁，等於同樣的框裡看到更大的範圍與更清楚的路名。
- */
-export const MAP_PREVIEW_IMAGE_URL = 'assets/images/map-preview-mobile.jpg'
-
-export const MAP_PREVIEW_IMAGE_DESKTOP_URL = 'assets/images/map-preview.jpg'
-
-/**
  * S1 主視覺封面區的固定文案（新人姓名、日期見 WEDDING_CONTENT，這裡只放版面上的標籤字）。
  * 倒數計時四格的英文標籤與婚期已過時顯示的致謝句都在畫面最上方、第一屏可見。
  */
@@ -403,8 +392,8 @@ export const INFO_TEXT = {
     hall: '宴會廳',
     address: '地址',
   },
-  /** 地圖圖片的無障礙替代文字（螢幕報讀器會唸出來，畫面上不會直接顯示）。 */
-  mapImageAlt: '宴會地點位置示意地圖',
+  /** 內嵌地圖的無障礙標題（螢幕報讀器會唸出來，畫面上不會直接顯示）。 */
+  mapFrameTitle: '臻愛花園飯店位置地圖',
   /** 導航按鈕文字。 */
   navButtonLabel: '開啟 Google 地圖導航',
 } as const

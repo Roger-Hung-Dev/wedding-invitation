@@ -16,6 +16,11 @@ export const WEDDING_LINKS = {
   rsvpFormUrlVegetarian: 'https://forms.gle/PLACEHOLDER_RSVP_FORM_VEG',
   /** 宴客地點地址文字，用於組出 Google 地圖導航連結（帶文字地址即可，不需要經緯度）。 */
   venueAddress: '台中市烏日區高鐵路三段 168 號',
+  /**
+   * 內嵌地圖的定位字串。名稱與地址一起帶：只帶地址時大頭針旁不會標出飯店名稱，
+   * 只帶名稱則怕 Google 對到同名的其他地點。
+   */
+  venueMapQuery: '臻愛花園飯店 台中市烏日區高鐵路三段168號',
 } as const
 
 /**
@@ -25,4 +30,13 @@ export const WEDDING_LINKS = {
 export function buildGoogleMapsDirectionUrl(address: string): string {
   const encoded = encodeURIComponent(address)
   return `https://www.google.com/maps/dir/?api=1&destination=${encoded}`
+}
+
+/**
+ * 由定位字串組出可放進 iframe 的 Google 地圖內嵌網址。
+ * 走不需 API 金鑰的 output=embed 形式 —— 本站沒有後端可以藏金鑰，也不想為一張地圖綁 Google Cloud 帳單。
+ */
+export function buildGoogleMapsEmbedUrl(query: string): string {
+  const encoded = encodeURIComponent(query)
+  return `https://www.google.com/maps?q=${encoded}&z=16&hl=zh-TW&output=embed`
 }

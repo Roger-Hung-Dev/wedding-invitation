@@ -118,25 +118,37 @@
 }
 
 /*
-  120px 太矮，賓客認不出這是哪裡——那個高度只夠顯示原圖中間三分之一，
-  路名與場地標記全擠在一條窄帶裡。220 配上手機專用的裁切圖，比例幾乎吻合、不再被裁。
+  120px 太矮，賓客認不出這是哪裡——路名與場地標記全擠在一條窄帶裡，所以手機至少 220。
+
+  內嵌地圖左上角固定會疊一塊 Google 的資訊，網址參數關不掉，只能把地圖往上推、讓那塊落到框外。
+  那塊的大小看地圖框寬度而定（實測）：窄框只有一顆「在 Google 地圖中開啟」小按鈕，
+  底緣約 44px；框寬到 500 上下會換成含地址與評分的整張卡，底緣約 108px。
+  所以依框寬（container query，不是視窗寬）決定推多少。400 刻意取在切換點之前：
+  寬度落在交界時寧可多推一點、少看一截地圖，也不要讓半張卡露出來。
+  只推上緣，不動下緣——底部的 Google 標誌與條款連結依使用條款必須保留可見。
 */
 .info__map-preview {
+  --map-top-crop: 52px;
+
   height: 220px;
   border-radius: 12px;
   overflow: hidden;
   background: var(--color-bg-ivory);
+  container-type: inline-size;
 }
 
-.info__map-preview-img {
+@container (min-width: 400px) {
+  .info__map-frame {
+    --map-top-crop: 116px;
+  }
+}
+
+.info__map-frame {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: calc(100% + var(--map-top-crop));
+  margin-top: calc(-1 * var(--map-top-crop));
+  border: 0;
   display: block;
-}
-
-.info__map-preview-img--desktop {
-  display: none;
 }
 
 .info__nav-btn {
@@ -221,14 +233,6 @@
   .info__map-preview {
     height: 400px;
     border-radius: 24px;
-  }
-
-  .info__map-preview-img--mobile {
-    display: none;
-  }
-
-  .info__map-preview-img--desktop {
-    display: block;
   }
 
   .info__nav-btn {

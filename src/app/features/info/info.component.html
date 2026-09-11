@@ -72,8 +72,13 @@
 
     <div class="info__map-block">
       <div class="info__map-preview">
-        <img class="info__map-preview-img info__map-preview-img--mobile" [src]="mapImageUrl" [alt]="text.mapImageAlt" loading="lazy" />
-        <img class="info__map-preview-img info__map-preview-img--desktop" [src]="mapImageDesktopUrl" [alt]="text.mapImageAlt" loading="lazy" />
+        <iframe
+          class="info__map-frame"
+          [src]="mapEmbedUrl"
+          [title]="text.mapFrameTitle"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+        ></iframe>
       </div>
       <a class="info__nav-btn" [href]="mapsUrl" target="_blank" rel="noopener">
         <app-icon name="navigation" [size]="16" color="var(--color-text-invert)" />

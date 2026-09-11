@@ -1,14 +1,15 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core'
+import { DomSanitizer } from '@angular/platform-browser'
 import { IconComponent } from '../../shared/icon/icon.component'
 import { ScrollRevealDirective } from '../../shared/scroll-reveal.directive'
 import { SectionHeadingComponent } from '../../shared/section-heading/section-heading.component'
-import { INFO_TEXT, MAP_PREVIEW_IMAGE_DESKTOP_URL, MAP_PREVIEW_IMAGE_URL, WEDDING_CONTENT } from '../../core/config/wedding-content'
-import { WEDDING_LINKS, buildGoogleMapsDirectionUrl } from '../../core/config/wedding-links'
+import { INFO_TEXT, WEDDING_CONTENT } from '../../core/config/wedding-content'
+import { WEDDING_LINKS, buildGoogleMapsDirectionUrl, buildGoogleMapsEmbedUrl } from '../../core/config/wedding-links'
 import { InfoStore } from './info.store'
 import { DietStore } from '../../core/diet.store'
 
 /**
- * S3 宴客資訊區。地圖預覽為非互動靜態圖，導航鈕另開分頁前往 Google 地圖。
+ * S3 宴客資訊區。地圖為內嵌的 Google 地圖（預設定位在飯店），導航鈕另開分頁前往 Google 地圖。
  */
 @Component({
   selector: 'app-info',
@@ -26,6 +27,8 @@ export class InfoComponent {
   protected readonly links = WEDDING_LINKS
 
   protected readonly mapsUrl = buildGoogleMapsDirectionUrl(WEDDING_LINKS.venueAddress)
-  protected readonly mapImageUrl = MAP_PREVIEW_IMAGE_URL
-  protected readonly mapImageDesktopUrl = MAP_PREVIEW_IMAGE_DESKTOP_URL
+  /** iframe 的 src 需先標記為可信任，Angular 才不會把它當成不安全的網址擋掉；網址由本站常數組成，不含使用者輸入。 */
+  protected readonly mapEmbedUrl = inject(DomSanitizer).bypassSecurityTrustResourceUrl(
+    buildGoogleMapsEmbedUrl(WEDDING_LINKS.venueMapQuery),
+  )
 }
