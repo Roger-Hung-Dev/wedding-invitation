@@ -83,12 +83,14 @@ export type EmbossTone = 'blush' | 'ivory' | 'wine'
       --bottom-light: #ffffff24;
     }
 
+    // 陰影位移必須是整數 px：Safari（WebKit）會把 drop-shadow 的位移截成整數，
+    // 寫 0.9px 會變成 0，陰影正好藏在同色花紋底下，整個壓印就消失了。
     .corner {
       position: absolute;
       width: 118px;
       height: 118px;
       color: var(--top-fill);
-      filter: drop-shadow(-0.9px -0.9px 0 var(--top-shadow)) drop-shadow(0.9px 0.9px 0 var(--top-light));
+      filter: drop-shadow(-1px -1px 0 var(--top-shadow)) drop-shadow(1px 1px 0 var(--top-light));
     }
 
     .corner--tl {
@@ -105,7 +107,7 @@ export type EmbossTone = 'blush' | 'ivory' | 'wine'
     .corner--br {
       bottom: 0;
       color: var(--bottom-fill);
-      filter: drop-shadow(-0.9px -0.9px 0 var(--bottom-shadow)) drop-shadow(0.9px 0.9px 0 var(--bottom-light));
+      filter: drop-shadow(-1px -1px 0 var(--bottom-shadow)) drop-shadow(1px 1px 0 var(--bottom-light));
     }
 
     .corner--bl {
