@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core'
-import { CornerEmbossComponent } from '../../shared/corner-emboss/corner-emboss.component'
 import { DomSanitizer } from '@angular/platform-browser'
 import { IconComponent } from '../../shared/icon/icon.component'
 import { ScrollRevealDirective } from '../../shared/scroll-reveal.directive'
@@ -12,7 +11,7 @@ import { WEDDING_LINKS, buildGoogleMapsDirectionUrl, buildGoogleMapsEmbedUrl } f
  */
 @Component({
   selector: 'app-info',
-  imports: [CornerEmbossComponent, SectionHeadingComponent, IconComponent, ScrollRevealDirective],
+  imports: [SectionHeadingComponent, IconComponent, ScrollRevealDirective],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './info.component.html',
   styleUrl: './info.component.scss',

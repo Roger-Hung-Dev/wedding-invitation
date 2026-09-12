@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core'
-import { CornerEmbossComponent } from '../../shared/corner-emboss/corner-emboss.component'
 import { IconComponent } from '../../shared/icon/icon.component'
 import { ScrollRevealDirective } from '../../shared/scroll-reveal.directive'
 import { SectionHeadingComponent } from '../../shared/section-heading/section-heading.component'
@@ -12,7 +11,7 @@ import { DietStore } from '../../core/diet.store'
  */
 @Component({
   selector: 'app-rsvp',
-  imports: [CornerEmbossComponent, SectionHeadingComponent, IconComponent, ScrollRevealDirective],
+  imports: [SectionHeadingComponent, IconComponent, ScrollRevealDirective],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './rsvp.component.html',
   styleUrl: './rsvp.component.scss',

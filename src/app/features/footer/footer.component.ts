@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core'
-import { CornerEmbossComponent } from '../../shared/corner-emboss/corner-emboss.component'
 import { ScrollRevealDirective } from '../../shared/scroll-reveal.directive'
 import { FOOTER_TEXT, WEDDING_CONTENT } from '../../core/config/wedding-content'
 
@@ -8,7 +7,7 @@ import { FOOTER_TEXT, WEDDING_CONTENT } from '../../core/config/wedding-content'
  */
 @Component({
   selector: 'app-footer',
-  imports: [CornerEmbossComponent, ScrollRevealDirective],
+  imports: [ScrollRevealDirective],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './footer.component.html',
   styleUrl: './footer.component.scss',
