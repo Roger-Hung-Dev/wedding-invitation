@@ -18,6 +18,7 @@
   // 開場層在底圖下載完成前露出的底色。取自封面照黃昏天空的暗部，
   // 照片蓋上來時像暗場亮起，而不是換了一張色塊。
   // 這裡不可以用 --color-text-main（酒紅）—— 與照片色調差太遠，第一次進站會閃一下紅。
+  // index.html 的 <meta name="theme-color"> 寫死同一個色值（那裡讀不到 CSS 變數），改色時要一起改。
   --color-gate-backdrop: #1E2A33;
   --color-glass-fill: #FFFFFF26;
   --color-glass-border: #FFFFFF4D;

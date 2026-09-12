@@ -31,7 +31,11 @@
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="icon" type="image/x-icon" href="favicon.ico" sizes="16x16 32x32 48x48">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
-  <meta name="theme-color" content="#831843">
+  <!--
+    手機瀏覽器頂端狀態列／網址列的染色。要跟開場層底色 --color-gate-backdrop（_tokens.scss）同一色：
+    進站第一眼就是開場層，這裡若留酒紅，畫面最上緣會多一條紅帶。這裡讀不到 CSS 變數，改色時兩處要一起改。
+  -->
+  <meta name="theme-color" content="#1E2A33">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
