@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core'
+import { CornerEmbossComponent } from '../../shared/corner-emboss/corner-emboss.component'
 import { ScrollRevealDirective } from '../../shared/scroll-reveal.directive'
 import { SectionHeadingComponent } from '../../shared/section-heading/section-heading.component'
 import { DIET_NOTES_TEXT } from '../../core/config/wedding-content'
@@ -11,7 +12,7 @@ import { DietStore } from '../../core/diet.store'
  */
 @Component({
   selector: 'app-diet-notes',
-  imports: [SectionHeadingComponent, ScrollRevealDirective],
+  imports: [CornerEmbossComponent, SectionHeadingComponent, ScrollRevealDirective],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './diet-notes.component.html',
   styleUrl: './diet-notes.component.scss',

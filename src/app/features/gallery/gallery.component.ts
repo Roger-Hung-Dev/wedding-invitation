@@ -1,6 +1,7 @@
 import { ComponentType, Overlay, OverlayRef } from '@angular/cdk/overlay'
 import { ComponentPortal } from '@angular/cdk/portal'
 import { ChangeDetectionStrategy, Component, ComponentRef, DestroyRef, ElementRef, afterNextRender, computed, effect, inject, signal, viewChild } from '@angular/core'
+import { CornerEmbossComponent } from '../../shared/corner-emboss/corner-emboss.component'
 import { BreakpointService } from '../../shared/breakpoint.service'
 import { ScrollRevealDirective } from '../../shared/scroll-reveal.directive'
 import { SectionHeadingComponent } from '../../shared/section-heading/section-heading.component'
@@ -37,7 +38,7 @@ export interface MarqueeItem {
  */
 @Component({
   selector: 'app-gallery',
-  imports: [SectionHeadingComponent, ScrollRevealDirective],
+  imports: [CornerEmbossComponent, SectionHeadingComponent, ScrollRevealDirective],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './gallery.component.html',
   styleUrl: './gallery.component.scss',

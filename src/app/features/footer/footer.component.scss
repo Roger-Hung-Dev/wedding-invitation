@@ -3,6 +3,9 @@
 }
 
 .footer {
+  // 四角壓印以 z-index: -1 墊在內容之下，需要本段自成一個堆疊層才不會沉到整頁背景後面。
+  position: relative;
+  isolation: isolate;
   display: flex;
   flex-direction: column;
   align-items: center;

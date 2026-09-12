@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core'
+import { CornerEmbossComponent } from '../../shared/corner-emboss/corner-emboss.component'
 import { ABOUT_PROFILES, ABOUT_TEXT } from '../../core/config/wedding-content'
 import { BreakpointService } from '../../shared/breakpoint.service'
 import { ScrollRevealDirective } from '../../shared/scroll-reveal.directive'
@@ -22,7 +23,7 @@ const CARD_TEXT_DELAY_MS = 520
  */
 @Component({
   selector: 'app-about',
-  imports: [SectionHeadingComponent, ScrollRevealDirective],
+  imports: [CornerEmbossComponent, SectionHeadingComponent, ScrollRevealDirective],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './about.component.html',
   styleUrl: './about.component.scss',

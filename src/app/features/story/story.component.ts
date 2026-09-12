@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, DestroyRef, computed, inject } from '@angular/core'
+import { CornerEmbossComponent } from '../../shared/corner-emboss/corner-emboss.component'
 import { STORY_TEXT } from '../../core/config/wedding-content'
 import { BreakpointService } from '../../shared/breakpoint.service'
 import { IconComponent } from '../../shared/icon/icon.component'
@@ -63,7 +64,7 @@ const SWIPE_CLICK_GUARD_MS = 400
  */
 @Component({
   selector: 'app-story',
-  imports: [SectionHeadingComponent, ScrollRevealDirective, IconComponent, StoryPageComponent],
+  imports: [CornerEmbossComponent, SectionHeadingComponent, ScrollRevealDirective, IconComponent, StoryPageComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './story.component.html',
   styleUrl: './story.component.scss',
