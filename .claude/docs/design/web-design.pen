@@ -36,7 +36,7 @@
               "fill": {
                 "type": "image",
                 "enabled": true,
-                "url": "https://images.unsplash.com/photo-1683039676974-420cfd6625ca?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3ODg1MDQwNzB8&ixlib=rb-4.1.0&q=80&w=1080",
+                "url": "../../../src/assets/images/hero-mobile.jpg",
                 "mode": "fill"
               },
               "width": 390,
@@ -603,7 +603,7 @@
                   "fill": {
                     "type": "image",
                     "enabled": true,
-                    "url": "https://images.unsplash.com/photo-1725567005742-20be6a2865a2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3ODg4ODY0NjF8&ixlib=rb-4.1.0&q=80&w=1080",
+                    "url": "../../../src/assets/images/groom.jpg",
                     "mode": "fill"
                   },
                   "cornerRadius": 16,
@@ -888,7 +888,7 @@
                   "fill": {
                     "type": "image",
                     "enabled": true,
-                    "url": "https://images.unsplash.com/photo-1785162347226-8952e0de209c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3ODg4ODY5Mzd8&ixlib=rb-4.1.0&q=80&w=1080",
+                    "url": "../../../src/assets/images/bride.jpg",
                     "mode": "fill"
                   },
                   "cornerRadius": 16,
@@ -1048,7 +1048,7 @@
                       "fill": {
                         "type": "image",
                         "enabled": true,
-                        "url": "https://images.unsplash.com/photo-1759866614103-376bde0fc66f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3ODg5MTYwNjF8&ixlib=rb-4.1.0&q=80&w=1080",
+                        "url": "../../../src/assets/gallery/photo-1.jpg",
                         "mode": "fill"
                       },
                       "cornerRadius": 12
@@ -1462,7 +1462,7 @@
                   "fill": {
                     "type": "image",
                     "enabled": true,
-                    "url": "https://images.unsplash.com/photo-1613469663014-ab7a6093a13e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3ODg1MDQwOTJ8&ixlib=rb-4.1.0&q=80&w=1080",
+                    "url": "../../../src/assets/gallery/photo-8.jpg",
                     "mode": "fill"
                   },
                   "cornerRadius": 16
@@ -1482,7 +1482,7 @@
                   "fill": {
                     "type": "image",
                     "enabled": true,
-                    "url": "https://images.unsplash.com/photo-1593445831191-ccde00562535?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3ODg1MDQ2MjR8&ixlib=rb-4.1.0&q=80&w=1080",
+                    "url": "../../../src/assets/gallery/photo-1.jpg",
                     "mode": "fill"
                   },
                   "cornerRadius": 16,
@@ -1513,7 +1513,7 @@
                   "fill": {
                     "type": "image",
                     "enabled": true,
-                    "url": "https://images.unsplash.com/photo-1782786661323-f81c8a4ad25d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3ODg1MDQ2MjV8&ixlib=rb-4.1.0&q=80&w=1080",
+                    "url": "../../../src/assets/gallery/photo-2.jpg",
                     "mode": "fill"
                   },
                   "cornerRadius": 16
@@ -1678,117 +1678,146 @@
               "children": [
                 {
                   "type": "frame",
-                  "id": "JKGVq",
-                  "name": "S3-場次列",
+                  "id": "B7S7D",
+                  "name": "S3-燙金雙框",
                   "width": "fill_container",
-                  "height": 40,
-                  "gap": 8,
-                  "justifyContent": "center",
+                  "cornerRadius": 6,
+                  "stroke": "$gold-soft",
+                  "strokeWidth": 1,
+                  "strokeAlignment": "inner",
+                  "layout": "vertical",
+                  "padding": 4,
                   "alignItems": "center",
                   "children": [
                     {
                       "type": "frame",
-                      "id": "t92Jq",
-                      "name": "膠囊-午宴(選中)",
-                      "width": 143,
-                      "height": 40,
-                      "fill": "$primary",
-                      "cornerRadius": 20,
-                      "padding": [
-                        0,
-                        20
-                      ],
-                      "justifyContent": "center",
-                      "alignItems": "center",
-                      "children": [
-                        {
-                          "type": "text",
-                          "id": "pW5wd",
-                          "name": "label",
-                          "fill": "$text-invert",
-                          "content": "午宴　12:00",
-                          "lineHeight": 1.4,
-                          "textAlign": "center",
-                          "fontFamily": "$font-body",
-                          "fontSize": 14,
-                          "fontWeight": "600",
-                          "letterSpacing": 1
-                        }
-                      ]
-                    },
-                    {
-                      "type": "frame",
-                      "id": "dXeie",
-                      "name": "膠囊-晚宴(未選)",
-                      "width": 143,
-                      "height": 40,
-                      "cornerRadius": 20,
-                      "stroke": "$border-pill",
+                      "id": "Atk5d",
+                      "name": "S3-燙金雙框-內框",
+                      "width": "fill_container",
+                      "cornerRadius": 2,
+                      "stroke": "$gold-soft",
                       "strokeWidth": 1,
                       "strokeAlignment": "inner",
+                      "layout": "vertical",
                       "padding": [
-                        0,
-                        20
+                        22,
+                        16
                       ],
-                      "justifyContent": "center",
                       "alignItems": "center",
                       "children": [
                         {
                           "type": "text",
-                          "id": "HMtAt",
-                          "name": "label",
-                          "fill": "$text-muted",
-                          "content": "晚宴　18:00",
+                          "id": "s1K7Q",
+                          "name": "S3-雙框-眉標",
+                          "fill": "$accent-gold",
+                          "content": "THE WEDDING DAY",
                           "lineHeight": 1.4,
-                          "textAlign": "center",
                           "fontFamily": "$font-body",
-                          "fontSize": 14,
-                          "fontWeight": "500",
-                          "letterSpacing": 1
+                          "fontSize": 11,
+                          "fontWeight": "600",
+                          "letterSpacing": 4
+                        },
+                        {
+                          "type": "frame",
+                          "id": "q4fYT",
+                          "name": "spacer-10",
+                          "width": 1,
+                          "height": 10
+                        },
+                        {
+                          "type": "text",
+                          "id": "M8IJ1",
+                          "name": "S3-雙框-日期",
+                          "fill": "$text-main",
+                          "content": "2026.12.12",
+                          "lineHeight": 1.1,
+                          "fontFamily": "$font-body",
+                          "fontSize": 30,
+                          "fontWeight": "600",
+                          "letterSpacing": 3
+                        },
+                        {
+                          "type": "frame",
+                          "id": "nZEzn",
+                          "name": "spacer-4",
+                          "width": 1,
+                          "height": 4
+                        },
+                        {
+                          "type": "text",
+                          "id": "O50TpV",
+                          "name": "S3-雙框-星期",
+                          "fill": "$text-muted",
+                          "content": "星期六",
+                          "lineHeight": 1.4,
+                          "fontFamily": "$font-body",
+                          "fontSize": 13,
+                          "fontWeight": "normal",
+                          "letterSpacing": 3
+                        },
+                        {
+                          "type": "frame",
+                          "id": "vdw9L",
+                          "name": "spacer-14",
+                          "width": 1,
+                          "height": 14
+                        },
+                        {
+                          "type": "frame",
+                          "id": "OUDv0",
+                          "name": "S3-雙框-飾線",
+                          "gap": 8,
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "rectangle",
+                              "id": "ebYrX",
+                              "name": "飾線-左",
+                              "fill": "$gold-soft",
+                              "width": 36,
+                              "height": 1
+                            },
+                            {
+                              "type": "rectangle",
+                              "id": "SJOSl",
+                              "name": "飾線-菱形",
+                              "rotation": 45,
+                              "fill": "$gold-soft",
+                              "width": 6,
+                              "height": 6
+                            },
+                            {
+                              "type": "rectangle",
+                              "id": "j0h21",
+                              "name": "飾線-右",
+                              "fill": "$gold-soft",
+                              "width": 36,
+                              "height": 1
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "fOBfy",
+                          "name": "spacer-12",
+                          "width": 1,
+                          "height": 12
+                        },
+                        {
+                          "type": "text",
+                          "id": "EtDF6",
+                          "name": "S3-雙框-場次",
+                          "fill": "$text-main",
+                          "content": "晚宴　18:00 入席",
+                          "lineHeight": 1.4,
+                          "fontFamily": "$font-body",
+                          "fontSize": 15,
+                          "fontWeight": "normal",
+                          "letterSpacing": 2
                         }
                       ]
                     }
                   ]
-                },
-                {
-                  "type": "frame",
-                  "id": "kHrxp",
-                  "name": "spacer-24",
-                  "width": 1,
-                  "height": 24
-                },
-                {
-                  "type": "text",
-                  "id": "PSnHF",
-                  "name": "S3-日期大字",
-                  "fill": "$text-main",
-                  "content": "2026 . 11 . 14",
-                  "lineHeight": 1.4,
-                  "textAlign": "center",
-                  "fontFamily": "$font-body",
-                  "fontSize": 30,
-                  "fontWeight": "600",
-                  "letterSpacing": 2
-                },
-                {
-                  "type": "frame",
-                  "id": "jd4jO",
-                  "name": "spacer-6",
-                  "width": 1,
-                  "height": 6
-                },
-                {
-                  "type": "text",
-                  "id": "zT1US",
-                  "name": "S3-日期副標",
-                  "fill": "$text-muted",
-                  "content": "星期六　·　農曆十月初五",
-                  "lineHeight": 1.4,
-                  "textAlign": "center",
-                  "fontFamily": "$font-body",
-                  "fontSize": 13,
-                  "fontWeight": "normal",
-                  "letterSpacing": 1
                 },
                 {
                   "type": "frame",
@@ -2060,7 +2089,7 @@
                   "fill": {
                     "type": "image",
                     "enabled": true,
-                    "url": "https://images.unsplash.com/photo-1645708313906-c4e2cd0b4daa?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3ODg1MDQ2MjZ8&ixlib=rb-4.1.0&q=80&w=1080",
+                    "url": "../../../src/assets/images/map-preview-mobile.jpg",
                     "mode": "fill"
                   },
                   "cornerRadius": 12
@@ -2728,7 +2757,7 @@
           "fill": {
             "type": "image",
             "enabled": true,
-            "url": "https://images.unsplash.com/photo-1572021007383-0128eeb8acac?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3ODg1MDQyNDR8&ixlib=rb-4.1.0&q=80&w=1080",
+            "url": "../../../src/assets/gallery/photo-1.jpg",
             "mode": "fill"
           },
           "cornerRadius": 12
@@ -3017,7 +3046,7 @@
           "fill": {
             "type": "image",
             "enabled": true,
-            "url": "https://images.unsplash.com/photo-1708126756123-1c1245d26c54?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3ODg1MDQyNzd8&ixlib=rb-4.1.0&q=80&w=1080",
+            "url": "../../../src/assets/images/og-share.jpg",
             "mode": "fill"
           }
         },
@@ -3100,7 +3129,7 @@
           "fill": {
             "type": "image",
             "enabled": true,
-            "url": "https://images.unsplash.com/photo-1692554502481-9e7228083e6c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3ODg1MDQ4MzR8&ixlib=rb-4.1.0&q=80&w=1080",
+            "url": "../../../src/assets/images/og-share.jpg",
             "mode": "fill"
           },
           "width": 1200,
@@ -3278,7 +3307,7 @@
               "fill": {
                 "type": "image",
                 "enabled": true,
-                "url": "https://images.unsplash.com/photo-1548741954-4c3c8d7036cd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3ODg1MDQ2OTJ8&ixlib=rb-4.1.0&q=80&w=1080",
+                "url": "../../../src/assets/images/hero-desktop.jpg",
                 "mode": "fill"
               },
               "width": 1440,
@@ -3779,7 +3808,7 @@
                       "fill": {
                         "type": "image",
                         "enabled": true,
-                        "url": "https://images.unsplash.com/photo-1725567005742-20be6a2865a2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3ODg4ODY0NjF8&ixlib=rb-4.1.0&q=80&w=1080",
+                        "url": "../../../src/assets/images/groom.jpg",
                         "mode": "fill"
                       },
                       "cornerRadius": 20,
@@ -4061,7 +4090,7 @@
                       "fill": {
                         "type": "image",
                         "enabled": true,
-                        "url": "https://images.unsplash.com/photo-1785162347226-8952e0de209c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3ODg4ODY5Mzd8&ixlib=rb-4.1.0&q=80&w=1080",
+                        "url": "../../../src/assets/images/bride.jpg",
                         "mode": "fill"
                       },
                       "cornerRadius": 20,
@@ -4275,7 +4304,7 @@
                           "fill": {
                             "type": "image",
                             "enabled": true,
-                            "url": "https://images.unsplash.com/photo-1759866614103-376bde0fc66f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3ODg5MTYwNjF8&ixlib=rb-4.1.0&q=80&w=1080",
+                            "url": "../../../src/assets/gallery/photo-1.jpg",
                             "mode": "fill"
                           },
                           "cornerRadius": 12
@@ -4758,7 +4787,7 @@
                   "fill": {
                     "type": "image",
                     "enabled": true,
-                    "url": "https://images.unsplash.com/photo-1708126756123-1c1245d26c54?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3ODg1MDk5NzV8&ixlib=rb-4.1.0&q=80&w=1080",
+                    "url": "../../../src/assets/gallery/photo-1.jpg",
                     "mode": "fill"
                   },
                   "cornerRadius": 20,
@@ -4789,7 +4818,7 @@
                   "fill": {
                     "type": "image",
                     "enabled": true,
-                    "url": "https://images.unsplash.com/photo-1645748655597-19fbf4d5e991?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3ODg1MDk5NzZ8&ixlib=rb-4.1.0&q=80&w=1080",
+                    "url": "../../../src/assets/gallery/photo-2.jpg",
                     "mode": "fill"
                   },
                   "cornerRadius": 20,
@@ -4820,7 +4849,7 @@
                   "fill": {
                     "type": "image",
                     "enabled": true,
-                    "url": "https://images.unsplash.com/photo-1773994788711-69a484e31fc3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3ODg1MDk5Nzd8&ixlib=rb-4.1.0&q=80&w=1080",
+                    "url": "../../../src/assets/gallery/photo-3.jpg",
                     "mode": "fill"
                   },
                   "cornerRadius": 20,
@@ -4851,7 +4880,7 @@
                   "fill": {
                     "type": "image",
                     "enabled": true,
-                    "url": "https://images.unsplash.com/photo-1592107704270-3fef4d7c4c3e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3ODg1MjQxNjl8&ixlib=rb-4.1.0&q=80&w=1080",
+                    "url": "../../../src/assets/gallery/photo-4.jpg",
                     "mode": "fill"
                   },
                   "cornerRadius": 20,
@@ -4882,7 +4911,7 @@
                   "fill": {
                     "type": "image",
                     "enabled": true,
-                    "url": "https://images.unsplash.com/photo-1662624915160-af38b1599dd4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3ODg1MjQxNzB8&ixlib=rb-4.1.0&q=80&w=1080",
+                    "url": "../../../src/assets/gallery/photo-5.jpg",
                     "mode": "fill"
                   },
                   "cornerRadius": 20,
@@ -5002,103 +5031,146 @@
                   "children": [
                     {
                       "type": "frame",
-                      "id": "jVRYN",
-                      "name": "場次列",
-                      "width": 460,
-                      "height": 48,
-                      "gap": 12,
+                      "id": "XD3Fk",
+                      "name": "D3-燙金雙框",
+                      "width": "fill_container",
+                      "cornerRadius": 6,
+                      "stroke": "$gold-soft",
+                      "strokeWidth": 1,
+                      "strokeAlignment": "inner",
+                      "layout": "vertical",
+                      "padding": 4,
+                      "alignItems": "center",
                       "children": [
                         {
                           "type": "frame",
-                          "id": "ifJ5W",
-                          "name": "膠囊-午宴(選中)",
-                          "width": 224,
-                          "height": 48,
-                          "fill": "$primary",
-                          "cornerRadius": 24,
-                          "justifyContent": "center",
-                          "alignItems": "center",
-                          "children": [
-                            {
-                              "type": "text",
-                              "id": "ObOS5",
-                              "name": "label",
-                              "fill": "$text-invert",
-                              "content": "午宴　12:00",
-                              "lineHeight": 1.4,
-                              "fontFamily": "$font-body",
-                              "fontSize": 14,
-                              "fontWeight": "600",
-                              "letterSpacing": 1
-                            }
-                          ]
-                        },
-                        {
-                          "type": "frame",
-                          "id": "qytYS",
-                          "name": "膠囊-晚宴(未選)",
-                          "width": 224,
-                          "height": 48,
-                          "cornerRadius": 24,
-                          "stroke": "$border-pill",
+                          "id": "kAVhL",
+                          "name": "D3-燙金雙框-內框",
+                          "width": "fill_container",
+                          "cornerRadius": 2,
+                          "stroke": "$gold-soft",
                           "strokeWidth": 1,
                           "strokeAlignment": "inner",
-                          "justifyContent": "center",
+                          "layout": "vertical",
+                          "padding": [
+                            34,
+                            24
+                          ],
                           "alignItems": "center",
                           "children": [
                             {
                               "type": "text",
-                              "id": "kZJvp",
-                              "name": "label",
-                              "fill": "$text-muted",
-                              "content": "晚宴　18:00",
+                              "id": "xZOO7",
+                              "name": "D3-雙框-眉標",
+                              "fill": "$accent-gold",
+                              "content": "THE WEDDING DAY",
                               "lineHeight": 1.4,
                               "fontFamily": "$font-body",
-                              "fontSize": 14,
-                              "fontWeight": "500",
-                              "letterSpacing": 1
+                              "fontSize": 13,
+                              "fontWeight": "600",
+                              "letterSpacing": 5
+                            },
+                            {
+                              "type": "frame",
+                              "id": "cZh11",
+                              "name": "spacer-12",
+                              "width": 1,
+                              "height": 12
+                            },
+                            {
+                              "type": "text",
+                              "id": "nCZ2H",
+                              "name": "D3-雙框-日期",
+                              "fill": "$text-main",
+                              "content": "2026.12.12",
+                              "lineHeight": 1.1,
+                              "fontFamily": "$font-body",
+                              "fontSize": 44,
+                              "fontWeight": "600",
+                              "letterSpacing": 3
+                            },
+                            {
+                              "type": "frame",
+                              "id": "a4QzCL",
+                              "name": "spacer-4",
+                              "width": 1,
+                              "height": 4
+                            },
+                            {
+                              "type": "text",
+                              "id": "knHQ2",
+                              "name": "D3-雙框-星期",
+                              "fill": "$text-muted",
+                              "content": "星期六",
+                              "lineHeight": 1.4,
+                              "fontFamily": "$font-body",
+                              "fontSize": 15,
+                              "fontWeight": "normal",
+                              "letterSpacing": 3
+                            },
+                            {
+                              "type": "frame",
+                              "id": "Eh2f0",
+                              "name": "spacer-14",
+                              "width": 1,
+                              "height": 14
+                            },
+                            {
+                              "type": "frame",
+                              "id": "fkkYC",
+                              "name": "D3-雙框-飾線",
+                              "gap": 8,
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "rectangle",
+                                  "id": "gv3B8",
+                                  "name": "飾線-左",
+                                  "fill": "$gold-soft",
+                                  "width": 36,
+                                  "height": 1
+                                },
+                                {
+                                  "type": "rectangle",
+                                  "id": "I5YBX",
+                                  "name": "飾線-菱形",
+                                  "rotation": 45,
+                                  "fill": "$gold-soft",
+                                  "width": 6,
+                                  "height": 6
+                                },
+                                {
+                                  "type": "rectangle",
+                                  "id": "sLi2v",
+                                  "name": "飾線-右",
+                                  "fill": "$gold-soft",
+                                  "width": 36,
+                                  "height": 1
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "DhpC3",
+                              "name": "spacer-12",
+                              "width": 1,
+                              "height": 12
+                            },
+                            {
+                              "type": "text",
+                              "id": "kcjhy",
+                              "name": "D3-雙框-場次",
+                              "fill": "$text-main",
+                              "content": "晚宴　18:00 入席",
+                              "lineHeight": 1.4,
+                              "fontFamily": "$font-body",
+                              "fontSize": 18,
+                              "fontWeight": "normal",
+                              "letterSpacing": 2
                             }
                           ]
                         }
                       ]
-                    },
-                    {
-                      "type": "frame",
-                      "id": "wNbpE",
-                      "name": "sp-28",
-                      "width": 1,
-                      "height": 28
-                    },
-                    {
-                      "type": "text",
-                      "id": "UuAiq",
-                      "name": "日期大字",
-                      "fill": "$text-main",
-                      "content": "2026 . 11 . 14",
-                      "lineHeight": 1.4,
-                      "fontFamily": "$font-body",
-                      "fontSize": 40,
-                      "fontWeight": "600",
-                      "letterSpacing": 2
-                    },
-                    {
-                      "type": "frame",
-                      "id": "Q8Rgf",
-                      "name": "sp-8",
-                      "width": 1,
-                      "height": 8
-                    },
-                    {
-                      "type": "text",
-                      "id": "DHVmq",
-                      "name": "日期副標",
-                      "fill": "$text-muted",
-                      "content": "星期六　·　農曆十月初五",
-                      "lineHeight": 1.4,
-                      "fontFamily": "$font-body",
-                      "fontSize": 13,
-                      "fontWeight": "normal",
-                      "letterSpacing": 1
                     },
                     {
                       "type": "frame",
@@ -5368,7 +5440,7 @@
                       "fill": {
                         "type": "image",
                         "enabled": true,
-                        "url": "https://images.unsplash.com/photo-1736117703382-8ed6a338c3b9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3ODg1MTAwNTJ8&ixlib=rb-4.1.0&q=80&w=1080",
+                        "url": "../../../src/assets/images/map-preview.jpg",
                         "mode": "fill"
                       },
                       "cornerRadius": 24
@@ -5918,6 +5990,642 @@
               "fontSize": 10,
               "fontWeight": "normal",
               "letterSpacing": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "e7T9T3",
+      "x": 0,
+      "y": 6700,
+      "name": "裝置版-S3.5 蔬食心意（蔬食版限定）",
+      "clip": true,
+      "width": 390,
+      "fill": "$bg-ivory",
+      "layout": "vertical",
+      "padding": [
+        64,
+        24
+      ],
+      "alignItems": "center",
+      "children": [
+        {
+          "type": "text",
+          "id": "FbTg1",
+          "name": "S35-眉標",
+          "fill": "$accent-gold",
+          "content": "WITH LOVE",
+          "lineHeight": 1.4,
+          "fontFamily": "$font-body",
+          "fontSize": 11,
+          "fontWeight": "600",
+          "letterSpacing": 5
+        },
+        {
+          "type": "frame",
+          "id": "CQVAo",
+          "name": "spacer-10",
+          "width": 1,
+          "height": 10
+        },
+        {
+          "type": "text",
+          "id": "X1Ym7",
+          "name": "S35-主標",
+          "fill": "$primary",
+          "content": "A Little Note",
+          "lineHeight": 1.2,
+          "fontFamily": "$font-script",
+          "fontSize": 34,
+          "fontWeight": "normal"
+        },
+        {
+          "type": "frame",
+          "id": "XilA0",
+          "name": "spacer-12",
+          "width": 1,
+          "height": 12
+        },
+        {
+          "type": "rectangle",
+          "id": "XjZr9",
+          "name": "S35-金線",
+          "fill": "$gold-soft",
+          "width": 40,
+          "height": 1
+        },
+        {
+          "type": "frame",
+          "id": "jG1h1",
+          "name": "spacer-40",
+          "width": 1,
+          "height": 40
+        },
+        {
+          "type": "frame",
+          "id": "gzyYb",
+          "name": "S35-列表",
+          "width": 342,
+          "layout": "vertical",
+          "children": [
+            {
+              "type": "frame",
+              "id": "G8PwsD",
+              "name": "S35-列-禮金",
+              "width": "fill_container",
+              "gap": 16,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "ogCfn",
+                  "name": "S35-文字欄-禮金",
+                  "width": 206,
+                  "layout": "vertical",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "a8j74Y",
+                      "name": "S35-標籤-禮金",
+                      "fill": "$accent-gold",
+                      "content": "GIFT",
+                      "lineHeight": 1.4,
+                      "fontFamily": "$font-body",
+                      "fontSize": 11,
+                      "fontWeight": "600",
+                      "letterSpacing": 5
+                    },
+                    {
+                      "type": "frame",
+                      "id": "m7xog",
+                      "name": "spacer-6",
+                      "width": 1,
+                      "height": 6
+                    },
+                    {
+                      "type": "text",
+                      "id": "ozagg",
+                      "name": "S35-英文大字-禮金",
+                      "fill": "$text-main",
+                      "content": "YOUR PRESENCE",
+                      "lineHeight": 1.2,
+                      "fontFamily": "$font-body",
+                      "fontSize": 15,
+                      "letterSpacing": 2
+                    },
+                    {
+                      "type": "frame",
+                      "id": "wDyj3",
+                      "name": "spacer-4",
+                      "width": 1,
+                      "height": 4
+                    },
+                    {
+                      "type": "text",
+                      "id": "Cn7Xh",
+                      "name": "S35-中文標題-禮金",
+                      "fill": "$text-main",
+                      "content": "不收禮金",
+                      "lineHeight": 1.4,
+                      "fontFamily": "$font-body",
+                      "fontSize": 18,
+                      "fontWeight": "500",
+                      "letterSpacing": 2
+                    },
+                    {
+                      "type": "frame",
+                      "id": "sNTIO",
+                      "name": "spacer-10",
+                      "width": 1,
+                      "height": 10
+                    },
+                    {
+                      "type": "text",
+                      "id": "Ph41X",
+                      "name": "S35-內文-禮金",
+                      "fill": "$text-muted",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "女方親友席不收禮金，敬請入座，您的到來就是我們最珍貴的祝福",
+                      "lineHeight": 1.7,
+                      "fontFamily": "$font-body",
+                      "fontSize": 13,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "Eun9u",
+                  "name": "S35-插圖-禮金",
+                  "width": 120,
+                  "height": 120,
+                  "fill": {
+                    "type": "image",
+                    "enabled": true,
+                    "url": "images/s35-gift-line.png",
+                    "mode": "fill"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "zJApt",
+              "name": "spacer-28",
+              "width": 1,
+              "height": 28
+            },
+            {
+              "type": "rectangle",
+              "id": "XzonR",
+              "name": "S35-分隔線-禮金",
+              "fill": "$gold-soft",
+              "width": "fill_container",
+              "height": 1
+            },
+            {
+              "type": "frame",
+              "id": "k9YdhY",
+              "name": "spacer-32",
+              "width": 1,
+              "height": 32
+            },
+            {
+              "type": "frame",
+              "id": "QK2Xj",
+              "name": "S35-列-餐點",
+              "width": "fill_container",
+              "gap": 16,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "azt4Q",
+                  "name": "S35-文字欄-餐點",
+                  "width": 206,
+                  "layout": "vertical",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "VdFKw",
+                      "name": "S35-標籤-餐點",
+                      "fill": "$accent-gold",
+                      "content": "DINNER",
+                      "lineHeight": 1.4,
+                      "fontFamily": "$font-body",
+                      "fontSize": 11,
+                      "fontWeight": "600",
+                      "letterSpacing": 5
+                    },
+                    {
+                      "type": "frame",
+                      "id": "LfOus",
+                      "name": "spacer-6",
+                      "width": 1,
+                      "height": 6
+                    },
+                    {
+                      "type": "text",
+                      "id": "cUL9a",
+                      "name": "S35-英文大字-餐點",
+                      "fill": "$text-main",
+                      "content": "PLANT-BASED FEAST",
+                      "lineHeight": 1.2,
+                      "fontFamily": "$font-body",
+                      "fontSize": 15,
+                      "letterSpacing": 2
+                    },
+                    {
+                      "type": "frame",
+                      "id": "r9fXP",
+                      "name": "spacer-4",
+                      "width": 1,
+                      "height": 4
+                    },
+                    {
+                      "type": "text",
+                      "id": "XlubT",
+                      "name": "S35-中文標題-餐點",
+                      "fill": "$text-main",
+                      "content": "蔬食盛宴",
+                      "lineHeight": 1.4,
+                      "fontFamily": "$font-body",
+                      "fontSize": 18,
+                      "fontWeight": "500",
+                      "letterSpacing": 2
+                    },
+                    {
+                      "type": "frame",
+                      "id": "V3k0P",
+                      "name": "spacer-10",
+                      "width": 1,
+                      "height": 10
+                    },
+                    {
+                      "type": "text",
+                      "id": "N7M7X",
+                      "name": "S35-內文-餐點",
+                      "fill": "$text-muted",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "女方親友席宴請蔬食料理，由飯店主廚特別設計，期待與您共享蔬食盛宴",
+                      "lineHeight": 1.7,
+                      "fontFamily": "$font-body",
+                      "fontSize": 13,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "yVSZH",
+                  "name": "S35-插圖-餐點",
+                  "width": 120,
+                  "height": 120,
+                  "fill": {
+                    "type": "image",
+                    "enabled": true,
+                    "url": "images/s35-dinner-line.png",
+                    "mode": "fill"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "syUlR",
+              "name": "spacer-28",
+              "width": 1,
+              "height": 28
+            },
+            {
+              "type": "rectangle",
+              "id": "qgwKn",
+              "name": "S35-分隔線-餐點",
+              "fill": "$gold-soft",
+              "width": "fill_container",
+              "height": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "n5G41n",
+      "x": 560,
+      "y": 6700,
+      "name": "電腦版-段3.5 蔬食心意（蔬食版限定）",
+      "clip": true,
+      "width": 1440,
+      "fill": "$bg-ivory",
+      "layout": "vertical",
+      "padding": [
+        96,
+        160
+      ],
+      "alignItems": "center",
+      "children": [
+        {
+          "type": "text",
+          "id": "j3Oau",
+          "name": "D35-眉標",
+          "fill": "$accent-gold",
+          "content": "WITH LOVE",
+          "lineHeight": 1.4,
+          "fontFamily": "$font-body",
+          "fontSize": 13,
+          "fontWeight": "600",
+          "letterSpacing": 5
+        },
+        {
+          "type": "frame",
+          "id": "LBpps",
+          "name": "spacer-12",
+          "width": 1,
+          "height": 12
+        },
+        {
+          "type": "text",
+          "id": "jvSSg",
+          "name": "D35-主標",
+          "fill": "$primary",
+          "content": "A Little Note",
+          "lineHeight": 1.2,
+          "fontFamily": "$font-script",
+          "fontSize": 44,
+          "fontWeight": "normal"
+        },
+        {
+          "type": "frame",
+          "id": "pWF4W",
+          "name": "spacer-14",
+          "width": 1,
+          "height": 14
+        },
+        {
+          "type": "rectangle",
+          "id": "L02qn",
+          "name": "D35-金線",
+          "fill": "$gold-soft",
+          "width": 64,
+          "height": 1
+        },
+        {
+          "type": "frame",
+          "id": "X9O9bL",
+          "name": "spacer-56",
+          "width": 1,
+          "height": 56
+        },
+        {
+          "type": "frame",
+          "id": "mAiGf",
+          "name": "D35-內容欄",
+          "width": 720,
+          "layout": "vertical",
+          "children": [
+            {
+              "type": "frame",
+              "id": "iloiI",
+              "name": "D35-列-禮金",
+              "width": "fill_container",
+              "gap": 40,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "oMknY",
+                  "name": "D35-文字欄-禮金",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "LBX4I",
+                      "name": "D35-標籤-禮金",
+                      "fill": "$accent-gold",
+                      "content": "GIFT",
+                      "lineHeight": 1.4,
+                      "fontFamily": "$font-body",
+                      "fontSize": 12,
+                      "fontWeight": "600",
+                      "letterSpacing": 5
+                    },
+                    {
+                      "type": "frame",
+                      "id": "h81rWL",
+                      "name": "spacer-8",
+                      "width": 1,
+                      "height": 8
+                    },
+                    {
+                      "type": "text",
+                      "id": "P5H5pX",
+                      "name": "D35-英文大字-禮金",
+                      "fill": "$text-main",
+                      "content": "YOUR PRESENCE",
+                      "lineHeight": 1.2,
+                      "fontFamily": "$font-body",
+                      "fontSize": 17,
+                      "letterSpacing": 2
+                    },
+                    {
+                      "type": "frame",
+                      "id": "S6JDk",
+                      "name": "spacer-6",
+                      "width": 1,
+                      "height": 6
+                    },
+                    {
+                      "type": "text",
+                      "id": "YkTxk",
+                      "name": "D35-中文標題-禮金",
+                      "fill": "$text-main",
+                      "content": "不收禮金",
+                      "lineHeight": 1.4,
+                      "fontFamily": "$font-body",
+                      "fontSize": 20,
+                      "fontWeight": "500",
+                      "letterSpacing": 2
+                    },
+                    {
+                      "type": "frame",
+                      "id": "QwixY",
+                      "name": "spacer-12",
+                      "width": 1,
+                      "height": 12
+                    },
+                    {
+                      "type": "text",
+                      "id": "ll4n9",
+                      "name": "D35-內文-禮金",
+                      "fill": "$text-muted",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "女方親友席不收禮金，敬請入座，您的到來就是我們最珍貴的祝福",
+                      "lineHeight": 1.7,
+                      "fontFamily": "$font-body",
+                      "fontSize": 15,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "QBBLo",
+                  "name": "D35-插圖-禮金",
+                  "width": 180,
+                  "height": 180,
+                  "fill": {
+                    "type": "image",
+                    "enabled": true,
+                    "url": "images/s35-gift-line.png",
+                    "mode": "fill"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "l5tTNo",
+              "name": "spacer-36",
+              "width": 1,
+              "height": 36
+            },
+            {
+              "type": "rectangle",
+              "id": "QVerJ",
+              "name": "D35-分隔線-禮金",
+              "fill": "$gold-soft",
+              "width": "fill_container",
+              "height": 1
+            },
+            {
+              "type": "frame",
+              "id": "w11x9G",
+              "name": "spacer-40",
+              "width": 1,
+              "height": 40
+            },
+            {
+              "type": "frame",
+              "id": "N4fONk",
+              "name": "D35-列-餐點",
+              "width": "fill_container",
+              "gap": 40,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "t9zfQ",
+                  "name": "D35-文字欄-餐點",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "a27TIA",
+                      "name": "D35-標籤-餐點",
+                      "fill": "$accent-gold",
+                      "content": "DINNER",
+                      "lineHeight": 1.4,
+                      "fontFamily": "$font-body",
+                      "fontSize": 12,
+                      "fontWeight": "600",
+                      "letterSpacing": 5
+                    },
+                    {
+                      "type": "frame",
+                      "id": "ftRuf",
+                      "name": "spacer-8",
+                      "width": 1,
+                      "height": 8
+                    },
+                    {
+                      "type": "text",
+                      "id": "t5kWQ1",
+                      "name": "D35-英文大字-餐點",
+                      "fill": "$text-main",
+                      "content": "PLANT-BASED FEAST",
+                      "lineHeight": 1.2,
+                      "fontFamily": "$font-body",
+                      "fontSize": 17,
+                      "letterSpacing": 2
+                    },
+                    {
+                      "type": "frame",
+                      "id": "qncz6",
+                      "name": "spacer-6",
+                      "width": 1,
+                      "height": 6
+                    },
+                    {
+                      "type": "text",
+                      "id": "wAvej",
+                      "name": "D35-中文標題-餐點",
+                      "fill": "$text-main",
+                      "content": "蔬食盛宴",
+                      "lineHeight": 1.4,
+                      "fontFamily": "$font-body",
+                      "fontSize": 20,
+                      "fontWeight": "500",
+                      "letterSpacing": 2
+                    },
+                    {
+                      "type": "frame",
+                      "id": "wQCor",
+                      "name": "spacer-12",
+                      "width": 1,
+                      "height": 12
+                    },
+                    {
+                      "type": "text",
+                      "id": "x2T1q",
+                      "name": "D35-內文-餐點",
+                      "fill": "$text-muted",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "女方親友席宴請蔬食料理，由飯店主廚特別設計，期待與您共享蔬食盛宴",
+                      "lineHeight": 1.7,
+                      "fontFamily": "$font-body",
+                      "fontSize": 15,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "Qzkc8",
+                  "name": "D35-插圖-餐點",
+                  "width": 180,
+                  "height": 180,
+                  "fill": {
+                    "type": "image",
+                    "enabled": true,
+                    "url": "images/s35-dinner-line.png",
+                    "mode": "fill"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "zM4VT",
+              "name": "spacer-36",
+              "width": 1,
+              "height": 36
+            },
+            {
+              "type": "rectangle",
+              "id": "nnR0N",
+              "name": "D35-分隔線-餐點",
+              "fill": "$gold-soft",
+              "width": "fill_container",
+              "height": 1
             }
           ]
         }
