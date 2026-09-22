@@ -64,49 +64,91 @@ export interface GalleryPhoto {
 }
 
 /**
- * 婚紗照 8 張，依拍攝場景由白天外景走到黃昏海邊排序，即畫面上的瀏覽順序。
- * 圖檔為原始檔縮至寬 1000 的網頁版本；手機版頁點指示器在 8 張以內仍清晰，再增量需改為數字式。
+ * 婚紗照 15 張，依拍攝場景由白天老屋走到黃昏海邊排序，即畫面上的瀏覽順序。
+ * 圖檔為原始檔縮至寬 1000 的網頁版本（原始檔約 4500 寬、每張 7～19MB，不可直接上站）。
+ *
+ * 手機版頁點指示器現在是 15 顆（約 204px 寬）——仍放得進 390px 的手機版面，
+ * 但已接近極限，再加照片就要改成「3 / 15」這種數字式，否則點會擠到換行。
+ * 桌機兩種版式都不受張數影響：自動捲動的位移與時長依張數計算，
+ * 減少動態效果時的靜態網格是 flex-wrap 每列三張，15 張自然排成五列。
+ *
  * 路徑不加開頭斜線 —— 網站部署在 GitHub Pages 子路徑下，絕對路徑會在上線後 404。
+ * 資料夾是 weddingphotos/，不是 gallery/ —— gallery/ 放的是交往故事書那五張。
  */
 export const GALLERY_PHOTOS: readonly GalleryPhoto[] = [
   {
     id: 'photo-1',
-    url: 'assets/gallery/photo-1.jpg',
-    alt: '新人牽手走在林蔭道上，新娘身著粉色紗裙',
+    url: 'assets/weddingphotos/photo-1.jpg',
+    alt: '紅磚牆前，新娘手持捧花站立微笑，新郎蹲坐在牆邊',
   },
   {
     id: 'photo-2',
-    url: 'assets/gallery/photo-2.jpg',
-    alt: '日式老屋前，新郎將身著黑色禮服的新娘抱起',
+    url: 'assets/weddingphotos/photo-2.jpg',
+    alt: '日式老屋暖簾前，新郎從身後環抱新娘、兩人十指交扣',
   },
   {
     id: 'photo-3',
-    url: 'assets/gallery/photo-3.jpg',
-    alt: '公園草地上相擁而笑的新人特寫',
+    url: 'assets/weddingphotos/photo-3.jpg',
+    alt: '日式老屋前，新郎牽起新娘的手轉圈，黑色蓬裙揚起',
   },
   {
     id: 'photo-4',
-    url: 'assets/gallery/photo-4.jpg',
-    alt: '藍天草原上，新人戴著愛心墨鏡舉著「我們結婚了」手牌',
+    url: 'assets/weddingphotos/photo-4.jpg',
+    alt: '黑瓦日式老屋與綠樹前，新人相吻',
   },
   {
     id: 'photo-5',
-    url: 'assets/gallery/photo-5.jpg',
-    alt: '黃昏河床上，新娘白紗長裙鋪展、與新郎相望',
+    url: 'assets/weddingphotos/photo-5.jpg',
+    alt: '日式老屋前的草地上，兩人並肩而坐望向遠方',
   },
   {
     id: 'photo-6',
-    url: 'assets/gallery/photo-6.jpg',
-    alt: '新娘背影，長頭紗隨風揚起於溪谷之上',
+    url: 'assets/weddingphotos/photo-6.jpg',
+    alt: '日式老屋前的草地上，新娘依偎在新郎肩上',
   },
   {
     id: 'photo-7',
-    url: 'assets/gallery/photo-7.jpg',
-    alt: '海邊夕陽下，新郎輕吻新娘的手，手中捧著粉色花束',
+    url: 'assets/weddingphotos/photo-7.jpg',
+    alt: '新人牽著手走在日式老屋前的石板路上',
   },
   {
     id: 'photo-8',
-    url: 'assets/gallery/photo-8.jpg',
+    url: 'assets/weddingphotos/photo-8.jpg',
+    alt: '日式老屋前，新郎將新娘抱起，黑紗裙擺飛揚',
+  },
+  {
+    id: 'photo-9',
+    url: 'assets/weddingphotos/photo-9.jpg',
+    alt: '大樹綠蔭下，新娘身著粉色紗裙與新郎並肩而立',
+  },
+  {
+    id: 'photo-10',
+    url: 'assets/weddingphotos/photo-10.jpg',
+    alt: '陽光樹影間，身著粉色紗裙的新娘與新郎相擁',
+  },
+  {
+    id: 'photo-11',
+    url: 'assets/weddingphotos/photo-11.jpg',
+    alt: '黃昏河床上，新娘白紗長裙鋪展，與新郎並立遠望',
+  },
+  {
+    id: 'photo-12',
+    url: 'assets/weddingphotos/photo-12.jpg',
+    alt: '夕照染紅遠山，新人在河床礫石地上相依',
+  },
+  {
+    id: 'photo-13',
+    url: 'assets/weddingphotos/photo-13.jpg',
+    alt: '河床上新人相吻，長頭紗被風揚起橫過畫面',
+  },
+  {
+    id: 'photo-14',
+    url: 'assets/weddingphotos/photo-14.jpg',
+    alt: '海邊夕陽下，新郎從身後環抱新娘，手中捧著粉色花束',
+  },
+  {
+    id: 'photo-15',
+    url: 'assets/weddingphotos/photo-15.jpg',
     alt: '沙灘上新郎將新娘橫抱起，兩人相視而笑',
   },
 ]
@@ -330,13 +372,17 @@ export interface StoryPage {
 /**
  * S10 交往故事書的五頁內容，順序即翻頁順序。
  *
- * 待替換（一）：這五段故事沒有一句是真的，全部是為了把版面做出來而寫的示範文案，上線前必須整批替換。
+ * 待替換：這五段故事沒有一句是真的，全部是為了把版面做出來而寫的示範文案，上線前必須整批替換。
  * 季節、地點、對話、繞半座城市送宵夜、搬三次家等細節全是編的——
  * 這是全站最不能留著假內容的地方，賓客會當真。
  *
- * 待替換（二）：photoUrl 目前全部是佔位圖，借用婚紗藝廊的照片，但婚紗照與「2019 秋」的時間軸對不上，
- * 正式應換成交往期間的生活照。五張需維持同一色調傾向（暖調、柔和），
- * 否則翻頁時每頁色溫跳動會很明顯。
+ * 照片是婚紗照，不是交往期間的生活照，因此時間軸（2019 秋）與畫面對不上；
+ * 這是新人提供的素材範圍內的選擇，不是疏漏。挑選時以情節對得上為準：
+ * 第五頁講求婚，配的是拿出戒指盒那張（photo-4）；第四頁講一起走過的日子，
+ * 配沙灘上歡呼那張（photo-5）——所以這兩頁的編號與頁序是交叉的，不要「順手改回」順號。
+ *
+ * 照片放 gallery/，與婚紗藝廊的 weddingphotos/ 分開——兩邊都叫 photo-N.jpg，
+ * 改路徑時要看清楚資料夾。
  *
  * body 每段維持 58～64 字：手機一行約 21.4 字、桌機約 23.1 字，皆排成 3 行；
  * 超過 64 字手機會變成 4 行、撐爆固定高度的書頁卡。
@@ -348,7 +394,7 @@ export const STORY_PAGES: readonly StoryPage[] = [
     title: '初次見面',
     body: '那年秋天，在朋友的一場聚會上第一次見到彼此。那天散場之後才發現，我們是聊到最後才離開的兩個人，連要回家的方向都一樣。',
     photoUrl: 'assets/gallery/photo-1.jpg',
-    photoAlt: '新人牽手走在林蔭道上，新娘身著粉色紗裙',
+    photoAlt: '紅磚木屋牆前，新娘身著黑色禮服手持捧花，與新郎相視而笑',
   },
   {
     id: 'story-2',
@@ -356,7 +402,7 @@ export const STORY_PAGES: readonly StoryPage[] = [
     title: '熟悉起來',
     body: '開始習慣生活裡有對方的日常。她下班傳訊息說今天很累，他就把宵夜送到樓下，說剛好順路——其實那天他整整繞了半座城市才到。',
     photoUrl: 'assets/gallery/photo-2.jpg',
-    photoAlt: '日式老屋前，新郎將身著黑色禮服的新娘抱起',
+    photoAlt: '日式老屋的暖簾前，新娘從身後摟著新郎的肩',
   },
   {
     id: 'story-3',
@@ -364,23 +410,23 @@ export const STORY_PAGES: readonly StoryPage[] = [
     title: '在一起',
     body: '其實那天沒有誰正式開口說什麼。只是某一天散步回家的路上，牽起來的手就沒有再放開；後來想想，那條路我們一走就走了好多年。',
     photoUrl: 'assets/gallery/photo-3.jpg',
-    photoAlt: '公園草地上相擁而笑的新人特寫',
+    photoAlt: '樹蔭草地上，新娘身著粉色紗裙依偎在新郎懷裡',
   },
   {
     id: 'story-4',
     year: '2021 – 2025',
     title: '一起走過的日子',
     body: '我們一起搬過三次家，一起吵過架也一起道過歉。日子說不上轟轟烈烈，但每一天都比前一天更確定一點，確定要一直這樣走下去。',
-    photoUrl: 'assets/gallery/photo-4.jpg',
-    photoAlt: '藍天草原上，新人戴著愛心墨鏡舉著「我們結婚了」手牌',
+    photoUrl: 'assets/gallery/photo-5.jpg',
+    photoAlt: '海邊沙灘上，新郎將新娘抱起，新娘高舉捧花歡呼',
   },
   {
     id: 'story-5',
     year: '2026 3月',
     title: '他問，她說好',
     body: '就在第一次見面的那家店門口，他單膝跪下。她一邊哭一邊點頭，然後說了一句：你怎麼這麼慢。那天整間店的人全都站起來鼓掌。',
-    photoUrl: 'assets/gallery/photo-5.jpg',
-    photoAlt: '黃昏河床上，新娘白紗長裙鋪展、與新郎相望',
+    photoUrl: 'assets/gallery/photo-4.jpg',
+    photoAlt: '海邊夕陽下，新郎打開戒指盒，新娘驚喜而笑',
   },
 ]
 
