@@ -21,8 +21,12 @@ Thumbs.db
 .claude/docs/design/exports/**/*.png
 
 # === 攝影原始檔（每張 7～15MB，網頁只用壓縮後的版本）===
-# 壓縮版進版控：src/assets/gallery/、hero-*.jpg、map-preview.jpg、og-share.jpg、wedding-bgm.mp3
-/src/assets/weddingphotos/
+# 壓縮版進版控：src/assets/gallery/（故事書 5 張）、src/assets/weddingphotos/（婚紗藝廊 15 張）、
+# hero-*.jpg、map-preview.jpg、og-share.jpg、wedding-bgm.mp3
+#
+# weddingphotos/ 曾經整個資料夾被忽略（當時裡面放的是原始檔）。現在它放的是縮到寬 1000 的
+# 藝廊照片，是網站實際載入的檔案 —— 繼續忽略的話，GitHub Pages 上線後整個藝廊會是破圖，
+# 而本機 ng serve 一切正常，不會有任何錯誤提示。別把這行加回來。
 /src/assets/images/dobe-*.jpg
 # （壓縮版 groom.jpg／bride.jpg 進版控，原始檔 dobe-5329／dobe-5557 由上面那行忽略）
 # 分鏡設計稿引用的原始檔副本（wedding-photo-slideshow.pen 用），同樣只留本機
