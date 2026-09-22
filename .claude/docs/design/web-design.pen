@@ -1607,7 +1607,6 @@
           "name": "裝置版-S3 Info",
           "clip": true,
           "width": 390,
-          "height": 900,
           "fill": "$bg-blush",
           "layout": "vertical",
           "padding": [
@@ -1893,7 +1892,7 @@
                               "fill": "$text-main",
                               "textGrowth": "fixed-width",
                               "width": "fill_container",
-                              "content": "台北文華東方酒店",
+                              "content": "臻愛花園飯店",
                               "lineHeight": 1.4,
                               "fontFamily": "$font-body",
                               "fontSize": 15,
@@ -1947,7 +1946,7 @@
                               "fill": "$text-main",
                               "textGrowth": "fixed-width",
                               "width": "fill_container",
-                              "content": "3F　文華廳",
+                              "content": "2F　東方明珠",
                               "lineHeight": 1.4,
                               "fontFamily": "$font-body",
                               "fontSize": 15,
@@ -2001,61 +2000,7 @@
                               "fill": "$text-main",
                               "textGrowth": "fixed-width",
                               "width": "fill_container",
-                              "content": "台北市松山區敦化北路二段 158 號",
-                              "lineHeight": 1.4,
-                              "fontFamily": "$font-body",
-                              "fontSize": 15,
-                              "fontWeight": "500"
-                            }
-                          ]
-                        }
-                      ]
-                    },
-                    {
-                      "type": "frame",
-                      "id": "buaQy",
-                      "name": "資訊列-桌次引導",
-                      "width": "fill_container",
-                      "gap": 12,
-                      "children": [
-                        {
-                          "type": "icon",
-                          "id": "SqBkp",
-                          "name": "icon-users",
-                          "width": 20,
-                          "height": 20,
-                          "icon": "users",
-                          "library": "lucide",
-                          "fill": "$accent-gold"
-                        },
-                        {
-                          "type": "frame",
-                          "id": "Zltcv",
-                          "name": "文字欄-桌次引導",
-                          "width": "fill_container",
-                          "layout": "vertical",
-                          "gap": 3,
-                          "children": [
-                            {
-                              "type": "text",
-                              "id": "BNfHF",
-                              "name": "標籤-桌次引導",
-                              "fill": "$text-muted",
-                              "content": "桌次引導",
-                              "lineHeight": 1.4,
-                              "fontFamily": "$font-body",
-                              "fontSize": 11,
-                              "fontWeight": "600",
-                              "letterSpacing": 2
-                            },
-                            {
-                              "type": "text",
-                              "id": "AIdS7",
-                              "name": "值-桌次引導",
-                              "fill": "$text-main",
-                              "textGrowth": "fixed-width",
-                              "width": "fill_container",
-                              "content": "入口處設有座位表，男方親友請至 A 區、女方親友請至 B 區",
+                              "content": "台中市烏日區高鐵路三段 168 號",
                               "lineHeight": 1.4,
                               "fontFamily": "$font-body",
                               "fontSize": 15,
@@ -5244,7 +5189,7 @@
                                   "id": "iXyiD",
                                   "name": "值",
                                   "fill": "$text-main",
-                                  "content": "台北文華東方酒店",
+                                  "content": "臻愛花園飯店",
                                   "lineHeight": 1.4,
                                   "fontFamily": "$font-body",
                                   "fontSize": 18,
@@ -5296,7 +5241,7 @@
                                   "id": "a9L0Eq",
                                   "name": "值",
                                   "fill": "$text-main",
-                                  "content": "3F　文華廳",
+                                  "content": "2F　東方明珠",
                                   "lineHeight": 1.4,
                                   "fontFamily": "$font-body",
                                   "fontSize": 18,
@@ -5348,61 +5293,7 @@
                                   "id": "OE7pJ",
                                   "name": "值",
                                   "fill": "$text-main",
-                                  "content": "台北市松山區敦化北路二段 158 號",
-                                  "lineHeight": 1.4,
-                                  "fontFamily": "$font-body",
-                                  "fontSize": 18,
-                                  "fontWeight": "500"
-                                }
-                              ]
-                            }
-                          ]
-                        },
-                        {
-                          "type": "frame",
-                          "id": "v6JhE",
-                          "name": "資訊列-桌次引導",
-                          "width": "fill_container",
-                          "gap": 16,
-                          "children": [
-                            {
-                              "type": "icon",
-                              "id": "wko9N",
-                              "name": "icon-users",
-                              "width": 24,
-                              "height": 24,
-                              "icon": "users",
-                              "library": "lucide",
-                              "fill": "$accent-gold"
-                            },
-                            {
-                              "type": "frame",
-                              "id": "k2nu3X",
-                              "name": "文字欄",
-                              "width": 420,
-                              "layout": "vertical",
-                              "gap": 4,
-                              "children": [
-                                {
-                                  "type": "text",
-                                  "id": "aisWh",
-                                  "name": "標籤",
-                                  "fill": "$text-muted",
-                                  "content": "桌次引導",
-                                  "lineHeight": 1.4,
-                                  "fontFamily": "$font-body",
-                                  "fontSize": 13,
-                                  "fontWeight": "600",
-                                  "letterSpacing": 2
-                                },
-                                {
-                                  "type": "text",
-                                  "id": "vXcAB",
-                                  "name": "值",
-                                  "fill": "$text-main",
-                                  "textGrowth": "fixed-width",
-                                  "width": "fill_container",
-                                  "content": "入口處設有座位表，男方親友請至 A 區、女方親友請至 B 區",
+                                  "content": "台中市烏日區高鐵路三段 168 號",
                                   "lineHeight": 1.4,
                                   "fontFamily": "$font-body",
                                   "fontSize": 18,
