@@ -33,6 +33,11 @@ import { MusicPlayerStore } from './music-player.store'
       而「靜音的 <video>」是允許的。用 video 載同一個 mp3，才能在賓客還沒點畫面前
       就讓音軌靜音跑起來，之後首次手勢只要解除靜音即可。
       playsinline 是 iOS 必要的（否則會嘗試全螢幕播放）。
+
+      ⛔ **不要把 src 寫回模板裡。** 有 autoplay 屬性的媒體元素一旦帶著 src 進 DOM，
+      瀏覽器就會立刻開始下載，完全不理會下方「等 window load 再開始」那段 JS。
+      實測（手機 4G）：音檔在開頁第 217ms 就開搶頻寬，2.7MB 拉滿 4 秒，
+      把首屏底圖從應有的 0.2 秒拖成 1.25 秒。src 改由 startSilently() 設定。
     -->
     <video
       #audioEl
@@ -41,12 +46,10 @@ import { MusicPlayerStore } from './music-player.store'
       muted
       autoplay
       playsinline
-      preload="metadata"
+      preload="none"
       aria-hidden="true"
       tabindex="-1"
-    >
-      <source src="assets/audio/wedding-bgm.mp3" type="audio/mpeg">
-    </video>
+    ></video>
   `,
   styles: `
     :host {
@@ -121,16 +124,22 @@ export class MusicPlayerComponent {
       // 讓瀏覽器自己啟動 —— 由 JS 呼叫 play() 在無使用者手勢時仍會被拒（本輪實測）。
       // 這裡的 play() 只是補一手：屬性沒生效時再試一次，失敗就算了。
       //
-      // ⛔ 不要先等 canplay：preload="metadata" 只載到 readyState 1，
+      // ⛔ 不要先等 canplay：設 src 前元素根本沒有資源可載（preload="none"），
       // 而 canplay 要 readyState 3 才發出，等它就是等一個永遠不會來的事件。
       const startSilently = (): void => {
+        // 設 src 是「開始下載」的扳機 —— 模板裡刻意不寫 src，就是為了把這一刻
+        // 推遲到首屏圖都下載完之後（見模板內的 ⛔ 註解）。
+        // 相對路徑會依 <base href> 解析，與寫在模板裡的行為一致。
+        audio.src = 'assets/audio/wedding-bgm.mp3'
+
         audio.play().catch(() => {
           // 靜音播放都被拒（少數瀏覽器設定），那就完全等賓客輕觸開場層
         })
       }
 
-      // 延到首屏載入完成才開始抓音檔 —— 2MB 的音檔與 Hero 底圖搶頻寬的話，
+      // 延到首屏載入完成才開始抓音檔 —— 2.7MB 的音檔與 Hero 底圖搶頻寬的話，
       // 換來的是第一眼看到的畫面變慢，那個代價比音樂晚幾秒開始大得多。
+      // 開場層還沒被輕觸前音樂本來就是靜音的，晚幾秒開始賓客感覺不到。
       if (document.readyState === 'complete') startSilently()
       else window.addEventListener('load', startSilently, { once: true })
     })

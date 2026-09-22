@@ -23,6 +23,11 @@
     不用 @if 依斷點 signal 動態拆換節點：實測發現 @if 切換會讓 IntersectionObserver
     在舊節點上觸發過的 is-visible 進場動畫，來不及套用到斷點切換後新建立的節點上，
     導致桌機版照片永遠停在 clip-path 揭幕前的隱藏狀態。
+
+    相簿照片一律 loading="lazy" ＋ fetchpriority="low"。光有 lazy 不夠 ——
+    瀏覽器會預先抓 viewport 附近的 lazy 圖，於是第一張（近 400KB）會跟 Hero 底圖
+    擠在同一批請求裡搶頻寬（實測手機 4G 讓首屏底圖多等了約 0.4 秒）。
+    降優先權讓它排到首屏資源之後，賓客捲到這裡時早就載好了。
   -->
   <div class="gallery__track anim-reveal-mask" #track (scroll)="onTrackScroll()">
     @for (photo of store.photos; track photo.id; let i = $index) {
@@ -32,7 +37,7 @@
         [class.gallery__card--active]="i === store.activeIndex()"
         (click)="store.openLightbox(i)"
       >
-        <img [src]="photo.url" [alt]="photo.alt" loading="lazy" />
+        <img [src]="photo.url" [alt]="photo.alt" loading="lazy" fetchpriority="low" />
       </button>
     }
   </div>
@@ -60,7 +65,7 @@
           [attr.tabindex]="item.isDuplicate ? -1 : null"
           (click)="store.openLightbox(item.originalIndex)"
         >
-          <img [src]="item.photo.url" [alt]="item.photo.alt" loading="lazy" />
+          <img [src]="item.photo.url" [alt]="item.photo.alt" loading="lazy" fetchpriority="low" />
         </button>
       }
     </div>
@@ -70,7 +75,7 @@
   <div class="gallery__grid">
     @for (photo of store.photos; track photo.id; let i = $index) {
       <button type="button" class="gallery__grid-card anim-reveal-mask" [style.transition-delay.ms]="i * 140" (click)="store.openLightbox(i)">
-        <img [src]="photo.url" [alt]="photo.alt" loading="lazy" />
+        <img [src]="photo.url" [alt]="photo.alt" loading="lazy" fetchpriority="low" />
       </button>
     }
   </div>
