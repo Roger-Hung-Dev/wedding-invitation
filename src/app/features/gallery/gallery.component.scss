@@ -67,6 +67,10 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+    // 婚紗照是 2:3 的全身構圖、卡片是 3:4，置中裁切會讓上半部全是屋頂與天空、人物擠在底緣。
+    // 取景點往下移到 65% 讓人物落在卡片中央；代價是場景上緣裁掉更多，這是刻意的取捨。
+    // 換一批構圖不同的照片時要重新檢查這個值。
+    object-position: 50% 65%;
     display: block;
   }
 }
@@ -150,6 +154,8 @@ $gallery-marquee-gap: 20px;
     width: 100%;
     height: 100%;
     object-fit: cover;
+    // 取景點同手機輪播卡，理由見 .gallery__card 的說明。
+    object-position: 50% 65%;
     display: block;
   }
 }
@@ -185,6 +191,8 @@ $gallery-marquee-gap: 20px;
     width: 100%;
     height: 100%;
     object-fit: cover;
+    // 取景點同手機輪播卡，理由見 .gallery__card 的說明。
+    object-position: 50% 65%;
     display: block;
   }
 }
