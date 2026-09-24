@@ -161,7 +161,7 @@ import { IntroGateStore } from './intro-gate.store'
     }
 
     .gate__name-en {
-      font-family: var(--font-script);
+      font-family: var(--font-script-cover);
       font-size: 57px;
       line-height: 1.2;
       color: var(--color-text-invert);
