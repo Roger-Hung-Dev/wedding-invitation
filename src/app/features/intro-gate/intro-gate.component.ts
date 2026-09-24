@@ -123,7 +123,11 @@ import { IntroGateStore } from './intro-gate.store'
       align-items: center;
       padding: 0 24px;
       text-align: center;
-      transform: translateY(-137px);
+      /*
+        上移的幅度由封面照決定：字組要整個落在新人頭頂以上的天空帶，
+        「輕觸開啟」壓在臉上會讓第一眼變成一張被蓋住的照片。換封面照時要重看這個值。
+      */
+      transform: translateY(-200px);
     }
 
     /*
@@ -145,6 +149,8 @@ import { IntroGateStore } from './intro-gate.store'
     .gate__title svg {
       display: block;
       overflow: visible;
+      width: 244px;
+      height: 51px;
     }
 
     .gate__title text {
@@ -156,7 +162,7 @@ import { IntroGateStore } from './intro-gate.store'
 
     .gate__name-en {
       font-family: var(--font-script);
-      font-size: 52px;
+      font-size: 57px;
       line-height: 1.2;
       color: var(--color-text-invert);
       animation: gate-rise 900ms var(--ease-elegant) 200ms both;
@@ -164,7 +170,7 @@ import { IntroGateStore } from './intro-gate.store'
 
     .gate__name-zh {
       margin-top: 10px;
-      font-size: 17px;
+      font-size: 19px;
       font-weight: 400;
       letter-spacing: 6px;
       line-height: 1.4;
@@ -199,9 +205,9 @@ import { IntroGateStore } from './intro-gate.store'
     */
     .gate__action {
       margin-top: 36px;
-      font-size: 13px;
+      font-size: 16.5px;
       font-weight: 500;
-      letter-spacing: 5px;
+      letter-spacing: 6px;
       color: var(--color-gold-soft);
       /* 底圖亮處（天空、白紗）會吃掉金色字，加一層暗影確保任何一張封面都讀得到 */
       text-shadow: 0 1px 6px #00000099;
@@ -251,23 +257,23 @@ import { IntroGateStore } from './intro-gate.store'
       }
 
       .gate__title svg {
-        width: 254px;
-        height: 53px;
+        width: 274px;
+        height: 57px;
       }
 
       .gate__name-en {
-        font-size: 88px;
+        font-size: 94px;
       }
 
       .gate__name-zh {
         margin-top: 14px;
-        font-size: 24px;
+        font-size: 26px;
         letter-spacing: 8px;
       }
 
       .gate__action {
         margin-top: 52px;
-        font-size: 15px;
+        font-size: 18px;
       }
     }
 
