@@ -163,6 +163,12 @@ import { IntroGateStore } from './intro-gate.store'
     .gate__name-en {
       font-family: var(--font-script-cover);
       font-size: 57px;
+      /*
+        Great Vibes 的空格字寬很窄，Roger & Amy 直接排出來三個字會黏成一團。
+        撐開的是空格不是字距 —— 用 letter-spacing 會連帶把每個字母都拉開，
+        連筆花體一拉開就散了。
+      */
+      word-spacing: 0.3em;
       line-height: 1.2;
       color: var(--color-text-invert);
       animation: gate-rise 900ms var(--ease-elegant) 200ms both;

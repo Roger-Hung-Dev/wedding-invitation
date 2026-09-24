@@ -82,6 +82,8 @@
   margin: 20px 0 0;
   font-family: var(--font-script-cover);
   font-size: 56px;
+  // 理由同開場層的 .gate__name-en：撐開空格而不是字距，兩邊要一起調才不會進場前後跳動
+  word-spacing: 0.3em;
   font-weight: 400;
   line-height: 1.2;
   color: var(--color-text-invert);
