@@ -153,6 +153,49 @@ export const GALLERY_PHOTOS: readonly GalleryPhoto[] = [
   },
 ]
 
+export interface ParentPair {
+  /** 欄位標籤，例如「男方家長」。 */
+  readonly label: string
+  /** 父、母的順序即畫面上下順序。 */
+  readonly names: readonly string[]
+}
+
+/**
+ * 雙方父母。只有正式邀請函區（S1.5）具名，其餘段落不出現——
+ * 那一區是整份喜帖唯一「由雙方家長具名邀請」的位置，等同紙本帖的帖面。
+ *
+ * 「艷」與「眞」用的是新人提供的字形（U+8276、U+771E），不是「艶」與「真」。
+ * 編輯器或轉檔工具有時會自動代換成常用字，改到這兩個名字時要回頭確認。
+ */
+export const WEDDING_PARENTS: { readonly groom: ParentPair; readonly bride: ParentPair } = {
+  groom: { label: '男方家長', names: ['洪進源', '柯麗香'] },
+  bride: { label: '女方家長', names: ['李宗敏', '許艷眞'] },
+}
+
+/**
+ * S1.5 正式邀請函區的文案。這一區是水彩帖面：橢圓照片、中文姓名當主標、
+ * 英文退為副標，底下條列雙方家長與宴席。
+ *
+ * 內容與 S3 宴客資訊區有意重疊——S1.5 是「帖」，賓客一眼看完就知道是誰邀、哪天、在哪；
+ * S3 是「怎麼去」，帶地圖與導航。兩區的地址字串同源，改一邊要想到另一邊。
+ */
+export const INVITATION_TEXT = {
+  eyebrow: 'WE ARE GETTING MARRIED',
+  /** 中文姓名之下的英文副標，全大寫並拉開字距，不用花體。 */
+  nameEn: 'ROGER & AMY',
+  photoAlt: '海邊夕陽下，新郎從身後環抱新娘，手中捧著粉色花束',
+  rowLabels: {
+    venue: '地　點',
+    hall: '宴會廳',
+    address: '地　址',
+  },
+  /** 帖面最後的收尾句，手機兩行、桌機同一行（純 CSS 控制，不分兩種版本）。 */
+  quoteLines: ['願我們的故事，', '從今天起有了共同的名字。'] as readonly string[],
+} as const
+
+/** S1.5 正式邀請函區的橢圓照片。與藝廊那張同源，但裁切與尺寸為這一區另外轉過。 */
+export const INVITATION_PHOTO_URL = 'assets/images/invitation-portrait.jpg'
+
 /** Hero 滿版底圖。是 LCP 元素，於 index.html 另外 preload（換圖時兩處要一起改）。 */
 export const HERO_IMAGE_URL = 'assets/images/hero-mobile.jpg'
 

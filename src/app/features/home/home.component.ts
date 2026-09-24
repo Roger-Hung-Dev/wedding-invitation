@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, effect, inject, input } from '@angu
 import { DietType } from '../../core/config/wedding-content'
 import { DietStore } from '../../core/diet.store'
 import { HeroComponent } from '../hero/hero.component'
+import { InvitationComponent } from '../invitation/invitation.component'
 import { AboutComponent } from '../about/about.component'
 import { StoryComponent } from '../story/story.component'
 import { GalleryComponent } from '../gallery/gallery.component'
@@ -21,6 +22,7 @@ import { FooterComponent } from '../footer/footer.component'
   selector: 'app-home',
   imports: [
     HeroComponent,
+    InvitationComponent,
     AboutComponent,
     StoryComponent,
     GalleryComponent,
@@ -32,6 +34,7 @@ import { FooterComponent } from '../footer/footer.component'
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <app-hero />
+    <app-invitation />
     <app-about />
     <app-story />
     <app-gallery />
