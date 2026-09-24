@@ -69,15 +69,6 @@
   text-align: center;
 }
 
-.hero__eyebrow {
-  margin: 0;
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 4px;
-  color: var(--color-text-invert-muted);
-  transition-delay: 500ms;
-}
-
 .hero__name-en {
   margin: 20px 0 0;
   font-family: var(--font-script-cover);
@@ -153,10 +144,25 @@
   141 = 40（原值）+ 85（吃掉上面那組的上移，讓倒數格停回原位）+ 16（再往下讓一點）。
   往下的餘裕到 30 左右就到頂了：Hero 實高 640，SCROLL 提示在 559–596，再往下會擠到它。
 */
+/*
+  這個間距是算出來的，不是排版留白。
+
+  封面照是 cover 且手機比照片更瘦長，垂直方向永遠完整顯示，所以人物的臉固定
+  落在畫面四成一到五成之間，與螢幕多高無關；而文字組是從頂端固定 px 往下排的，
+  位置不隨螢幕變。兩者一個按比例、一個按像素，螢幕一拉高就會交疊 ——
+  iPhone 12 上倒數剛好擦過下巴，到 14 Pro Max 就蓋住整張臉。
+
+  所以間距取「畫面的五成三」減掉「文字組結束的位置」，讓四格的上緣永遠落在
+  五成三處，也就是臉以下、裙擺那一帶（壓在新人身上是設計的一部分，壓到臉不是）。
+
+  262px 是場地名那一行的下緣，等於 content 的 padding-top 加上文字組的高度。
+  動到 Hero 任何一行文字的字級、間距或存在與否，這個數字就要重量一次；
+  換封面照（人物高度變了）則要重看 53% 這個比例。
+*/
 .hero__countdown {
   display: flex;
   gap: 12px;
-  margin-top: 141px;
+  margin-top: calc(53svh - 262px);
 }
 
 .hero__countdown-cell {
@@ -186,7 +192,8 @@
 }
 
 .hero__over-message {
-  margin-top: 40px;
+  // 婚期過後取代倒數，落點與倒數一致，理由見上
+  margin-top: calc(53svh - 262px);
   font-family: var(--font-script-cover);
   font-size: 24px;
   color: var(--color-text-invert);
@@ -245,11 +252,6 @@
     position: absolute;
     top: 250px;
     left: 0;
-  }
-
-  .hero__eyebrow {
-    font-size: 13px;
-    letter-spacing: 4px;
   }
 
   .hero__name-en {

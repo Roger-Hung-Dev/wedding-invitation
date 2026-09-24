@@ -307,8 +307,6 @@ export const INTRO_GATE_TEXT = {
 } as const
 
 export const HERO_TEXT = {
-  /** 姓名上方的小字眉標，全大寫、字距展開。 */
-  eyebrow: 'WE ARE GETTING MARRIED',
   /** 倒數計時四格下方各自的英文標籤，順序固定為天／時／分／秒。 */
   countdownLabels: {
     days: 'DAYS',
