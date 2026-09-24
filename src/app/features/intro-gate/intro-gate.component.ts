@@ -124,10 +124,21 @@ import { IntroGateStore } from './intro-gate.store'
       padding: 0 24px;
       text-align: center;
       /*
-        上移的幅度由封面照決定：字組要整個落在新人頭頂以上的天空帶，
-        「輕觸開啟」壓在臉上會讓第一眼變成一張被蓋住的照片。換封面照時要重看這個值。
+        用底緣對齊百分比，不用固定 px 上移。
+
+        封面照是 cover 且手機比照片更瘦長，所以垂直方向永遠完整顯示 ——
+        人物頭頂固定落在畫面約四成二高的地方，與螢幕多高無關。
+        固定 px 的上移補不回置中基準（螢幕高的一半）隨螢幕拉高而下移的量，
+        結果是螢幕越大、文字越靠近人物：iPhone 12 上剛好擦過頭頂，
+        到 14 Pro Max 就蓋住了。
+
+        底緣訂在四成處，讓文字與頭頂之間在任何高度都留得住空隙。
+        換封面照（人物高度變了）時要重看這個值。
       */
-      transform: translateY(-200px);
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 60%;
     }
 
     /*
@@ -266,6 +277,8 @@ import { IntroGateStore } from './intro-gate.store'
         所以補償是 -120 − (53+8)/2 ≈ -150。
       */
       .gate__content {
+        // 桌機用的是另一張封面照，人物位置不同，維持原本的置中位移
+        position: static;
         transform: translateY(-150px);
       }
 
@@ -287,6 +300,34 @@ import { IntroGateStore } from './intro-gate.store'
       .gate__action {
         margin-top: 52px;
         font-size: 18px;
+      }
+    }
+
+    /*
+      矮螢幕（iPhone SE 這一類 667 高的機型）：字組底緣固定在四成處，
+      但字組本身的高度是固定 px，螢幕一矮，頂端就會頂到畫面邊緣。
+      整組字一起縮一級把高度收回來，底緣與人物頭頂的關係不變。
+    */
+    @media (max-height: 720px) {
+      .gate__title svg {
+        width: 214px;
+        height: 45px;
+      }
+
+      .gate__name-en {
+        font-size: 48px;
+      }
+
+      .gate__name-zh {
+        font-size: 17px;
+      }
+
+      .gate__divider {
+        margin-top: 20px;
+      }
+
+      .gate__action {
+        margin-top: 26px;
       }
     }
 
