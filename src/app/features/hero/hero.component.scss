@@ -121,7 +121,7 @@
 }
 
 .hero__date {
-  margin: 16px 0 0;
+  margin: 10px 0 0;
   font-size: 16px;
   font-weight: 500;
   letter-spacing: 3px;
@@ -135,7 +135,13 @@
   兩行同樣大小會讓這一區變成兩個並列的重點，反而都不突出。
 */
 .hero__venue {
-  margin: 12px 0 0;
+  /*
+    這一行要停在新人頭頂以上。封面照的人物大約落在畫面四成高的位置，
+    矮一點的手機（375 x 667 這一類）文字組會整個往下壓，原本的間距會讓地點名
+    正好蓋在新郎頭上。日期與地點各收一點上緣間距，把這兩行一起往上帶。
+    換封面照或改這兩行的字級時，要回到 375 x 667 再看一次。
+  */
+  margin: 2px 0 0;
   font-size: 14px;
   font-weight: 400;
   letter-spacing: 3px;
