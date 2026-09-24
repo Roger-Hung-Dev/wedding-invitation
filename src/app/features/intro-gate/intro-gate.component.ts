@@ -143,6 +143,13 @@ import { IntroGateStore } from './intro-gate.store'
       display: block;
       line-height: 0;
       margin-bottom: 8px;
+      /*
+        單獨把弧形標題往下推，用 relative 位移而不是 margin ——
+        margin 會把底下的姓名、分隔線與提示一起擠下去，那三者的位置是對著封面照
+        （人物頭頂以上的天空帶）調過的，不能跟著動。
+      */
+      position: relative;
+      top: 16px;
       animation: gate-rise 900ms var(--ease-elegant) 80ms both;
     }
 
