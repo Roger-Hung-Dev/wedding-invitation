@@ -15,9 +15,9 @@ export const WEDDING_CONTENT = {
   brideGroomZh: '洪承孝　✕　李怡安',
   /** 婚期（ISO 日期，不含時間）。 */
   weddingDate: '2026-12-12',
-  weddingDateDisplay: '2026 . 12 . 12　SATURDAY',
+  weddingDateDisplay: '2026 . 12 . 12　星期六',
   /**
-   * 不含星期的純日期顯示，S3 宴客資訊區燙金框裡的日期大字專用（S1 Hero 才帶 SATURDAY）。
+   * 不含星期的純日期顯示，S3 宴客資訊區燙金框裡的日期大字專用（S1 Hero 才帶星期）。
    * 不像 Hero 那樣在點號兩側留空白：框內扣掉雙線與內距後，手機只剩約 260px，帶空白的寫法會貼到框線。
    */
   weddingDateOnlyDisplay: '2026.12.12',
