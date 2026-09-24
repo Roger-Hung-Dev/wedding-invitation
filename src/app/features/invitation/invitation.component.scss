@@ -1,41 +1,40 @@
-// 水彩帖面自帶一組配色，不走全站 token：
-// 全站的粉是桃紅（--color-primary），這一區要的是藕粉與杏桃那種暈開的柔調，
-// 兩者疊在一起會把水彩的清透壓掉。變數限在 :host 內，不外流。
+// 這一區的數值全部來自比稿定案的水彩帖（C 版），不是從全站樣式推導出來的。
+// 帖面固定 390px 寬，桌機也不放大 —— 它是「一張帖」，不是一個響應式區塊，
+// 放大之後暈染的位置、橢圓與字級的比例都會跑掉。
 :host {
-  --inv-paper: #fffcfa;
-  --inv-ink: #4a3742;
-  --inv-ink-strong: #5c4450;
-  --inv-label: #b08196;
-  --inv-line: rgba(217, 188, 198, 0.7);
-  --inv-rose: #f3c3ce;
-  --inv-lilac: #d8c9ec;
-  --inv-apricot: #f7ddc0;
-
   display: block;
 }
 
 .invitation {
-  position: relative;
-  overflow: hidden;
-  background: var(--inv-paper);
-  color: var(--inv-ink);
-  padding: 58px 24px 62px;
+  background: #fffcfa;
+  // 帖面內用 Cormorant Garamond，不是全站 body 的 Cormorant Infant。
+  // 兩者同家族但字母造型不同，日期那行數字尤其看得出來。
+  font-family: 'Cormorant Garamond', serif;
+  color: #4a3742;
 }
 
-// 三團暈染。用 blur 的圓而不是背景圖：換色只要改一個變數，
-// 也不必為了一張底圖多送一次請求。
+// 帖面本體。暈染與 overflow 都掛在這一層，位置才會跟著帖面走而不是跟著螢幕寬度走。
+.invitation__sheet {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  max-width: 390px;
+  margin: 0 auto;
+  padding: 0 0 34px;
+}
+
 .invitation__wash {
   position: absolute;
   border-radius: 50%;
   filter: blur(38px);
+  opacity: 0.55;
   pointer-events: none;
 }
 
 .invitation__wash--rose {
   width: 300px;
   height: 280px;
-  background: var(--inv-rose);
-  opacity: 0.55;
+  background: #f3c3ce;
   left: -90px;
   top: -70px;
 }
@@ -43,56 +42,56 @@
 .invitation__wash--lilac {
   width: 260px;
   height: 240px;
-  background: var(--inv-lilac);
+  background: #d8c9ec;
   opacity: 0.45;
   right: -80px;
-  top: 90px;
+  top: 70px;
 }
 
 .invitation__wash--apricot {
   width: 320px;
   height: 260px;
-  background: var(--inv-apricot);
+  background: #f7ddc0;
   opacity: 0.5;
   left: -40px;
-  bottom: -60px;
+  top: 330px;
 }
 
 .invitation__inner {
   position: relative;
-  max-width: 390px;
-  margin: 0 auto;
+  padding: 54px 30px 0;
   text-align: center;
 }
 
 .invitation__eyebrow {
   margin: 0 0 22px;
+  font-family: 'Noto Serif TC', serif;
   font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 5px;
-  color: var(--inv-label);
+  letter-spacing: 0.46em;
+  color: #b08196;
 }
 
-// 中文姓名是這一區的主標，英文退為副標——帖面的主角是中文全名，
-// 花體英文留在封面那一屏，同一份喜帖裡不重複同一個角色。
+// 中文姓名是帖面的主標，英文退為副標 —— 花體英文留在封面那一屏，
+// 同一份喜帖裡不讓同一個角色出現兩次。
 .invitation__name-zh {
   margin: 0;
+  font-family: 'Noto Serif TC', serif;
   font-size: 31px;
   font-weight: 500;
-  letter-spacing: 3px;
+  letter-spacing: 0.18em;
   line-height: 1.3;
-  color: var(--inv-ink-strong);
+  color: #5c4450;
 }
 
 .invitation__name-en {
   margin: 14px 0 0;
   font-size: 16px;
   font-weight: 400;
-  letter-spacing: 6px;
+  letter-spacing: 0.34em;
   color: #a88c97;
 }
 
-// 正圓角的橢圓。曾經用過上窄下寬的蛋形，配上直幅照片會讀成倒立的雞蛋。
+// 正圓角橢圓。曾經用過上窄下寬的蛋形，配直幅照片會讀成倒立的雞蛋。
 .invitation__portrait {
   width: 200px;
   height: 248px;
@@ -126,28 +125,31 @@
 }
 
 .invitation__date-text {
-  font-size: 32px;
-  letter-spacing: 2px;
-  color: var(--inv-ink-strong);
+  font-size: 35px;
+  letter-spacing: 0.1em;
+  color: #5c4450;
 }
 
 .invitation__date-sub {
   margin: 10px 0 0;
+  font-family: 'Noto Serif TC', serif;
   font-size: 12px;
-  letter-spacing: 3px;
-  color: var(--inv-label);
+  letter-spacing: 0.3em;
+  color: #b08196;
 }
 
 .invitation__card {
-  margin: 28px 0 0;
-  display: grid;
-  gap: 13px;
+  margin: 28px 24px 0;
   padding: 22px 20px;
+  position: relative;
   text-align: left;
   background: rgba(255, 255, 255, 0.72);
-  border: 1px solid var(--inv-line);
+  border: 1px solid rgba(217, 188, 198, 0.7);
   border-radius: 8px;
   backdrop-filter: blur(3px);
+  display: grid;
+  gap: 13px;
+  font-family: 'Noto Serif TC', serif;
 }
 
 // 標籤欄 58px 是量出來的：放得下「男方家長」四個字不斷行，
@@ -160,57 +162,29 @@
 
   dt {
     font-size: 11.5px;
-    letter-spacing: 2px;
-    color: var(--inv-label);
+    letter-spacing: 0.2em;
+    color: #b08196;
   }
 
   dd {
     margin: 0;
     font-size: 15.5px;
     line-height: 1.75;
-    letter-spacing: 0.5px;
-    color: var(--inv-ink);
+    letter-spacing: 0.04em;
+    color: #4a3742;
   }
 }
 
 .invitation__quote {
-  margin: 26px 0 0;
+  position: relative;
+  margin: 24px 34px 0;
+  font-style: italic;
+  font-size: 18px;
+  line-height: 1.85;
+  color: #8a7080;
+  text-align: center;
 
   p {
     margin: 0;
-    font-style: italic;
-    font-size: 18px;
-    line-height: 1.85;
-    color: #8a7080;
-  }
-}
-
-@media (min-width: 1024px) {
-  .invitation {
-    padding: 82px 24px 88px;
-  }
-
-  .invitation__inner {
-    max-width: 440px;
-  }
-
-  .invitation__name-zh {
-    font-size: 36px;
-  }
-
-  .invitation__portrait {
-    width: 232px;
-    height: 288px;
-  }
-
-  .invitation__date-text {
-    font-size: 36px;
-  }
-
-  // 桌機兩行併成一行：這句是收尾的氣口，寬度夠時斷成兩行反而拖慢節奏
-  .invitation__quote {
-    display: flex;
-    justify-content: center;
-    gap: 0;
   }
 }

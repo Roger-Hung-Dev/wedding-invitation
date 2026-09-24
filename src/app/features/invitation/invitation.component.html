@@ -4,27 +4,27 @@
   [staggerSelector]="'.anim-fade-up, .anim-fade-in'"
   [staggerMs]="100"
 >
-  <span class="invitation__wash invitation__wash--rose" aria-hidden="true"></span>
-  <span class="invitation__wash invitation__wash--lilac" aria-hidden="true"></span>
-  <span class="invitation__wash invitation__wash--apricot" aria-hidden="true"></span>
+  <div class="invitation__sheet">
+    <span class="invitation__wash invitation__wash--rose" aria-hidden="true"></span>
+    <span class="invitation__wash invitation__wash--lilac" aria-hidden="true"></span>
+    <span class="invitation__wash invitation__wash--apricot" aria-hidden="true"></span>
 
-  <div class="invitation__inner">
-    <p class="invitation__eyebrow anim-fade-up">{{ text.eyebrow }}</p>
-    <h2 class="invitation__name-zh anim-fade-up">{{ content.brideGroomZh }}</h2>
-    <p class="invitation__name-en anim-fade-up">{{ text.nameEn }}</p>
+    <div class="invitation__inner">
+      <p class="invitation__eyebrow anim-fade-up">{{ text.eyebrow }}</p>
+      <h2 class="invitation__name-zh anim-fade-up">{{ text.nameZh }}</h2>
+      <p class="invitation__name-en anim-fade-up">{{ text.nameEn }}</p>
 
-    <div class="invitation__portrait anim-fade-in">
-      <img [src]="photoUrl" [alt]="text.photoAlt" loading="lazy" fetchpriority="low" />
+      <div class="invitation__portrait anim-fade-in">
+        <img [src]="photoUrl" [alt]="text.photoAlt" loading="lazy" fetchpriority="low" />
+      </div>
+
+      <div class="invitation__date anim-fade-up">
+        <span class="invitation__date-line" aria-hidden="true"></span>
+        <span class="invitation__date-text">{{ text.dateDisplay }}</span>
+        <span class="invitation__date-line" aria-hidden="true"></span>
+      </div>
+      <p class="invitation__date-sub anim-fade-up">{{ dateSubDisplay }}</p>
     </div>
-
-    <div class="invitation__date anim-fade-up">
-      <span class="invitation__date-line" aria-hidden="true"></span>
-      <span class="invitation__date-text">{{ content.weddingDateOnlyDisplay }}</span>
-      <span class="invitation__date-line" aria-hidden="true"></span>
-    </div>
-    <p class="invitation__date-sub anim-fade-up">
-      {{ content.dateSubDisplay }}　·　{{ sessionTimeDisplay }}
-    </p>
 
     <dl class="invitation__card anim-fade-up">
       <div class="invitation__row">

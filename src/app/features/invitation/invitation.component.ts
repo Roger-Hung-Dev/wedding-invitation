@@ -31,8 +31,12 @@ export class InvitationComponent {
   protected readonly address = WEDDING_LINKS.venueAddress
 
   /**
-   * 帖面上的時間字串。本場只有晚宴一場，取第一筆即可；
-   * 日後加辦午宴時這裡要改成逐場列出，否則帖面只會顯示其中一場。
+   * 日期下方那一行，例如「星期六 · 晚宴 18:00 入席」。
+   * 字距靠 CSS 的 letter-spacing 拉開，不在字串裡塞空白 —— 那會讓資料變成排版的一部分。
+   *
+   * 本場只有晚宴一場，取第一筆即可；日後加辦午宴時這裡要改成逐場列出，
+   * 否則帖面只會顯示其中一場。
    */
-  protected readonly sessionTimeDisplay = WEDDING_SESSIONS[0].timeDisplay
+  protected readonly dateSubDisplay =
+    `${WEDDING_CONTENT.dateSubDisplay} · ${WEDDING_SESSIONS[0].label} ${WEDDING_SESSIONS[0].timeDisplay}`
 }

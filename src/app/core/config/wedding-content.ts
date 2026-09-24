@@ -181,8 +181,18 @@ export const WEDDING_PARENTS: { readonly groom: ParentPair; readonly bride: Pare
  */
 export const INVITATION_TEXT = {
   eyebrow: 'WE ARE GETTING MARRIED',
+  /**
+   * 帖面的中文姓名。與 WEDDING_CONTENT.brideGroomZh 不同：那個帶「✕」符號給封面用，
+   * 帖面只要兩個名字，中間以全形空白分隔。
+   */
+  nameZh: '洪承孝　李怡安',
   /** 中文姓名之下的英文副標，全大寫並拉開字距，不用花體。 */
   nameEn: 'ROGER & AMY',
+  /**
+   * 帖面的日期寫法是日.月.年，與全站其他地方的年.月.日不同。
+   * 這是帖面設計定稿時選的西式寫法，不要為了「跟其他區一致」改回去。
+   */
+  dateDisplay: '12 . 12 . 2026',
   photoAlt: '海邊夕陽下，新郎從身後環抱新娘，手中捧著粉色花束',
   rowLabels: {
     venue: '地　點',
