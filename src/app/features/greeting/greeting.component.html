@@ -4,7 +4,24 @@
   [staggerSelector]="'.anim-fade-up, .anim-fade-in'"
   [staggerMs]="160"
 >
-  <img class="greeting__photo anim-fade-in" [src]="text.photoUrl" [alt]="text.photoAlt" loading="lazy" decoding="async" />
+  <img
+    class="greeting__photo greeting__photo--mobile anim-fade-in"
+    [src]="text.photoMobileUrl"
+    [alt]="text.photoMobileAlt"
+    width="1000"
+    height="1500"
+    loading="lazy"
+    decoding="async"
+  />
+  <img
+    class="greeting__photo greeting__photo--desktop anim-fade-in"
+    [src]="text.photoDesktopUrl"
+    [alt]="text.photoDesktopAlt"
+    width="2400"
+    height="1600"
+    loading="lazy"
+    decoding="async"
+  />
   <p class="greeting__line anim-fade-up">{{ text.line }}</p>
   <p class="greeting__date anim-fade-up">{{ dateDisplay }}</p>
 </section>

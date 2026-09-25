@@ -228,11 +228,14 @@ export const INVITATION_PHOTO_URL = 'assets/images/invitation-portrait.jpg'
 export const GREETING_TEXT = {
   line: '好久不見，我們婚禮見',
   /**
-   * 原始檔 dobe-5569.jpg（7MB，不進版控）縮到寬 1000 的網頁版。
+   * 手機與桌機用不同的照片：手機是直幅（2:3），桌機是橫幅（3:2），各自完整顯示、不裁切。
+   * 兩張都是原始檔縮小後的網頁版（手機寬 1000、桌機寬 2400；桌機是滿版，大螢幕也要夠清楚），原始檔在 D:\婚禮籌備\婚紗照 不進專案；
    * 換圖時照同樣方式另存，不要直接引用原始檔。
    */
-  photoUrl: 'assets/images/greeting.jpg',
-  photoAlt: '海邊夕色中，新郎把新娘扛在肩上，新娘高舉捧花',
+  photoMobileUrl: 'assets/images/greeting-mobile.jpg',
+  photoMobileAlt: '日式老屋前的石板路上，穿黑色禮服的新娘與新郎牽手漫步',
+  photoDesktopUrl: 'assets/images/greeting-desktop.jpg',
+  photoDesktopAlt: '大樹下的草坡上，新郎抱起穿粉色紗裙的新娘',
 } as const
 
 /** Hero 滿版底圖。是 LCP 元素，於 index.html 另外 preload（換圖時兩處要一起改）。 */
