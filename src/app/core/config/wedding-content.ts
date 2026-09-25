@@ -164,12 +164,12 @@ export interface ParentPair {
  * 雙方父母。只有正式邀請函區（S1.5）具名，其餘段落不出現——
  * 那一區是整份喜帖唯一「由雙方家長具名邀請」的位置，等同紙本帖的帖面。
  *
- * 「艷」與「眞」用的是新人提供的字形（U+8276、U+771E），不是「艶」與「真」。
+ * 「艶」與「眞」用的是新人指定的字形（U+8276、U+771E），不是常見的「艷」（U+8277）與「真」（U+771F）。
  * 編輯器或轉檔工具有時會自動代換成常用字，改到這兩個名字時要回頭確認。
  */
 export const WEDDING_PARENTS: { readonly groom: ParentPair; readonly bride: ParentPair } = {
   groom: { label: '男方家長', names: ['洪進源', '柯麗香'] },
-  bride: { label: '女方家長', names: ['李宗敏', '許艷眞'] },
+  bride: { label: '女方家長', names: ['李宗敏', '許艶眞'] },
 }
 
 /**
