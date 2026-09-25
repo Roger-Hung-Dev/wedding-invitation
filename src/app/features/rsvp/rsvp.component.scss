@@ -36,27 +36,7 @@
   box-shadow: 0 8px 28px var(--shadow-rose);
 }
 
-.rsvp__chips {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 8px;
-}
-
-.rsvp__chip {
-  height: 30px;
-  display: inline-flex;
-  align-items: center;
-  padding: 0 14px;
-  border-radius: 15px;
-  background: var(--color-bg-blush);
-  color: var(--color-primary);
-  font-size: 12px;
-  font-weight: 500;
-}
-
 .rsvp__cta {
-  margin-top: 20px;
   width: 100%;
   height: 54px;
   border-radius: 27px;
@@ -102,21 +82,7 @@
     padding: 0;
   }
 
-  .rsvp__chips {
-    // 七顆桌機一行排列（設計稿明訂不換行），但視窗窄於 1440 時允許換行以避免橫向溢出。
-    flex-wrap: wrap;
-    gap: 12px;
-  }
-
-  .rsvp__chip {
-    height: 36px;
-    border-radius: 18px;
-    padding: 0 18px;
-    font-size: 14px;
-  }
-
   .rsvp__cta {
-    margin-top: 40px;
     width: 360px;
     height: 60px;
     border-radius: 30px;

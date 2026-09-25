@@ -18,7 +18,7 @@ import { DietStore } from '../../core/diet.store'
 })
 export class RsvpComponent {
   protected readonly content = WEDDING_CONTENT
-  /** 表單網址與欄位預告兩版不同：分開的表單讓回覆自然分開統計。 */
+  /** 表單網址兩版不同：分開的表單讓回覆自然分開統計。 */
   protected readonly diet = inject(DietStore)
   protected readonly links = WEDDING_LINKS
   protected readonly text = RSVP_TEXT

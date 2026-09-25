@@ -258,18 +258,10 @@ export interface DietNote {
  */
 export const DIET_VARIANTS = {
   regular: {
-    /** 出席回覆表單會收集的欄位預告。 */
-    fieldChips: ['姓名', '出席人數', '素食需求', '兒童椅', '聯絡電話'] as readonly string[],
     /** 禮金與餐點兩則心意只對女方親戚桌說，葷食版不渲染整個蔬食心意區。 */
     dietNotes: [] as readonly DietNote[],
   },
   vegetarian: {
-    /**
-     * 素食版問的不是「吃不吃素」而是「吃哪一種素」——
-     * 賓客是從素食專屬連結進來的，再問一次是否素食會讓人以為自己拿錯連結；
-     * 但蔬食分全素、蛋奶素、忌五辛，光知道「這位吃素」不夠備餐。
-     */
-    fieldChips: ['姓名', '出席人數', '兒童椅', '聯絡電話', '蔬食備註'] as readonly string[],
     /**
      * 蔬食心意區的兩則，順序即畫面由上到下。
      *
@@ -555,11 +547,6 @@ export const RSVP_TEXT = {
   title: '出席回覆',
   /** 說明文兩行，第二行的 {{deadline}} 會被換成 WEDDING_CONTENT.rsvpDeadlineDisplay。 */
   introLines: ['您的出席是我們最珍貴的祝福，', '敬請於 {{deadline}} 前回覆。'] as readonly string[],
-  /**
-   * 表單會收集的欄位預告，畫面上以 chip 呈現，順序即畫面順序。
-   * 這幾顆必須與實際 Google 表單的題目對得上，否則賓客會看到預告了卻沒被問的欄位。
-   */
-  fieldChips: ['姓名', '出席人數', '素食需求', '兒童椅', '聯絡電話'] as readonly string[],
   /** 主要 CTA 按鈕文字。 */
   ctaLabel: '填寫出席回覆表單',
   /** CTA 按鈕下方的小字註記。 */

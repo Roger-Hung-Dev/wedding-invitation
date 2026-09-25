@@ -14,9 +14,6 @@ export class DietStore {
 
   readonly diet = this._diet.asReadonly()
 
-  /** 出席回覆表單會收集的欄位預告。 */
-  readonly fieldChips = computed(() => DIET_VARIANTS[this._diet()].fieldChips)
-
   /** 蔬食心意區的禮金與餐點兩則。葷食版為空陣列，首頁據此決定要不要渲染整個區塊。 */
   readonly dietNotes = computed(() => DIET_VARIANTS[this._diet()].dietNotes)
 
