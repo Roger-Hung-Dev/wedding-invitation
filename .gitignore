@@ -31,6 +31,9 @@ Thumbs.db
 # 喜帖選稿用的攝影原始檔（單張 8MB 上下）。
 # 網頁要用的是壓縮過的版本，例如 hero-mobile.jpg 就是從這裡的原始檔轉出來的。
 /src/assets/invitationphotos/
+# 喜帖匯出的圖片（單張 2MB 上下）。
+# 隨時可以從網站重新截一張，不必進版控。
+/exports/
 # （壓縮版 groom.jpg／bride.jpg 進版控，原始檔 dobe-5329／dobe-5557 由上面那行忽略）
 # 分鏡設計稿引用的原始檔副本（wedding-photo-slideshow.pen 用），同樣只留本機
 /.claude/docs/design/wedding-photo/
