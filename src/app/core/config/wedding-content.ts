@@ -176,8 +176,8 @@ export const WEDDING_PARENTS: { readonly groom: ParentPair; readonly bride: Pare
  * S1.5 正式邀請函區的文案。這一區是水彩帖面：橢圓照片、中文姓名當主標、
  * 英文退為副標，底下條列雙方家長與宴席。
  *
- * 內容與 S3 宴客資訊區有意重疊——S1.5 是「帖」，賓客一眼看完就知道是誰邀、哪天、在哪；
- * S3 是「怎麼去」，帶地圖與導航。兩區的地址字串同源，改一邊要想到另一邊。
+ * 這一區是全站唯一列出日期、時間、場地、宴會廳與地址的地方——S1.5 是「帖」，賓客一眼看完就知道是誰邀、哪天、在哪；
+ * S3 交通資訊區只管「怎麼去」（停車示意圖與地圖導航），不再重複這些資料。刪減這裡的欄位前要想到這點。
  */
 export const INVITATION_TEXT = {
   eyebrow: 'WE ARE GETTING MARRIED',
@@ -519,20 +519,25 @@ export const GALLERY_TEXT = {
 } as const
 
 /**
- * S3 宴客資訊區文案。地址、場地名稱等實際資料在 WEDDING_CONTENT／WEDDING_LINKS，
- * 這裡只放資訊列的標籤字、按鈕文字與提醒句。
+ * S3 交通資訊區文案：停車示意圖與地圖導航兩塊的顯示文字。
+ * 日期、場地、宴會廳與地址改由婚禮邀請函區呈現，這一段不再重複，也就沒有那幾列的標籤字。
  */
 export const INFO_TEXT = {
-  eyebrow: 'INFORMATION',
-  title: 'Wedding Day',
-  /** 燙金框最上方的小字眉標。 */
-  dateEyebrow: 'THE WEDDING DAY',
-  /** 卡片內資訊列各自的標籤字，順序固定：宴會地點／宴會廳／地址。 */
-  rowLabels: {
-    venue: '宴會地點',
-    hall: '宴會廳',
-    address: '地址',
-  },
+  /** 段落抬頭。這一段不放英文眉標；中文標題由 SectionHeading 的 serif 模式排版（花體字型沒有中文字）。 */
+  title: '交通資訊',
+  /**
+   * 停車示意圖。原稿是 .claude/docs/design/parking-map/ 的 V01 喜帖雅緻版，
+   * 在該處執行 src/build.mjs 會一併覆寫這個檔，不要直接手改網站這一份。
+   * 路徑不加開頭斜線，理由同 GALLERY_PHOTOS（GitHub Pages 子路徑）。
+   */
+  parkingMapUrl: 'assets/images/parking-map.svg',
+  /** 圖上的資訊只存在於圖裡，替代文字要把重點講完，螢幕報讀器的使用者才拿得到同樣的內容。 */
+  parkingMapAlt:
+    '停車示意圖：飯店停車場在建物後方，汽機車位共約 1,000 個，汽車位有室內也有室外，可停遊覽車。' +
+    '汽車沿高鐵路三段往北，在靠台74 匝道那一端的汽車入口右轉；機車在靠高鐵五路那一端的機車入口右轉。' +
+    '停好車走進接待大廳，搭電梯上 2F 東方明珠。南下車流請於高鐵五路口左迴轉，飯店在右手邊。',
+  /** 圖片下方的提示。手機上整張圖只有三百多像素寬，圖上的小字看不清楚，要引導賓客點開看原尺寸。 */
+  parkingMapZoomHint: '點圖開啟大圖，可放大查看',
   /** 內嵌地圖的無障礙標題（螢幕報讀器會唸出來，畫面上不會直接顯示）。 */
   mapFrameTitle: '臻愛花園飯店位置地圖',
   /** 導航按鈕文字。 */

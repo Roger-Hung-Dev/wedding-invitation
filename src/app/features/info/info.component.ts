@@ -3,11 +3,12 @@ import { DomSanitizer } from '@angular/platform-browser'
 import { IconComponent } from '../../shared/icon/icon.component'
 import { ScrollRevealDirective } from '../../shared/scroll-reveal.directive'
 import { SectionHeadingComponent } from '../../shared/section-heading/section-heading.component'
-import { INFO_TEXT, WEDDING_CONTENT, WEDDING_SESSIONS } from '../../core/config/wedding-content'
+import { INFO_TEXT } from '../../core/config/wedding-content'
 import { WEDDING_LINKS, buildGoogleMapsDirectionUrl, buildGoogleMapsEmbedUrl } from '../../core/config/wedding-links'
 
 /**
- * S3 宴客資訊區。地圖為內嵌的 Google 地圖（預設定位在飯店），導航鈕另開分頁前往 Google 地圖。
+ * S3 交通資訊區：上方停車示意圖（點圖另開原尺寸），下方內嵌 Google 地圖（預設定位在飯店）與導航鈕。
+ * 日期、場地、宴會廳與地址由婚禮邀請函區呈現，這一段不重複。
  */
 @Component({
   selector: 'app-info',
@@ -17,11 +18,7 @@ import { WEDDING_LINKS, buildGoogleMapsDirectionUrl, buildGoogleMapsEmbedUrl } f
   styleUrl: './info.component.scss',
 })
 export class InfoComponent {
-  /** 只辦一場時框內就一行；原本的場次切換膠囊已移除——只有一場時它點了不會有任何反應。 */
-  protected readonly sessions = WEDDING_SESSIONS
-  protected readonly content = WEDDING_CONTENT
   protected readonly text = INFO_TEXT
-  protected readonly links = WEDDING_LINKS
 
   protected readonly mapsUrl = buildGoogleMapsDirectionUrl(WEDDING_LINKS.venueAddress)
   /** iframe 的 src 需先標記為可信任，Angular 才不會把它當成不安全的網址擋掉；網址由本站常數組成，不含使用者輸入。 */

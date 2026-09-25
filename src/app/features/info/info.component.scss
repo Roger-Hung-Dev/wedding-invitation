@@ -23,122 +23,33 @@
   box-shadow: 0 8px 28px var(--shadow-rose);
 }
 
-.info__primary {
-  display: flex;
-  flex-direction: column;
-}
-
-/*
-  燙金雙框：外框一條金線、往內 4px 再一條，兩線之間露出卡片的白。
-  用三層 inset 陰影畫而不是兩層 border，才不必為了畫框多包一層元素。
-*/
-.info__date-frame {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 22px 16px;
-  border-radius: 6px;
-  text-align: center;
-  box-shadow:
-    inset 0 0 0 1px var(--color-gold-soft),
-    inset 0 0 0 5px var(--color-surface),
-    inset 0 0 0 6px var(--color-gold-soft);
-}
-
-.info__date-eyebrow {
+.info__parking {
   margin: 0;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 4px;
-  color: var(--color-accent-gold);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
-.info__date {
-  margin: 10px 0 0;
-  font-size: 30px;
-  font-weight: 600;
-  letter-spacing: 3px;
-  line-height: 1.1;
-  color: var(--color-text-main);
+.info__parking-link {
+  display: block;
+  border-radius: 12px;
+  overflow: hidden;
 }
 
-.info__date-sub {
-  margin: 4px 0 0;
+.info__parking-img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.info__parking-hint {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
   font-size: 13px;
-  letter-spacing: 3px;
+  letter-spacing: 1px;
   color: var(--color-text-muted);
-}
-
-.info__ornament {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin: 14px 0 12px;
-}
-
-.info__ornament-line {
-  width: 36px;
-  height: 1px;
-  background: var(--color-gold-soft);
-}
-
-.info__ornament-diamond {
-  width: 6px;
-  height: 6px;
-  background: var(--color-gold-soft);
-  transform: rotate(45deg);
-}
-
-// 這一行帶的是「幾點該到」，是整段資訊裡賓客最先要找的一句，所以用主色而不是次要的灰。
-.info__session {
-  margin: 0;
-  font-size: 15px;
-  letter-spacing: 2px;
-  color: var(--color-text-main);
-
-  & + & {
-    margin-top: 4px;
-  }
-}
-
-.info__divider {
-  margin-top: 20px;
-  height: 1px;
-  background: var(--color-border-soft);
-}
-
-.info__rows {
-  margin-top: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-}
-
-.info__row {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-}
-
-.info__row-text {
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-}
-
-.info__row-label {
-  margin: 0;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 2px;
-  color: var(--color-text-muted);
-}
-
-.info__row-value {
-  margin: 0;
-  font-size: 15px;
-  font-weight: 500;
-  color: var(--color-text-main);
 }
 
 .info__map-block {
@@ -203,68 +114,31 @@
     padding: 96px clamp(24px, 8vw, 160px);
   }
 
+  /*
+    桌機維持單欄、停車圖在上：停車圖是 1200 寬的整張圖，並排成半欄只剩五百多寬，圖上的路名與入口標籤會縮到看不清。
+    880 是讓圖上最小的字（約 19px）縮完仍有 13px 上下的寬度。
+  */
   .info__layout {
     margin-top: 48px;
-    width: min(1120px, 100%);
-    flex-direction: row;
-    gap: 40px;
-    background: transparent;
-    border-radius: 0;
-    padding: 0;
-    box-shadow: none;
-    align-items: flex-start;
-  }
-
-  .info__primary {
-    flex: 1 1 0;
-    min-width: 0;
-    background: var(--color-surface);
+    width: min(880px, 100%);
+    gap: 32px;
     border-radius: 24px;
     padding: 40px;
-    box-shadow: 0 8px 28px var(--shadow-rose);
   }
 
-  .info__date-frame {
-    padding: 34px 24px;
-    box-shadow:
-      inset 0 0 0 1px var(--color-gold-soft),
-      inset 0 0 0 6px var(--color-surface),
-      inset 0 0 0 7px var(--color-gold-soft);
+  .info__parking {
+    gap: 12px;
   }
 
-  .info__date-eyebrow {
-    font-size: 13px;
-    letter-spacing: 5px;
+  .info__parking-link {
+    border-radius: 16px;
   }
 
-  .info__date {
-    margin-top: 12px;
-    font-size: 44px;
-  }
-
-  .info__date-sub {
-    font-size: 15px;
-  }
-
-  .info__session {
-    font-size: 18px;
-  }
-
-  .info__rows {
-    gap: 24px;
-  }
-
-  .info__row-label {
-    font-size: 13px;
-  }
-
-  .info__row-value {
-    font-size: 18px;
+  .info__parking-hint {
+    font-size: 14px;
   }
 
   .info__map-block {
-    flex: 1 1 0;
-    min-width: 0;
     gap: 20px;
   }
 
