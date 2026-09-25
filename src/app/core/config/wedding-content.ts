@@ -213,7 +213,7 @@ export const INVITATION_TEXT = {
     hall: '宴會廳',
     address: '地　址',
   },
-  /** 帖面最後的收尾句，手機兩行、桌機同一行（純 CSS 控制，不分兩種版本）。 */
+  /** 帖面的收尾句，固定兩行。直式帖放在最底下，桌機的橫式帖放在照片正下方。 */
   quoteLines: ['願我們的故事，', '從今天起有了共同的名字。'] as readonly string[],
 } as const
 

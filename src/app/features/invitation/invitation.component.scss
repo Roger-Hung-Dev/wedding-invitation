@@ -1,6 +1,9 @@
-// 這一區的數值全部來自比稿定案的水彩帖（C 版），不是從全站樣式推導出來的。
-// 帖面固定 390px 寬，桌機也不放大 —— 它是「一張帖」，不是一個響應式區塊，
-// 放大之後暈染的位置、橢圓與字級的比例都會跑掉。
+// 這一區的數值全部來自比稿定案的水彩帖，不是從全站樣式推導出來的：
+// 手機與平板用直式的 C 版（固定 390px 寬），桌機換成橫式的 L17 水彩橫幅（固定 960 × 540）。
+// 兩張帖都不隨螢幕縮放 —— 它是「一張帖」，不是一個響應式區塊，
+// 縮放之後暈染的位置、橢圓與字級的比例都會跑掉。
+// 兩張帖的字型、字級、橢圓尺寸完全相同，差別只在排法，所以共用同一組元素樣式，
+// 橫式那張只覆寫間距與對齊（見檔案最後）。
 :host {
   display: block;
 }
@@ -195,5 +198,142 @@
 
   p {
     margin: 0;
+  }
+}
+
+// ---------- 桌機：橫式帖面（水彩橫幅 L17） ----------
+// 數值取自比稿頁的 L17：960 × 540，左邊橢圓照片＋收尾句，右邊姓名、家長、日期與場地。
+// 兩張帖同時在 DOM 裡、用顯示與否切換，而不是同一組元素靠 CSS 重排：
+// 兩種排法的閱讀順序不同（直式照片夾在姓名與日期之間，橫式照片獨立一欄），
+// 硬用 order／display: contents 重排會讓報讀順序與畫面脫鉤。
+// 隱藏的那張是 display: none，不會被報讀，也不會觸發它自己的進場動畫。
+.invitation__landscape {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .invitation {
+    padding: 96px 24px;
+  }
+
+  .invitation__sheet {
+    display: none;
+  }
+
+  // 帖面做成一張卡片：暈染被裁在 960 的邊界上，不加卡片邊緣的話，
+  // 那條裁切線會在頁面中間變成一道來路不明的直線。
+  .invitation__landscape {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    gap: 36px;
+    width: 960px;
+    height: 540px;
+    margin: 0 auto;
+    padding: 40px 52px;
+    background: #fffcfa;
+    border-radius: 16px;
+    box-shadow: 0 18px 40px -22px rgba(74, 55, 66, 0.45);
+
+    .invitation__wash {
+      filter: blur(44px);
+    }
+
+    .invitation__wash--rose {
+      width: 340px;
+      height: 300px;
+      left: -90px;
+      top: -80px;
+    }
+
+    .invitation__wash--lilac {
+      width: 300px;
+      height: 280px;
+      opacity: 0.5;
+      top: auto;
+      right: -70px;
+      bottom: -90px;
+    }
+
+    .invitation__wash--apricot {
+      width: 300px;
+      height: 240px;
+      opacity: 0.45;
+      left: auto;
+      right: 230px;
+      top: -70px;
+    }
+
+    .invitation__portrait {
+      margin: 0;
+    }
+
+    .invitation__quote {
+      margin: 22px 0 0;
+    }
+
+    .invitation__eyebrow {
+      margin: 0 0 14px;
+    }
+
+    .invitation__name-en {
+      margin: 14px 0 20px;
+    }
+
+    // 直式的日期置中；橫式整欄靠左，日期跟著靠左，兩側短線保留。
+    .invitation__date {
+      justify-content: flex-start;
+      margin-top: 0;
+    }
+  }
+
+  .invitation__visual {
+    position: relative;
+    flex: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .invitation__body {
+    position: relative;
+    flex: 1;
+    min-width: 0;
+  }
+
+  // 雙方家長左右並排、標籤在上，上下各一條細線；中間不加分隔線（新人要求拿掉）。
+  .invitation__parents {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    margin: 0 0 18px;
+    padding: 14px 0;
+    border-top: 1px solid rgba(217, 188, 198, 0.9);
+    border-bottom: 1px solid rgba(217, 188, 198, 0.9);
+    font-family: 'Noto Serif TC', serif;
+
+    dt {
+      margin: 0 0 8px;
+      font-size: 10px;
+      letter-spacing: 0.26em;
+      color: #b08196;
+    }
+
+    dd {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.9;
+      letter-spacing: 0.1em;
+      color: #4a3742;
+    }
+  }
+
+  // 場地三列沿用直式卡片的列樣式（標籤欄寬、字級相同），只是不包卡片、列距收緊，540 高才放得下。
+  .invitation__venue {
+    display: grid;
+    gap: 8px;
+    margin: 16px 0 0;
+    font-family: 'Noto Serif TC', serif;
   }
 }
