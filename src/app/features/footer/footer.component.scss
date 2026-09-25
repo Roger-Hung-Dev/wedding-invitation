@@ -11,7 +11,7 @@
   text-align: center;
 }
 
-// 眉標與主標的排法比照段落抬頭（SectionHeading），頁尾是深色底，所以眉標改用淡金、主標用白。
+// 眉標比照段落抬頭（SectionHeading）的字級與字距；頁尾是深色底，改用淡金。
 .footer__eyebrow {
   margin: 0;
   font-size: 11px;
@@ -20,15 +20,13 @@
   color: var(--color-gold-soft);
 }
 
-// 字距加在字尾會讓置中偏左，左側補同寬的內距抵銷。
+// 字級與段落抬頭（SectionHeading）相同，頁尾才不會比前面各段的標題大一號。
 .footer__title {
   margin: 10px 0 0;
-  padding-left: 6px;
-  font-family: var(--font-body);
-  font-size: 26px;
-  font-weight: 500;
-  letter-spacing: 6px;
-  line-height: 1.3;
+  font-family: var(--font-script);
+  font-size: 34px;
+  font-weight: 400;
+  line-height: 1.2;
   color: var(--color-text-invert);
   transition-duration: 1000ms;
 }
@@ -89,9 +87,7 @@
 
   .footer__title {
     margin-top: 12px;
-    padding-left: 10px;
-    font-size: 38px;
-    letter-spacing: 10px;
+    font-size: 56px;
   }
 
   .footer__body {

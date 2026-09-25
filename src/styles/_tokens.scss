@@ -37,9 +37,8 @@
 
   // 花體有兩套，差別在用在哪裡，不是隨便挑的：
   // 封面（開場層與 Hero）的 Roger & Amy 用 Great Vibes —— 字面大、連筆明顯，
-  // 撐得起 56px 以上的主視覺；新人介紹兩張卡之間的 & 用 Tangerine —— 襯線筆法、
+  // 撐得起 56px 以上的主視覺；段落標題、頁尾那些用 Tangerine —— 襯線筆法、
   // 比較收斂，放在內文區塊旁不會搶戲。混用是刻意的，不要合併成同一個值。
-  // 段落標題與頁尾標題已改成中文，花體字型沒有中文字，所以那兩處改用 --font-body。
   --font-script-cover: 'Great Vibes', cursive;
   --font-script: 'Tangerine', cursive;
   --font-body: 'Cormorant Infant', 'Noto Serif TC', serif;
