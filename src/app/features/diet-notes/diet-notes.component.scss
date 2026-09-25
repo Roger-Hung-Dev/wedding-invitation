@@ -91,10 +91,10 @@
 
 @media (min-width: 1024px) {
   :host {
-    // 抬頭比照新人介紹與交往故事書的較小字級（13／44）：這一段主體只有兩則，放 56px 會頭重腳輕。
+    // 抬頭用較小的字級（13／30）：這一段主體只有兩則，放預設的 36px 會頭重腳輕。
     --section-heading-eyebrow-size: 13px;
     --section-heading-eyebrow-spacing: 5px;
-    --section-heading-title-size: 44px;
+    --section-heading-title-size: 30px;
   }
 
   .notes {

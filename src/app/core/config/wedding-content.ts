@@ -308,7 +308,7 @@ export const DIET_VARIANTS = {
  */
 export const DIET_NOTES_TEXT = {
   eyebrow: 'WITH LOVE',
-  title: 'A Little Note',
+  title: '貼心提醒',
 } as const
 
 export const INTRO_GATE_TEXT = {
@@ -340,7 +340,7 @@ export const HERO_TEXT = {
  */
 export const ABOUT_TEXT = {
   eyebrow: 'ABOUT US',
-  title: 'The Two of Us',
+  title: '關於我們',
   intro: {
     /** 桌機單行不斷行。 */
     full: '在遇見彼此之前，我們各自過著很不一樣的日子。',
@@ -409,7 +409,7 @@ export const ABOUT_PROFILES: readonly AboutProfile[] = [
  */
 export const STORY_TEXT = {
   eyebrow: 'OUR STORY',
-  title: 'How We Met',
+  title: '我們的故事',
   /**
    * 書頁卡下方的操作提示。手機可以左右滑，桌機沒有觸控只能點箭頭，所以兩句分開。
    * 手機把「滑動」放前面：那是主要的操作方式，箭頭是備援。
@@ -502,8 +502,8 @@ export const STORY_PAGES: readonly StoryPage[] = [
 export const GALLERY_TEXT = {
   /** 區塊眉標（小字、金色）。 */
   eyebrow: 'GALLERY',
-  /** 區塊主標（花體字）。 */
-  title: 'Our Moments',
+  /** 區塊主標。 */
+  title: '婚紗照',
   quote: {
     /** 桌機顯示一整行。 */
     full: '願我們的故事，從今天起有了共同的名字。',
@@ -523,7 +523,7 @@ export const GALLERY_TEXT = {
  * 日期、場地、宴會廳與地址改由婚禮邀請函區呈現，這一段不再重複，也就沒有那幾列的標籤字。
  */
 export const INFO_TEXT = {
-  /** 段落抬頭。這一段不放英文眉標；中文標題由 SectionHeading 的 serif 模式排版（花體字型沒有中文字）。 */
+  eyebrow: 'DIRECTIONS',
   title: '交通資訊',
   /**
    * 停車示意圖。原稿是 .claude/docs/design/parking-map/ 的 V01 喜帖雅緻版，
@@ -550,8 +550,9 @@ export const INFO_TEXT = {
  * 不要把日期字面值再寫死一次，否則以後改期限會漏改這裡。
  */
 export const RSVP_TEXT = {
-  eyebrow: 'R.S.V.P.',
-  title: 'Will You Join Us?',
+  /** 不用 R.S.V.P.：那是法文縮寫，多數賓客看不懂，換成一個直接的英文單字。 */
+  eyebrow: 'REPLY',
+  title: '出席回覆',
   /** 說明文兩行，第二行的 {{deadline}} 會被換成 WEDDING_CONTENT.rsvpDeadlineDisplay。 */
   introLines: ['您的出席是我們最珍貴的祝福，', '敬請於 {{deadline}} 前回覆。'] as readonly string[],
   /**
@@ -570,8 +571,8 @@ export const RSVP_TEXT = {
  * 文字本身沒有分成兩種版本），monogram／婚期見 WEDDING_CONTENT。
  */
 export const FOOTER_TEXT = {
-  /** 花體主標。 */
-  title: 'Thank You',
+  eyebrow: 'THANK YOU',
+  title: '謝謝你們',
   /** 致謝內文，手機兩行、桌機同一行顯示（見上方說明）。 */
   bodyLines: ['謝謝每一位陪伴我們走到這裡的人，', '期待與你分享這一天的喜悅。'] as readonly string[],
   copyright: '© 2026 Roger & Amy　·　Made with love',
