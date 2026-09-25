@@ -24,7 +24,7 @@ import { ScrollRevealDirective } from '../scroll-reveal.directive'
 
     .heading__eyebrow {
       margin: 0;
-      font-size: 11px;
+      font-size: 14px;
       font-weight: 600;
       letter-spacing: 5px;
       color: var(--color-accent-gold);
@@ -34,18 +34,19 @@ import { ScrollRevealDirective } from '../scroll-reveal.directive'
       margin: 10px 0 0;
       font-family: var(--font-script);
       font-size: 34px;
-      font-weight: 400;
+      // 用 Tangerine 本身的粗體字重（index.html 有載入 700），不是瀏覽器硬描的假粗體。
+      font-weight: 700;
       line-height: 1.2;
       color: var(--color-primary);
     }
 
     /**
-     * 各段抬頭的字級一律相同（手機 11／34、桌機 14／56），不開放個別段落覆寫：
+     * 各段抬頭的字級一律相同（手機 14／34、桌機 18／56），不開放個別段落覆寫：
      * 曾經讓蔬食心意區自己縮小，結果相鄰兩段一大一小，看起來像排錯。頁尾的抬頭也比照這組數值。
      */
     @media (min-width: 1024px) {
       .heading__eyebrow {
-        font-size: 14px;
+        font-size: 18px;
         letter-spacing: 6px;
       }
 

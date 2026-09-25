@@ -14,7 +14,7 @@
 // 眉標比照段落抬頭（SectionHeading）的字級與字距；頁尾是深色底，改用淡金。
 .footer__eyebrow {
   margin: 0;
-  font-size: 11px;
+  font-size: 14px;
   font-weight: 600;
   letter-spacing: 5px;
   color: var(--color-gold-soft);
@@ -25,7 +25,7 @@
   margin: 10px 0 0;
   font-family: var(--font-script);
   font-size: 34px;
-  font-weight: 400;
+  font-weight: 700;
   line-height: 1.2;
   color: var(--color-text-invert);
   transition-duration: 1000ms;
@@ -81,7 +81,7 @@
   }
 
   .footer__eyebrow {
-    font-size: 14px;
+    font-size: 18px;
     letter-spacing: 6px;
   }
 
