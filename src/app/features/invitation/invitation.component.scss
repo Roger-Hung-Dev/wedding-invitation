@@ -1,9 +1,9 @@
 // 這一區的數值全部來自比稿定案的水彩帖，不是從全站樣式推導出來的：
-// 手機與平板用直式的 C 版（固定 390px 寬），桌機換成橫式的 L17 水彩橫幅（固定 960 × 540）。
-// 兩張帖都不隨螢幕縮放 —— 它是「一張帖」，不是一個響應式區塊，
-// 縮放之後暈染的位置、橢圓與字級的比例都會跑掉。
-// 兩張帖的字型、字級、橢圓尺寸完全相同，差別只在排法，所以共用同一組元素樣式，
-// 橫式那張只覆寫間距與對齊（見檔案最後）。
+// 手機與平板用直式的 C 版（固定 390px 寬），桌機換成橫式的 L17 水彩橫幅（滿版，依畫面寬等比放大）。
+// 兩張帖都不做響應式重排 —— 它是「一張帖」，只能整張等比縮放，
+// 各元素分別伸縮的話，暈染的位置、橢圓與字級的比例都會跑掉。
+// 兩張帖的字型、字級比例、橢圓比例完全相同，差別只在排法與縮放，所以共用同一組元素樣式，
+// 橫式那張覆寫尺寸、間距與對齊（見檔案最後）。
 :host {
   display: block;
 }
@@ -201,8 +201,8 @@
   }
 }
 
-// ---------- 桌機：橫式帖面（水彩橫幅 L17） ----------
-// 數值取自比稿頁的 L17：960 × 540，左邊橢圓照片＋收尾句，右邊姓名、家長、日期與場地。
+// ---------- 桌機：橫式帖面（水彩橫幅 L17），滿版 ----------
+// 數值取自比稿頁的 L17（960 × 540）：左邊橢圓照片＋收尾句，右邊姓名、家長、日期與場地。
 // 兩張帖同時在 DOM 裡、用顯示與否切換，而不是同一組元素靠 CSS 重排：
 // 兩種排法的閱讀順序不同（直式照片夾在姓名與日期之間，橫式照片獨立一欄），
 // 硬用 order／display: contents 重排會讓報讀順序與畫面脫鉤。
@@ -212,79 +212,124 @@
 }
 
 @media (min-width: 1024px) {
+  // 區塊本身當尺寸容器，帖面裡的 cqw 才會以整個畫面寬度為準。
   .invitation {
-    padding: 96px 24px;
+    padding: 0;
+    container-type: inline-size;
   }
 
   .invitation__sheet {
     display: none;
   }
 
-  // 帖面做成一張卡片：暈染被裁在 960 的邊界上，不加卡片邊緣的話，
-  // 那條裁切線會在頁面中間變成一道來路不明的直線。
+  // 滿版：帖面寬度貼齊畫面，整張依 960 × 540 的原稿等比放大。
+  // 每個尺寸都寫成「原稿數值 × --u」，--u 是畫面寬的 1/960；
+  // 只放大外框、字級不跟著放大的話，照片與文字會縮在中間一小塊，暈染也對不上原稿的位置。
+  // 16:9 的畫面（1920 × 1080、1366 × 768）剛好一屏；字距用 em，會自己跟著字級走。
   .invitation__landscape {
+    --u: calc(100cqw / 960);
+
     position: relative;
     overflow: hidden;
     display: flex;
     align-items: center;
-    gap: 36px;
-    width: 960px;
-    height: 540px;
-    margin: 0 auto;
-    padding: 40px 52px;
+    gap: calc(36 * var(--u));
+    width: 100%;
+    height: calc(540 * var(--u));
+    padding: calc(40 * var(--u)) calc(52 * var(--u));
     background: #fffcfa;
-    border-radius: 16px;
-    box-shadow: 0 18px 40px -22px rgba(74, 55, 66, 0.45);
 
     .invitation__wash {
-      filter: blur(44px);
+      filter: blur(calc(44 * var(--u)));
     }
 
     .invitation__wash--rose {
-      width: 340px;
-      height: 300px;
-      left: -90px;
-      top: -80px;
+      width: calc(340 * var(--u));
+      height: calc(300 * var(--u));
+      left: calc(-90 * var(--u));
+      top: calc(-80 * var(--u));
     }
 
     .invitation__wash--lilac {
-      width: 300px;
-      height: 280px;
+      width: calc(300 * var(--u));
+      height: calc(280 * var(--u));
       opacity: 0.5;
       top: auto;
-      right: -70px;
-      bottom: -90px;
+      right: calc(-70 * var(--u));
+      bottom: calc(-90 * var(--u));
     }
 
     .invitation__wash--apricot {
-      width: 300px;
-      height: 240px;
+      width: calc(300 * var(--u));
+      height: calc(240 * var(--u));
       opacity: 0.45;
       left: auto;
-      right: 230px;
-      top: -70px;
+      right: calc(230 * var(--u));
+      top: calc(-70 * var(--u));
     }
 
     .invitation__portrait {
+      width: calc(200 * var(--u));
+      height: calc(248 * var(--u));
       margin: 0;
+      box-shadow: 0 calc(14 * var(--u)) calc(32 * var(--u)) calc(-20 * var(--u)) rgba(74, 55, 66, 0.5);
     }
 
     .invitation__quote {
-      margin: 22px 0 0;
+      margin: calc(22 * var(--u)) 0 0;
+      font-size: calc(18 * var(--u));
     }
 
     .invitation__eyebrow {
-      margin: 0 0 14px;
+      margin: 0 0 calc(14 * var(--u));
+      font-size: calc(11 * var(--u));
+    }
+
+    .invitation__name-zh {
+      font-size: calc(31 * var(--u));
     }
 
     .invitation__name-en {
-      margin: 14px 0 20px;
+      margin: calc(14 * var(--u)) 0 calc(20 * var(--u));
+      font-size: calc(16 * var(--u));
     }
 
     // 直式的日期置中；橫式整欄靠左，日期跟著靠左，兩側短線保留。
     .invitation__date {
       justify-content: flex-start;
+      gap: calc(14 * var(--u));
       margin-top: 0;
+    }
+
+    .invitation__date-line {
+      width: calc(34 * var(--u));
+    }
+
+    .invitation__date-text {
+      font-size: calc(35 * var(--u));
+    }
+
+    .invitation__date-lunar {
+      margin-top: calc(12 * var(--u));
+      font-size: calc(13 * var(--u));
+    }
+
+    .invitation__date-sub {
+      margin-top: calc(7 * var(--u));
+      font-size: calc(12 * var(--u));
+    }
+
+    .invitation__row {
+      grid-template-columns: calc(58 * var(--u)) 1fr;
+      gap: calc(12 * var(--u));
+
+      dt {
+        font-size: calc(11.5 * var(--u));
+      }
+
+      dd {
+        font-size: calc(15.5 * var(--u));
+      }
     }
   }
 
@@ -306,34 +351,34 @@
   .invitation__parents {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 18px;
-    margin: 0 0 18px;
-    padding: 14px 0;
+    gap: calc(18 * var(--u));
+    margin: 0 0 calc(18 * var(--u));
+    padding: calc(14 * var(--u)) 0;
     border-top: 1px solid rgba(217, 188, 198, 0.9);
     border-bottom: 1px solid rgba(217, 188, 198, 0.9);
     font-family: 'Noto Serif TC', serif;
 
     dt {
-      margin: 0 0 8px;
-      font-size: 10px;
+      margin: 0 0 calc(8 * var(--u));
+      font-size: calc(10 * var(--u));
       letter-spacing: 0.26em;
       color: #b08196;
     }
 
     dd {
       margin: 0;
-      font-size: 14px;
+      font-size: calc(14 * var(--u));
       line-height: 1.9;
       letter-spacing: 0.1em;
       color: #4a3742;
     }
   }
 
-  // 場地三列沿用直式卡片的列樣式（標籤欄寬、字級相同），只是不包卡片、列距收緊，540 高才放得下。
+  // 場地三列沿用直式卡片的列樣式，只是不包卡片、列距收緊，540 高的比例裡才放得下。
   .invitation__venue {
     display: grid;
-    gap: 8px;
-    margin: 16px 0 0;
+    gap: calc(8 * var(--u));
+    margin: calc(16 * var(--u)) 0 0;
     font-family: 'Noto Serif TC', serif;
   }
 }
