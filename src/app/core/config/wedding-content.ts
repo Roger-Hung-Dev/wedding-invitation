@@ -31,7 +31,7 @@ export const WEDDING_CONTENT = {
    * 在 20px 字級下會讓 R 與 A 各離 & 二十多 px，圓環裡看起來是散開的三個字母。
    */
   monogram: 'R & A',
-  rsvpDeadlineDisplay: '2026 / 11 / 08',
+  rsvpDeadlineDisplay: '2026 / 10 / 31',
 } as const
 
 /**
