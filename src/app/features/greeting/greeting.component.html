@@ -1,0 +1,10 @@
+<section
+  class="greeting"
+  appScrollReveal
+  [staggerSelector]="'.anim-fade-up, .anim-fade-in'"
+  [staggerMs]="160"
+>
+  <img class="greeting__photo anim-fade-in" [src]="text.photoUrl" [alt]="text.photoAlt" loading="lazy" decoding="async" />
+  <p class="greeting__line anim-fade-up">{{ text.line }}</p>
+  <p class="greeting__date anim-fade-up">{{ dateDisplay }}</p>
+</section>

@@ -220,6 +220,21 @@ export const INVITATION_TEXT = {
 /** S1.5 正式邀請函區的橢圓照片。與藝廊那張同源，但裁切與尺寸為這一區另外轉過。 */
 export const INVITATION_PHOTO_URL = 'assets/images/invitation-portrait.jpg'
 
+/**
+ * 婚紗藝廊與交通資訊之間的過場：一張照片上下淡進背景，下方置中一句問候。
+ * 版型是比稿頁 .claude/docs/design/greeting-placement/ 的第 10 式。
+ * 文案有另一個版本「好久不見，婚禮見」；橫排一行用有「我們」的長句，讀起來像新人親口說。
+ */
+export const GREETING_TEXT = {
+  line: '好久不見，我們婚禮見',
+  /**
+   * 原始檔 dobe-5569.jpg（7MB，不進版控）縮到寬 1000 的網頁版。
+   * 換圖時照同樣方式另存，不要直接引用原始檔。
+   */
+  photoUrl: 'assets/images/greeting.jpg',
+  photoAlt: '海邊夕色中，新郎把新娘扛在肩上，新娘高舉捧花',
+} as const
+
 /** Hero 滿版底圖。是 LCP 元素，於 index.html 另外 preload（換圖時兩處要一起改）。 */
 export const HERO_IMAGE_URL = 'assets/images/hero-mobile.jpg'
 

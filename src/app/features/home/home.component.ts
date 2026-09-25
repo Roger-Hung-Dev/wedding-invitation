@@ -6,6 +6,7 @@ import { InvitationComponent } from '../invitation/invitation.component'
 import { AboutComponent } from '../about/about.component'
 import { StoryComponent } from '../story/story.component'
 import { GalleryComponent } from '../gallery/gallery.component'
+import { GreetingComponent } from '../greeting/greeting.component'
 import { InfoComponent } from '../info/info.component'
 import { DietNotesComponent } from '../diet-notes/diet-notes.component'
 import { RsvpComponent } from '../rsvp/rsvp.component'
@@ -26,6 +27,7 @@ import { FooterComponent } from '../footer/footer.component'
     AboutComponent,
     StoryComponent,
     GalleryComponent,
+    GreetingComponent,
     InfoComponent,
     DietNotesComponent,
     RsvpComponent,
@@ -38,6 +40,7 @@ import { FooterComponent } from '../footer/footer.component'
     <app-about />
     <app-story />
     <app-gallery />
+    <app-greeting />
     <app-info />
     @if (dietStore.dietNotes().length > 0) {
       <app-diet-notes />
