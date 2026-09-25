@@ -182,7 +182,7 @@ export const WEDDING_PARENTS: { readonly groom: ParentPair; readonly bride: Pare
 export const INVITATION_TEXT = {
   eyebrow: 'WE ARE GETTING MARRIED',
   /**
-   * 帖面的中文姓名。與 WEDDING_CONTENT.brideGroomZh 不同：那個帶「✕」符號給封面用，
+   * 帖面的中文姓名。與 WEDDING_CONTENT.brideGroomZh 不同：那個在兩個名字中間夾一個乘號給封面用，
    * 帖面只要兩個名字，中間以全形空白分隔。
    */
   nameZh: '洪承孝　李怡安',
