@@ -1,6 +1,5 @@
 :host {
   display: block;
-  // 這一段的抬頭字級比其他段落小：主體是兩張人物卡，抬頭放到 56px 會把卡片壓下去。
 }
 
 .about {
@@ -24,7 +23,7 @@
   width: 300px;
   max-width: 100%;
   text-align: center;
-  font-size: 16px;
+  font-size: 18px;
   font-style: italic;
   line-height: 1.4;
   color: var(--color-text-muted);
@@ -48,7 +47,8 @@
   gap: 16px;
   align-items: flex-start;
   width: 100%;
-  height: 176px;
+  // 用最小高度而不是固定高度：字級放大後介紹文字可能多一行，固定高度會讓文字溢出卡片。
+  min-height: 192px;
 }
 
 // 新娘卡是鏡像：照片換到右邊，文字欄連同角色標籤與職業膠囊一起靠右對齊。
@@ -62,9 +62,9 @@
 }
 
 .about__photo {
-  flex: 0 0 132px;
-  width: 132px;
-  height: 176px;
+  flex: 0 0 144px;
+  width: 144px;
+  height: 192px;
   border-radius: 16px;
   overflow: hidden;
   box-shadow: 0 8px 28px var(--shadow-rose);
@@ -86,7 +86,7 @@
 
   .about__role {
     margin: 0;
-    font-size: 10px;
+    font-size: 11px;
     font-weight: 600;
     letter-spacing: 3px;
     line-height: 1.4;
@@ -104,7 +104,7 @@
 
   .about__name {
     margin: 0;
-    font-size: 22px;
+    font-size: 25px;
     font-weight: 500;
     letter-spacing: 2px;
     line-height: 1.4;
@@ -119,12 +119,12 @@
     display: inline-flex;
     align-items: center;
     margin: 6px 0 0;
-    height: 26px;
+    height: 28px;
     padding: 0 12px;
     border: 1px solid var(--color-border-pill);
-    border-radius: 13px;
+    border-radius: 14px;
     background: var(--color-bg-ivory);
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 500;
     color: var(--color-primary);
   }
@@ -132,7 +132,7 @@
   // 全站唯一用 1.6 以上行高的兩個地方之一：這兩段是最長的連續中文，1.4 在 13px 下會擠成一團。
   .about__desc {
     margin: 12px 0 0;
-    font-size: 13px;
+    font-size: 14px;
     line-height: 1.6;
     color: var(--color-text-muted);
   }
@@ -156,7 +156,7 @@
 
 .about__connector-mark {
   font-family: var(--font-script);
-  font-size: 20px;
+  font-size: 22px;
   // 連結列的列高是 12，字大於列高是刻意的：& 的字面本來就比行框小，撐高列高會讓兩張卡的間距跑掉。
   line-height: 12px;
   color: var(--color-gold-soft);
@@ -164,10 +164,11 @@
 
 .about__outro {
   margin: 32px 0 0;
-  width: 310px;
+  // 與人物卡同寬：16px 下第一句「一個把日子過成邏輯，一個把日子過成溫度，」要 320px，310 會把最後兩個字擠到下一行。
+  width: 342px;
   max-width: 100%;
   text-align: center;
-  font-size: 14px;
+  font-size: 16px;
   font-style: italic;
   line-height: 1.4;
   color: var(--color-text-muted);
@@ -190,7 +191,7 @@
   .about__intro {
     margin-top: 24px;
     width: auto;
-    font-size: 20px;
+    font-size: 22px;
   }
 
   // 桌機把兩張卡與中央分隔排成一列：520 + 80 + 520 = 1120，與內容欄同寬。
@@ -205,19 +206,19 @@
     flex: 0 0 520px;
     gap: 24px;
     align-items: center;
-    height: 300px;
+    min-height: 320px;
   }
 
   .about__photo {
-    flex: 0 0 220px;
-    width: 220px;
-    height: 300px;
+    flex: 0 0 240px;
+    width: 240px;
+    height: 320px;
     border-radius: 20px;
   }
 
   .about__text {
     .about__role {
-      font-size: 12px;
+      font-size: 13px;
     }
 
     .about__identity {
@@ -225,18 +226,19 @@
     }
 
     .about__name {
-      font-size: 26px;
+      font-size: 30px;
     }
 
     .about__chip {
       margin-top: 8px;
-      height: 28px;
-      font-size: 13px;
+      height: 30px;
+      border-radius: 15px;
+      font-size: 14px;
     }
 
     .about__desc {
       margin-top: 14px;
-      font-size: 15px;
+      font-size: 16.5px;
       line-height: 1.7;
     }
   }
@@ -249,12 +251,12 @@
     gap: 0;
     margin: 0;
     width: 80px;
-    height: 300px;
+    height: 320px;
   }
 
   .about__connector-line {
     width: 1px;
-    height: 90px;
+    height: 100px;
   }
 
   // 直立的線要沿著自己的長邊長出來，沿用共用語彙的 scaleX 只會讓 1px 寬的線瞬間出現。
@@ -276,6 +278,6 @@
   .about__outro {
     margin-top: 48px;
     width: auto;
-    font-size: 17px;
+    font-size: 19px;
   }
 }
