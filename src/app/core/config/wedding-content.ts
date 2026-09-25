@@ -288,7 +288,7 @@ export const DIET_VARIANTS = {
         tag: 'GIFT',
         headlineEn: 'YOUR PRESENCE',
         title: '不收禮金',
-        text: '女方親友席不收禮金，敬請入座，您的到來就是我們最珍貴的祝福',
+        text: '親屬席不收禮金，敬請入座，您的到來就是我們最珍貴的祝福',
         illustrationUrl: 'assets/images/diet-note-gift.png',
       },
       {
@@ -296,7 +296,7 @@ export const DIET_VARIANTS = {
         tag: 'DINNER',
         headlineEn: 'PLANT-BASED FEAST',
         title: '蔬食盛宴',
-        text: '女方親友席宴請蔬食料理，由飯店主廚特別設計，期待與您共享蔬食盛宴',
+        text: '女方親屬席宴請蔬食料理，由飯店主廚特別設計，期待與您共享蔬食盛宴',
         illustrationUrl: 'assets/images/diet-note-dinner.png',
       },
     ] as readonly DietNote[],
