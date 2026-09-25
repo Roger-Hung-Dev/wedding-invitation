@@ -1,0 +1,487 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>好久不見放置比稿</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Cormorant+Infant:ital,wght@0,400;0,500;0,600;1,400&family=Great+Vibes&family=Tangerine&family=Noto+Serif+TC:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700&family=LXGW+WenKai+TC:wght@400;700&display=swap">
+<style>
+/* 比稿頁外殼 */
+:root { --bg:#F4EEF0; --ink:#3A2A31; --muted:#7A6570; --line:#E5D6DC; --accent:#B0306A; --card:#FFFFFF; }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--ink); font-family:'Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif; -webkit-font-smoothing:antialiased; }
+.wrap { max-width:1680px; margin:0 auto; padding:40px 20px 80px; }
+.head { max-width:900px; margin:0 auto 32px; }
+.head .kicker { font-size:12px; letter-spacing:.24em; color:var(--accent); margin:0 0 10px; }
+.head h1 { font-family:'Noto Serif TC',serif; font-size:clamp(26px,4vw,38px); margin:0 0 14px; line-height:1.3; }
+.head p { margin:0 0 10px; color:var(--muted); line-height:1.85; font-size:15px; }
+.picks { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:12px; margin:22px 0 8px; }
+.pick { background:#fff; border:1px solid var(--line); border-radius:14px; padding:14px 16px; }
+.pick b { display:block; font-family:'Noto Serif TC',serif; font-size:16px; margin-bottom:6px; }
+.pick span { font-size:13.5px; color:var(--muted); line-height:1.7; }
+.legend { display:flex; flex-wrap:wrap; gap:8px; margin-top:14px; }
+.tag { display:inline-block; font-size:11.5px; padding:3px 10px; border-radius:999px; border:1px solid var(--line); color:var(--muted); background:#fff; }
+.tag.rec { background:#B0306A; border-color:#B0306A; color:#fff; }
+.tag.anim { background:#FFF4D6; border-color:#EACB7A; color:#8A6310; }
+.tag.s { background:#EEF6EE; border-color:#BFD9BF; color:#3F6B3F; }
+.tag.m { background:#EEF2FA; border-color:#C3CFEA; color:#3D5287; }
+.tag.l { background:#FBEDEE; border-color:#EBC2C6; color:#8C3440; }
+.group { font-family:'Noto Serif TC',serif; font-size:20px; margin:44px 0 16px; padding-bottom:10px; border-bottom:1px solid var(--line); }
+.grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(380px,1fr)); gap:34px 22px; }
+.card { display:flex; flex-direction:column; align-items:center; gap:14px; }
+.device { padding:9px; background:#17161A; border-radius:40px; box-shadow:0 22px 40px -24px rgba(40,20,30,.6); }
+.meta { width:378px; max-width:100%; }
+.meta .no { font-size:12px; letter-spacing:.2em; color:var(--accent); }
+.meta h3 { font-family:'Noto Serif TC',serif; font-size:18px; margin:4px 0 8px; }
+.meta .tags { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:8px; }
+.meta p { margin:0; font-size:13.5px; line-height:1.8; color:var(--muted); }
+
+/* 手機畫面本體：360 × 640 */
+.scr { position:relative; width:360px; height:640px; overflow:hidden; border-radius:31px; background:#FFFBF7; color:#4A3742; font-family:'Cormorant Infant','Noto Serif TC',serif; }
+.bg { position:absolute; inset:0; background-size:cover; background-position:center; }
+.ph-hero { background-image:url(../../../../src/assets/images/hero-mobile.jpg); }
+.ph-7 { background-image:url(../../../../src/assets/weddingphotos/photo-7.jpg); }
+.ph-11 { background-image:url(../../../../src/assets/weddingphotos/photo-11.jpg); }
+.ph-12 { background-image:url(../../../../src/assets/weddingphotos/photo-12.jpg); }
+.ph-13 { background-image:url(../../../../src/assets/weddingphotos/photo-13.jpg); }
+.ph-14 { background-image:url(../../../../src/assets/weddingphotos/photo-14.jpg); }
+.serif { font-family:'Noto Serif TC',serif; }
+.hand { font-family:'LXGW WenKai TC','Noto Serif TC',serif; }
+.vibes { font-family:'Great Vibes',cursive; }
+.tang { font-family:'Tangerine',cursive; }
+.orn { display:flex; align-items:center; justify-content:center; gap:8px; margin:12px 0; }
+.orn i { width:34px; height:1px; background:#E7C873; }
+.orn b { width:6px; height:6px; background:#E7C873; transform:rotate(45deg); }
+.sec-eye { margin:0; font-size:11px; font-weight:600; letter-spacing:5px; color:#CA8A04; text-align:center; font-family:'Cormorant Infant',serif; }
+.sec-title { margin:6px 0 0; font-family:'Tangerine',cursive; font-size:34px; line-height:1.2; color:#DB2777; text-align:center; font-weight:400; }
+.gold-line { width:56px; height:1px; background:#E7C873; margin:14px auto 0; }
+.wash { position:absolute; border-radius:50%; filter:blur(34px); opacity:.55; pointer-events:none; }
+.hl { position:relative; }
+
+/* 01 開場層・弧形標題 */
+.m01 .shade { position:absolute; inset:0; background:linear-gradient(180deg,rgba(20,24,30,.2),rgba(20,24,30,.7)); }
+.m01 .gate { position:absolute; left:0; right:0; bottom:118px; text-align:center; color:#fff; }
+.m01 svg { display:block; margin:0 auto -4px; }
+.m01 svg text { fill:#fff; font-family:'Noto Serif TC',serif; font-size:17px; letter-spacing:3px; }
+.m01 .en { margin:0; font-family:'Great Vibes',cursive; font-size:58px; line-height:1; }
+.m01 .zh { margin:10px 0 0; font-family:'Noto Serif TC',serif; font-size:15px; letter-spacing:.3em; }
+.m01 .tap { margin:0; font-family:'Noto Serif TC',serif; font-size:13px; letter-spacing:.4em; color:#E7C873; }
+
+/* 02 開場層・逐字浮現 */
+.m02 { background:#1E2A33; }
+.m02 .bg { opacity:.28; }
+.m02 .c { position:absolute; left:0; right:0; top:230px; text-align:center; color:#fff; }
+.m02 .tw { font-family:'Noto Serif TC',serif; font-size:24px; letter-spacing:.24em; }
+.m02 .tw span { display:inline-block; opacity:0; animation:m02tw 8s infinite both; animation-delay:calc(var(--i) * .3s); }
+.m02 .after { opacity:0; animation:m02after 8s infinite both; }
+.m02 .en { margin:26px 0 0; font-family:'Great Vibes',cursive; font-size:46px; }
+.m02 .tap { margin:44px 0 0; font-family:'Noto Serif TC',serif; font-size:13px; letter-spacing:.4em; color:#E7C873; }
+@keyframes m02tw { 0% { opacity:0; transform:translateY(8px); } 6% { opacity:1; transform:none; } 80% { opacity:1; } 90%,100% { opacity:0; } }
+@keyframes m02after { 0%,48% { opacity:0; } 58% { opacity:1; } 86% { opacity:1; } 94%,100% { opacity:0; } }
+
+/* 03 開場層・直排大字 */
+.m03 .shade { position:absolute; inset:0; background:linear-gradient(180deg,rgba(0,0,0,.18),rgba(0,0,0,0) 45%,rgba(0,0,0,.5)); }
+.m03 .vt { position:absolute; top:46px; right:44px; writing-mode:vertical-rl; font-family:'Noto Serif TC',serif; font-size:30px; line-height:1.7; letter-spacing:.32em; color:#fff; text-shadow:0 2px 14px rgba(0,0,0,.35); margin:0; }
+.m03 .bot { position:absolute; left:0; right:0; bottom:54px; text-align:center; color:#fff; }
+.m03 .en { margin:0; font-family:'Great Vibes',cursive; font-size:40px; }
+.m03 .tap { margin:14px 0 0; font-family:'Noto Serif TC',serif; font-size:12px; letter-spacing:.4em; color:#E7C873; }
+
+/* 04 封面・名字上方一行 */
+.m04 .shade { position:absolute; inset:0; background:linear-gradient(180deg,rgba(0,0,0,0) 35%,rgba(0,0,0,.62)); }
+.m04 .c { position:absolute; left:0; right:0; bottom:74px; text-align:center; color:#fff; }
+.m04 .eye { margin:0; font-family:'Noto Serif TC',serif; font-size:13px; letter-spacing:.42em; color:rgba(255,255,255,.9); }
+.m04 .en { margin:6px 0 0; font-family:'Great Vibes',cursive; font-size:62px; line-height:1.05; }
+.m04 .zh { margin:8px 0 0; font-family:'Noto Serif TC',serif; font-size:15px; letter-spacing:.3em; }
+.m04 .d { margin:14px 0 0; font-family:'Cormorant Infant',serif; font-size:17px; letter-spacing:.2em; }
+.m04 .v { margin:4px 0 0; font-family:'Noto Serif TC',serif; font-size:13px; letter-spacing:.3em; color:rgba(255,255,255,.85); }
+
+/* 05 全站・捲動時的浮動膠囊 */
+.m05 { background:#FDF2F8; }
+.m05 .top { padding-top:52px; }
+.m05 .row { display:flex; gap:14px; justify-content:center; margin-top:26px; }
+.m05 .row div { width:150px; height:200px; border-radius:14px; background-size:cover; background-position:center; }
+.m05 .intro { margin:22px 34px 0; text-align:center; font-style:italic; font-size:16px; line-height:1.8; color:#7A5560; font-family:'Cormorant Infant','Noto Serif TC',serif; }
+.m05 .pill { position:absolute; left:14px; right:14px; bottom:22px; height:56px; border-radius:28px; background:#831843; color:#fff; display:flex; align-items:center; justify-content:space-between; padding:0 8px 0 20px; box-shadow:0 12px 24px -12px rgba(131,24,67,.7); animation:m05up 4s ease-in-out infinite; }
+.m05 .pill span { font-family:'Noto Serif TC',serif; font-size:14px; letter-spacing:.12em; }
+.m05 .pill span small { font-family:'Cormorant Infant',serif; font-size:13px; letter-spacing:.1em; color:#E7C873; margin-left:6px; }
+.m05 .pill a { background:#FFFFFF; color:#831843; text-decoration:none; font-size:12.5px; font-weight:700; padding:9px 13px; border-radius:20px; font-family:'Noto Sans TC',sans-serif; }
+@keyframes m05up { 0% { transform:translateY(90px); } 18%,82% { transform:none; } 100% { transform:translateY(90px); } }
+
+/* 06 封面・倒數計時的標題 */
+.m06 .shade { position:absolute; inset:0; background:linear-gradient(180deg,rgba(0,0,0,.05) 30%,rgba(0,0,0,.66)); }
+.m06 .c { position:absolute; left:0; right:0; bottom:56px; text-align:center; color:#fff; }
+.m06 .en { margin:0; font-family:'Great Vibes',cursive; font-size:48px; }
+.m06 .ph { margin:18px 0 12px; font-family:'Noto Serif TC',serif; font-size:17px; letter-spacing:.28em; }
+.m06 .cd { display:flex; justify-content:center; gap:10px; }
+.m06 .cd div { width:66px; padding:10px 0 8px; border-radius:12px; background:rgba(255,255,255,.14); border:1px solid rgba(255,255,255,.32); backdrop-filter:blur(6px); }
+.m06 .cd b { display:block; font-family:'Cormorant Infant',serif; font-size:26px; font-weight:500; }
+.m06 .cd small { font-size:9.5px; letter-spacing:.2em; opacity:.85; font-family:'Cormorant Infant',serif; }
+
+/* 07 封面・直排＋12 月月曆 */
+.m07 .shade { position:absolute; inset:0; background:linear-gradient(180deg,rgba(0,0,0,.12),rgba(0,0,0,0) 40%,rgba(40,20,30,.25)); }
+.m07 .vt { position:absolute; top:28px; left:50%; transform:translateX(-50%); writing-mode:vertical-rl; margin:0; font-family:'Noto Serif TC',serif; font-size:24px; letter-spacing:.28em; color:#fff; text-shadow:0 2px 12px rgba(0,0,0,.35); }
+.m07 .date { position:absolute; left:26px; right:26px; top:352px; display:flex; justify-content:space-between; align-items:baseline; color:#fff; }
+.m07 .date b { font-family:'Cormorant Infant',serif; font-weight:500; font-size:34px; letter-spacing:.04em; }
+.m07 .date i { font-family:'Great Vibes',cursive; font-style:normal; font-size:30px; }
+.m07 .cal { position:absolute; left:20px; right:20px; bottom:20px; padding:12px 10px 10px; background:rgba(255,255,255,.3); backdrop-filter:blur(3px); border-radius:6px; color:#fff; }
+.m07 .cal .w, .m07 .cal .d { display:grid; grid-template-columns:repeat(7,1fr); text-align:center; }
+.m07 .cal .w span { font-family:'Noto Serif TC',serif; font-size:13px; padding-bottom:6px; }
+.m07 .cal .d span { font-family:'Cormorant Infant',serif; font-size:17px; line-height:30px; }
+.m07 .cal .d .on { display:inline-flex; align-items:center; justify-content:center; width:30px; height:30px; margin:0 auto; border-radius:50%; background:#FFF8F0; color:#5C4450; font-weight:600; }
+
+/* 08–10 帖面（水彩 C 版） */
+.inv { background:#FFFCFA; font-family:'Cormorant Garamond',serif; color:#4A3742; }
+.inv .w1 { width:280px; height:260px; background:#F3C3CE; left:-90px; top:-70px; }
+.inv .w2 { width:240px; height:220px; background:#D8C9EC; right:-80px; top:70px; opacity:.45; }
+.inv .w3 { width:300px; height:240px; background:#F7DDC0; left:-40px; top:330px; opacity:.5; }
+.inv .in { position:relative; padding:46px 26px 0; text-align:center; }
+.inv .eye { margin:0 0 18px; font-family:'Noto Serif TC',serif; font-size:10.5px; letter-spacing:.46em; color:#B08196; }
+.inv .zh { margin:0; font-family:'Noto Serif TC',serif; font-size:28px; font-weight:500; letter-spacing:.18em; color:#5C4450; line-height:1.3; }
+.inv .en { margin:12px 0 0; font-size:14px; letter-spacing:.34em; color:#A88C97; }
+.inv .oval { margin:22px auto 0; width:170px; height:210px; border-radius:50%; overflow:hidden; box-shadow:0 14px 32px -20px rgba(74,55,66,.5); background:url(../../../../src/assets/images/invitation-portrait.jpg) 50% 38%/cover; }
+.inv .dw { margin-top:22px; display:flex; align-items:center; justify-content:center; gap:12px; }
+.inv .dw i { width:30px; height:1px; background:#D9BCC6; }
+.inv .dw span { font-size:30px; letter-spacing:.1em; color:#5C4450; }
+.inv .lunar { margin:9px 0 0; font-family:'Noto Serif TC',serif; font-size:12px; letter-spacing:.24em; color:#8A7080; }
+.inv .sub { margin:6px 0 0; font-family:'Noto Serif TC',serif; font-size:11px; letter-spacing:.3em; color:#B08196; }
+.inv .card { margin:20px 20px 0; padding:16px; background:rgba(255,255,255,.72); border:1px solid rgba(217,188,198,.7); border-radius:8px; text-align:left; display:grid; gap:9px; font-family:'Noto Serif TC',serif; position:relative; }
+.inv .card div { display:grid; grid-template-columns:56px 1fr; gap:10px; align-items:baseline; }
+.inv .card dt { font-size:11px; letter-spacing:.2em; color:#B08196; }
+.inv .card dd { margin:0; font-size:14px; color:#4A3742; letter-spacing:.04em; }
+.m08 .eye { font-size:13px; letter-spacing:.3em; color:#B0607E; margin-bottom:16px; }
+.m09 .in { padding-top:36px; }
+.m09 .ph { position:relative; margin:22px 0 0; text-align:center; font-family:'LXGW WenKai TC','Noto Serif TC',serif; font-size:23px; line-height:1.7; letter-spacing:.14em; color:#8A5470; }
+.m09 .ph small { display:block; font-family:'Cormorant Garamond',serif; font-style:italic; font-size:14px; letter-spacing:.14em; color:#B08196; margin-top:4px; }
+.m10 .in { padding-top:40px; }
+.m10 .ovwrap { position:relative; width:320px; height:320px; margin:14px auto 0; }
+.m10 .ovwrap .oval { position:absolute; left:70px; top:20px; margin:0; width:180px; height:224px; }
+.m10 .ovwrap svg { position:absolute; inset:0; overflow:visible; }
+.m10 .ovwrap text { fill:#8A5470; font-family:'Noto Serif TC',serif; font-size:16px; letter-spacing:5px; }
+
+/* 11 段落間・照片淡出＋置中一行（參考圖 1） */
+.m11 { background:#FFFBF7; }
+.m11 .prev { padding:30px 30px 0; text-align:center; color:#B9A3AD; font-family:'Noto Serif TC',serif; font-size:12px; letter-spacing:.2em; }
+.m11 .photo { position:absolute; left:0; right:0; top:74px; height:420px; background:url(../../../../src/assets/weddingphotos/photo-7.jpg) 50% 45%/cover;
+  -webkit-mask-image:linear-gradient(180deg,transparent 0,#000 16%,#000 74%,transparent 100%); mask-image:linear-gradient(180deg,transparent 0,#000 16%,#000 74%,transparent 100%); }
+.m11 .ph { position:absolute; left:0; right:0; top:512px; margin:0; text-align:center; font-family:'Noto Serif TC',serif; font-size:17px; letter-spacing:.34em; color:#5C4450; }
+.m11 .dd { position:absolute; left:0; right:0; top:552px; text-align:center; font-family:'Cormorant Infant',serif; font-size:13px; letter-spacing:.3em; color:#B08196; }
+
+/* 12 段落間・大字排版 */
+.m12 { background:#FDF2F8; }
+.m12 .c { position:absolute; left:34px; right:34px; top:150px; }
+.m12 .eye { margin:0 0 28px; font-family:'Cormorant Infant',serif; font-size:12px; font-weight:600; letter-spacing:.34em; color:#CA8A04; }
+.m12 .l1, .m12 .l2 { margin:0; font-family:'Noto Serif TC',serif; font-weight:600; font-size:46px; line-height:1.35; color:#831843; letter-spacing:.06em; }
+.m12 .l2 { text-align:right; }
+.m12 .gl { height:1px; background:#E7C873; margin:30px 0 16px; }
+.m12 .dd { margin:0; display:flex; justify-content:space-between; font-family:'Noto Serif TC',serif; font-size:13px; letter-spacing:.2em; color:#7A5560; }
+
+/* 13 段落間・跑馬燈字帶 */
+.m13 { background:#FDF2F8; }
+.m13 .up { position:absolute; left:0; right:0; top:0; height:230px; background:#FFFCFA; overflow:hidden; }
+.m13 .up .w1 { width:260px; height:220px; background:#F3C3CE; left:-80px; top:30px; }
+.m13 .up .w3 { width:260px; height:200px; background:#F7DDC0; right:-60px; top:60px; opacity:.5; }
+.m13 .up p { position:absolute; left:0; right:0; top:120px; text-align:center; font-style:italic; font-size:17px; color:#8A7080; font-family:'Cormorant Garamond','Noto Serif TC',serif; margin:0; }
+.m13 .band { position:absolute; left:0; right:0; top:230px; height:58px; background:#831843; overflow:hidden; display:flex; align-items:center; }
+.m13 .track { display:flex; white-space:nowrap; animation:m13run 16s linear infinite; }
+.m13 .track span { font-family:'Noto Serif TC',serif; font-size:16px; letter-spacing:.24em; color:#fff; padding-right:26px; }
+.m13 .track span em { font-style:normal; color:#E7C873; font-family:'Cormorant Infant',serif; letter-spacing:.3em; font-size:14px; }
+.m13 .down { position:absolute; left:0; right:0; top:340px; }
+@keyframes m13run { from { transform:translateX(0); } to { transform:translateX(-50%); } }
+
+/* 14 關於我們・手寫開場白 */
+.m14 { background:#FDF2F8; }
+.m14 .top { padding-top:50px; }
+.m14 .ph { margin:24px 0 0; text-align:center; font-family:'LXGW WenKai TC','Noto Serif TC',serif; font-size:24px; letter-spacing:.12em; color:#831843; }
+.m14 .intro { margin:12px 30px 0; text-align:center; font-style:italic; font-size:15.5px; line-height:1.8; color:#7A5560; }
+.m14 .person { display:flex; gap:16px; margin:26px 24px 0; }
+.m14 .person div:first-child { width:130px; height:176px; flex:none; border-radius:14px; background:url(../../../../src/assets/images/groom.jpg) center/cover; }
+.m14 .person p { margin:0; }
+.m14 .person .k { font-size:10px; letter-spacing:.3em; color:#CA8A04; margin-top:10px; }
+.m14 .person .n { font-family:'Noto Serif TC',serif; font-size:24px; color:#831843; margin-top:4px; }
+.m14 .person .t { font-family:'Noto Serif TC',serif; font-size:12.5px; line-height:1.8; color:#7A5560; margin-top:8px; }
+
+/* 15 交往故事・最後一頁 */
+.m15 { background:#FFFBF7; }
+.m15 .top { padding-top:46px; }
+.m15 .book { margin:22px 20px 0; padding:10px; border-radius:10px; background:#A67C52; box-shadow:inset 0 2px 0 #BD9B79, inset 0 -3px 0 #7D5D3E, 0 18px 30px -20px rgba(80,50,30,.6); }
+.m15 .page { background:#FFFDF9; border-radius:4px; padding:12px; }
+.m15 .pic { height:210px; border-radius:6px; background:url(../../../../src/assets/gallery/photo-5.jpg) 50% 30%/cover; }
+.m15 .when { margin:14px 0 0; font-family:'Cormorant Infant','Noto Serif TC',serif; font-size:13px; letter-spacing:.2em; color:#CA8A04; }
+.m15 .ttl { margin:6px 0 0; font-family:'Noto Serif TC',serif; font-size:21px; font-weight:600; color:#831843; letter-spacing:.06em; }
+.m15 .txt { margin:8px 0 0; font-family:'Noto Serif TC',serif; font-size:13px; line-height:1.8; color:#7A5560; }
+.m15 .dots { display:flex; justify-content:center; gap:7px; margin-top:16px; }
+.m15 .dots i { width:7px; height:7px; border-radius:50%; background:#E4BFCD; }
+.m15 .dots i.on { background:#DB2777; width:18px; border-radius:4px; }
+
+/* 16 婚紗藝廊・取代金句 */
+.m16 { background:#FFFBF7; }
+.m16 .top { padding-top:46px; }
+.m16 .strip { display:flex; gap:10px; margin:24px 0 0 -40px; }
+.m16 .strip div { flex:none; width:176px; height:250px; border-radius:14px; background-size:cover; background-position:center; }
+.m16 .q { display:flex; align-items:center; justify-content:center; gap:12px; margin:28px 0 0; }
+.m16 .q i { width:26px; height:1px; background:#E7C873; }
+.m16 .q span { font-family:'Noto Serif TC',serif; font-size:17px; letter-spacing:.26em; color:#7A5560; }
+.m16 .hint { margin:16px 0 0; text-align:center; font-family:'Noto Serif TC',serif; font-size:11.5px; letter-spacing:.2em; color:#B9A3AD; }
+
+/* 17 交通資訊・See You There 的中文副標 */
+.m17 { background:#FDF2F8; }
+.m17 .top { padding-top:46px; }
+.m17 .ph { margin:8px 0 0; text-align:center; font-family:'Noto Serif TC',serif; font-size:14px; letter-spacing:.34em; color:#7A5560; }
+.m17 .cardx { margin:22px 20px 0; padding:16px; background:#fff; border-radius:18px; box-shadow:0 8px 28px rgba(131,24,67,.12); }
+.m17 .cardx img { display:block; width:100%; border-radius:10px; }
+.m17 .map { margin-top:12px; height:110px; border-radius:10px; background:url(../../../../src/assets/images/map-preview-mobile.jpg) center/cover, #EDE7E9; }
+.m17 .btn { margin-top:12px; height:44px; border-radius:22px; background:#CA8A04; color:#fff; display:flex; align-items:center; justify-content:center; font-family:'Noto Serif TC',serif; font-size:13px; letter-spacing:.08em; }
+
+/* 18 出席回覆・說明文第一句 */
+.m18 { background:linear-gradient(180deg,#FFFBF7 0%,#FDF2F8 100%); }
+.m18 .top { padding-top:120px; }
+.m18 .intro { margin:22px 0 0; text-align:center; font-family:'Noto Serif TC',serif; }
+.m18 .intro .p1 { margin:0; font-size:19px; letter-spacing:.18em; color:#831843; font-weight:500; }
+.m18 .intro .p2 { margin:8px 0 0; font-size:14px; letter-spacing:.06em; color:#7A5560; }
+.m18 .cardx { margin:30px 24px 0; padding:22px; background:#fff; border-radius:20px; box-shadow:0 8px 28px rgba(131,24,67,.12); text-align:center; }
+.m18 .btn { height:52px; border-radius:26px; background:#DB2777; color:#fff; display:flex; align-items:center; justify-content:center; font-family:'Noto Serif TC',serif; font-size:15px; font-weight:600; letter-spacing:.08em; }
+.m18 .note { margin:12px 0 0; font-family:'Noto Serif TC',serif; font-size:11.5px; color:#7A5560; }
+
+/* 19 頁尾・R&A 圓環外圈環形字 */
+.m19 { background:#831843; color:#fff; }
+.m19 .top { padding-top:70px; text-align:center; }
+.m19 .eye { margin:0; font-size:11px; font-weight:600; letter-spacing:5px; color:#E7C873; font-family:'Cormorant Infant',serif; }
+.m19 .tt { margin:8px 0 0; font-family:'Tangerine',cursive; font-size:44px; line-height:1.1; }
+.m19 .body { margin:14px 30px 0; font-family:'Noto Serif TC',serif; font-size:13.5px; line-height:1.8; color:rgba(255,255,255,.8); }
+.m19 .ring { position:relative; width:220px; height:220px; margin:26px auto 0; }
+.m19 .ring svg { position:absolute; inset:0; animation:m19spin 40s linear infinite; }
+.m19 .ring text { fill:#E7C873; font-family:'Noto Serif TC',serif; font-size:13px; letter-spacing:2px; }
+.m19 .ring .mono { position:absolute; left:50%; top:50%; width:110px; height:110px; margin:-55px 0 0 -55px; border-radius:50%; border:1px solid #E7C873; display:flex; align-items:center; justify-content:center; color:#E7C873; font-family:'Cormorant Infant',serif; font-size:22px; letter-spacing:1px; }
+.m19 .d { margin:18px 0 0; text-align:center; font-family:'Cormorant Infant',serif; font-size:13px; letter-spacing:.3em; color:rgba(255,255,255,.8); }
+@keyframes m19spin { to { transform:rotate(360deg); } }
+
+/* 20 LINE 分享預覽卡 */
+.m20 { background:#8CABD8; font-family:'Noto Sans TC',sans-serif; }
+.m20 .bar { height:84px; background:#212A38; color:#fff; display:flex; align-items:flex-end; padding:0 16px 14px; font-size:15px; font-weight:700; }
+.m20 .bar small { font-weight:400; opacity:.6; margin-left:8px; font-size:12px; }
+.m20 .msg { position:absolute; right:14px; top:120px; width:252px; }
+.m20 .url { background:#8DE055; color:#1B1B1B; border-radius:16px 16px 4px 16px; padding:9px 12px; font-size:11.5px; word-break:break-all; }
+.m20 .pv { margin-top:6px; background:#fff; border-radius:14px; overflow:hidden; box-shadow:0 4px 12px rgba(0,0,0,.12); }
+.m20 .pv .img { height:132px; background:url(../../../../src/assets/images/og-share.jpg) center/cover; }
+.m20 .pv .tx { padding:10px 12px 12px; }
+.m20 .pv b { display:block; font-size:13.5px; line-height:1.45; color:#111; }
+.m20 .pv span { display:block; margin-top:4px; font-size:11.5px; color:#666; line-height:1.5; }
+.m20 .pv em { display:block; margin-top:6px; font-style:normal; font-size:11px; color:#999; }
+.m20 .time { position:absolute; right:272px; top:372px; font-size:10px; color:rgba(0,0,0,.45); }
+.m20 .reply { position:absolute; left:14px; top:458px; width:210px; background:#fff; color:#1B1B1B; border-radius:16px 16px 16px 4px; padding:10px 12px; font-size:13px; line-height:1.55; }
+
+@media (prefers-reduced-motion: reduce) {
+  .m02 .tw span, .m02 .after { animation:none; opacity:1; }
+  .m05 .pill, .m13 .track, .m19 .ring svg { animation:none; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="head">
+    <p class="kicker">GREETING PLACEMENT · 20 IDEAS</p>
+    <h1>「好久不見，我們婚禮見」放置比稿　20 式</h1>
+    <p>照網站由上往下排：開場層 → 封面 → 婚禮邀請函 → 段落之間 → 各段落 → 頁尾與分享。每一格都是手機畫面，用網站實際的配色、字型與婚紗照。有「動態」標籤的，這一頁上就會動給你看。</p>
+    <p><b style="color:var(--ink)">兩個版本的文案怎麼選：</b>「好久不見，我們婚禮見」多了「我們」，讀起來像新人親口在說，適合橫排的一行字；「好久不見，婚禮見」少兩個字、節奏更俐落，直排或放大字級時比較好排（例如 03、06、11）。同一個網站可以兩種並用：主要的位置用長句，直排與跑馬燈用短句。</p>
+    <div class="picks">
+      <div class="pick"><b>首選　10 照片淡出＋一行字</b><span>跟你第一張參考圖同一種做法，插在兩段之間當「呼吸」，不動到任何現有區塊，情緒最到位。</span></div>
+      <div class="pick"><b>次選　17 See You There 的中文副標</b><span>交通區的英文主標剛好就是「到時見」，中文放在正下方像翻譯又像問候，改動只有一行字。</span></div>
+      <div class="pick"><b>也很適合　01 開場弧形標題</b><span>賓客點開連結第一眼就看到，比「婚禮邀請函」四個字更有溫度；同樣只換一行字。</span></div>
+    </div>
+    <div class="legend">
+      <span class="tag s">改動小：換一行字</span><span class="tag m">改動中：加一個元素</span><span class="tag l">改動大：新增一個區塊</span><span class="tag anim">動態</span><span class="tag rec">推薦</span>
+    </div>
+  </header>
+
+  <h2 class="group">開場層（點開連結後的第一個畫面）</h2>
+  <div class="grid">
+    <div class="card">
+      <div class="device"><div class="scr m01"><div class="bg ph-hero"></div><div class="shade"></div>
+        <div class="gate">
+          <svg width="300" height="84" viewBox="0 0 300 84"><path id="arc01" d="M16 80 Q150 -8 284 80" fill="none"/><text><textPath href="#arc01" startOffset="50%" text-anchor="middle">好久不見，我們婚禮見</textPath></text></svg>
+          <p class="en">Roger &amp; Amy</p>
+          <p class="zh">洪承孝　✕　李怡安</p>
+          <div class="orn"><i></i><b></b><i></i></div>
+          <p class="tap">輕觸開啟</p>
+        </div></div></div>
+      <div class="meta"><div class="no">01</div><h3>開場弧形標題</h3><div class="tags"><span class="tag s">改動小</span><span class="tag rec">推薦</span></div>
+        <p>把現在弧形排列的「婚禮邀請函」換成這句。位置、弧度、字級都不變，只換字，賓客點開連結第一眼就讀到。</p></div>
+    </div>
+
+    <div class="card">
+      <div class="device"><div class="scr m02"><div class="bg ph-hero"></div>
+        <div class="c">
+          <div class="tw"><span style="--i:0">好</span><span style="--i:1">久</span><span style="--i:2">不</span><span style="--i:3">見</span><span style="--i:4">，</span><span style="--i:5">我</span><span style="--i:6">們</span><span style="--i:7">婚</span><span style="--i:8">禮</span><span style="--i:9">見</span></div>
+          <div class="after"><p class="en">Roger &amp; Amy</p><p class="tap">輕觸開啟</p></div>
+        </div></div></div>
+      <div class="meta"><div class="no">02</div><h3>開場逐字浮現</h3><div class="tags"><span class="tag m">改動中</span><span class="tag anim">動態</span></div>
+        <p>深色底上一個字一個字浮出來，像在打招呼；整句出現後才浮出名字與「輕觸開啟」。儀式感最強，但賓客要多等兩三秒。</p></div>
+    </div>
+
+    <div class="card">
+      <div class="device"><div class="scr m03"><div class="bg ph-11"></div><div class="shade"></div>
+        <p class="vt">好久不見，<br>我們婚禮見</p>
+        <div class="bot"><p class="en">Roger &amp; Amy</p><p class="tap">輕觸開啟</p></div></div></div>
+      <div class="meta"><div class="no">03</div><h3>開場直排大字</h3><div class="tags"><span class="tag m">改動中</span></div>
+        <p>選一張上半部是天空的照片，句子直排在右上角，名字縮小放到底部。最像雜誌封面；直排時用短句「好久不見，婚禮見」會更好看。</p></div>
+    </div>
+  </div>
+
+  <h2 class="group">封面</h2>
+  <div class="grid">
+    <div class="card">
+      <div class="device"><div class="scr m04"><div class="bg ph-hero"></div><div class="shade"></div>
+        <div class="c"><p class="eye">好久不見，我們婚禮見</p><p class="en">Roger &amp; Amy</p><p class="zh">洪承孝　✕　李怡安</p><p class="d">2026 . 12 . 12　星期六</p><p class="v">臻愛花園飯店</p></div></div></div>
+      <div class="meta"><div class="no">04</div><h3>名字上方的一行小字</h3><div class="tags"><span class="tag s">改動小</span></div>
+        <p>封面之前有一行英文眉標，後來拿掉了；這個位置剛好空著，放回一行中文小字，當作 Roger &amp; Amy 的開場白。</p></div>
+    </div>
+
+    <div class="card">
+      <div class="device"><div class="scr m06"><div class="bg ph-13"></div><div class="shade"></div>
+        <div class="c"><p class="en">Roger &amp; Amy</p><p class="ph">好久不見，我們婚禮見</p>
+          <div class="cd"><div><b>78</b><small>DAYS</small></div><div><b>06</b><small>HOURS</small></div><div><b>42</b><small>MINS</small></div><div><b>15</b><small>SECS</small></div></div></div></div></div>
+      <div class="meta"><div class="no">05</div><h3>倒數計時的標題</h3><div class="tags"><span class="tag s">改動小</span></div>
+        <p>放在倒數四格正上方，讀起來像「好久不見，還有 78 天就婚禮見」。句子和倒數互相呼應，最有期待感。</p></div>
+    </div>
+
+    <div class="card">
+      <div class="device"><div class="scr m07"><div class="bg ph-11"></div><div class="shade"></div>
+        <p class="vt">好久不見，我們婚禮見</p>
+        <div class="date"><b>12/12</b><i>2026</i></div>
+        <div class="cal"><div class="w"><span>日</span><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span></div>
+          <div class="d"><span></span><span></span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span>11</span><span><b class="on">12</b></span><span>13</span><span>14</span><span>15</span><span>16</span><span>17</span><span>18</span><span>19</span><span>20</span><span>21</span><span>22</span><span>23</span><span>24</span><span>25</span><span>26</span><span>27</span><span>28</span><span>29</span><span>30</span><span>31</span></div></div></div></div>
+      <div class="meta"><div class="no">06</div><h3>直排＋12 月月曆</h3><div class="tags"><span class="tag l">改動大</span></div>
+        <p>你第二張參考圖的做法：照片上直排一句，下方半透明月曆把 12 號圈起來。適合做成封面之後的獨立一屏；月曆已依 2026 年 12 月排好（12 日是星期六）。</p></div>
+    </div>
+  </div>
+
+  <h2 class="group">婚禮邀請函（帖面）</h2>
+  <div class="grid">
+    <div class="card">
+      <div class="device"><div class="scr inv m08"><span class="wash w1"></span><span class="wash w2"></span><span class="wash w3"></span>
+        <div class="in"><p class="eye">好久不見，我們婚禮見</p><p class="zh">洪承孝　李怡安</p><p class="en">ROGER &amp; AMY</p><div class="oval"></div>
+          <div class="dw"><i></i><span>12 . 12 . 2026</span><i></i></div><p class="lunar">歲次丙午年　十一月初四</p><p class="sub">星 期 六 · 晚 宴 18:00 入 席</p></div></div></div>
+      <div class="meta"><div class="no">07</div><h3>取代帖面眉標</h3><div class="tags"><span class="tag s">改動小</span></div>
+        <p>「WE ARE GETTING MARRIED」換成這句，位置不變、字級略放大。帖面從「宣布」變成「打招呼」，語氣更親近。</p></div>
+    </div>
+
+    <div class="card">
+      <div class="device"><div class="scr inv m09"><span class="wash w1"></span><span class="wash w2"></span><span class="wash w3" style="top:180px"></span>
+        <div class="in"><div class="dw" style="margin-top:0"><i></i><span>12 . 12 . 2026</span><i></i></div><p class="lunar">歲次丙午年　十一月初四</p><p class="sub">星 期 六 · 晚 宴 18:00 入 席</p></div>
+        <dl class="card"><div><dt>男方家長</dt><dd>洪進源・柯麗香</dd></div><div><dt>女方家長</dt><dd>李宗敏・許艷眞</dd></div><div><dt>地　點</dt><dd>臻愛花園飯店</dd></div><div><dt>宴會廳</dt><dd>2F 東方明珠</dd></div><div><dt>地　址</dt><dd>台中市烏日區高鐵路三段 168 號</dd></div></dl>
+        <p class="ph">好久不見，<br>我們婚禮見 ♡<small>— Roger &amp; Amy</small></p></div></div>
+      <div class="meta"><div class="no">08</div><h3>帖面的手寫收尾</h3><div class="tags"><span class="tag s">改動小</span></div>
+        <p>把帖面最後的「願我們的故事，從今天起有了共同的名字。」換成這句，改用手寫感字體並署名，像卡片最後親筆寫的一行。</p></div>
+    </div>
+
+    <div class="card">
+      <div class="device"><div class="scr inv m10"><span class="wash w1"></span><span class="wash w2"></span><span class="wash w3"></span>
+        <div class="in"><p class="eye">WE ARE GETTING MARRIED</p><p class="zh">洪承孝　李怡安</p><p class="en">ROGER &amp; AMY</p>
+          <div class="ovwrap"><div class="oval"></div>
+            <svg width="320" height="320" viewBox="0 0 320 320"><path id="arc10" d="M42 132 A118 144 0 0 0 278 132" fill="none"/><text><textPath href="#arc10" startOffset="50%" text-anchor="middle">好久不見，我們婚禮見</textPath></text></svg></div>
+          <div class="dw" style="margin-top:0"><i></i><span>12 . 12 . 2026</span><i></i></div></div></div></div>
+      <div class="meta"><div class="no">09</div><h3>沿著橢圓照片的弧形字</h3><div class="tags"><span class="tag m">改動中</span></div>
+        <p>句子順著橢圓照片的下緣彎成一道弧，像印在相框上的字。帖面其他內容完全不動，只多一圈字。</p></div>
+    </div>
+  </div>
+
+  <h2 class="group">段落之間（新增一屏）</h2>
+  <div class="grid">
+    <div class="card">
+      <div class="device"><div class="scr m11"><p class="prev">（上一段：婚禮邀請函）</p><div class="photo"></div>
+        <p class="ph">好久不見，我們婚禮見</p><p class="dd">2026 . 12 . 12</p></div></div>
+      <div class="meta"><div class="no">10</div><h3>照片淡出＋置中一行</h3><div class="tags"><span class="tag l">改動大</span><span class="tag rec">推薦</span></div>
+        <p>你第一張參考圖的做法：一張走在石板路上的照片，上下邊緣淡進背景，下方置中一行字。插在邀請函與「關於我們」之間當一口呼吸，不動到任何現有區塊。</p></div>
+    </div>
+
+    <div class="card">
+      <div class="device"><div class="scr m12"><div class="c"><p class="eye">SEE YOU AT OUR WEDDING</p><p class="l1">好久不見，</p><p class="l2">我們婚禮見</p><div class="gl"></div><p class="dd"><span>2026 . 12 . 12</span><span>臻愛花園飯店</span></p></div></div></div>
+      <div class="meta"><div class="no">11</div><h3>大字排版</h3><div class="tags"><span class="tag l">改動大</span></div>
+        <p>不用照片，整屏只有兩行大字，第一行靠左、第二行靠右，像海報。版面最乾淨，適合放在照片很多的段落之間讓眼睛休息。</p></div>
+    </div>
+
+    <div class="card">
+      <div class="device"><div class="scr m13"><div class="up"><span class="wash w1"></span><span class="wash w3"></span><p>願我們的故事，從今天起有了共同的名字。</p></div>
+        <div class="band"><div class="track"><span>好久不見，我們婚禮見　<em>✦ SEE YOU AT OUR WEDDING ✦</em></span><span>好久不見，我們婚禮見　<em>✦ SEE YOU AT OUR WEDDING ✦</em></span><span>好久不見，我們婚禮見　<em>✦ SEE YOU AT OUR WEDDING ✦</em></span><span>好久不見，我們婚禮見　<em>✦ SEE YOU AT OUR WEDDING ✦</em></span></div></div>
+        <div class="down"><p class="sec-eye">ABOUT US</p><p class="sec-title">The Two of Us</p><div class="gold-line"></div></div></div></div>
+      <div class="meta"><div class="no">12</div><h3>跑馬燈字帶</h3><div class="tags"><span class="tag m">改動中</span><span class="tag anim">動態</span></div>
+        <p>兩段之間一條酒紅色的細帶，句子緩緩橫向捲動、中英交替。存在感強但不佔版面；系統設定「減少動態效果」的人會看到靜止版。</p></div>
+    </div>
+  </div>
+
+  <h2 class="group">各段落內</h2>
+  <div class="grid">
+    <div class="card">
+      <div class="device"><div class="scr m05"><div class="top"><p class="sec-eye">ABOUT US</p><p class="sec-title">The Two of Us</p><div class="gold-line"></div></div>
+        <div class="row"><div style="background-image:url(../../../../src/assets/images/groom.jpg)"></div><div style="background-image:url(../../../../src/assets/images/bride.jpg)"></div></div>
+        <p class="intro">在遇見彼此之前，<br>我們各自過著很不一樣的日子。</p>
+        <div class="pill"><span>好久不見，我們婚禮見<small>12.12</small></span><a>回覆出席 →</a></div></div></div>
+      <div class="meta"><div class="no">13</div><h3>捲動時的浮動膠囊</h3><div class="tags"><span class="tag m">改動中</span><span class="tag anim">動態</span></div>
+        <p>滑過封面之後，畫面底部浮出一條膠囊：左邊是這句話，右邊是「回覆出席」按鈕。賓客讀到哪裡都能一鍵回覆，句子也一路陪著。</p></div>
+    </div>
+
+    <div class="card">
+      <div class="device"><div class="scr m14"><div class="top"><p class="sec-eye">ABOUT US</p><p class="sec-title">The Two of Us</p><div class="gold-line"></div></div>
+        <p class="ph">好久不見，我們婚禮見</p><p class="intro">在遇見彼此之前，<br>我們各自過著很不一樣的日子。</p>
+        <div class="person"><div></div><div><p class="k">GROOM</p><p class="n">洪承孝</p><p class="t">靠一行行程式碼過日子，習慣把複雜的問題拆開來、一個一個解決。</p></div></div></div></div>
+      <div class="meta"><div class="no">14</div><h3>「關於我們」的手寫開場白</h3><div class="tags"><span class="tag s">改動小</span></div>
+        <p>在「關於我們」標題下方、引言之前加一行手寫字，像兩人開口自我介紹前先打聲招呼。</p></div>
+    </div>
+
+    <div class="card">
+      <div class="device"><div class="scr m15"><div class="top"><p class="sec-eye">OUR STORY</p><p class="sec-title">How We Met</p></div>
+        <div class="book"><div class="page"><div class="pic"></div><p class="when">2026　12 月</p><p class="ttl">好久不見，我們婚禮見</p><p class="txt">故事的最後一頁，留給婚禮那天的你。</p></div></div>
+        <div class="dots"><i></i><i></i><i></i><i></i><i></i><i class="on"></i></div></div></div>
+      <div class="meta"><div class="no">15</div><h3>交往故事的最後一頁</h3><div class="tags"><span class="tag m">改動中</span></div>
+        <p>故事書現在五頁，多加第六頁當結局：前五頁講兩人怎麼走到今天，最後一頁翻過來是這句話。內文那一行只是示意，可以再寫。</p></div>
+    </div>
+
+    <div class="card">
+      <div class="device"><div class="scr m16"><div class="top"><p class="sec-eye">GALLERY</p><p class="sec-title">Our Moments</p><div class="gold-line"></div></div>
+        <div class="strip"><div style="background-image:url(../../../../src/assets/weddingphotos/photo-9.jpg)"></div><div style="background-image:url(../../../../src/assets/weddingphotos/photo-14.jpg)"></div><div style="background-image:url(../../../../src/assets/weddingphotos/photo-3.jpg)"></div></div>
+        <div class="q"><i></i><span>好久不見，我們婚禮見</span><i></i></div><p class="hint">左右滑動瀏覽・點擊放大</p></div></div>
+      <div class="meta"><div class="no">16</div><h3>取代婚紗藝廊的金句</h3><div class="tags"><span class="tag s">改動小</span></div>
+        <p>藝廊下方那句「願我們的故事…」和帖面收尾句重複了，正好換成這句。看完一整排婚紗照，接一句「婚禮見」很順。</p></div>
+    </div>
+
+    <div class="card">
+      <div class="device"><div class="scr m17"><div class="top"><p class="sec-eye">DIRECTIONS</p><p class="sec-title">See You There</p><p class="ph">好久不見，我們婚禮見</p></div>
+        <div class="cardx"><img src="../../../../src/assets/images/parking-map.svg" alt="停車示意圖"><div class="map"></div><div class="btn">開啟 Google 地圖導航</div></div></div></div>
+      <div class="meta"><div class="no">17</div><h3>See You There 的中文副標</h3><div class="tags"><span class="tag s">改動小</span><span class="tag rec">推薦</span></div>
+        <p>交通區的英文主標「See You There」本來就是「到時見」，中文放在正下方，一句像翻譯、一句像問候，語意剛好接得上。</p></div>
+    </div>
+
+    <div class="card">
+      <div class="device"><div class="scr m18"><div class="top"><p class="sec-eye">R.S.V.P.</p><p class="sec-title">Will You Join Us?</p></div>
+        <div class="intro"><p class="p1">好久不見，我們婚禮見。</p><p class="p2">敬請於 2026 / 10 / 31 前回覆。</p></div>
+        <div class="cardx"><div class="btn">填寫出席回覆表單</div><p class="note">將另開新視窗前往 Google 表單</p></div></div></div>
+      <div class="meta"><div class="no">18</div><h3>出席回覆的第一句</h3><div class="tags"><span class="tag s">改動小</span></div>
+        <p>把「您的出席是我們最珍貴的祝福，」換成這句。放在按鈕正上方，從「邀請」直接接到「請回覆」，是最有行動力的位置。</p></div>
+    </div>
+  </div>
+
+  <h2 class="group">頁尾與分享</h2>
+  <div class="grid">
+    <div class="card">
+      <div class="device"><div class="scr m19"><div class="top"><p class="eye">WITH GRATITUDE</p><p class="tt">Thank You</p><p class="body">謝謝每一位陪伴我們走到這裡的人，<br>期待與你分享這一天的喜悅。</p></div>
+        <div class="ring"><svg width="220" height="220" viewBox="0 0 220 220"><path id="ring19" d="M110 110 m-86 0 a86 86 0 1 1 172 0 a86 86 0 1 1 -172 0" fill="none"/><text><textPath href="#ring19" textLength="530" lengthAdjust="spacing">好久不見，我們婚禮見　·　2026.12.12　·　</textPath></text></svg><div class="mono">R &amp; A</div></div>
+        <p class="d">2026 . 12 . 12</p></div></div>
+      <div class="meta"><div class="no">19</div><h3>頁尾圓環外圈的環形字</h3><div class="tags"><span class="tag m">改動中</span><span class="tag anim">動態</span></div>
+        <p>頁尾的 R &amp; A 圓環外面再繞一圈字，慢慢旋轉，像印章或封蠟。整個網站最後一眼停在這句話上。</p></div>
+    </div>
+
+    <div class="card">
+      <div class="device"><div class="scr m20"><div class="bar">李怡安<small>（2）</small></div>
+        <div class="msg"><div class="url">https://roger-hung-dev.github.io/wedding-invitation/</div>
+          <div class="pv"><div class="img"></div><div class="tx"><b>好久不見，我們婚禮見｜Roger &amp; Amy</b><span>2026 . 12 . 12 星期六　臻愛花園飯店，點開看時間地點與回覆出席。</span><em>roger-hung-dev.github.io</em></div></div></div>
+        <p class="time">已讀<br>下午 8:12</p>
+        <div class="reply">哇好久不見！12 月一定到 🎉</div></div></div>
+      <div class="meta"><div class="no">20</div><h3>LINE 分享時的預覽標題</h3><div class="tags"><span class="tag s">改動小</span></div>
+        <p>網站本身不動，改的是「分享連結時 LINE 顯示的標題」。很多賓客根本還沒點進來，第一眼看到的就是這張預覽卡，是觸及最多人的位置。</p></div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
