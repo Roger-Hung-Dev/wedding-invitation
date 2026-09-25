@@ -7,7 +7,8 @@ import { INFO_TEXT } from '../../core/config/wedding-content'
 import { WEDDING_LINKS, buildGoogleMapsDirectionUrl, buildGoogleMapsEmbedUrl } from '../../core/config/wedding-links'
 
 /**
- * S3 交通資訊區：上方停車示意圖（點圖另開原尺寸），下方內嵌 Google 地圖（預設定位在飯店）與導航鈕。
+ * S3 交通資訊區：停車示意圖（點圖另開原尺寸）與內嵌 Google 地圖（預設定位在飯店）加導航鈕，
+ * 手機上下疊、桌機左右併排。
  * 日期、場地、宴會廳與地址由婚禮邀請函區呈現，這一段不重複。
  */
 @Component({

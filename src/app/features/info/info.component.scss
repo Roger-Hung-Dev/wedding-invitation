@@ -115,23 +115,31 @@
   }
 
   /*
-    桌機維持單欄、停車圖在上：停車圖是 1200 寬的整張圖，並排成半欄只剩五百多寬，圖上的路名與入口標籤會縮到看不清。
-    880 是讓圖上最小的字（約 19px）縮完仍有 13px 上下的寬度。
+    桌機左右併排：左停車圖、右地圖＋導航鈕。手機的白卡外框在這裡拿掉——停車圖本身就有米白底與燙金框，
+    再包一層白卡只會吃掉圖的寬度，圖上的入口標籤已經夠小了。
+    停車圖欄給得比地圖寬（6：5），多出來的寬度都花在讓圖上的字大一點。
   */
   .info__layout {
     margin-top: 48px;
-    width: min(880px, 100%);
-    gap: 32px;
-    border-radius: 24px;
-    padding: 40px;
+    width: min(1120px, 100%);
+    flex-direction: row;
+    align-items: stretch;
+    gap: 40px;
+    background: transparent;
+    border-radius: 0;
+    padding: 0;
+    box-shadow: none;
   }
 
   .info__parking {
+    flex: 6 1 0;
+    min-width: 0;
     gap: 12px;
   }
 
   .info__parking-link {
-    border-radius: 16px;
+    border-radius: 24px;
+    box-shadow: 0 8px 28px var(--shadow-rose);
   }
 
   .info__parking-hint {
@@ -139,11 +147,17 @@
   }
 
   .info__map-block {
+    flex: 5 1 0;
+    min-width: 0;
     gap: 20px;
   }
 
+  // 地圖撐滿右欄剩下的高度，底緣跟左邊停車圖的提示字對齊，兩欄才不會一高一低。
+  // 最小高度不能訂太高：1024 寬時左欄只有約 450 高，地圖若硬要 400，右欄會比左欄長、左邊底下空一截。
   .info__map-preview {
-    height: 400px;
+    flex: 1 1 auto;
+    height: auto;
+    min-height: 320px;
     border-radius: 24px;
   }
 
