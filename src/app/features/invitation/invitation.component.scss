@@ -130,8 +130,17 @@
   color: #5c4450;
 }
 
+// 干支年夾在西元日期與星期之間：一行國曆、一行農曆、一行時間，由粗到細三階讀下來
+.invitation__date-lunar {
+  margin: 12px 0 0;
+  font-family: 'Noto Serif TC', serif;
+  font-size: 13px;
+  letter-spacing: 0.24em;
+  color: #8a7080;
+}
+
 .invitation__date-sub {
-  margin: 10px 0 0;
+  margin: 7px 0 0;
   font-family: 'Noto Serif TC', serif;
   font-size: 12px;
   letter-spacing: 0.3em;
