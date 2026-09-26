@@ -51,13 +51,19 @@
   min-height: 192px;
 }
 
-// 新娘卡是鏡像：照片換到右邊，文字欄連同角色標籤與職業膠囊一起靠右對齊。
+// 新娘卡是鏡像：照片換到右邊，角色標籤、姓名與職業膠囊靠右貼齊照片。
+// 介紹文字仍然靠左，與新郎那段一致；靠右的多行中文左緣參差不齊，兩段並排時看起來不統一。
 .about__card--bride {
   flex-direction: row-reverse;
   text-align: right;
 
   .about__text {
     align-items: flex-end;
+  }
+
+  .about__desc {
+    align-self: stretch;
+    text-align: left;
   }
 }
 
