@@ -6,7 +6,7 @@
     [style.transitionDelay.ms]="animated() ? photoDelayMs : null"
     (click)="photoClick.emit($event)"
   >
-    <img [src]="page().photoUrl" [alt]="page().photoAlt" loading="lazy" />
+    <img [src]="page().photoUrl" [alt]="page().photoAlt" [style.object-position]="page().photoFocusMobile" loading="lazy" />
   </div>
 }
 

@@ -442,6 +442,12 @@ export interface StoryPage {
   readonly body: string
   readonly photoUrl: string
   readonly photoAlt: string
+  /**
+   * 手機版照片框的對焦位置（CSS object-position）。手機框接近正方形，直式照片只看得到上下約七成，
+   * 預設置中裁切會切到人：人物在下半部就對準下方、臉在上方就對準上方。
+   * 桌機的照片框就是 2:3、與照片同比例，完全不裁切，所以不需要這個值。
+   */
+  readonly photoFocusMobile: string
 }
 
 /**
@@ -470,6 +476,8 @@ export const STORY_PAGES: readonly StoryPage[] = [
     body: '那年秋天，在朋友的一場聚會上第一次見到彼此。那天散場之後才發現，我們是聊到最後才離開的兩個人，連要回家的方向都一樣。',
     photoUrl: 'assets/gallery/photo-1.jpg',
     photoAlt: '紅磚木屋牆前，新娘身著黑色禮服手持捧花，與新郎相視而笑',
+    // 兩人站在照片下半部的紅磚牆前
+    photoFocusMobile: '50% 100%',
   },
   {
     id: 'story-2',
@@ -478,6 +486,7 @@ export const STORY_PAGES: readonly StoryPage[] = [
     body: '開始習慣生活裡有對方的日常。她下班傳訊息說今天很累，他就把宵夜送到樓下，說剛好順路——其實那天他整整繞了半座城市才到。',
     photoUrl: 'assets/gallery/photo-2.jpg',
     photoAlt: '日式老屋的暖簾前，新娘從身後摟著新郎的肩',
+    photoFocusMobile: '50% 85%',
   },
   {
     id: 'story-3',
@@ -486,6 +495,7 @@ export const STORY_PAGES: readonly StoryPage[] = [
     body: '其實那天沒有誰正式開口說什麼。只是某一天散步回家的路上，牽起來的手就沒有再放開；後來想想，那條路我們一走就走了好多年。',
     photoUrl: 'assets/gallery/photo-3.jpg',
     photoAlt: '樹蔭草地上，新娘身著粉色紗裙依偎在新郎懷裡',
+    photoFocusMobile: '50% 100%',
   },
   {
     id: 'story-4',
@@ -494,6 +504,8 @@ export const STORY_PAGES: readonly StoryPage[] = [
     body: '我們一起搬過三次家，一起吵過架也一起道過歉。日子說不上轟轟烈烈，但每一天都比前一天更確定一點，確定要一直這樣走下去。',
     photoUrl: 'assets/gallery/photo-5.jpg',
     photoAlt: '海邊沙灘上，新郎將新娘抱起，新娘高舉捧花歡呼',
+    // 從高舉的捧花到腳底佔了照片八成，手機框放不下全身；保住捧花與兩人的臉，裁掉腿部
+    photoFocusMobile: '50% 22%',
   },
   {
     id: 'story-5',
@@ -502,6 +514,8 @@ export const STORY_PAGES: readonly StoryPage[] = [
     body: '就在第一次見面的那家店門口，他單膝跪下。她一邊哭一邊點頭，然後說了一句：你怎麼這麼慢。那天整間店的人全都站起來鼓掌。',
     photoUrl: 'assets/gallery/photo-4.jpg',
     photoAlt: '海邊夕陽下，新郎打開戒指盒，新娘驚喜而笑',
+    // 近景，兩人的臉在照片最上方
+    photoFocusMobile: '50% 0%',
   },
 ]
 
