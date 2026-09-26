@@ -14,22 +14,20 @@
 
 // 手機與桌機各一張照片，依寬度只顯示其中一張；兩張的內容不同，所以各自帶替代文字，而不是用 <picture> 共用一段。
 // 隱藏的那張是 display: none，加上 loading="lazy"，瀏覽器不會去下載它。
-// 照原比例完整顯示、不裁切，寬度比畫面窄（手機 78%、桌機 66%），滿版會顯得太大。
-// 桌機另外限制照片高度不超過螢幕的 70%，照片與下方那句話才能在同一個畫面裡看完。
-// 四邊都淡進背景（比稿第 10 式）：不貼齊螢幕之後左右也會露出邊，只淡上下會留下兩條直的硬邊。
+// 照原比例完整顯示、不裁切。手機左右滿版，只淡上下（比稿第 10 式）；
+// 桌機寬 66%、高度不超過螢幕的 70%，照片與下方那句話才能在同一個畫面裡看完，
+// 不貼齊螢幕後左右也會露出邊，所以桌機四邊都淡進背景。
 .greeting__photo {
   display: block;
   height: auto;
 }
 
 .greeting__photo--mobile {
-  width: 78%;
+  width: 100%;
   aspect-ratio: 2 / 3;
   object-fit: cover;
-  -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 12%, #000 82%, transparent 100%), linear-gradient(90deg, transparent 0, #000 10%, #000 90%, transparent 100%);
-  -webkit-mask-composite: source-in;
-  mask-image: linear-gradient(180deg, transparent 0, #000 12%, #000 82%, transparent 100%), linear-gradient(90deg, transparent 0, #000 10%, #000 90%, transparent 100%);
-  mask-composite: intersect;
+  -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 12%, #000 82%, transparent 100%);
+  mask-image: linear-gradient(180deg, transparent 0, #000 12%, #000 82%, transparent 100%);
 }
 
 .greeting__photo--desktop {
