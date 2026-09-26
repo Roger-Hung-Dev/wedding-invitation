@@ -135,6 +135,8 @@
     font-size: 14px;
     line-height: 1.6;
     color: var(--color-text-muted);
+    // 避免最後一行只剩一兩個字（例如只掛著「愛。」），不支援的瀏覽器照常換行
+    text-wrap: pretty;
   }
 }
 

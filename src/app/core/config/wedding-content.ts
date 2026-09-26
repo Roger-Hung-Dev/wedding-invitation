@@ -407,7 +407,7 @@ export const ABOUT_PROFILES: readonly AboutProfile[] = [
     name: '李怡安',
     occupation: '服務業',
     description:
-      '在餐飲業裡練就一身照顧人的本事，記得誰不吃什麼、誰想多要一點醬。她相信好好吃一頓飯，能讓人重新有力氣。',
+      '用心感受生活的服務業女孩。日常裡用親切笑容迎接每個人、傳遞溫暖，也喜歡記錄生活中的微小美好。直到遇見承孝，換她被溫柔寵愛。',
     photoUrl: 'assets/images/bride.jpg',
     photoAlt: '新娘李怡安身著粉色紗裙，於綠蔭草地上回眸微笑',
   },
