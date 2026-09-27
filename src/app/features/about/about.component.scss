@@ -52,7 +52,7 @@
 }
 
 // 新娘卡是鏡像：照片換到右邊，角色標籤、姓名與職業膠囊靠右貼齊照片。
-// 介紹文字左右對齊（最後一行靠左）：靠右的多行中文左緣參差不齊，左右對齊後兩側邊緣都切齊。
+// 介紹文字撐滿整欄，左右對齊才會切齊文字欄的兩側，而不是只包住文字本身的寬度。
 .about__card--bride {
   flex-direction: row-reverse;
   text-align: right;
@@ -63,7 +63,6 @@
 
   .about__desc {
     align-self: stretch;
-    text-align: justify;
   }
 }
 
@@ -141,6 +140,8 @@
     font-size: 14px;
     line-height: 1.6;
     color: var(--color-text-muted);
+    // 兩段都左右對齊（最後一行靠左），兩張卡的文字兩側都切齊，並排時才一致
+    text-align: justify;
     // 避免最後一行只剩一兩個字（例如只掛著「愛。」），不支援的瀏覽器照常換行
     text-wrap: pretty;
   }
