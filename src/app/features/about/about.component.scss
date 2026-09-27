@@ -42,12 +42,13 @@
   max-width: 100%;
 }
 
+// 手機版照片與文字欄等高（stretch）：照片最矮 192，文字超過時照片跟著拉長，
+// 文字不會比照片長出一截；照片用 object-fit: cover，拉長只會裁掉左右一點點，不會變形。
 .about__card {
   display: flex;
   gap: 16px;
-  align-items: flex-start;
+  align-items: stretch;
   width: 100%;
-  // 用最小高度而不是固定高度：字級放大後介紹文字可能多一行，固定高度會讓文字溢出卡片。
   min-height: 192px;
 }
 
@@ -69,7 +70,7 @@
 .about__photo {
   flex: 0 0 144px;
   width: 144px;
-  height: 192px;
+  min-height: 192px;
   border-radius: 16px;
   overflow: hidden;
   box-shadow: 0 8px 28px var(--shadow-rose);
