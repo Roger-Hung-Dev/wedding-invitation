@@ -52,7 +52,7 @@
 }
 
 // 新娘卡是鏡像：照片換到右邊，角色標籤、姓名與職業膠囊靠右貼齊照片。
-// 介紹文字仍然靠左，與新郎那段一致；靠右的多行中文左緣參差不齊，兩段並排時看起來不統一。
+// 介紹文字左右對齊（最後一行靠左）：靠右的多行中文左緣參差不齊，左右對齊後兩側邊緣都切齊。
 .about__card--bride {
   flex-direction: row-reverse;
   text-align: right;
@@ -63,7 +63,7 @@
 
   .about__desc {
     align-self: stretch;
-    text-align: left;
+    text-align: justify;
   }
 }
 
