@@ -65,10 +65,9 @@
   position: relative;
   width: 342px;
   max-width: 100%;
-  // 414 → 484：照片框從 4:3 改成 1:1（+70）後，卡高要跟著長，
-  // 否則故事文字會被 overflow: hidden 裁掉（實測溢出 49px）。
-  // 段高連帶 738 → 808，仍在手機一屏 844 之內。
-  height: 484px;
+  // 484 → 623：照片框從正方形 278 改成與照片同比例的 2:3（高 417，+139）後，卡高要跟著長，
+  // 否則故事文字會被 overflow: hidden 裁掉。整段已超過手機一屏，但書頁卡加上翻頁鈕仍放得進 844 高的畫面。
+  height: 623px;
   border-radius: 16px;
   overflow: hidden;
   box-shadow: 0 10px 32px var(--shadow-rose);

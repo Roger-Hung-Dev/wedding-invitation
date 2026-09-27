@@ -453,12 +453,6 @@ export interface StoryPage {
   readonly body: string
   readonly photoUrl: string
   readonly photoAlt: string
-  /**
-   * 手機版照片框的對焦位置（CSS object-position）。手機框接近正方形，直式照片只看得到上下約七成，
-   * 預設置中裁切會切到人：人物在下半部就對準下方、臉在上方就對準上方。
-   * 桌機的照片框就是 2:3、與照片同比例，完全不裁切，所以不需要這個值。
-   */
-  readonly photoFocusMobile: string
 }
 
 /**
@@ -485,8 +479,6 @@ export const STORY_PAGES: readonly StoryPage[] = [
     body: '那年夏天，他與家人從宜蘭返家，途經台北時特地帶了一盒奶凍捲去見她。短短幾句寒暄，兩人便被彼此深深吸引，從此開始有了聯繫。',
     photoUrl: 'assets/gallery/photo-1.jpg',
     photoAlt: '紅磚木屋牆前，新娘身著黑色禮服手持捧花，與新郎相視而笑',
-    // 兩人站在照片下半部的紅磚牆前
-    photoFocusMobile: '50% 100%',
   },
   {
     id: 'story-2',
@@ -495,7 +487,6 @@ export const STORY_PAGES: readonly StoryPage[] = [
     body: '2022 年聖誕夜，他在空ㄟ農場的夜景前鼓起勇氣，牽起她的手告白。一個月後的寒夜，她遞來一個暖暖包，角落寫著她的答覆：「好」。',
     photoUrl: 'assets/gallery/photo-2.jpg',
     photoAlt: '日式老屋的暖簾前，新娘從身後摟著新郎的肩',
-    photoFocusMobile: '50% 85%',
   },
   {
     id: 'story-3',
@@ -504,7 +495,6 @@ export const STORY_PAGES: readonly StoryPage[] = [
     body: '交往後，他每個月搭車北上與她相見；分隔兩地的日子，就靠視訊分享生活，再用一趟趟旅行累積回憶。相聚雖短，每一次都格外珍惜。',
     photoUrl: 'assets/gallery/photo-3.jpg',
     photoAlt: '樹蔭草地上，新娘身著粉色紗裙依偎在新郎懷裡',
-    photoFocusMobile: '50% 100%',
   },
   {
     id: 'story-4',
@@ -513,8 +503,6 @@ export const STORY_PAGES: readonly StoryPage[] = [
     body: '他們一起看過大稻埕煙火、澎湖花火節、台東熱氣球，也去了日本、聽了五月天；搬過三次家，吵過架也道過歉，學會了溝通與包容。',
     photoUrl: 'assets/gallery/photo-5.jpg',
     photoAlt: '海邊沙灘上，新郎將新娘抱起，新娘高舉捧花歡呼',
-    // 從高舉的捧花到腳底佔了照片八成，手機框放不下全身；保住捧花與兩人的臉，裁掉腿部
-    photoFocusMobile: '50% 22%',
   },
   {
     id: 'story-5',
@@ -523,8 +511,6 @@ export const STORY_PAGES: readonly StoryPage[] = [
     body: '那年秋天的東京鐵塔下，他鼓起勇氣，從口袋拿出準備已久的戒指向她求婚，並許下一段誓言。她最後對他說：「我願意」。',
     photoUrl: 'assets/gallery/photo-4.jpg',
     photoAlt: '海邊夕陽下，新郎打開戒指盒，新娘驚喜而笑',
-    // 近景，兩人的臉在照片最上方
-    photoFocusMobile: '50% 0%',
   },
 ]
 
