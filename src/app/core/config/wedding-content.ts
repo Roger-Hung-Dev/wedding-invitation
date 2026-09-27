@@ -91,32 +91,32 @@ export const GALLERY_PHOTOS: readonly GalleryPhoto[] = [
   {
     id: 'photo-3',
     url: 'assets/weddingphotos/photo-3.jpg',
-    alt: '日式老屋暖簾前，新郎從身後環抱新娘、兩人十指交扣',
+    alt: '日式老屋暖簾前，新娘從新郎身後探出頭，雙手環抱著他',
   },
   {
     id: 'photo-4',
     url: 'assets/weddingphotos/photo-4.jpg',
-    alt: '木格窗前的長椅上，新娘倚著新郎，兩人望向鏡頭微笑',
+    alt: '日式老屋暖簾前，新郎從身後環抱新娘、兩人十指交扣',
   },
   {
     id: 'photo-5',
     url: 'assets/weddingphotos/photo-5.jpg',
-    alt: '木格窗前，新郎坐在長椅上，新娘俯身擁住他、兩人額頭相靠',
+    alt: '木格窗前的長椅上，新娘倚著新郎，兩人望向鏡頭微笑',
   },
   {
     id: 'photo-6',
     url: 'assets/weddingphotos/photo-6.jpg',
-    alt: '日式老屋前的草地上，新娘依偎在新郎肩上',
+    alt: '木格窗前，新郎坐在長椅上，新娘俯身擁住他、兩人額頭相靠',
   },
   {
     id: 'photo-7',
     url: 'assets/weddingphotos/photo-7.jpg',
-    alt: '日式老屋前，新郎將新娘抱起，黑紗裙擺飛揚',
+    alt: '日式老屋前的草地上，新娘依偎在新郎肩上',
   },
   {
     id: 'photo-8',
     url: 'assets/weddingphotos/photo-8.jpg',
-    alt: '日式老屋暖簾前，新娘從新郎身後探出頭，雙手環抱著他',
+    alt: '日式老屋前，新郎將新娘抱起，黑紗裙擺飛揚',
   },
   {
     id: 'photo-9',
