@@ -468,15 +468,15 @@ export interface StoryPage {
  * 照片放 gallery/，與婚紗藝廊的 weddingphotos/ 分開——兩邊都叫 photo-N.jpg，
  * 改路徑時要看清楚資料夾。
  *
- * body 每段維持 58～64 字：手機一行約 21.4 字、桌機約 23.1 字，皆排成 3 行；
- * 超過 64 字手機會變成 4 行、撐爆固定高度的書頁卡。
+ * body 每段最多約 85 字：手機一行約 21.4 字，書頁卡的高度留了 4 行；桌機一行約 23.1 字，空間寬裕。
+ * 超過 85 字手機會變成 5 行、撐爆固定高度的書頁卡。
  */
 export const STORY_PAGES: readonly StoryPage[] = [
   {
     id: 'story-1',
     year: '2022 8月',
     title: '再次邂逅',
-    body: '那年夏天，他與家人從宜蘭返家，途經台北時特地帶了一盒奶凍捲去見她。短短幾句寒暄，兩人便被彼此深深吸引，從此開始有了聯繫。',
+    body: '那年夏天，他從宜蘭返家，途經台北，只為親手送上一盒奶凍捲。寥寥數語的相遇，卻讓心動悄悄生根，從此有了彼此的消息。兩段平行的日子，於是有了交集。',
     photoUrl: 'assets/gallery/photo-1.jpg',
     photoAlt: '紅磚木屋牆前，新娘身著黑色禮服手持捧花，與新郎相視而笑',
   },
@@ -484,7 +484,7 @@ export const STORY_PAGES: readonly StoryPage[] = [
     id: 'story-2',
     year: '2023 1月',
     title: '在一起',
-    body: '2022 年聖誕夜，他在空ㄟ農場的夜景前鼓起勇氣，牽起她的手告白。一個月後的寒夜，她遞來一個暖暖包，角落寫著她的答覆：「好」。',
+    body: '那年聖誕夜，他在滿城燈火前牽起她的手，說出心意。她的答覆晚了一個月，卻格外溫暖，她遞來一個暖暖包，角落輕輕寫著：「好」。',
     photoUrl: 'assets/gallery/photo-2.jpg',
     photoAlt: '日式老屋的暖簾前，新娘從身後摟著新郎的肩',
   },
@@ -492,7 +492,7 @@ export const STORY_PAGES: readonly StoryPage[] = [
     id: 'story-3',
     year: '2023 1月 – 2024 8月',
     title: '遠距離戀愛',
-    body: '交往後，他每個月搭車北上與她相見；分隔兩地的日子，就靠視訊分享生活，再用一趟趟旅行累積回憶。相聚雖短，每一次都格外珍惜。',
+    body: '距離很遠，想念很近。每個月北上的車程，載著他奔向她的思念。分隔兩地的日子，在視訊裡分享日常，再用一趟趟旅行，把短暫相聚釀成回憶。每一次見面都格外珍惜。',
     photoUrl: 'assets/gallery/photo-3.jpg',
     photoAlt: '樹蔭草地上，新娘身著粉色紗裙依偎在新郎懷裡',
   },
@@ -500,7 +500,7 @@ export const STORY_PAGES: readonly StoryPage[] = [
     id: 'story-4',
     year: '2023 – 2026',
     title: '一起走過的日子',
-    body: '他們一起看過大稻埕煙火、澎湖花火節、台東熱氣球，也去了日本、聽了五月天；搬過三次家，吵過架也道過歉，學會了溝通與包容。',
+    body: '日本、煙火與演唱會，回憶一站站收藏。他陪她搬過三次家，直到她回到台中；吵過架也道過歉，學會溝通與包容，讓愛愈發堅定。',
     photoUrl: 'assets/gallery/photo-5.jpg',
     photoAlt: '海邊沙灘上，新郎將新娘抱起，新娘高舉捧花歡呼',
   },
@@ -508,7 +508,7 @@ export const STORY_PAGES: readonly StoryPage[] = [
     id: 'story-5',
     year: '2025 10月',
     title: '他問，她說好',
-    body: '那年秋天的東京鐵塔下，他鼓起勇氣，從口袋拿出準備已久的戒指向她求婚，並許下一段誓言。她最後對他說：「我願意」。',
+    body: '東京鐵塔的燈火下，他從口袋拿出準備已久的戒指，許下誓言。她眼裡有光，輕聲回答：「我願意」。',
     photoUrl: 'assets/gallery/photo-4.jpg',
     photoAlt: '海邊夕陽下，新郎打開戒指盒，新娘驚喜而笑',
   },
