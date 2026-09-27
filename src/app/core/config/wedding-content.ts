@@ -460,9 +460,7 @@ export interface StoryPage {
  * 內容由新人提供的交往經歷改寫成正式口吻，一律用第三人稱「他／她」，與第五頁標題「他問，她說好」一致。
  *
  * 照片是婚紗照，不是交往期間的生活照，因此時間軸與畫面對不上；
- * 這是新人提供的素材範圍內的選擇，不是疏漏。挑選時以情節對得上為準：
- * 第五頁講求婚，配的是拿出戒指盒那張（photo-4）；第四頁講一起走過的日子，
- * 配沙灘上歡呼那張（photo-5）——所以這兩頁的編號與頁序是交叉的，不要「順手改回」順號。
+ * 這是新人提供的素材範圍內的選擇，不是疏漏。照片由新人挑選並依頁序編號，第 N 頁配 photo-N。
  *
  * 照片放 gallery/，與婚紗藝廊的 weddingphotos/ 分開——兩邊都叫 photo-N.jpg，
  * 改路徑時要看清楚資料夾。
@@ -477,7 +475,7 @@ export const STORY_PAGES: readonly StoryPage[] = [
     title: '再次邂逅',
     body: '那年夏天，他從宜蘭返家，途經台北，只為親手送上一盒奶凍捲。寥寥數語的相遇，卻讓心動悄悄生根，從此有了彼此的消息。兩段平行的日子，於是有了交集。',
     photoUrl: 'assets/gallery/photo-1.jpg',
-    photoAlt: '紅磚木屋牆前，新娘身著黑色禮服手持捧花，與新郎相視而笑',
+    photoAlt: '日式老屋前，新郎牽起新娘的手轉圈，黑色蓬裙揚起',
   },
   {
     id: 'story-2',
@@ -485,7 +483,7 @@ export const STORY_PAGES: readonly StoryPage[] = [
     title: '在一起',
     body: '那年聖誕夜，他在滿城燈火前牽起她的手，說出心意。她的答覆晚了一個月，卻格外溫暖，她遞來一個暖暖包，角落輕輕寫著：「好」。',
     photoUrl: 'assets/gallery/photo-2.jpg',
-    photoAlt: '日式老屋的暖簾前，新娘從身後摟著新郎的肩',
+    photoAlt: '大樹綠蔭下，新娘身著粉色紗裙依偎在新郎懷裡',
   },
   {
     id: 'story-3',
@@ -493,14 +491,14 @@ export const STORY_PAGES: readonly StoryPage[] = [
     title: '遠距離戀愛',
     body: '距離很遠，想念很近。每個月北上的車程，載著他奔向她的思念。分隔兩地的日子，在視訊裡分享日常，再用一趟趟旅行，把短暫相聚釀成回憶。每一次見面都格外珍惜。',
     photoUrl: 'assets/gallery/photo-3.jpg',
-    photoAlt: '樹蔭草地上，新娘身著粉色紗裙依偎在新郎懷裡',
+    photoAlt: '藍天綠葉下，身著黑紗的新娘與新郎相擁、額頭相靠',
   },
   {
     id: 'story-4',
     year: '2023 – 2026',
     title: '一起走過的日子',
     body: '日本、煙火與演唱會，回憶一站站收藏。他陪她搬過三次家，直到她回到台中；吵過架也道過歉，學會溝通與包容，讓愛愈發堅定。',
-    photoUrl: 'assets/gallery/photo-5.jpg',
+    photoUrl: 'assets/gallery/photo-4.jpg',
     photoAlt: '海邊沙灘上，新郎將新娘抱起，新娘高舉捧花歡呼',
   },
   {
@@ -508,7 +506,7 @@ export const STORY_PAGES: readonly StoryPage[] = [
     year: '2025 10月',
     title: '他問，她說好',
     body: '東京鐵塔的燈火下，他從口袋拿出準備已久的戒指，許下誓言。她眼裡有光，輕聲回答：「我願意」。',
-    photoUrl: 'assets/gallery/photo-4.jpg',
+    photoUrl: 'assets/gallery/photo-5.jpg',
     photoAlt: '海邊夕陽下，新郎打開戒指盒，新娘驚喜而笑',
   },
 ]
