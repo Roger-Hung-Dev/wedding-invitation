@@ -4,16 +4,10 @@
  * S4 畫面上對應的那一行連結一併移除，不留下點不開的入口。
  */
 export const WEDDING_LINKS = {
-  /**
-   * Google 表單填寫連結（葷食版）。
-   * ⚠️ 仍為占位值 —— 新人尚未提供正式表單網址，賓客點擊 CTA 不會開啟任何表單，上線前必須替換。
-   */
-  rsvpFormUrl: 'https://forms.gle/PLACEHOLDER_RSVP_FORM',
-  /**
-   * Google 表單填寫連結（素食版，/vegetarian 專用）。
-   * ⚠️ 同樣是占位值。兩版用不同表單，回覆才會自然分開統計。
-   */
-  rsvpFormUrlVegetarian: 'https://forms.gle/PLACEHOLDER_RSVP_FORM_VEG',
+  /** Google 表單填寫連結（葷食版，預設網址用）。 */
+  rsvpFormUrl: 'https://forms.gle/Mbo5qwDLmvD3KsSE8',
+  /** Google 表單填寫連結（素食版，/vegetarian 專用）。兩版用不同表單，回覆才會自然分開統計。 */
+  rsvpFormUrlVegetarian: 'https://forms.gle/UZ3t1cVM28XkYBto6',
   /** 宴客地點地址文字，用於組出 Google 地圖導航連結（帶文字地址即可，不需要經緯度）。 */
   venueAddress: '台中市烏日區高鐵路三段 168 號',
   /**
