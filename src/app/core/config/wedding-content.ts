@@ -218,7 +218,7 @@ export const INVITATION_TEXT = {
    * 農曆日期沒有可以靠公式算準的捷徑，改婚期時要重新查表，不要自行推估。
    */
   lunarDate: '歲次丙午年　十一月初四',
-  photoAlt: '海邊夕陽下，新郎從身後環抱新娘，手中捧著粉色花束',
+  photoAlt: '綠蔭草地上，身著粉色紗裙的新娘與新郎相擁，兩人望向鏡頭微笑',
   rowLabels: {
     venue: '地　點',
     hall: '宴會廳',

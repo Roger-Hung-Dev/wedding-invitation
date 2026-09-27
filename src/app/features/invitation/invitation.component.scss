@@ -107,8 +107,8 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    // 兩人臉部落在原圖偏上處，置中裁切會切到下巴
-    object-position: 50% 38%;
+    // 新郎的頭頂離原圖上緣很近，對準點再往上移，頭頂才不會貼著橢圓的上緣
+    object-position: 50% 15%;
     display: block;
   }
 }
