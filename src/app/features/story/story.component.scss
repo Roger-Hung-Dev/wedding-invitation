@@ -161,7 +161,6 @@
   border-radius: 8px;
   overflow: hidden;
   background: var(--color-surface);
-  perspective: 1200px;
 }
 
 .story__card-inner .story__live {
@@ -180,61 +179,53 @@
 }
 
 /*
-  手機單頁的翻頁：一整張紙繞垂直中軸原地翻面，正面舊頁、背面新頁。
+  手機單頁的翻頁：掀書角。上層那頁沿一條 45 度的摺線被掀起，摺線沿對角線從一角掃到對角。
+  往後翻從右下角掀向左上，往前翻則是前一頁從左上角蓋回右下。
 
-  為什麼不繞左緣翻（那才像掀書頁）：單頁沒有左半頁可以讓紙躺下去，
-  紙轉過 90 度之後整片落在畫面左側外被裁掉，後半段畫面完全靜止 ——
-  實測 900ms 的動畫只有前 360ms 看得到東西，翻起來會覺得遲鈍。
-  原地翻面則全程都有東西在動。
+  為什麼不用 3D 旋轉：單頁沒有左半頁可以讓紙躺下去，繞邊翻的紙轉過 90 度後整片落在畫面外；
+  繞中軸原地翻面雖然全程有東西在動，但看起來像卡片在轉，不像書頁。
+  掀書角全程都在畫面內，也最接近用手指捏起書角翻頁的樣子。
 
-  ⛔ .story__card-inner 只設 perspective 與 overflow，不可以再設 transform-style: preserve-3d
-  —— 那兩者併用會把 3D 壓平，背面就會變成正面反過來的鏡像文字。
-  裁切交給 card-inner 的 overflow，翻頁元素本身不設 overflow。
+  每一幀的形狀（上層保留的範圍、掀起的紙背、落在底頁上的陰影）由 story.component.ts 的
+  paintPeel 計算後寫進 clip-path 與背景，這裡只放不隨進度變化的樣式。
 */
-.story__card-flip {
+.story__peel {
   position: absolute;
   inset: 0;
   z-index: 2;
-  transform-style: preserve-3d;
-  will-change: transform;
+  background: var(--color-surface);
 }
 
-.story__card-flip-face {
+.story__peel-layer {
   position: absolute;
   inset: 0;
-  overflow: hidden;
   background: var(--color-surface);
-  backface-visibility: hidden;
 }
 
-// 背面固定預轉 180 度：往左翻（-180）與往右翻（+180）算下來都回到 0，才不會是鏡像。
-.story__card-flip-face--back {
-  transform: rotateY(180deg);
+// 往前翻時上層一開始是完全掀開的，第一幀還沒算出形狀之前先整片藏起來，否則會閃一下整頁新頁。
+.story__peel--prev .story__peel-top,
+.story__peel-shadow,
+.story__peel-flap {
+  clip-path: polygon(0 0, 0 0, 0 0);
 }
 
-/*
-  ⛔ 不要在翻頁的紙上加固定的壓暗漸層（試過，撤掉了）。
-  加了之後轉動中確實比較有厚度，但紙翻到底之後不會立刻移除——要等整段動畫結束——
-  所以最後那段時間看到的是「帶著陰影的新頁」，讀起來像「怎麼先暗一下才正常」。
-  真要做厚度的話，陰影必須跟著翻頁進度在貼平前淡掉，不能是靜態的一層。
-*/
-
-@keyframes story-card-flip-next {
-  from {
-    transform: rotateY(0);
-  }
-  to {
-    transform: rotateY(-180deg);
-  }
+.story__peel-shadow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
 }
 
-@keyframes story-card-flip-prev {
-  from {
-    transform: rotateY(0);
-  }
-  to {
-    transform: rotateY(180deg);
-  }
+// 紙背的投影掛在外層：clip-path 會連 filter 的陰影一起裁掉，所以陰影與裁切要分在兩層。
+.story__peel-flap-wrap {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  filter: drop-shadow(0 2px 6px rgba(74, 55, 66, 0.28));
+}
+
+.story__peel-flap {
+  position: absolute;
+  inset: 0;
 }
 
 // 桌機的右頁沿書脊翻過去，正面是舊頁的文字、背面是新頁的照片；往回翻則是左頁繞右緣轉。
@@ -303,16 +294,6 @@
   to {
     opacity: 1;
   }
-}
-
-// 手機單頁的翻頁時長比桌機短：紙在原地翻，視覺移動距離比桌機那張橫跨書脊的紙小得多，
-// 用桌機的 900ms 會拖。這個數字與 story.component.ts 的 CARD_TURN_DURATION_MS 是同一組。
-.story__card-flip--next {
-  animation: story-card-flip-next 800ms var(--ease-elegant) forwards;
-}
-
-.story__card-flip--prev {
-  animation: story-card-flip-prev 800ms var(--ease-elegant) forwards;
 }
 
 /*

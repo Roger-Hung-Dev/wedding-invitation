@@ -52,20 +52,32 @@
               />
             } @else {
               <!--
-                一整張紙原地翻面：正面是舊頁、背面是新頁，繞垂直中軸轉 180 度。
-                背面固定預轉 180 度，往左翻（-180）與往右翻（+180）才都不會變成鏡像。
+                掀書角：上層那頁沿一條 45 度的摺線被掀起，摺線沿對角線掃過整頁（每一幀的形狀由元件計算）。
+                往後翻：上層是舊頁，從右下角掀向左上，露出底下的新頁。
+                往前翻：上層是新頁（前一頁），從左上角蓋回右下，蓋住底下的舊頁。
+                底層與上層都在這一層裡，整層不透明，下面常駐的那一頁何時換都不會被看見。
               -->
               <div
-                class="story__card-flip"
-                [class.story__card-flip--next]="store.direction() === 'next'"
-                [class.story__card-flip--prev]="store.direction() === 'prev'"
+                #peel
+                class="story__peel"
+                [class.story__peel--prev]="store.direction() === 'prev'"
                 aria-hidden="true"
               >
-                <div class="story__card-flip-face">
-                  <app-story-page [page]="outgoing" [variant]="'single'" />
+                <div class="story__peel-layer">
+                  <app-story-page
+                    [page]="store.direction() === 'next' ? store.currentPage() : outgoing"
+                    [variant]="'single'"
+                  />
                 </div>
-                <div class="story__card-flip-face story__card-flip-face--back">
-                  <app-story-page [page]="store.currentPage()" [variant]="'single'" />
+                <div class="story__peel-layer story__peel-top">
+                  <app-story-page
+                    [page]="store.direction() === 'next' ? outgoing : store.currentPage()"
+                    [variant]="'single'"
+                  />
+                </div>
+                <div class="story__peel-shadow"></div>
+                <div class="story__peel-flap-wrap">
+                  <div class="story__peel-flap"></div>
                 </div>
               </div>
             }
