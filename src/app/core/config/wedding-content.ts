@@ -64,13 +64,15 @@ export interface GalleryPhoto {
 }
 
 /**
- * 婚紗照 15 張，依拍攝場景由白天老屋走到黃昏海邊排序，即畫面上的瀏覽順序。
- * 圖檔為原始檔縮至寬 1000 的網頁版本（原始檔約 4500 寬、每張 7～19MB，不可直接上站）。
+ * 婚紗照 17 張，依拍攝場景排序，即畫面上的瀏覽順序：
+ * 黑紗老屋（1～8）、粉紗綠蔭（9～10）、黃昏河床（11～13）、海邊夕陽（14～17）。
+ * 檔名編號與順序一致；要插入或調整順序時，檔名要跟著重新編號，兩者才不會脫鉤。
+ * 圖檔為原始檔縮至 1000 × 1500 的網頁版本（原始檔約 4500 寬、每張 7～19MB，不可直接上站）。
  *
- * 手機版頁點指示器現在是 15 顆（約 204px 寬）——仍放得進 390px 的手機版面，
- * 但已接近極限，再加照片就要改成「3 / 15」這種數字式，否則點會擠到換行。
+ * 手機版頁點指示器現在是 17 顆（約 244px 寬）——仍放得進 320px 寬的最小手機，
+ * 但已接近極限，再加照片就要改成「3 / 17」這種數字式，否則點會擠到換行。
  * 桌機兩種版式都不受張數影響：自動捲動的位移與時長依張數計算，
- * 減少動態效果時的靜態網格是 flex-wrap 每列三張，15 張自然排成五列。
+ * 減少動態效果時的靜態網格是 flex-wrap 每列三張，17 張排成六列、最後一列兩張置中。
  *
  * 路徑不加開頭斜線 —— 網站部署在 GitHub Pages 子路徑下，絕對路徑會在上線後 404。
  * 資料夾是 weddingphotos/，不是 gallery/ —— gallery/ 放的是交往故事書那五張。
@@ -94,12 +96,12 @@ export const GALLERY_PHOTOS: readonly GalleryPhoto[] = [
   {
     id: 'photo-4',
     url: 'assets/weddingphotos/photo-4.jpg',
-    alt: '黑瓦日式老屋與綠樹前，新人相吻',
+    alt: '木格窗前的長椅上，新娘倚著新郎，兩人望向鏡頭微笑',
   },
   {
     id: 'photo-5',
     url: 'assets/weddingphotos/photo-5.jpg',
-    alt: '日式老屋前的草地上，兩人並肩而坐望向遠方',
+    alt: '木格窗前，新郎坐在長椅上，新娘俯身擁住他、兩人額頭相靠',
   },
   {
     id: 'photo-6',
@@ -109,12 +111,12 @@ export const GALLERY_PHOTOS: readonly GalleryPhoto[] = [
   {
     id: 'photo-7',
     url: 'assets/weddingphotos/photo-7.jpg',
-    alt: '新人牽著手走在日式老屋前的石板路上',
+    alt: '日式老屋前，新郎將新娘抱起，黑紗裙擺飛揚',
   },
   {
     id: 'photo-8',
     url: 'assets/weddingphotos/photo-8.jpg',
-    alt: '日式老屋前，新郎將新娘抱起，黑紗裙擺飛揚',
+    alt: '藍天綠葉下，身著黑紗的新娘與新郎相擁',
   },
   {
     id: 'photo-9',
@@ -139,20 +141,29 @@ export const GALLERY_PHOTOS: readonly GalleryPhoto[] = [
   {
     id: 'photo-13',
     url: 'assets/weddingphotos/photo-13.jpg',
-    alt: '河床上新人相吻，長頭紗被風揚起橫過畫面',
+    alt: '河床上新娘白紗拖尾鋪地，長頭紗隨風揚起',
   },
   {
     id: 'photo-14',
     url: 'assets/weddingphotos/photo-14.jpg',
-    alt: '海邊夕陽下，新郎從身後環抱新娘，手中捧著粉色花束',
+    alt: '夕陽海邊，新人並肩站在濕沙灘上，海面映著晚霞',
   },
   {
     id: 'photo-15',
     url: 'assets/weddingphotos/photo-15.jpg',
+    alt: '海邊近景，新郎低頭親吻新娘的手，新娘手捧粉色花束',
+  },
+  {
+    id: 'photo-16',
+    url: 'assets/weddingphotos/photo-16.jpg',
+    alt: '海邊，新郎輕吻新娘額頭，新娘抱著粉色花束微笑',
+  },
+  {
+    id: 'photo-17',
+    url: 'assets/weddingphotos/photo-17.jpg',
     alt: '沙灘上新郎將新娘橫抱起，兩人相視而笑',
   },
 ]
-
 export interface ParentPair {
   /** 欄位標籤，例如「男方家長」。 */
   readonly label: string
