@@ -67,12 +67,14 @@
                   <app-story-page
                     [page]="store.direction() === 'next' ? store.currentPage() : outgoing"
                     [variant]="'single'"
+                    [eager]="true"
                   />
                 </div>
                 <div class="story__peel-layer story__peel-top">
                   <app-story-page
                     [page]="store.direction() === 'next' ? outgoing : store.currentPage()"
                     [variant]="'single'"
+                    [eager]="true"
                   />
                 </div>
                 <div class="story__peel-shadow"></div>

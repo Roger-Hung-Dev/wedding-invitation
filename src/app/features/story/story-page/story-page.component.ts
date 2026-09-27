@@ -37,6 +37,11 @@ export class StoryPageComponent {
   /** 桌機右頁右下角的兩位數頁碼；手機不顯示頁碼，傳 null 即可。 */
   readonly pageNumber = input<string | null>(null)
   readonly animated = input(false)
+  /**
+   * 照片立即載入。翻頁時長出來的那幾份要開：延遲載入要等瀏覽器判斷「進入畫面了」才開始抓圖，
+   * 翻頁層在那之前的幾幀照片是空的，掀開書角時會閃一下白。常駐的目前頁維持延遲載入。
+   */
+  readonly eager = input(false)
 
   /** 照片被點擊（含左右半邊的位置資訊），由外層決定要往前還是往後翻。 */
   readonly photoClick = output<MouseEvent>()

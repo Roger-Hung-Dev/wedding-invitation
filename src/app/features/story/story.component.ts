@@ -1,4 +1,13 @@
-import { ChangeDetectionStrategy, Component, DestroyRef, ElementRef, computed, inject, viewChild } from '@angular/core'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  DestroyRef,
+  ElementRef,
+  afterNextRender,
+  computed,
+  inject,
+  viewChild,
+} from '@angular/core'
 import { STORY_TEXT } from '../../core/config/wedding-content'
 import { BreakpointService } from '../../shared/breakpoint.service'
 import { IconComponent } from '../../shared/icon/icon.component'
@@ -37,6 +46,12 @@ const BASE_SWAP_RATIO = 0.85
 /** 翻頁鈕內箭頭的尺寸，手機 16、桌機 20。 */
 const ICON_SIZE_MOBILE = 16
 const ICON_SIZE_DESKTOP = 20
+
+/**
+ * 故事書離畫面還有多遠就開始預先下載五頁的照片。
+ * 賓客往下捲到這一段之前就抓好，第一次翻頁時才不會等照片下載。
+ */
+const PRELOAD_MARGIN = '800px 0px'
 
 /** 掀起處落在底頁上的陰影寬度，沿摺線的垂直方向量。 */
 const PEEL_SHADOW_WIDTH_PX = 48
@@ -134,6 +149,7 @@ export class StoryComponent {
   protected readonly text = STORY_TEXT
 
   private readonly destroyRef = inject(DestroyRef)
+  private readonly host = inject<ElementRef<HTMLElement>>(ElementRef)
   private turnTimer: ReturnType<typeof setTimeout> | null = null
   private swapTimer: ReturnType<typeof setTimeout> | null = null
   private peelFrame: number | null = null
@@ -162,6 +178,7 @@ export class StoryComponent {
 
   constructor() {
     this.destroyRef.onDestroy(() => this.clearTimer())
+    afterNextRender(() => this.preloadPhotosWhenNear())
   }
 
   protected turn(direction: StoryTurnDirection): void {
@@ -267,6 +284,28 @@ export class StoryComponent {
       this.peelFrame = progress < 1 ? requestAnimationFrame(step) : null
     }
     this.peelFrame = requestAnimationFrame(step)
+  }
+
+  /**
+   * 故事書接近畫面時，先把五頁的照片都抓下來。
+   * 常駐的那一頁是延遲載入，其他四頁要等翻過去才會開始下載；手機網路一慢，
+   * 掀開書角時底下那頁還在下載，就會露出一片白。預先抓好之後，翻頁都是從快取取圖。
+   */
+  private preloadPhotosWhenNear(): void {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (!entries.some((entry) => entry.isIntersecting)) return
+        observer.disconnect()
+        for (const page of this.store.pages) {
+          const img = new Image()
+          img.src = page.photoUrl
+          img.decode().catch(() => undefined)
+        }
+      },
+      { rootMargin: PRELOAD_MARGIN },
+    )
+    observer.observe(this.host.nativeElement)
+    this.destroyRef.onDestroy(() => observer.disconnect())
   }
 
   private clearTimer(): void {
