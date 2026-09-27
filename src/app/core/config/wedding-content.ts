@@ -81,17 +81,17 @@ export const GALLERY_PHOTOS: readonly GalleryPhoto[] = [
   {
     id: 'photo-1',
     url: 'assets/weddingphotos/photo-1.jpg',
-    alt: '紅磚牆前，新娘手持捧花站立微笑，新郎蹲坐在牆邊',
+    alt: '紅磚木屋牆前，新人倚著牆相視而笑，新娘手持捧花',
   },
   {
     id: 'photo-2',
     url: 'assets/weddingphotos/photo-2.jpg',
-    alt: '日式老屋暖簾前，新郎從身後環抱新娘、兩人十指交扣',
+    alt: '紅磚牆前，新娘手持捧花站立微笑，新郎蹲坐在牆邊',
   },
   {
     id: 'photo-3',
     url: 'assets/weddingphotos/photo-3.jpg',
-    alt: '日式老屋前，新郎牽起新娘的手轉圈，黑色蓬裙揚起',
+    alt: '日式老屋暖簾前，新郎從身後環抱新娘、兩人十指交扣',
   },
   {
     id: 'photo-4',
@@ -116,7 +116,7 @@ export const GALLERY_PHOTOS: readonly GalleryPhoto[] = [
   {
     id: 'photo-8',
     url: 'assets/weddingphotos/photo-8.jpg',
-    alt: '藍天綠葉下，身著黑紗的新娘與新郎相擁',
+    alt: '日式老屋暖簾前，新娘從新郎身後探出頭，雙手環抱著他',
   },
   {
     id: 'photo-9',
