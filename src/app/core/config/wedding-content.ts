@@ -10,6 +10,21 @@
  *
  * 姓名、日期、場地為新人提供的正式資料，異動時於此檔一次替換即可。
  */
+
+/**
+ * 照片網址的版本號。換照片時常沿用同一個檔名（例如 photo-4.jpg 換成另一張），
+ * 看過網站的手機會直接拿快取裡的舊圖；網址帶上版本號，版本一變瀏覽器就會重新下載。
+ * 只要替換了任何一張照片的內容，就把這個數字加一。
+ *
+ * 封面底圖（HERO_IMAGE_*）不套用：index.html 以固定網址 preload 它，網址對不上 preload 就白做了。
+ * 要換封面底圖時改用新檔名，並同步修改 index.html 的 preload。
+ */
+const PHOTO_VERSION = 2
+
+function versioned(path: string): string {
+  return `${path}?v=${PHOTO_VERSION}`
+}
+
 export const WEDDING_CONTENT = {
   brideGroomEn: 'Roger & Amy',
   brideGroomZh: '洪承孝　✕　李怡安',
@@ -80,87 +95,87 @@ export interface GalleryPhoto {
 export const GALLERY_PHOTOS: readonly GalleryPhoto[] = [
   {
     id: 'photo-1',
-    url: 'assets/weddingphotos/photo-1.jpg',
+    url: versioned('assets/weddingphotos/photo-1.jpg'),
     alt: '紅磚木屋牆前，新人倚著牆相視而笑，新娘手持捧花',
   },
   {
     id: 'photo-2',
-    url: 'assets/weddingphotos/photo-2.jpg',
+    url: versioned('assets/weddingphotos/photo-2.jpg'),
     alt: '紅磚牆前，新娘手持捧花站立微笑，新郎蹲坐在牆邊',
   },
   {
     id: 'photo-3',
-    url: 'assets/weddingphotos/photo-3.jpg',
+    url: versioned('assets/weddingphotos/photo-3.jpg'),
     alt: '日式老屋暖簾前，新娘從新郎身後探出頭，雙手環抱著他',
   },
   {
     id: 'photo-4',
-    url: 'assets/weddingphotos/photo-4.jpg',
+    url: versioned('assets/weddingphotos/photo-4.jpg'),
     alt: '日式老屋暖簾前，新郎從身後環抱新娘、兩人十指交扣',
   },
   {
     id: 'photo-5',
-    url: 'assets/weddingphotos/photo-5.jpg',
+    url: versioned('assets/weddingphotos/photo-5.jpg'),
     alt: '木格窗前的長椅上，新娘倚著新郎，兩人望向鏡頭微笑',
   },
   {
     id: 'photo-6',
-    url: 'assets/weddingphotos/photo-6.jpg',
+    url: versioned('assets/weddingphotos/photo-6.jpg'),
     alt: '木格窗前，新郎坐在長椅上，新娘俯身擁住他、兩人額頭相靠',
   },
   {
     id: 'photo-7',
-    url: 'assets/weddingphotos/photo-7.jpg',
+    url: versioned('assets/weddingphotos/photo-7.jpg'),
     alt: '日式老屋前的草地上，新娘依偎在新郎肩上',
   },
   {
     id: 'photo-8',
-    url: 'assets/weddingphotos/photo-8.jpg',
+    url: versioned('assets/weddingphotos/photo-8.jpg'),
     alt: '日式老屋前，新郎將新娘抱起，黑紗裙擺飛揚',
   },
   {
     id: 'photo-9',
-    url: 'assets/weddingphotos/photo-9.jpg',
+    url: versioned('assets/weddingphotos/photo-9.jpg'),
     alt: '大樹綠蔭下，新娘身著粉色紗裙與新郎並肩而立',
   },
   {
     id: 'photo-10',
-    url: 'assets/weddingphotos/photo-10.jpg',
+    url: versioned('assets/weddingphotos/photo-10.jpg'),
     alt: '陽光樹影間，身著粉色紗裙的新娘與新郎相擁',
   },
   {
     id: 'photo-11',
-    url: 'assets/weddingphotos/photo-11.jpg',
+    url: versioned('assets/weddingphotos/photo-11.jpg'),
     alt: '黃昏河床上，新娘白紗長裙鋪展，與新郎並立遠望',
   },
   {
     id: 'photo-12',
-    url: 'assets/weddingphotos/photo-12.jpg',
+    url: versioned('assets/weddingphotos/photo-12.jpg'),
     alt: '夕照染紅遠山，新人在河床礫石地上相依',
   },
   {
     id: 'photo-13',
-    url: 'assets/weddingphotos/photo-13.jpg',
+    url: versioned('assets/weddingphotos/photo-13.jpg'),
     alt: '河床上新娘白紗拖尾鋪地，長頭紗隨風揚起',
   },
   {
     id: 'photo-14',
-    url: 'assets/weddingphotos/photo-14.jpg',
+    url: versioned('assets/weddingphotos/photo-14.jpg'),
     alt: '夕陽海邊，新人並肩站在濕沙灘上，海面映著晚霞',
   },
   {
     id: 'photo-15',
-    url: 'assets/weddingphotos/photo-15.jpg',
+    url: versioned('assets/weddingphotos/photo-15.jpg'),
     alt: '海邊近景，新郎低頭親吻新娘的手，新娘手捧粉色花束',
   },
   {
     id: 'photo-16',
-    url: 'assets/weddingphotos/photo-16.jpg',
+    url: versioned('assets/weddingphotos/photo-16.jpg'),
     alt: '海邊，新郎輕吻新娘額頭，新娘抱著粉色花束微笑',
   },
   {
     id: 'photo-17',
-    url: 'assets/weddingphotos/photo-17.jpg',
+    url: versioned('assets/weddingphotos/photo-17.jpg'),
     alt: '沙灘上新郎將新娘橫抱起，兩人相視而笑',
   },
 ]
@@ -229,7 +244,7 @@ export const INVITATION_TEXT = {
 } as const
 
 /** S1.5 正式邀請函區的橢圓照片。與藝廊那張同源，但裁切與尺寸為這一區另外轉過。 */
-export const INVITATION_PHOTO_URL = 'assets/images/invitation-portrait.jpg'
+export const INVITATION_PHOTO_URL = versioned('assets/images/invitation-portrait.jpg')
 
 /**
  * 婚紗藝廊與交通資訊之間的過場：一張照片上下淡進背景，下方置中一句問候。
@@ -243,9 +258,9 @@ export const GREETING_TEXT = {
    * 兩張都是原始檔縮小後的網頁版（手機寬 1000、桌機寬 2400；桌機是滿版，大螢幕也要夠清楚），原始檔在 D:\婚禮籌備\婚紗照 不進專案；
    * 換圖時照同樣方式另存，不要直接引用原始檔。
    */
-  photoMobileUrl: 'assets/images/greeting-mobile.jpg',
+  photoMobileUrl: versioned('assets/images/greeting-mobile.jpg'),
   photoMobileAlt: '日式老屋前的石板路上，穿黑色禮服的新娘與新郎牽手漫步',
-  photoDesktopUrl: 'assets/images/greeting-desktop.jpg',
+  photoDesktopUrl: versioned('assets/images/greeting-desktop.jpg'),
   photoDesktopAlt: '大樹下的草坡上，新郎抱起穿粉色紗裙的新娘',
 } as const
 
@@ -408,7 +423,7 @@ export const ABOUT_PROFILES: readonly AboutProfile[] = [
     occupation: '軟體工程師',
     description:
       '靠一行行程式碼過日子，習慣把複雜的問題拆開來、一個一個解決。話不多，但答應的事情一定做到。直到遇見怡安，才把所有溫柔都留給她。',
-    photoUrl: 'assets/images/groom.jpg',
+    photoUrl: versioned('assets/images/groom.jpg'),
     photoAlt: '新郎洪承孝身著米色西裝，於公園綠蔭前回眸',
   },
   {
@@ -418,7 +433,7 @@ export const ABOUT_PROFILES: readonly AboutProfile[] = [
     occupation: '服務業',
     description:
       '用心感受生活的服務業女孩。日常裡用親切笑容迎接每個人、傳遞溫暖，也喜歡記錄生活中的微小美好。直到遇見承孝，換她被溫柔寵愛。',
-    photoUrl: 'assets/images/bride.jpg',
+    photoUrl: versioned('assets/images/bride.jpg'),
     photoAlt: '新娘李怡安身著白色蕾絲禮服，手持捧花於海邊回眸微笑',
   },
 ]
@@ -474,7 +489,7 @@ export const STORY_PAGES: readonly StoryPage[] = [
     year: '2022 8月',
     title: '再次邂逅',
     body: '那年夏天，他從宜蘭返家，途經台北，只為親手送上一盒奶凍捲。寥寥數語的相遇，卻讓心動悄悄生根，從此有了彼此的消息。兩段平行的日子，於是有了交集。',
-    photoUrl: 'assets/gallery/photo-1.jpg',
+    photoUrl: versioned('assets/gallery/photo-1.jpg'),
     photoAlt: '日式老屋前，新郎牽起新娘的手轉圈，黑色蓬裙揚起',
   },
   {
@@ -482,7 +497,7 @@ export const STORY_PAGES: readonly StoryPage[] = [
     year: '2023 1月',
     title: '在一起',
     body: '那年聖誕夜，他在滿城燈火前牽起她的手，說出心意。她的答覆晚了一個月，卻格外溫暖，她遞來一個暖暖包，角落輕輕寫著：「好」。',
-    photoUrl: 'assets/gallery/photo-2.jpg',
+    photoUrl: versioned('assets/gallery/photo-2.jpg'),
     photoAlt: '大樹綠蔭下，新娘身著粉色紗裙依偎在新郎懷裡',
   },
   {
@@ -490,7 +505,7 @@ export const STORY_PAGES: readonly StoryPage[] = [
     year: '2023 1月 – 2024 8月',
     title: '遠距離戀愛',
     body: '距離很遠，想念很近。每個月北上的車程，載著他奔向她的思念。分隔兩地的日子，在視訊裡分享日常，再用一趟趟旅行，把短暫相聚釀成回憶。每一次見面都格外珍惜。',
-    photoUrl: 'assets/gallery/photo-3.jpg',
+    photoUrl: versioned('assets/gallery/photo-3.jpg'),
     photoAlt: '藍天綠葉下，身著黑紗的新娘與新郎相擁、額頭相靠',
   },
   {
@@ -498,7 +513,7 @@ export const STORY_PAGES: readonly StoryPage[] = [
     year: '2023 – 2026',
     title: '一起走過的日子',
     body: '日本、煙火與演唱會，回憶一站站收藏。他陪她搬過三次家，直到她回到台中；吵過架也道過歉，學會溝通與包容，讓愛愈發堅定。',
-    photoUrl: 'assets/gallery/photo-4.jpg',
+    photoUrl: versioned('assets/gallery/photo-4.jpg'),
     photoAlt: '海邊沙灘上，新郎將新娘抱起，新娘高舉捧花歡呼',
   },
   {
@@ -506,7 +521,7 @@ export const STORY_PAGES: readonly StoryPage[] = [
     year: '2025 10月',
     title: '他問，她說好',
     body: '東京鐵塔的燈火下，他從口袋拿出準備已久的戒指，許下誓言。她眼裡有光，輕聲回答：「我願意」。',
-    photoUrl: 'assets/gallery/photo-5.jpg',
+    photoUrl: versioned('assets/gallery/photo-5.jpg'),
     photoAlt: '海邊夕陽下，新郎打開戒指盒，新娘驚喜而笑',
   },
 ]
