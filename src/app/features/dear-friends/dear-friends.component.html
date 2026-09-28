@@ -1,0 +1,62 @@
+<section
+  class="dear"
+  appScrollReveal
+  [staggerSelector]="'.anim-fade-up, .anim-fade-in'"
+  [staggerMs]="160"
+>
+  <!--
+    手機與桌機是兩張不同的照片，天空的位置不同，文字的位置與斷行也跟著不同，所以各自一組。
+    隱藏的那組是 display: none，不會被報讀，照片也因為 loading="lazy" 不會被下載。
+  -->
+  <div class="dear__frame dear__frame--mobile">
+    <picture class="webp-picture">
+      <source type="image/webp" [attr.srcset]="text.photoMobileUrl | webpSrcset" sizes="100vw" />
+      <img
+        class="dear__photo anim-fade-in"
+        [src]="text.photoMobileUrl"
+        [alt]="text.photoMobileAlt"
+        width="1000"
+        height="1500"
+        loading="lazy"
+        decoding="async"
+      />
+    </picture>
+    <div class="dear__shade" aria-hidden="true"></div>
+    <div class="dear__letter">
+      <p class="dear__heading anim-fade-up">{{ text.heading }}</p>
+      <span class="dear__gold-line anim-fade-up" aria-hidden="true"></span>
+      <div class="dear__body anim-fade-up">
+        @for (line of text.lines.mobile; track line) {
+          <p>{{ line }}</p>
+        }
+      </div>
+      <p class="dear__closing anim-fade-up">{{ text.closing }}</p>
+    </div>
+  </div>
+
+  <div class="dear__frame dear__frame--desktop">
+    <picture class="webp-picture">
+      <source type="image/webp" [attr.srcset]="text.photoDesktopUrl | webpSrcset" sizes="min(84vw, 134vh)" />
+      <img
+        class="dear__photo anim-fade-in"
+        [src]="text.photoDesktopUrl"
+        [alt]="text.photoDesktopAlt"
+        width="2400"
+        height="1600"
+        loading="lazy"
+        decoding="async"
+      />
+    </picture>
+    <div class="dear__shade" aria-hidden="true"></div>
+    <div class="dear__letter">
+      <p class="dear__heading anim-fade-up">{{ text.heading }}</p>
+      <span class="dear__gold-line anim-fade-up" aria-hidden="true"></span>
+      <div class="dear__body anim-fade-up">
+        @for (line of text.lines.desktop; track line) {
+          <p>{{ line }}</p>
+        }
+      </div>
+      <p class="dear__closing anim-fade-up">{{ text.closing }}</p>
+    </div>
+  </div>
+</section>

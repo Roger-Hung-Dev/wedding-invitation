@@ -1,0 +1,203 @@
+:host {
+  display: block;
+}
+
+// 底色與上下兩段（婚紗藝廊、greeting）相同，照片四周淡出時才會直接融進前後段落。
+.dear {
+  padding: 0 0 16px;
+  background: var(--color-bg-ivory);
+  font-family: 'Noto Serif TC', serif;
+  color: var(--color-text-invert);
+}
+
+// 照片、壓暗層與文字共用一個框。框本身當尺寸容器：文字的位置用框的百分比、字級用 cqw，
+// 整組跟著照片等比縮放 —— 字一旦不跟著縮，換個螢幕寬度就會從天空滑到雲或人臉上。
+// 數值全部換算自比稿（Artifact「致親友照片文案」的手機 1 與電腦 1）：手機以 390 寬、桌機以 1200 寬為基準。
+.dear__frame {
+  position: relative;
+  container-type: inline-size;
+}
+
+.dear__frame--mobile {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+}
+
+.dear__frame--desktop {
+  display: none;
+}
+
+.dear__photo {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.dear__frame--mobile .dear__photo {
+  -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 7%, #000 84%, transparent 100%);
+  mask-image: linear-gradient(180deg, transparent 0, #000 7%, #000 84%, transparent 100%);
+}
+
+// 文字後方把天空微微壓暗，白字才不會被雲吃掉；邊緣完全透明，看不出一塊暗框。
+.dear__shade {
+  position: absolute;
+  background: radial-gradient(
+    ellipse 50% 50% at 50% 50%,
+    rgba(22, 48, 84, 0.26) 0%,
+    rgba(22, 48, 84, 0.1) 55%,
+    rgba(22, 48, 84, 0) 100%
+  );
+  pointer-events: none;
+}
+
+.dear__frame--mobile .dear__shade {
+  left: 38.46%;
+  top: 3.42%;
+  width: 70.77%;
+  height: 56.41%;
+}
+
+.dear__letter {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  text-shadow:
+    0 1px 2px rgba(16, 32, 56, 0.45),
+    0 0 16px rgba(16, 32, 56, 0.38);
+
+  p {
+    margin: 0;
+    // 斷行是刻意排好的，一行就是一行；窄螢幕碰到最小字級時寧可略為超出文字欄，也不要自己折成兩行。
+    white-space: nowrap;
+  }
+}
+
+// 手機的天空只在右半邊，文字欄靠右（左緣在畫面 49%），避開左上的白雲與樹枝。
+// 字級下限 15～17px 是給長輩看的底線，只有 360 寬以下的手機會碰到。
+.dear__frame--mobile {
+  .dear__letter {
+    left: 49.23%;
+    top: 9.23%;
+    width: 48.72%;
+  }
+
+  .dear__heading {
+    font-size: clamp(16px, 4.62cqw, 28px);
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    padding-left: 0.1em;
+    line-height: 1.5;
+  }
+
+  .dear__gold-line {
+    width: 9.23cqw;
+    margin-top: 3.08cqw;
+  }
+
+  .dear__body {
+    margin-top: 3.59cqw;
+    font-size: clamp(15px, 4.36cqw, 26px);
+    line-height: 1.9;
+  }
+
+  .dear__closing {
+    margin-top: 3.59cqw;
+    font-size: clamp(17px, 4.87cqw, 29px);
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    padding-left: 0.2em;
+    line-height: 1.5;
+  }
+}
+
+.dear__gold-line {
+  display: block;
+  height: 1px;
+  background: #f3dfa8;
+}
+
+@media (min-width: 1024px) {
+  .dear {
+    padding: 0 0 48px;
+  }
+
+  .dear__frame--mobile {
+    display: none;
+  }
+
+  // 寬度同比稿（1440 畫面裡 1200 寬）；高度 = 寬 × 2/3，不超過螢幕高的 89%，照片才能一次看完。
+  .dear__frame--desktop {
+    display: block;
+    width: min(83.34%, 133.3vh);
+    aspect-ratio: 3 / 2;
+    margin: 0 auto;
+
+    .dear__photo {
+      -webkit-mask-image:
+        linear-gradient(180deg, transparent 0, #000 10%, #000 86%, transparent 100%),
+        linear-gradient(90deg, transparent 0, #000 8%, #000 92%, transparent 100%);
+      -webkit-mask-composite: source-in;
+      mask-image:
+        linear-gradient(180deg, transparent 0, #000 10%, #000 86%, transparent 100%),
+        linear-gradient(90deg, transparent 0, #000 8%, #000 92%, transparent 100%);
+      mask-composite: intersect;
+    }
+
+    .dear__shade {
+      left: 58.33%;
+      top: 5%;
+      width: 40%;
+      height: 52.5%;
+      background: radial-gradient(
+        ellipse 50% 50% at 50% 50%,
+        rgba(22, 48, 84, 0.24) 0%,
+        rgba(22, 48, 84, 0.1) 55%,
+        rgba(22, 48, 84, 0) 100%
+      );
+    }
+
+    // 右側那片藍天：新郎肩膀右邊到照片右緣淡出之前。
+    .dear__letter {
+      left: 64.58%;
+      top: 9.75%;
+      width: 27.5%;
+      text-shadow:
+        0 1px 2px rgba(16, 32, 56, 0.4),
+        0 0 18px rgba(16, 32, 56, 0.35);
+    }
+
+    .dear__heading {
+      font-size: clamp(18px, 2.17cqw, 34px);
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      padding-left: 0.22em;
+      line-height: 1.5;
+    }
+
+    .dear__gold-line {
+      width: 4cqw;
+      margin-top: 1.33cqw;
+    }
+
+    .dear__body {
+      margin-top: 1.5cqw;
+      font-size: clamp(16px, 1.75cqw, 28px);
+      line-height: 2;
+      letter-spacing: 0.06em;
+    }
+
+    .dear__closing {
+      margin-top: 1.67cqw;
+      font-size: clamp(18px, 2.17cqw, 34px);
+      font-weight: 600;
+      letter-spacing: 0.26em;
+      padding-left: 0.26em;
+      line-height: 1.5;
+    }
+  }
+}

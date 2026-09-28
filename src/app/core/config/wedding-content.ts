@@ -268,6 +268,39 @@ export const GREETING_TEXT = {
   photoDesktopAlt: '大樹下的草坡上，新郎抱起穿粉色紗裙的新娘',
 } as const
 
+/**
+ * 婚紗藝廊與 greeting 之間「致親友」那一段：一張照片，文字直接寫在照片的天空上。
+ *
+ * 手機與桌機的照片不同，天空的位置也不同，所以斷行各自維護：手機的天空只有畫面右半邊，
+ * 一行最多 11 個字；桌機的天空比較寬，最後兩句併成一行。兩種版本的字要一致，改文案時兩邊都要改。
+ *
+ * 手機照片是 dobe-5194 放大 1.2 倍、靠右上裁切（原圖左側切掉 672px、下方只取到 5043px）：
+ * 不放大的話右側天空只有約 170px 寬，一行放不下 9 個字以上。換照片時要重新確認天空夠不夠放字。
+ */
+export const DEAR_FRIENDS_TEXT = {
+  heading: '致 親愛的家人朋友',
+  lines: {
+    mobile: [
+      '感謝生命中有你的陪伴，',
+      '我們決定攜手相依。',
+      '誠摯邀請最親愛的你，',
+      '一同見證，',
+      '共度這份美好幸福。',
+    ] as readonly string[],
+    desktop: [
+      '感謝生命中有你的陪伴，',
+      '我們決定攜手相依。',
+      '誠摯邀請最親愛的你，',
+      '一同見證，共度這份美好幸福。',
+    ] as readonly string[],
+  },
+  closing: '期待與你相聚',
+  photoMobileUrl: versioned('assets/images/dear-friends-mobile.jpg'),
+  photoMobileAlt: '藍天綠樹下，新郎與穿黑色禮服的新娘相擁、額頭相靠',
+  photoDesktopUrl: versioned('assets/images/dear-friends-desktop.jpg'),
+  photoDesktopAlt: '藍天綠樹下，新郎與穿黑色禮服的新娘相擁對望',
+} as const
+
 /** Hero 滿版底圖。是 LCP 元素，於 index.html 另外 preload（換圖時兩處要一起改）。 */
 export const HERO_IMAGE_URL = 'assets/images/hero-mobile.jpg'
 
