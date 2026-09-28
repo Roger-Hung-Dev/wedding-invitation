@@ -61,7 +61,13 @@
   position: relative;
   // pan-y：垂直捲動照常交給瀏覽器，水平方向留給翻頁手勢。
   // 不設的話瀏覽器會先觀望手指要不要捲動，水平滑動的判定會慢半拍。
-  touch-action: pan-y;
+  // pinch-zoom 一定要一起寫：只寫 pan-y 會連雙指放大都擋掉，長輩想放大看字時在書上捏不動。
+  touch-action: pan-y pinch-zoom;
+}
+
+// 已經放大時，水平滑動要拿來移動畫面看字，交還給瀏覽器；翻頁手勢在元件裡同步停用。
+.story__slot--zoomed {
+  touch-action: auto;
 }
 
 .story__sr-only {

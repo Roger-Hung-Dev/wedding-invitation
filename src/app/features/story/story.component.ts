@@ -6,6 +6,7 @@ import {
   afterNextRender,
   computed,
   inject,
+  signal,
   viewChild,
 } from '@angular/core'
 import { STORY_TEXT } from '../../core/config/wedding-content'
@@ -133,6 +134,12 @@ const SWIPE_THRESHOLD_PX = 40
 const SWIPE_CLICK_GUARD_MS = 400
 
 /**
+ * 雙指放大超過這個倍率就視為「正在放大看」，滑動改成移動畫面、不再翻頁。
+ * 留一點餘裕而不是寫 1：放大後捏回原尺寸時，瀏覽器常停在 1.00x 附近而不是剛好 1。
+ */
+const ZOOMED_SCALE = 1.05
+
+/**
  * S10 交往故事書。手機是單頁的紀念冊、桌機是雙頁展開，兩種版式都固定渲染在 DOM 中、
  * 只用 CSS 切換顯示（理由同 S2 婚紗藝廊：用 @if 依斷點抽換節點會讓已經播過的進場動畫套不上新節點）。
  *
@@ -180,9 +187,15 @@ export class StoryComponent {
   private swipeStart: { x: number; y: number; id: number } | null = null
   private lastSwipeAt = 0
 
+  /** 賓客目前是否用雙指把頁面放大了。放大時書上的水平滑動要讓給瀏覽器移動畫面。 */
+  protected readonly pageZoomed = signal(false)
+
   constructor() {
     this.destroyRef.onDestroy(() => this.clearTimer())
-    afterNextRender(() => this.preloadPhotosWhenNear())
+    afterNextRender(() => {
+      this.preloadPhotosWhenNear()
+      this.trackPinchZoom()
+    })
   }
 
   protected turn(direction: StoryTurnDirection): void {
@@ -239,10 +252,11 @@ export class StoryComponent {
    * 觸控滑動翻頁。一本書在手機上，直覺是用手滑而不是點小箭頭。
    *
    * 只收 touch：滑鼠拖曳在桌機是選取文字的動作，把它也當成翻頁會讓人選不到字。
+   * 頁面放大時也不收：那時的水平滑動是在移動畫面找字，翻掉會讓人找不到剛才看的那一段。
    * 鍵盤與報讀器走的是翻頁鈕那條路，所以按鈕不能因為有了手勢就拿掉。
    */
   protected onSwipeStart(event: PointerEvent): void {
-    if (event.pointerType !== 'touch' || !event.isPrimary) {
+    if (event.pointerType !== 'touch' || !event.isPrimary || this.pageZoomed()) {
       this.swipeStart = null
       return
     }
@@ -288,6 +302,20 @@ export class StoryComponent {
       this.peelFrame = progress < 1 ? requestAnimationFrame(step) : null
     }
     this.peelFrame = requestAnimationFrame(step)
+  }
+
+  /**
+   * 跟著雙指縮放更新 pageZoomed。visualViewport 的 scale 是瀏覽器的縮放倍率，
+   * 捏放時會觸發 resize；不支援的瀏覽器就維持「沒放大」，行為與加這段之前相同。
+   */
+  private trackPinchZoom(): void {
+    const viewport = window.visualViewport
+    if (!viewport) return
+
+    const update = (): void => this.pageZoomed.set(viewport.scale > ZOOMED_SCALE)
+    viewport.addEventListener('resize', update)
+    this.destroyRef.onDestroy(() => viewport.removeEventListener('resize', update))
+    update()
   }
 
   /**

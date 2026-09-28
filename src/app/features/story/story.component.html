@@ -21,6 +21,7 @@
   <div class="story__stage" role="group" [attr.aria-label]="text.bookLabel" tabindex="0" (keydown)="onKeydown($event)">
     <div
       class="story__slot"
+      [class.story__slot--zoomed]="pageZoomed()"
       (pointerdown)="onSwipeStart($event)"
       (pointerup)="onSwipeEnd($event)"
       (pointercancel)="onSwipeEnd($event)"
