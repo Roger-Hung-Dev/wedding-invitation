@@ -172,8 +172,9 @@
   color: var(--color-gold-soft);
 }
 
+// 上距比其他段落間距多一個行距（16 × 1.4 ≈ 22），讓收尾句與人物卡拉開、自成一段。
 .about__outro {
-  margin: 32px 0 0;
+  margin: 54px 0 0;
   // 與人物卡同寬：16px 下第一句「一個把日子過成邏輯，一個把日子過成溫度，」要 320px，310 會把最後兩個字擠到下一行。
   width: 342px;
   max-width: 100%;
@@ -286,7 +287,8 @@
   }
 
   .about__outro {
-    margin-top: 48px;
+    // 48 ＋ 一個行距（20 × 1.4 = 28）
+    margin-top: 76px;
     width: auto;
     font-size: 20px;
   }
