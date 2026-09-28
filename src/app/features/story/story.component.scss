@@ -18,6 +18,21 @@
   background: var(--color-gold-soft);
 }
 
+// 與婚紗藝廊的引言同一套：金線下 20、引言與下方內容相隔 32（桌機 48），字級手機 16、桌機 20。
+.story__quote {
+  margin: 20px 0 0;
+  width: 300px;
+  max-width: 100%;
+  text-align: center;
+  font-size: 16px;
+  font-style: italic;
+  color: var(--color-text-muted);
+
+  p {
+    margin: 0;
+  }
+}
+
 // 書本、翻頁鈕、頁點與提示排成一個格：手機是「書 ／ 鈕-點-鈕 ／ 提示」三列，
 // 桌機改成「鈕-書-鈕 ／ 點 ／ 提示」。手機 390 寬扣掉書頁卡 342 只剩兩側各 24，
 // 放不下卡片兩側的按鈕，硬放就得把書縮到 286 以下、照片與文字跟著縮水。
@@ -32,7 +47,7 @@
   align-items: center;
   justify-items: center;
   column-gap: 24px;
-  margin-top: 20px;
+  margin-top: 32px;
 
   &:focus-visible {
     outline: 2px solid var(--color-primary);
@@ -376,13 +391,19 @@
     width: 64px;
   }
 
+  .story__quote {
+    width: auto;
+    white-space: nowrap;
+    font-size: 20px;
+  }
+
   .story__stage {
     grid-template-areas:
       'prev slot next'
       'dots dots dots'
       'hint hint hint';
     column-gap: 40px;
-    margin-top: 24px;
+    margin-top: 48px;
   }
 
   .story__card {

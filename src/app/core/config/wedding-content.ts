@@ -451,6 +451,11 @@ export const ABOUT_PROFILES: readonly AboutProfile[] = [
 export const STORY_TEXT = {
   eyebrow: 'OUR STORY',
   title: 'How We Met',
+  /** 金線下方的引言。桌機單行、手機刻意斷成兩行，作法同 GALLERY_TEXT.quote。 */
+  quote: {
+    full: '最幸運莫過於，在對的時間遇見你。',
+    lines: ['最幸運莫過於，', '在對的時間遇見你。'] as readonly string[],
+  },
   /**
    * 書頁卡下方的操作提示。手機可以左右滑，桌機沒有觸控只能點箭頭，所以兩句分開。
    * 手機把「滑動」放前面：那是主要的操作方式，箭頭是備援。

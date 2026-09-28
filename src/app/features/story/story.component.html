@@ -7,6 +7,16 @@
 
   <span class="story__gold-line anim-line-grow" style="transition-delay: 180ms" aria-hidden="true"></span>
 
+  <div class="story__quote anim-fade-up" style="transition-delay: 240ms">
+    @if (breakpoint.isDesktop()) {
+      <p>{{ text.quote.full }}</p>
+    } @else {
+      @for (line of text.quote.lines; track line) {
+        <p>{{ line }}</p>
+      }
+    }
+  </div>
+
   <!-- 鍵盤的左右方向鍵在整個書本區內都能翻頁，焦點在翻頁鈕上時同樣有效（事件會冒泡上來）。 -->
   <div class="story__stage" role="group" [attr.aria-label]="text.bookLabel" tabindex="0" (keydown)="onKeydown($event)">
     <div
