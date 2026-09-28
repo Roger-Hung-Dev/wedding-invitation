@@ -30,6 +30,10 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      # 照片的 WebP 縮圖不進版控，每次部署從原圖重新產生（見 tools/generate-image-variants.mjs）
+      - name: Generate image variants
+        run: node tools/generate-image-variants.mjs
+
       - name: Build (production, prerender)
         run: npx ng build --configuration production
 

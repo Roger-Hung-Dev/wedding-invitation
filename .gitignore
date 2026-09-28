@@ -10,6 +10,8 @@
 /node_modules
 /dist
 /.angular/
+# 照片的 WebP 縮圖，建置時由 tools/generate-image-variants.mjs 從原圖產生
+/.generated/
 npm-debug.log
 yarn-error.log
 /.idea

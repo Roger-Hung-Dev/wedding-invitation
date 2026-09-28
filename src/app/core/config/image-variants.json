@@ -1,0 +1,11 @@
+{
+  "weddingphotos/": [640, 1000],
+  "gallery/": [640, 1000],
+  "images/groom.jpg": [320, 600],
+  "images/bride.jpg": [320, 600],
+  "images/invitation-portrait.jpg": [400, 640],
+  "images/greeting-mobile.jpg": [800, 1000],
+  "images/greeting-desktop.jpg": [1200, 1800, 2400],
+  "images/hero-mobile.jpg": [1200],
+  "images/hero-desktop.jpg": [2400]
+}
