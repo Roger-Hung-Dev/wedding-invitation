@@ -1,3 +1,5 @@
+import PHOTO_VERSIONS from './photo-versions.generated.json'
+
 /**
  * 喜帖全站文案與示意資料。全站沒有後端，所有畫面上看得到的中文／英文字都集中在這一個檔案，
  * 不會散落在各元件的樣板（.html）裡——要改一句話，只需要來這裡找，不必去讀程式碼。
@@ -12,17 +14,19 @@
  */
 
 /**
- * 照片網址的版本號。換照片時常沿用同一個檔名（例如 photo-4.jpg 換成另一張），
- * 看過網站的手機會直接拿快取裡的舊圖；網址帶上版本號，版本一變瀏覽器就會重新下載。
- * 只要替換了任何一張照片的內容，就把這個數字加一。
+ * 在照片網址後面接上該照片的內容指紋（?v=指紋）。換照片時常沿用同一個檔名（例如 photo-4.jpg 換成另一張），
+ * 看過網站的手機會直接拿快取裡的舊圖；指紋跟著照片內容變，網址一變瀏覽器就會重新下載，
+ * 沒換的照片網址不變，也不會被迫重新下載。
+ *
+ * 指紋由 tools/generate-image-variants.mjs 在建置前算好，寫在 photo-versions.generated.json（不進版控），
+ * 換照片不需要手動改任何東西。查不到指紋時（例如新加的照片還沒重跑產生腳本）只用原網址，照片照常顯示。
  *
  * 封面底圖（HERO_IMAGE_*）不套用：index.html 以固定網址 preload 它，網址對不上 preload 就白做了。
  * 要換封面底圖時改用新檔名，並同步修改 index.html 的 preload。
  */
-const PHOTO_VERSION = 2
-
 function versioned(path: string): string {
-  return `${path}?v=${PHOTO_VERSION}`
+  const fingerprint = (PHOTO_VERSIONS as Record<string, string>)[path]
+  return fingerprint ? `${path}?v=${fingerprint}` : path
 }
 
 export const WEDDING_CONTENT = {

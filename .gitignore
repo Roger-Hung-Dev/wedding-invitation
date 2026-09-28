@@ -10,8 +10,9 @@
 /node_modules
 /dist
 /.angular/
-# 照片的 WebP 縮圖，建置時由 tools/generate-image-variants.mjs 從原圖產生
+# 照片的 WebP 縮圖與內容指紋，建置時由 tools/generate-image-variants.mjs 從原圖產生
 /.generated/
+/src/app/core/config/photo-versions.generated.json
 npm-debug.log
 yarn-error.log
 /.idea
