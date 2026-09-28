@@ -23,7 +23,7 @@
   width: 300px;
   max-width: 100%;
   text-align: center;
-  font-size: 18px;
+  font-size: 16px;
   font-style: italic;
   line-height: 1.4;
   color: var(--color-text-muted);
@@ -201,7 +201,7 @@
   .about__intro {
     margin-top: 24px;
     width: auto;
-    font-size: 22px;
+    font-size: 20px;
   }
 
   // 桌機把兩張卡與中央分隔排成一列：520 + 80 + 520 = 1120，與內容欄同寬。
@@ -288,6 +288,6 @@
   .about__outro {
     margin-top: 48px;
     width: auto;
-    font-size: 19px;
+    font-size: 20px;
   }
 }

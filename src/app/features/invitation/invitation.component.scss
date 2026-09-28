@@ -187,11 +187,12 @@
   }
 }
 
+// 全站斜體引言（本句、新人介紹的引言與收尾句、相簿引言）字級統一：手機 16px、桌機 20px。
 .invitation__quote {
   position: relative;
   margin: 24px 34px 0;
   font-style: italic;
-  font-size: 18px;
+  font-size: 16px;
   line-height: 1.85;
   color: #8a7080;
   text-align: center;
@@ -277,9 +278,11 @@
       box-shadow: 0 calc(14 * var(--u)) calc(32 * var(--u)) calc(-20 * var(--u)) rgba(74, 55, 66, 0.5);
     }
 
+    // 帖面上唯一不跟著縮放的字級：要與其他區塊的斜體引言同為 20px。
+    // 1024 寬時帖面最小，左欄（照片＋本句兩行）仍比帖面內高矮約 100px，放得下。
     .invitation__quote {
       margin: calc(22 * var(--u)) 0 0;
-      font-size: calc(18 * var(--u));
+      font-size: 20px;
     }
 
     .invitation__eyebrow {
