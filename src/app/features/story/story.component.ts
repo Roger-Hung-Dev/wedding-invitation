@@ -9,6 +9,7 @@ import {
   viewChild,
 } from '@angular/core'
 import { STORY_TEXT } from '../../core/config/wedding-content'
+import { webpSrcset } from '../../core/image-variants'
 import { BreakpointService } from '../../shared/breakpoint.service'
 import { IconComponent } from '../../shared/icon/icon.component'
 import { ReducedMotionService } from '../../shared/reduced-motion.service'
@@ -52,6 +53,9 @@ const ICON_SIZE_DESKTOP = 20
  * 賓客往下捲到這一段之前就抓好，第一次翻頁時才不會等照片下載。
  */
 const PRELOAD_MARGIN = '800px 0px'
+
+/** 與 story-page 樣板上 source 的 sizes 相同，預先下載的才會是翻頁時實際用到的那個寬度。 */
+const PHOTO_SIZES = '(min-width: 1024px) 340px, 278px'
 
 /** 掀起處落在底頁上的陰影寬度，沿摺線的垂直方向量。 */
 const PEEL_SHADOW_WIDTH_PX = 48
@@ -298,6 +302,8 @@ export class StoryComponent {
         observer.disconnect()
         for (const page of this.store.pages) {
           const img = new Image()
+          img.sizes = PHOTO_SIZES
+          img.srcset = webpSrcset(page.photoUrl) ?? ''
           img.src = page.photoUrl
           img.decode().catch(() => undefined)
         }

@@ -37,7 +37,10 @@
         [class.gallery__card--active]="i === store.activeIndex()"
         (click)="store.openLightbox(i)"
       >
-        <img [src]="photo.url" [alt]="photo.alt" loading="lazy" fetchpriority="low" />
+        <picture class="webp-picture">
+          <source type="image/webp" [attr.srcset]="photo.url | webpSrcset" sizes="260px" />
+          <img [src]="photo.url" [alt]="photo.alt" loading="lazy" fetchpriority="low" />
+        </picture>
       </button>
     }
   </div>
@@ -65,7 +68,10 @@
           [attr.tabindex]="item.isDuplicate ? -1 : null"
           (click)="store.openLightbox(item.originalIndex)"
         >
-          <img [src]="item.photo.url" [alt]="item.photo.alt" loading="lazy" fetchpriority="low" />
+          <picture class="webp-picture">
+            <source type="image/webp" [attr.srcset]="item.photo.url | webpSrcset" sizes="360px" />
+            <img [src]="item.photo.url" [alt]="item.photo.alt" loading="lazy" fetchpriority="low" />
+          </picture>
         </button>
       }
     </div>
@@ -75,7 +81,10 @@
   <div class="gallery__grid">
     @for (photo of store.photos; track photo.id; let i = $index) {
       <button type="button" class="gallery__grid-card anim-reveal-mask" [style.transition-delay.ms]="i * 140" (click)="store.openLightbox(i)">
-        <img [src]="photo.url" [alt]="photo.alt" loading="lazy" fetchpriority="low" />
+        <picture class="webp-picture">
+          <source type="image/webp" [attr.srcset]="photo.url | webpSrcset" sizes="360px" />
+          <img [src]="photo.url" [alt]="photo.alt" loading="lazy" fetchpriority="low" />
+        </picture>
       </button>
     }
   </div>

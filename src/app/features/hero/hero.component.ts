@@ -6,6 +6,7 @@ import { padTwoDigits } from '../../core/date.util'
 import { HeroStore } from './hero.store'
 import { IntroGateStore } from '../intro-gate/intro-gate.store'
 import { MusicPlayerComponent } from '../music-player/music-player.component'
+import { WebpSrcsetPipe } from '../../shared/webp-srcset.pipe'
 
 /**
  * S1 主視覺封面區。是進站第一印象，入場動畫在頁面載入完成即播放，
@@ -13,7 +14,7 @@ import { MusicPlayerComponent } from '../music-player/music-player.component'
  */
 @Component({
   selector: 'app-hero',
-  imports: [MusicPlayerComponent],
+  imports: [MusicPlayerComponent, WebpSrcsetPipe],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './hero.component.html',
   styleUrl: './hero.component.scss',

@@ -23,7 +23,10 @@
     @for (profile of profiles; track profile.id; let i = $index) {
       <article class="about__card" [class.about__card--bride]="profile.id === 'bride'">
         <div class="about__photo anim-reveal-mask" [style.transitionDelay.ms]="photoDelayMs(i)">
-          <img [src]="profile.photoUrl" [alt]="profile.photoAlt" loading="lazy" />
+          <picture class="webp-picture">
+            <source type="image/webp" [attr.srcset]="profile.photoUrl | webpSrcset" sizes="(min-width: 1024px) 240px, 144px" />
+            <img [src]="profile.photoUrl" [alt]="profile.photoAlt" loading="lazy" />
+          </picture>
         </div>
         <div
           class="about__text"

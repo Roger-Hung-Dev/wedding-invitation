@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core'
 import { ScrollRevealDirective } from '../../shared/scroll-reveal.directive'
+import { WebpSrcsetPipe } from '../../shared/webp-srcset.pipe'
 import { GREETING_TEXT, WEDDING_CONTENT } from '../../core/config/wedding-content'
 
 /**
@@ -8,7 +9,7 @@ import { GREETING_TEXT, WEDDING_CONTENT } from '../../core/config/wedding-conten
  */
 @Component({
   selector: 'app-greeting',
-  imports: [ScrollRevealDirective],
+  imports: [ScrollRevealDirective, WebpSrcsetPipe],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './greeting.component.html',
   styleUrl: './greeting.component.scss',

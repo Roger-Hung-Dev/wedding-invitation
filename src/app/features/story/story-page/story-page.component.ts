@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, input, output } from '@angular/core'
 import { StoryPage } from '../../../core/config/wedding-content'
+import { WebpSrcsetPipe } from '../../../shared/webp-srcset.pipe'
 
 /**
  * 書頁的版式：手機是照片與文字同一頁；桌機雙頁展開後拆成左頁只有照片、右頁只有文字。
@@ -21,7 +22,7 @@ const BODY_DELAY_MS = 780
  */
 @Component({
   selector: 'app-story-page',
-  imports: [],
+  imports: [WebpSrcsetPipe],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     '[class.page--single]': "variant() === 'single'",

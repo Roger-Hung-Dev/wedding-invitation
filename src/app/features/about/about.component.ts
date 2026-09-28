@@ -3,6 +3,7 @@ import { ABOUT_PROFILES, ABOUT_TEXT } from '../../core/config/wedding-content'
 import { BreakpointService } from '../../shared/breakpoint.service'
 import { ScrollRevealDirective } from '../../shared/scroll-reveal.directive'
 import { SectionHeadingComponent } from '../../shared/section-heading/section-heading.component'
+import { WebpSrcsetPipe } from '../../shared/webp-srcset.pipe'
 
 /**
  * 進場分鏡裡新郎卡與新娘卡的間隔（毫秒）。照片與文字欄各自的延遲都由這個間隔推出來，
@@ -22,7 +23,7 @@ const CARD_TEXT_DELAY_MS = 520
  */
 @Component({
   selector: 'app-about',
-  imports: [SectionHeadingComponent, ScrollRevealDirective],
+  imports: [SectionHeadingComponent, ScrollRevealDirective, WebpSrcsetPipe],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './about.component.html',
   styleUrl: './about.component.scss',

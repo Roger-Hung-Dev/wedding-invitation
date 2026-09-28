@@ -7,6 +7,7 @@ import { SectionHeadingComponent } from '../../shared/section-heading/section-he
 import { GALLERY_TEXT, GalleryPhoto } from '../../core/config/wedding-content'
 import { GalleryStore } from './gallery.store'
 import { LightboxComponent } from './lightbox/lightbox.component'
+import { WebpSrcsetPipe } from '../../shared/webp-srcset.pipe'
 
 /**
  * 自動捲動軌道的版面數值，與 gallery.component.scss 的 $gallery-marquee-card-width／
@@ -37,7 +38,7 @@ export interface MarqueeItem {
  */
 @Component({
   selector: 'app-gallery',
-  imports: [SectionHeadingComponent, ScrollRevealDirective],
+  imports: [SectionHeadingComponent, ScrollRevealDirective, WebpSrcsetPipe],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './gallery.component.html',
   styleUrl: './gallery.component.scss',

@@ -31,3 +31,9 @@ html, body {
 * {
   box-sizing: border-box;
 }
+
+// 照片外層的 picture 只負責挑選 WebP 縮圖，排版上不佔一層：
+// 讓 img 直接當原本容器的子元素，各區塊既有的照片樣式（寬高、object-fit、flex）完全不必改。
+.webp-picture {
+  display: contents;
+}

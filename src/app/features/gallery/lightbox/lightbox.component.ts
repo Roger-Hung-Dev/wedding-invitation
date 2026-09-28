@@ -2,6 +2,7 @@ import { A11yModule } from '@angular/cdk/a11y'
 import { ChangeDetectionStrategy, Component, HostListener, computed, input, output } from '@angular/core'
 import { IconComponent } from '../../../shared/icon/icon.component'
 import { GalleryPhoto } from '../../../core/config/wedding-content'
+import { WebpSrcsetPipe } from '../../../shared/webp-srcset.pipe'
 
 /**
  * 相簿燈箱本體：全視窗滿版遮罩，左右箭頭鈕／鍵盤左右鍵／滑動手勢三種方式皆可切圖，
@@ -13,7 +14,7 @@ import { GalleryPhoto } from '../../../core/config/wedding-content'
  */
 @Component({
   selector: 'app-lightbox',
-  imports: [IconComponent, A11yModule],
+  imports: [IconComponent, A11yModule, WebpSrcsetPipe],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="lightbox" cdkTrapFocus cdkTrapFocusAutoCapture (click)="onBackdropClick($event)">
@@ -32,13 +33,16 @@ import { GalleryPhoto } from '../../../core/config/wedding-content'
         <app-icon name="chevron-left" [size]="24" color="#FFFFFF" />
       </button>
 
-      <img
-        class="lightbox__image"
-        [src]="photo().url"
-        [alt]="photo().alt"
-        (touchstart)="onTouchStart($event)"
-        (touchend)="onTouchEnd($event)"
-      />
+      <picture class="webp-picture">
+        <source type="image/webp" [attr.srcset]="photo().url | webpSrcset" sizes="(min-width: 760px) 720px, calc(100vw - 40px)" />
+        <img
+          class="lightbox__image"
+          [src]="photo().url"
+          [alt]="photo().alt"
+          (touchstart)="onTouchStart($event)"
+          (touchend)="onTouchEnd($event)"
+        />
+      </picture>
 
       <button
         type="button"

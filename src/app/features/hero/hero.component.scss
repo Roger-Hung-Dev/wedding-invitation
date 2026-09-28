@@ -23,6 +23,8 @@
   瀏覽器照樣會下載，等於手機也吃掉桌機那張（大一倍）的流量。
   picture 只取用第一個符合 media 的來源，另一張完全不會發出請求。
   media 的斷點要與 index.html 的兩行 preload 一致，否則 preload 會抓錯那張。
+  每個斷點各有 WebP 與 jpg 兩個來源：支援 WebP 的瀏覽器取 WebP（小三到四成），舊瀏覽器退回 jpg；
+  preload 也只預載 WebP，網址要與 image-variants.ts 組出的縮圖網址完全相同。
 */
 .hero__bg-img {
   position: absolute;

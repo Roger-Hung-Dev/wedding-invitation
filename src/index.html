@@ -45,9 +45,11 @@
     封面底圖是 LCP 元素，preload 避免延遲首次繪製 —— 它晚到的話，開場層會先露出一段純底色。
     media 要跟 CSS 切換兩張圖的斷點（1024px）一致：沒有 media 的話兩張都會被下載，
     而桌機那張比手機的大一倍。
+    預載的是 WebP 縮圖（建置時由原圖產生，見 tools/generate-image-variants.mjs）；
+    type 讓不支援 WebP 的舊瀏覽器略過預載，改由 hero 的 picture 退回 jpg。
   -->
-  <link rel="preload" as="image" href="assets/images/hero-mobile.jpg" media="(max-width: 1023px)" fetchpriority="high">
-  <link rel="preload" as="image" href="assets/images/hero-desktop.jpg" media="(min-width: 1024px)" fetchpriority="high">
+  <link rel="preload" as="image" type="image/webp" href="assets/img/images/hero-mobile-1200.webp" media="(max-width: 1023px)" fetchpriority="high">
+  <link rel="preload" as="image" type="image/webp" href="assets/img/images/hero-desktop-2400.webp" media="(min-width: 1024px)" fetchpriority="high">
 </head>
 <body>
   <app-root></app-root>

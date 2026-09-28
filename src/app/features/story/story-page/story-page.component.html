@@ -6,9 +6,12 @@
     [style.transitionDelay.ms]="animated() ? photoDelayMs : null"
     (click)="photoClick.emit($event)"
   >
-    <img [src]="page().photoUrl" [alt]="page().photoAlt" [attr.loading]="eager() ? 'eager' : 'lazy'"
-      [attr.decoding]="eager() ? 'sync' : null"
-    />
+    <picture class="webp-picture">
+      <source type="image/webp" [attr.srcset]="page().photoUrl | webpSrcset" sizes="(min-width: 1024px) 340px, 278px" />
+      <img [src]="page().photoUrl" [alt]="page().photoAlt" [attr.loading]="eager() ? 'eager' : 'lazy'"
+        [attr.decoding]="eager() ? 'sync' : null"
+      />
+    </picture>
   </div>
 }
 

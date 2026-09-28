@@ -1,7 +1,9 @@
 <section class="hero">
   <div class="hero__bg anim-fade-in hero__bg-fade" [class.is-visible]="loaded()" #heroBg>
     <picture>
+      <source media="(min-width: 1024px)" type="image/webp" [attr.srcset]="heroImageDesktopUrl | webpSrcset" />
       <source media="(min-width: 1024px)" [srcset]="heroImageDesktopUrl" />
+      <source type="image/webp" [attr.srcset]="heroImageUrl | webpSrcset" />
       <img class="hero__bg-img" [src]="heroImageUrl" alt="" fetchpriority="high" />
     </picture>
   </div>

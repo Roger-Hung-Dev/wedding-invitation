@@ -15,7 +15,10 @@
       <p class="invitation__name-en anim-fade-up">{{ text.nameEn }}</p>
 
       <div class="invitation__portrait anim-fade-in">
-        <img [src]="photoUrl" [alt]="text.photoAlt" loading="lazy" fetchpriority="low" />
+        <picture class="webp-picture">
+          <source type="image/webp" [attr.srcset]="photoUrl | webpSrcset" sizes="200px" />
+          <img [src]="photoUrl" [alt]="text.photoAlt" loading="lazy" fetchpriority="low" />
+        </picture>
       </div>
 
       <div class="invitation__date anim-fade-up">
@@ -69,7 +72,10 @@
 
     <div class="invitation__visual">
       <div class="invitation__portrait anim-fade-in">
-        <img [src]="photoUrl" [alt]="text.photoAlt" loading="lazy" fetchpriority="low" />
+        <picture class="webp-picture">
+          <source type="image/webp" [attr.srcset]="photoUrl | webpSrcset" sizes="18vw" />
+          <img [src]="photoUrl" [alt]="text.photoAlt" loading="lazy" fetchpriority="low" />
+        </picture>
       </div>
       <div class="invitation__quote anim-fade-up">
         @for (line of text.quoteLines; track line) {

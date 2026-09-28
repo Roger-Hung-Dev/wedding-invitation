@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core'
 import { ScrollRevealDirective } from '../../shared/scroll-reveal.directive'
+import { WebpSrcsetPipe } from '../../shared/webp-srcset.pipe'
 import {
   INVITATION_PHOTO_URL,
   INVITATION_TEXT,
@@ -18,7 +19,7 @@ import { WEDDING_LINKS } from '../../core/config/wedding-links'
  */
 @Component({
   selector: 'app-invitation',
-  imports: [ScrollRevealDirective],
+  imports: [ScrollRevealDirective, WebpSrcsetPipe],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './invitation.component.html',
   styleUrl: './invitation.component.scss',

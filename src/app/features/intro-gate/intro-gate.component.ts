@@ -3,6 +3,7 @@ import { ChangeDetectionStrategy, Component, PLATFORM_ID, effect, inject } from 
 import { HERO_IMAGE_DESKTOP_URL, HERO_IMAGE_URL, INTRO_GATE_TEXT, WEDDING_CONTENT } from '../../core/config/wedding-content'
 import { MusicPlayerStore } from '../music-player/music-player.store'
 import { IntroGateStore } from './intro-gate.store'
+import { WebpSrcsetPipe } from '../../shared/webp-srcset.pipe'
 
 /**
  * 進站開場層：蓋滿畫面，賓客輕觸一下才進入喜帖本體。
@@ -15,12 +16,15 @@ import { IntroGateStore } from './intro-gate.store'
  */
 @Component({
   selector: 'app-intro-gate',
+  imports: [WebpSrcsetPipe],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     @if (!store.entered()) {
       <button type="button" class="gate" [attr.aria-label]="text.ariaLabel" (click)="enter()">
         <picture class="gate__bg">
+          <source media="(min-width: 1024px)" type="image/webp" [attr.srcset]="heroImageDesktopUrl | webpSrcset" />
           <source media="(min-width: 1024px)" [srcset]="heroImageDesktopUrl" />
+          <source type="image/webp" [attr.srcset]="heroImageUrl | webpSrcset" />
           <img class="gate__bg-img" [src]="heroImageUrl" alt="" aria-hidden="true" />
         </picture>
         <span class="gate__veil" aria-hidden="true"></span>
@@ -75,6 +79,7 @@ import { IntroGateStore } from './intro-gate.store'
       瀏覽器照樣會下載，等於手機也吃掉桌機那張（大一倍）的流量。
       picture 只會取用第一個符合 media 的來源，另一張完全不會發出請求。
       media 的斷點要與 index.html 的兩行 preload 一致，否則 preload 會抓錯那張。
+      WebP 與 jpg 兩個來源的排法同 Hero：兩處用的是同一張圖，來源不同的話會各下載一次。
     */
     .gate__bg {
       position: absolute;
