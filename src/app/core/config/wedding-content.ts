@@ -517,7 +517,7 @@ export const STORY_PAGES: readonly StoryPage[] = [
     title: '遠距離戀愛',
     body: '距離很遠，想念很近。台中到台北的距離，每個月北上的車程，載著他奔向她的思念。分隔兩地的日子，在視訊裡分享日常，再用一趟趟旅行，把短暫相聚釀成回憶。每一次見面都格外珍惜。',
     photoUrl: versioned('assets/gallery/photo-3.jpg'),
-    photoAlt: '藍天綠葉下，身著黑紗的新娘與新郎相擁、額頭相靠',
+    photoAlt: '黃昏的海邊，新郎從身後擁著穿白色蕾絲禮服的新娘，兩人一起捧著粉色捧花',
   },
   {
     id: 'story-4',
