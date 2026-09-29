@@ -72,13 +72,13 @@
 
   p {
     margin: 0;
-    // 斷行是刻意排好的，一行就是一行；窄螢幕碰到最小字級時寧可略為超出文字欄，也不要自己折成兩行。
+    // 斷行是刻意排好的，一行就是一行，不讓瀏覽器自己折行（字級與欄寬同比縮放，本來就放得下）。
     white-space: nowrap;
   }
 }
 
 // 手機的天空只在右半邊，文字欄靠右（左緣在畫面 49%），避開左上的白雲與樹枝。
-// 字級下限 15～17px 是給長輩看的底線，只有 360 寬以下的手機會碰到。
+// 字級純粹跟著照片等比縮放（390 寬時內文 17px），不設上下限：設了下限，窄螢幕上字會比天空大、壓到人。
 .dear__frame--mobile {
   .dear__letter {
     left: 49.23%;
@@ -87,7 +87,7 @@
   }
 
   .dear__heading {
-    font-size: clamp(16px, 4.62cqw, 28px);
+    font-size: 4.62cqw;
     font-weight: 600;
     letter-spacing: 0.1em;
     padding-left: 0.1em;
@@ -101,13 +101,13 @@
 
   .dear__body {
     margin-top: 3.59cqw;
-    font-size: clamp(15px, 4.36cqw, 26px);
+    font-size: 4.36cqw;
     line-height: 1.9;
   }
 
   .dear__closing {
     margin-top: 3.59cqw;
-    font-size: clamp(17px, 4.87cqw, 29px);
+    font-size: 4.87cqw;
     font-weight: 600;
     letter-spacing: 0.2em;
     padding-left: 0.2em;
@@ -130,10 +130,11 @@
     display: none;
   }
 
-  // 寬度同比稿（1440 畫面裡 1200 寬）；高度 = 寬 × 2/3，不超過螢幕高的 89%，照片才能一次看完。
+  // 照片尺寸與 greeting 那張相同：寬 66%，高度 = 寬 × 2/3 ≤ 70vh（所以寬度上限 105vh）。
+  // 文字位置與字級都是照片框的比例（比稿以 1200 寬為基準），照片變小字跟著等比變小。
   .dear__frame--desktop {
     display: block;
-    width: min(83.34%, 133.3vh);
+    width: min(66%, 105vh);
     aspect-ratio: 3 / 2;
     margin: 0 auto;
 
@@ -172,7 +173,7 @@
     }
 
     .dear__heading {
-      font-size: clamp(18px, 2.17cqw, 34px);
+      font-size: 2.17cqw;
       font-weight: 600;
       letter-spacing: 0.22em;
       padding-left: 0.22em;
@@ -186,14 +187,14 @@
 
     .dear__body {
       margin-top: 1.5cqw;
-      font-size: clamp(16px, 1.75cqw, 28px);
+      font-size: 1.75cqw;
       line-height: 2;
       letter-spacing: 0.06em;
     }
 
     .dear__closing {
       margin-top: 1.67cqw;
-      font-size: clamp(18px, 2.17cqw, 34px);
+      font-size: 2.17cqw;
       font-weight: 600;
       letter-spacing: 0.26em;
       padding-left: 0.26em;
