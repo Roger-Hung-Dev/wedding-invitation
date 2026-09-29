@@ -22,8 +22,17 @@
   background: var(--color-gold-soft);
 }
 
+// 與婚紗藝廊的引言同一套：金線下 20、引言與下方內容相隔 32（桌機 48），字級手機 16、桌機 20。
+.notes__quote {
+  margin: 20px 0 0;
+  text-align: center;
+  font-size: 16px;
+  font-style: italic;
+  color: var(--color-text-muted);
+}
+
 .notes__list {
-  margin: 40px 0 0;
+  margin: 32px 0 0;
   padding: 0;
   list-style: none;
   width: 342px;
@@ -99,8 +108,12 @@
     width: 64px;
   }
 
+  .notes__quote {
+    font-size: 20px;
+  }
+
   .notes__list {
-    margin-top: 56px;
+    margin-top: 48px;
     width: 720px;
   }
 

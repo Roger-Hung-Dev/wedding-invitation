@@ -382,6 +382,8 @@ export const DIET_VARIANTS = {
 export const DIET_NOTES_TEXT = {
   eyebrow: 'WITH LOVE',
   title: 'A Little Note',
+  /** 金線下方的引言，樣式與婚紗藝廊的引言同一套。字短，手機與桌機都是單行。 */
+  quote: '悄悄話時間',
 } as const
 
 export const INTRO_GATE_TEXT = {
