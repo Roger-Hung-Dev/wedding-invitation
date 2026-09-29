@@ -24,10 +24,12 @@
     在舊節點上觸發過的 is-visible 進場動畫，來不及套用到斷點切換後新建立的節點上，
     導致桌機版照片永遠停在 clip-path 揭幕前的隱藏狀態。
 
-    相簿照片一律 loading="lazy" ＋ fetchpriority="low"。光有 lazy 不夠 ——
+    相簿照片先以 lazy ＋ fetchpriority="low" 待命。光有 lazy 不夠 ——
     瀏覽器會預先抓 viewport 附近的 lazy 圖，於是第一張（近 400KB）會跟 Hero 底圖
     擠在同一批請求裡搶頻寬（實測手機 4G 讓首屏底圖多等了約 0.4 秒）。
-    降優先權讓它排到首屏資源之後，賓客捲到這裡時早就載好了。
+    降優先權讓它排到首屏資源之後。
+    賓客捲到相簿附近時，元件再把「現在看得到的那種版式」改成 eager 一次抓完（見 trackLoading 等），
+    否則自動捲動的照片要等捲進畫面邊緣才下載，會一張一張補上。
   -->
   <div class="gallery__track anim-reveal-mask" #track (scroll)="onTrackScroll()">
     @for (photo of store.photos; track photo.id; let i = $index) {
@@ -39,7 +41,7 @@
       >
         <picture class="webp-picture">
           <source type="image/webp" [attr.srcset]="photo.url | webpSrcset" sizes="260px" />
-          <img [src]="photo.url" [alt]="photo.alt" loading="lazy" fetchpriority="low" />
+          <img [src]="photo.url" [alt]="photo.alt" [attr.loading]="trackLoading()" fetchpriority="low" />
         </picture>
       </button>
     }
@@ -70,7 +72,7 @@
         >
           <picture class="webp-picture">
             <source type="image/webp" [attr.srcset]="item.photo.url | webpSrcset" sizes="360px" />
-            <img [src]="item.photo.url" [alt]="item.photo.alt" loading="lazy" fetchpriority="low" />
+            <img [src]="item.photo.url" [alt]="item.photo.alt" [attr.loading]="marqueeLoading()" fetchpriority="low" />
           </picture>
         </button>
       }
@@ -83,7 +85,7 @@
       <button type="button" class="gallery__grid-card anim-reveal-mask" [style.transition-delay.ms]="i * 140" (click)="store.openLightbox(i)">
         <picture class="webp-picture">
           <source type="image/webp" [attr.srcset]="photo.url | webpSrcset" sizes="360px" />
-          <img [src]="photo.url" [alt]="photo.alt" loading="lazy" fetchpriority="low" />
+          <img [src]="photo.url" [alt]="photo.alt" [attr.loading]="gridLoading()" fetchpriority="low" />
         </picture>
       </button>
     }

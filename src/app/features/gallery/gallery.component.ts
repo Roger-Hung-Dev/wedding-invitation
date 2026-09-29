@@ -2,6 +2,7 @@ import { ComponentType, Overlay, OverlayRef } from '@angular/cdk/overlay'
 import { ComponentPortal } from '@angular/cdk/portal'
 import { ChangeDetectionStrategy, Component, ComponentRef, DestroyRef, ElementRef, afterNextRender, computed, effect, inject, signal, viewChild } from '@angular/core'
 import { BreakpointService } from '../../shared/breakpoint.service'
+import { ReducedMotionService } from '../../shared/reduced-motion.service'
 import { ScrollRevealDirective } from '../../shared/scroll-reveal.directive'
 import { SectionHeadingComponent } from '../../shared/section-heading/section-heading.component'
 import { GALLERY_TEXT, GalleryPhoto } from '../../core/config/wedding-content'
@@ -18,6 +19,12 @@ const MARQUEE_GAP_PX = 20
 
 /** 捲動速度，每秒位移的像素。 */
 const MARQUEE_SPEED_PX_PER_SEC = 30
+
+/**
+ * 相簿離畫面還有多遠就開始把照片全部下載好（約兩個手機畫面高）。
+ * 太近的話賓客捲到時照片還在下載，輪播一張一張補上；太遠則會跟首屏資源搶頻寬。
+ */
+const PRELOAD_MARGIN = '1600px 0px'
 
 export interface MarqueeItem {
   readonly key: string
@@ -104,6 +111,27 @@ export class GalleryComponent {
       )}s`,
   )
 
+  private readonly reducedMotion = inject(ReducedMotionService)
+  private readonly host = inject<ElementRef<HTMLElement>>(ElementRef)
+
+  /** 賓客已經捲到相簿附近了。在這之前照片維持 lazy，不跟首屏的封面照搶頻寬。 */
+  private readonly photosNear = signal(false)
+
+  /**
+   * 三種版式各自的 loading 屬性。接近相簿時，只把「現在看得到的那一種」改成 eager 一次載完：
+   * 另外兩種是 display: none，改成 eager 瀏覽器照樣會下載，手機就會白白多抓一整套桌機照片。
+   * 不改的話，自動捲動與滑動輪播的照片要等捲進畫面邊緣才開始下載，看起來就是一張一張補上。
+   */
+  protected readonly trackLoading = computed(() =>
+    this.photosNear() && !this.breakpoint.isDesktop() ? 'eager' : 'lazy',
+  )
+  protected readonly marqueeLoading = computed(() =>
+    this.photosNear() && this.breakpoint.isDesktop() && !this.reducedMotion.prefersReduced() ? 'eager' : 'lazy',
+  )
+  protected readonly gridLoading = computed(() =>
+    this.photosNear() && this.breakpoint.isDesktop() && this.reducedMotion.prefersReduced() ? 'eager' : 'lazy',
+  )
+
   private overlayRef: OverlayRef | null = null
   private lightboxRef: ComponentRef<LightboxComponent> | null = null
 
@@ -144,6 +172,22 @@ export class GalleryComponent {
     })
 
     this.destroyRef.onDestroy(() => this.overlayRef?.dispose())
+
+    afterNextRender(() => this.watchApproach())
+  }
+
+  /** 相簿進入預載範圍時把 photosNear 打開，只觸發一次。 */
+  private watchApproach(): void {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (!entries.some((entry) => entry.isIntersecting)) return
+        observer.disconnect()
+        this.photosNear.set(true)
+      },
+      { rootMargin: PRELOAD_MARGIN },
+    )
+    observer.observe(this.host.nativeElement)
+    this.destroyRef.onDestroy(() => observer.disconnect())
   }
 
   private openOverlay(): ComponentRef<LightboxComponent> {

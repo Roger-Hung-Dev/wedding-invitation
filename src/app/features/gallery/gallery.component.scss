@@ -47,6 +47,8 @@
 }
 
 .gallery__card {
+  // 照片還沒下載完時先露出淡粉底，而不是一塊透明的空白（網路慢時才看得到）。
+  background: var(--color-bg-blush);
   flex: 0 0 260px;
   height: 340px;
   border: none;
@@ -140,6 +142,8 @@ $gallery-marquee-gap: 20px;
 }
 
 .gallery__marquee-card {
+  // 照片還沒下載完時先露出淡粉底，而不是一塊透明的空白（網路慢時才看得到）。
+  background: var(--color-bg-blush);
   flex: 0 0 $gallery-marquee-card-width;
   width: $gallery-marquee-card-width;
   height: 480px;
@@ -173,6 +177,8 @@ $gallery-marquee-gap: 20px;
 }
 
 .gallery__grid-card {
+  // 照片還沒下載完時先露出淡粉底，而不是一塊透明的空白（網路慢時才看得到）。
+  background: var(--color-bg-blush);
   // 360px 只在 1440 設計基準下成立，較窄的桌機視窗改用彈性寬度並用 aspect-ratio 維持比例；
   // flex-basis 用「(容器寬 - 2 個 gap) / 3」確保固定三欄一列，不會因為視窗變寬變成一列塞更多張。
   flex: 0 1 calc((100% - 40px) / 3);
