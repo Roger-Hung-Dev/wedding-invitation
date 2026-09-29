@@ -5,6 +5,7 @@ import { SectionHeadingComponent } from '../../shared/section-heading/section-he
 import { RSVP_TEXT, WEDDING_CONTENT } from '../../core/config/wedding-content'
 import { WEDDING_LINKS } from '../../core/config/wedding-links'
 import { DietStore } from '../../core/diet.store'
+import { BreakpointService } from '../../shared/breakpoint.service'
 
 /**
  * S4 意願調查區。全站沒有內嵌表單，一律外連 Google 表單，符合專案範圍界線。
@@ -22,6 +23,11 @@ export class RsvpComponent {
   protected readonly diet = inject(DietStore)
   protected readonly links = WEDDING_LINKS
   protected readonly text = RSVP_TEXT
+
+  private readonly breakpoint = inject(BreakpointService)
+
+  /** 信封按鈕兩個圖示（左側信封、右側箭頭）的尺寸，手機 20、桌機 22，跟著按鈕高度放大。 */
+  protected readonly iconSize = computed(() => (this.breakpoint.isDesktop() ? 22 : 20))
 
   /** 說明文第二行的 {{deadline}} 佔位字串換成截止日，日期只有 WEDDING_CONTENT.rsvpDeadlineDisplay 這一個來源。 */
   protected readonly introLines = computed(() =>

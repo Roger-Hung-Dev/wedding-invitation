@@ -14,8 +14,11 @@
 
   <div class="rsvp__card anim-fade-up">
     <a class="rsvp__cta" [href]="diet.rsvpFormUrl()" target="_blank" rel="noopener">
-      <span>{{ text.ctaLabel }}</span>
-      <app-icon name="external-link" [size]="16" color="var(--color-text-invert)" />
+      <span class="rsvp__cta-seal" aria-hidden="true">
+        <app-icon name="mail" [size]="iconSize()" />
+      </span>
+      <span class="rsvp__cta-label">{{ text.ctaLabel }}</span>
+      <app-icon class="rsvp__cta-arrow" name="arrow-right" [size]="iconSize()" color="var(--color-primary)" />
     </a>
 
     <p class="rsvp__note">{{ text.ctaNote }}</p>

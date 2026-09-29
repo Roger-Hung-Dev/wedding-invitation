@@ -36,20 +36,57 @@
   box-shadow: 0 8px 28px var(--shadow-rose);
 }
 
+// 信封卡片（比稿「出席回覆按鈕十款」第 04 款）：左側玫瑰色圓形信封、中間文字、右側箭頭。
+// 比膠囊按鈕高（64），整塊都能點，長輩在手機上比較好按到。
 .rsvp__cta {
+  display: flex;
+  align-items: center;
+  gap: 14px;
   width: 100%;
-  height: 54px;
-  border-radius: 27px;
-  background: var(--color-primary);
+  height: 64px;
+  padding: 0 18px 0 12px;
+  border: 1px solid var(--color-border-pill);
+  border-radius: 14px;
+  background: var(--color-bg-blush);
+  text-decoration: none;
+  color: #9d174d;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  transition:
+    background-color 200ms ease,
+    border-color 200ms ease;
+
+  &:hover {
+    background: #fce7f3;
+    border-color: var(--color-primary-soft);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 3px;
+  }
+}
+
+.rsvp__cta-seal {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  text-decoration: none;
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--color-primary);
   color: var(--color-text-invert);
-  font-size: 15px;
-  font-weight: 600;
-  letter-spacing: 1px;
+}
+
+.rsvp__cta-label {
+  flex-grow: 1;
+}
+
+.rsvp__cta-arrow {
+  display: flex;
+  flex-shrink: 0;
 }
 
 .rsvp__note {
@@ -82,11 +119,26 @@
     padding: 0;
   }
 
+  // 桌機沒有白卡片，按鈕直接放在淡粉色的段落底上：底色反過來用白色、加一點陰影，
+  // 與手機「粉底按鈕放在白卡片裡」維持同樣的深淺對比，不會糊成一片。
   .rsvp__cta {
-    width: 360px;
-    height: 60px;
-    border-radius: 30px;
+    width: 400px;
+    height: 72px;
+    gap: 16px;
+    padding: 0 22px 0 14px;
+    border-radius: 16px;
+    background: var(--color-surface);
+    box-shadow: 0 8px 24px var(--shadow-rose);
     font-size: 17px;
+
+    &:hover {
+      background: var(--color-bg-blush);
+    }
+  }
+
+  .rsvp__cta-seal {
+    width: 46px;
+    height: 46px;
   }
 
   .rsvp__note {

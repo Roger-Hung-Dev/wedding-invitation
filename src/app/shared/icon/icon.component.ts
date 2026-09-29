@@ -15,10 +15,13 @@ export type IconName =
   | 'users'
   | 'leaf'
   | 'heart'
+  | 'mail'
+  | 'arrow-right'
 
 /**
  * 全站唯一的圖示來源，手刻線性圖示（stroke-based，24×24 viewBox），
- * 不引入任何第三方圖示套件。畫面上只會用到分析檔列出的這幾種，不自行增補。
+ * 不引入任何第三方圖示套件。只放畫面上實際用到的圖示，不預先增補。
+ * mail／arrow-right 用在出席回覆的信封卡片按鈕（比稿第 04 款）。
  */
 @Component({
   selector: 'app-icon',
@@ -96,6 +99,14 @@ export type IconName =
         }
         @case ('heart') {
           <path d="M12 20.4s-7.5-4.6-7.5-10a4.3 4.3 0 0 1 7.5-2.6 4.3 4.3 0 0 1 7.5 2.6c0 5.4-7.5 10-7.5 10Z" />
+        }
+        @case ('mail') {
+          <rect x="3" y="5" width="18" height="14" rx="2" />
+          <path d="m3 7 9 6 9-6" />
+        }
+        @case ('arrow-right') {
+          <path d="M5 12h14" />
+          <path d="m13 6 6 6-6 6" />
         }
       }
     </svg>
