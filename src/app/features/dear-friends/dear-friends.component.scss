@@ -37,8 +37,8 @@
 }
 
 .dear__frame--mobile .dear__photo {
-  -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 7%, #000 84%, transparent 100%);
-  mask-image: linear-gradient(180deg, transparent 0, #000 7%, #000 84%, transparent 100%);
+  -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 7%, #000 88%, transparent 100%);
+  mask-image: linear-gradient(180deg, transparent 0, #000 7%, #000 88%, transparent 100%);
 }
 
 // 文字後方把天空微微壓暗，白字才不會被雲吃掉；邊緣完全透明，看不出一塊暗框。
@@ -55,9 +55,9 @@
 
 .dear__frame--mobile .dear__shade {
   left: 38.46%;
-  top: 3.42%;
+  top: 2.74%;
   width: 70.77%;
-  height: 56.41%;
+  height: 54.7%;
 }
 
 .dear__letter {
@@ -81,8 +81,8 @@
 // 字級純粹跟著照片等比縮放（390 寬時內文 17px），不設上下限：設了下限，窄螢幕上字會比天空大、壓到人。
 .dear__frame--mobile {
   .dear__letter {
-    left: 49.23%;
-    top: 9.23%;
+    left: 49.74%;
+    top: 7.86%;
     width: 48.72%;
   }
 

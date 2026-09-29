@@ -4,7 +4,7 @@ import { WebpSrcsetPipe } from '../../shared/webp-srcset.pipe'
 import { GREETING_TEXT, WEDDING_CONTENT } from '../../core/config/wedding-content'
 
 /**
- * 「致親友」與交通資訊之間的過場：一張照片淡進背景，下方置中一句「好久不見，我們婚禮見」。
+ * 「致親友」與交通資訊之間的過場：一張微斜的拍立得相紙，照片下方的留白寫著「好久不見，我們婚禮見」與婚期。
  * 不帶段落抬頭、不放任何按鈕 —— 它是兩段之間的一口呼吸，不是一個新的資訊區。
  */
 @Component({

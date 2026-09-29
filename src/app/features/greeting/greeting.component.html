@@ -1,33 +1,41 @@
 <section
   class="greeting"
   appScrollReveal
-  [staggerSelector]="'.anim-fade-up, .anim-fade-in'"
+  [staggerSelector]="'.anim-fade-up'"
   [staggerMs]="160"
 >
-  <picture class="webp-picture">
-    <source type="image/webp" [attr.srcset]="text.photoMobileUrl | webpSrcset" sizes="100vw" />
-    <img
-      class="greeting__photo greeting__photo--mobile anim-fade-in"
-      [src]="text.photoMobileUrl"
-      [alt]="text.photoMobileAlt"
-      width="1000"
-      height="1500"
-      loading="lazy"
-      decoding="async"
-    />
-  </picture>
-  <picture class="webp-picture">
-    <source type="image/webp" [attr.srcset]="text.photoDesktopUrl | webpSrcset" sizes="min(66vw, 105vh)" />
-    <img
-      class="greeting__photo greeting__photo--desktop anim-fade-in"
-      [src]="text.photoDesktopUrl"
-      [alt]="text.photoDesktopAlt"
-      width="2400"
-      height="1600"
-      loading="lazy"
-      decoding="async"
-    />
-  </picture>
-  <p class="greeting__line anim-fade-up">{{ text.line }}</p>
-  <p class="greeting__date anim-fade-up">{{ dateDisplay }}</p>
+  <!--
+    外層負責進場的淡入上移、內層負責傾斜：兩者都用 transform，
+    放在同一個元素上的話，進場動畫的 translateY 會蓋掉 rotate，相紙播完動畫就「變正」了。
+  -->
+  <div class="greeting__card-wrap anim-fade-up">
+    <div class="greeting__card">
+      <picture class="webp-picture">
+        <source type="image/webp" [attr.srcset]="text.photoMobileUrl | webpSrcset" sizes="min(80vw, 420px)" />
+        <img
+          class="greeting__photo greeting__photo--mobile"
+          [src]="text.photoMobileUrl"
+          [alt]="text.photoMobileAlt"
+          width="1000"
+          height="1500"
+          loading="lazy"
+          decoding="async"
+        />
+      </picture>
+      <picture class="webp-picture">
+        <source type="image/webp" [attr.srcset]="text.photoDesktopUrl | webpSrcset" sizes="min(56vw, 89vh)" />
+        <img
+          class="greeting__photo greeting__photo--desktop"
+          [src]="text.photoDesktopUrl"
+          [alt]="text.photoDesktopAlt"
+          width="2400"
+          height="1600"
+          loading="lazy"
+          decoding="async"
+        />
+      </picture>
+      <p class="greeting__line">{{ text.line }}</p>
+      <p class="greeting__date">{{ dateDisplay }}</p>
+    </div>
+  </div>
 </section>
