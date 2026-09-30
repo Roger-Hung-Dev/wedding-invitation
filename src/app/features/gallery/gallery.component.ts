@@ -21,10 +21,25 @@ const MARQUEE_GAP_PX = 20
 const MARQUEE_SPEED_PX_PER_SEC = 30
 
 /**
- * 相簿離畫面還有多遠就開始把照片全部下載好（約兩個手機畫面高）。
- * 太近的話賓客捲到時照片還在下載，輪播一張一張補上；太遠則會跟首屏資源搶頻寬。
+ * 相簿離畫面還有多遠時，無論如何都要開始下載（約兩個手機畫面高）。
+ * 平常會更早開始（網頁載完、瀏覽器空下來就開始，見 schedulePreload），這一條是給捲得很快的賓客的保底。
  */
 const PRELOAD_MARGIN = '1600px 0px'
+
+/** 網頁載入完成後再等多久才開始在背景抓相簿照片，讓封面照先解碼、畫面先穩定。 */
+const IDLE_PRELOAD_DELAY_MS = 1200
+
+/** 第一批照片遲遲載不完時（網路很慢），最多等這麼久就接著抓其餘照片，不讓後面的照片永遠卡住。 */
+const FIRST_BATCH_TIMEOUT_MS = 4000
+
+/** 手機輪播一開始看得到主卡與右側鄰卡，第一批抓這兩張。 */
+const MOBILE_FIRST_BATCH = 2
+
+/** 減少動態效果時的桌機靜態網格，第一列三張。 */
+const GRID_FIRST_BATCH = 3
+
+type PreloadStage = 'idle' | 'first' | 'all'
+type GalleryLayout = 'track' | 'marquee' | 'grid'
 
 export interface MarqueeItem {
   readonly key: string
@@ -114,23 +129,30 @@ export class GalleryComponent {
   private readonly reducedMotion = inject(ReducedMotionService)
   private readonly host = inject<ElementRef<HTMLElement>>(ElementRef)
 
-  /** 賓客已經捲到相簿附近了。在這之前照片維持 lazy，不跟首屏的封面照搶頻寬。 */
-  private readonly photosNear = signal(false)
-
   /**
-   * 三種版式各自的 loading 屬性。接近相簿時，只把「現在看得到的那一種」改成 eager 一次載完：
-   * 另外兩種是 display: none，改成 eager 瀏覽器照樣會下載，手機就會白白多抓一整套桌機照片。
-   * 不改的話，自動捲動與滑動輪播的照片要等捲進畫面邊緣才開始下載，看起來就是一張一張補上。
+   * 相簿照片的下載進度，分兩批：
+   * - idle：還沒開始，全部維持 lazy，不跟首屏的封面照搶頻寬。
+   * - first：先抓「一進相簿就看得到」的那幾張，並提高優先權。
+   * - all：第一批到齊（或等太久）後，其餘照片全部改成 eager 接著抓。
+   *
+   * 不能一開始就 17 張一起抓：頻寬被平分，每張都一樣慢，畫面會整排空白很久再同時跳出來；
+   * 也不能全靠 lazy：自動捲動的照片要等捲進畫面邊緣才下載，會一張一張補上。
    */
-  protected readonly trackLoading = computed(() =>
-    this.photosNear() && !this.breakpoint.isDesktop() ? 'eager' : 'lazy',
-  )
-  protected readonly marqueeLoading = computed(() =>
-    this.photosNear() && this.breakpoint.isDesktop() && !this.reducedMotion.prefersReduced() ? 'eager' : 'lazy',
-  )
-  protected readonly gridLoading = computed(() =>
-    this.photosNear() && this.breakpoint.isDesktop() && this.reducedMotion.prefersReduced() ? 'eager' : 'lazy',
-  )
+  private readonly preloadStage = signal<PreloadStage>('idle')
+
+  /** 第一批的張數，開始預載時依版式與視窗寬度決定。 */
+  private firstBatchSize = 0
+
+  /** 第一批已經載入的照片索引（桌機自動捲動有複製份，同一張會觸發兩次，所以用 Set）。 */
+  private readonly firstBatchLoaded = new Set<number>()
+
+  private firstBatchTimer: ReturnType<typeof setTimeout> | null = null
+
+  /** 目前實際顯示的版式。另外兩種是 display: none，不能改成 eager，否則會白白多抓一整套照片。 */
+  private readonly activeLayout = computed<GalleryLayout>(() => {
+    if (!this.breakpoint.isDesktop()) return 'track'
+    return this.reducedMotion.prefersReduced() ? 'grid' : 'marquee'
+  })
 
   private overlayRef: OverlayRef | null = null
   private lightboxRef: ComponentRef<LightboxComponent> | null = null
@@ -173,21 +195,78 @@ export class GalleryComponent {
 
     this.destroyRef.onDestroy(() => this.overlayRef?.dispose())
 
-    afterNextRender(() => this.watchApproach())
+    afterNextRender(() => this.schedulePreload())
+    this.destroyRef.onDestroy(() => {
+      if (this.firstBatchTimer) clearTimeout(this.firstBatchTimer)
+    })
   }
 
-  /** 相簿進入預載範圍時把 photosNear 打開，只觸發一次。 */
-  private watchApproach(): void {
+  /** 樣板用：某個版式的第 index 張照片現在該不該立刻下載。 */
+  protected photoLoading(layout: GalleryLayout, index: number): 'eager' | 'lazy' {
+    const stage = this.preloadStage()
+    if (stage === 'idle' || layout !== this.activeLayout()) return 'lazy'
+    return stage === 'all' || index < this.firstBatchSize ? 'eager' : 'lazy'
+  }
+
+  /** 樣板用：第一批提高下載優先權，其餘維持 low，免得跟頁面其他資源搶。 */
+  protected photoPriority(index: number): 'high' | 'low' {
+    return this.preloadStage() !== 'idle' && index < this.firstBatchSize ? 'high' : 'low'
+  }
+
+  /** 樣板用：照片載入完成。第一批到齊就接著抓其餘照片。 */
+  protected onPhotoLoad(index: number): void {
+    if (this.preloadStage() !== 'first' || index >= this.firstBatchSize) return
+    this.firstBatchLoaded.add(index)
+    if (this.firstBatchLoaded.size >= this.firstBatchSize) this.loadAll()
+  }
+
+  /**
+   * 兩個時機擇先觸發：網頁載完、瀏覽器空下來（多數賓客捲到相簿前照片早就好了），
+   * 或是相簿已經接近畫面（捲得很快、網頁還沒載完的保底）。
+   */
+  private schedulePreload(): void {
     const observer = new IntersectionObserver(
       (entries) => {
-        if (!entries.some((entry) => entry.isIntersecting)) return
-        observer.disconnect()
-        this.photosNear.set(true)
+        if (entries.some((entry) => entry.isIntersecting)) this.startPreload()
       },
       { rootMargin: PRELOAD_MARGIN },
     )
     observer.observe(this.host.nativeElement)
-    this.destroyRef.onDestroy(() => observer.disconnect())
+
+    let idleTimer: ReturnType<typeof setTimeout> | null = null
+    const onLoad = (): void => {
+      idleTimer = setTimeout(() => this.startPreload(), IDLE_PRELOAD_DELAY_MS)
+    }
+    if (document.readyState === 'complete') onLoad()
+    else window.addEventListener('load', onLoad, { once: true })
+
+    this.destroyRef.onDestroy(() => {
+      observer.disconnect()
+      window.removeEventListener('load', onLoad)
+      if (idleTimer) clearTimeout(idleTimer)
+    })
+  }
+
+  private startPreload(): void {
+    if (this.preloadStage() !== 'idle') return
+    const total = this.store.photos.length
+    const layout = this.activeLayout()
+    // 桌機自動捲動一開始看得到的張數 = 視窗寬 ÷ (卡寬 + 間距)，再多抓一張補右緣正要捲進來的那張。
+    const visible =
+      layout === 'marquee'
+        ? Math.ceil(window.innerWidth / (MARQUEE_CARD_WIDTH_PX + MARQUEE_GAP_PX)) + 1
+        : layout === 'grid'
+          ? GRID_FIRST_BATCH
+          : MOBILE_FIRST_BATCH
+    this.firstBatchSize = Math.min(total, visible)
+    this.preloadStage.set('first')
+    this.firstBatchTimer = setTimeout(() => this.loadAll(), FIRST_BATCH_TIMEOUT_MS)
+  }
+
+  private loadAll(): void {
+    if (this.firstBatchTimer) clearTimeout(this.firstBatchTimer)
+    this.firstBatchTimer = null
+    this.preloadStage.set('all')
   }
 
   private openOverlay(): ComponentRef<LightboxComponent> {
