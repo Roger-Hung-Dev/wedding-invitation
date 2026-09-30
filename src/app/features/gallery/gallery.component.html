@@ -30,6 +30,10 @@
     降優先權讓它排到首屏資源之後。
     網頁載完（或賓客捲近相簿）後，元件再分兩批改成 eager：先抓一進來就看得到的那幾張、提高優先權，
     到齊後再抓其餘照片（見 photoLoading／photoPriority）。
+
+    ⚠️ 每張 img 上 [attr.fetchpriority] 一定要寫在 [attr.loading] 前面。Angular 依屬性順序套用，
+    loading 一改成 eager 瀏覽器當下就送出請求；優先權若還沒改成 high，請求會以 low 送出、事後再改也無效，
+    第一批照片就會跟 3.7MB 的背景音樂用同樣的低優先權搶頻寬（實測慢速網路下整排空白十幾秒）。
   -->
   <div class="gallery__track anim-reveal-mask" #track (scroll)="onTrackScroll()">
     @for (photo of store.photos; track photo.id; let i = $index) {
@@ -44,8 +48,8 @@
           <img
             [src]="photo.url"
             [alt]="photo.alt"
-            [attr.loading]="photoLoading('track', i)"
             [attr.fetchpriority]="photoPriority(i)"
+            [attr.loading]="photoLoading('track', i)"
             (load)="onPhotoLoad(i)"
           />
         </picture>
@@ -81,8 +85,8 @@
             <img
               [src]="item.photo.url"
               [alt]="item.photo.alt"
-              [attr.loading]="photoLoading('marquee', item.originalIndex)"
               [attr.fetchpriority]="photoPriority(item.originalIndex)"
+              [attr.loading]="photoLoading('marquee', item.originalIndex)"
               (load)="onPhotoLoad(item.originalIndex)"
             />
           </picture>
@@ -100,8 +104,8 @@
           <img
             [src]="photo.url"
             [alt]="photo.alt"
-            [attr.loading]="photoLoading('grid', i)"
             [attr.fetchpriority]="photoPriority(i)"
+            [attr.loading]="photoLoading('grid', i)"
             (load)="onPhotoLoad(i)"
           />
         </picture>

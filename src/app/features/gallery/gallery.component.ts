@@ -208,9 +208,14 @@ export class GalleryComponent {
     return stage === 'all' || index < this.firstBatchSize ? 'eager' : 'lazy'
   }
 
-  /** 樣板用：第一批提高下載優先權，其餘維持 low，免得跟頁面其他資源搶。 */
+  /**
+   * 樣板用：開始下載的照片一律提高優先權，還在 lazy 待命的維持 low。
+   * 預載開始時網頁本身早已載完，還在搶頻寬的主要是 3.7MB 的背景音樂（靜音預播，晚幾秒緩衝好賓客感覺不到）；
+   * 照片若也是 low，會跟它平分頻寬，慢速網路下整排空白十幾秒。
+   */
   protected photoPriority(index: number): 'high' | 'low' {
-    return this.preloadStage() !== 'idle' && index < this.firstBatchSize ? 'high' : 'low'
+    const stage = this.preloadStage()
+    return stage === 'all' || (stage === 'first' && index < this.firstBatchSize) ? 'high' : 'low'
   }
 
   /** 樣板用：照片載入完成。第一批到齊就接著抓其餘照片。 */
