@@ -44,10 +44,10 @@ import { FooterComponent } from '../footer/footer.component'
     <app-gallery />
     <app-dear-friends />
     <app-greeting />
-    <app-info />
     @if (dietStore.dietNotes().length > 0) {
       <app-diet-notes />
     }
+    <app-info />
     <app-rsvp />
     <app-footer />
   `,

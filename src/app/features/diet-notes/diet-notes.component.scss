@@ -11,7 +11,7 @@
   flex-direction: column;
   align-items: center;
   padding: 64px 24px;
-  // 上一段宴客資訊是純 blush，這一段若同色會黏成一整片看不出分段。
+  // 排在 greeting 之後、宴客資訊之前：下一段宴客資訊是純 blush，這一段若同色會黏成一整片看不出分段。
   background: var(--color-bg-ivory);
 }
 
