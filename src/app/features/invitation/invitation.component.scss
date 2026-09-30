@@ -256,8 +256,11 @@
   // 區塊本身當尺寸容器，帖面裡的 cqw 才會以整個畫面寬度為準。
   // 裁切掛在整個區塊上而不是帖面上：暈染可以溢出帖面、一路鋪到畫面兩側，
   // 帖面四周的留白與帖面是同一片底色，看不出帖面的邊界。
+  // 上下留白在矮螢幕改看畫面高度：帖面四周與留白是同一片底色，少一點看不出來，省下的高度全給帖面放大。
   .invitation {
-    padding: 4vw 0;
+    --invitation-pad-y: min(4vw, 4svh);
+
+    padding: var(--invitation-pad-y) 0;
     overflow: hidden;
     container-type: inline-size;
   }
@@ -270,8 +273,12 @@
   // 每個尺寸都寫成「原稿數值 × --u」，--u 是帖面寬的 1/960；
   // 只縮放外框、字級不跟著縮放的話，照片與文字的比例會跑掉，暈染也對不上原稿的位置。
   // 高度由 540 加到 640：多了新郎新娘小標、「敬邀」與電話，原本的高度放不下。字距用 em，會自己跟著字級走。
+  //
+  // --u 取「寬度換算」與「高度換算」的較小值：封面的 SCROLL 鈕會把這一段捲到畫面頂端，
+  // 整段（帖面＋上下留白）要一次放進一個畫面。只看寬度的話，1366 × 657 這類筆電整段約 870 高，
+  // 帖面下緣的地址與電話會被切掉。16px 是留給捲動停點誤差的餘裕。
   .invitation__landscape {
-    --u: calc(84cqw / 960);
+    --u: min(calc(84cqw / 960), calc((100svh - 2 * var(--invitation-pad-y) - 16px) / 640));
 
     position: relative;
     display: flex;
@@ -318,10 +325,11 @@
       box-shadow: 0 calc(14 * var(--u)) calc(32 * var(--u)) calc(-20 * var(--u)) rgba(74, 55, 66, 0.5);
     }
 
-    // 帖面上唯一不跟著縮放的字級：要與其他區塊的斜體引言同為 20px。
+    // 與其他區塊的斜體引言同為 20px；只有矮螢幕把帖面縮小時才跟著等比縮小——
+    // 固定 20px 會比縮小後的照片寬，把右邊的內文擠到貼著卡片邊框。17 是 20px 剛好不比照片寬的換算值。
     .invitation__quote {
       margin: calc(22 * var(--u)) 0 0;
-      font-size: 20px;
+      font-size: min(20px, calc(17 * var(--u)));
     }
 
     .invitation__eyebrow {
