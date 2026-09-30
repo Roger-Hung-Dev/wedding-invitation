@@ -4,6 +4,15 @@ import { IconComponent } from '../../../shared/icon/icon.component'
 import { GalleryPhoto } from '../../../core/config/wedding-content'
 import { WebpSrcsetPipe } from '../../../shared/webp-srcset.pipe'
 
+/** 判定為換圖的水平滑動距離。 */
+const SWIPE_THRESHOLD_PX = 48
+
+/**
+ * 頁面縮放超過這個倍率就視為「正在放大看照片」，單指拖動是在移動畫面看細節，不換圖。
+ * 留一點餘裕而不是寫 1：捏回原尺寸時，瀏覽器常停在 1.00x 附近而不是剛好 1。
+ */
+const ZOOMED_SCALE = 1.05
+
 /**
  * 相簿燈箱本體：全視窗滿版遮罩，左右箭頭鈕／鍵盤左右鍵／滑動手勢三種方式皆可切圖，
  * Esc 關閉，焦點以 cdkTrapFocus 鎖在燈箱內。由 GalleryComponent 透過 CDK Overlay 掛載。
@@ -41,6 +50,7 @@ import { WebpSrcsetPipe } from '../../../shared/webp-srcset.pipe'
           [alt]="photo().alt"
           (touchstart)="onTouchStart($event)"
           (touchend)="onTouchEnd($event)"
+          (touchcancel)="onTouchCancel()"
         />
       </picture>
 
@@ -151,7 +161,8 @@ export class LightboxComponent {
   protected readonly isFirst = computed(() => this.index() === 0)
   protected readonly isLast = computed(() => this.index() === this.total() - 1)
 
-  private touchStartX = 0
+  /** 這次單指滑動的起點；null 表示這次手勢不算換圖（雙指捏放、或頁面已放大）。 */
+  private swipeStart: { x: number; y: number; id: number } | null = null
 
   @HostListener('document:keydown', ['$event'])
   onKeydown(event: KeyboardEvent): void {
@@ -164,14 +175,35 @@ export class LightboxComponent {
     if (event.target === event.currentTarget) this.close.emit()
   }
 
+  /**
+   * 只有「頁面沒放大時的單指橫滑」才換圖。
+   * 第二根手指一放上來就是在捏放，整段手勢作廢——放開時先離開的那根手指常帶著橫向位移，
+   * 以前會被當成滑動而換到上一張或下一張。放大後的單指拖動是在移動畫面看細節，同樣不換圖。
+   */
   onTouchStart(event: TouchEvent): void {
-    this.touchStartX = event.changedTouches[0].clientX
+    const zoomed = (window.visualViewport?.scale ?? 1) > ZOOMED_SCALE
+    if (event.touches.length > 1 || zoomed) {
+      this.swipeStart = null
+      return
+    }
+    const touch = event.changedTouches[0]
+    this.swipeStart = { x: touch.clientX, y: touch.clientY, id: touch.identifier }
+  }
+
+  onTouchCancel(): void {
+    this.swipeStart = null
   }
 
   onTouchEnd(event: TouchEvent): void {
-    const deltaX = event.changedTouches[0].clientX - this.touchStartX
-    const swipeThreshold = 48
-    if (deltaX > swipeThreshold) this.prev.emit()
-    else if (deltaX < -swipeThreshold) this.next.emit()
+    const start = this.swipeStart
+    const touch = Array.from(event.changedTouches).find((t) => t.identifier === start?.id)
+    if (!start || !touch) return
+    this.swipeStart = null
+
+    const dx = touch.clientX - start.x
+    const dy = touch.clientY - start.y
+    if (Math.abs(dx) < SWIPE_THRESHOLD_PX || Math.abs(dx) <= Math.abs(dy)) return
+    if (dx > 0) this.prev.emit()
+    else this.next.emit()
   }
 }
