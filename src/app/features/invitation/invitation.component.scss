@@ -173,11 +173,12 @@
   color: #5c4450;
 }
 
-// 干支年夾在西元日期與星期之間：一行國曆、一行農曆、一行時間，由粗到細三階讀下來
+// 干支年夾在西元日期與星期之間：一行國曆、一行農曆、一行時間，由粗到細三階讀下來。
+// 農曆 15、星期 14 是長輩看得清楚的下限；星期那行在 14px 時寬約 296，360 寬手機的可用寬 300 剛好放得下，再放大會換行。
 .invitation__date-lunar {
   margin: 12px 0 0;
   font-family: 'Noto Serif TC', serif;
-  font-size: 13px;
+  font-size: 15px;
   letter-spacing: 0.24em;
   color: #8a7080;
 }
@@ -185,7 +186,7 @@
 .invitation__date-sub {
   margin: 7px 0 0;
   font-family: 'Noto Serif TC', serif;
-  font-size: 12px;
+  font-size: 14px;
   letter-spacing: 0.3em;
   color: #b08196;
 }
