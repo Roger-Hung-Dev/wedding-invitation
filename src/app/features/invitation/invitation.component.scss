@@ -1,9 +1,9 @@
 // 這一區的數值全部來自比稿定案的水彩帖，不是從全站樣式推導出來的：
-// 手機與平板用直式的 C 版（固定 390px 寬），桌機換成橫式的 L17 水彩橫幅（畫面寬的 84%，依畫面寬等比縮放）。
+// 手機與平板用直式帖（固定 390px 寬），桌機換成橫式水彩帖（畫面寬的 84%，依畫面寬等比縮放）。
 // 兩張帖都不做響應式重排 —— 它是「一張帖」，只能整張等比縮放，
 // 各元素分別伸縮的話，暈染的位置、橢圓與字級的比例都會跑掉。
-// 兩張帖的字型、字級比例、橢圓比例完全相同，差別只在排法與縮放，所以共用同一組元素樣式，
-// 橫式那張覆寫尺寸、間距與對齊（見檔案最後）。
+// 排版取自比稿「電子喜帖帖面排版」的手機 1 與電腦 6；字型、字級、顏色沿用原本的帖面，改版時刻意不動。
+// 兩張帖共用同一組元素樣式，橫式那張覆寫尺寸、間距與排法（見檔案最後）。
 :host {
   display: block;
 }
@@ -74,31 +74,11 @@
   color: #b08196;
 }
 
-// 中文姓名是帖面的主標，英文退為副標 —— 花體英文留在封面那一屏，
-// 同一份喜帖裡不讓同一個角色出現兩次。
-.invitation__name-zh {
-  margin: 0;
-  font-family: 'Noto Serif TC', serif;
-  font-size: 31px;
-  font-weight: 500;
-  letter-spacing: 0.18em;
-  line-height: 1.3;
-  color: #5c4450;
-}
-
-.invitation__name-en {
-  margin: 14px 0 0;
-  font-size: 16px;
-  font-weight: 400;
-  letter-spacing: 0.34em;
-  color: #a88c97;
-}
-
 // 正圓角橢圓。曾經用過上窄下寬的蛋形，配直幅照片會讀成倒立的雞蛋。
 .invitation__portrait {
   width: 200px;
   height: 248px;
-  margin: 28px auto 0;
+  margin: 0 auto;
   border-radius: 50%;
   overflow: hidden;
   box-shadow: 0 14px 32px -20px rgba(74, 55, 66, 0.5);
@@ -113,21 +93,81 @@
   }
 }
 
-.invitation__date {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 14px;
-  margin-top: 30px;
+.invitation__name-en {
+  margin: 24px 0 0;
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: 0.34em;
+  color: #a88c97;
 }
 
-.invitation__date-line {
-  width: 34px;
+// 新郎、新娘各一欄，男左女右；下方雙方家長用同一組兩欄，左右對得齊。
+.invitation__couple,
+.invitation__parents {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin: 22px 0 0;
+  font-family: 'Noto Serif TC', serif;
+  font-weight: 400;
+}
+
+.invitation__person {
+  display: block;
+}
+
+// 「新郎／新娘」小標沿用家長欄標籤的字級與顏色，不另立一種字樣。
+.invitation__role,
+.invitation__parent dt {
+  display: block;
+  font-size: 11.5px;
+  letter-spacing: 0.2em;
+  color: #b08196;
+}
+
+.invitation__name {
+  display: block;
+  margin-top: 4px;
+  font-size: 31px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  line-height: 1.3;
+  color: #5c4450;
+}
+
+.invitation__parent dd {
+  margin: 4px 0 0;
+  font-size: 15.5px;
+  line-height: 1.75;
+  letter-spacing: 0.04em;
+  color: #4a3742;
+}
+
+// 「敬邀」分隔線：以上是具名邀請的人，以下是時間與地點。字樣沿用農曆那一行。
+.invitation__invite {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 28px 0 0;
+}
+
+.invitation__invite-line {
+  flex-grow: 1;
   height: 1px;
   background: #d9bcc6;
 }
 
+.invitation__invite-text {
+  font-family: 'Noto Serif TC', serif;
+  font-size: 13px;
+  letter-spacing: 0.24em;
+  // 字距加在字尾會讓置中偏左，左側補同寬的內距抵銷
+  padding-left: 0.24em;
+  color: #8a7080;
+}
+
+// 手機的日期兩側不加短線（上方已有「敬邀」的分隔線，再加會顯得重複）；桌機卡片內的日期保留短線。
 .invitation__date-text {
+  margin: 20px 0 0;
   font-size: 35px;
   letter-spacing: 0.1em;
   color: #5c4450;
@@ -164,13 +204,13 @@
   font-family: 'Noto Serif TC', serif;
 }
 
-// 標籤欄 58px 是量出來的：放得下「男方家長」四個字不斷行，
-// 又不會把地址那行擠到換行。字級一動就要重量一次。
+// 標籤欄 58px 是量出來的：放得下「宴會廳」三個字不斷行，又不會把地址那行擠到換行。字級一動就要重量一次。
+// 標籤與內容上下置中（不是對齊基線）：標籤字小，對基線會讓標籤看起來偏上。
 .invitation__row {
   display: grid;
   grid-template-columns: 58px 1fr;
   gap: 12px;
-  align-items: baseline;
+  align-items: center;
 
   dt {
     font-size: 11.5px;
@@ -202,10 +242,10 @@
   }
 }
 
-// ---------- 桌機：橫式帖面（水彩橫幅 L17），畫面寬 84% ----------
-// 數值取自比稿頁的 L17（960 × 540）：左邊橢圓照片＋收尾句，右邊姓名、家長、日期與場地。
+// ---------- 桌機：橫式帖面，畫面寬 84% ----------
+// 左邊橢圓照片＋收尾句，右邊姓名、家長、「敬邀」與收進卡片的日期、場地。
 // 兩張帖同時在 DOM 裡、用顯示與否切換，而不是同一組元素靠 CSS 重排：
-// 兩種排法的閱讀順序不同（直式照片夾在姓名與日期之間，橫式照片獨立一欄），
+// 兩種排法的閱讀順序不同（直式照片在最上面，橫式照片獨立一欄），
 // 硬用 order／display: contents 重排會讓報讀順序與畫面脫鉤。
 // 隱藏的那張是 display: none，不會被報讀，也不會觸發它自己的進場動畫。
 .invitation__landscape {
@@ -226,10 +266,10 @@
     display: none;
   }
 
-  // 帖面寬度為畫面寬的 84%，整張依 960 × 540 的原稿等比縮放、置中。
+  // 帖面寬度為畫面寬的 84%，整張依 960 × 640 的原稿等比縮放、置中。
   // 每個尺寸都寫成「原稿數值 × --u」，--u 是帖面寬的 1/960；
   // 只縮放外框、字級不跟著縮放的話，照片與文字的比例會跑掉，暈染也對不上原稿的位置。
-  // 字距用 em，會自己跟著字級走。
+  // 高度由 540 加到 640：多了新郎新娘小標、「敬邀」與電話，原本的高度放不下。字距用 em，會自己跟著字級走。
   .invitation__landscape {
     --u: calc(84cqw / 960);
 
@@ -238,7 +278,7 @@
     align-items: center;
     gap: calc(36 * var(--u));
     width: calc(960 * var(--u));
-    height: calc(540 * var(--u));
+    height: calc(640 * var(--u));
     margin: 0 auto;
     padding: calc(40 * var(--u)) calc(52 * var(--u));
 
@@ -279,7 +319,6 @@
     }
 
     // 帖面上唯一不跟著縮放的字級：要與其他區塊的斜體引言同為 20px。
-    // 1024 寬時帖面最小，左欄（照片＋本句兩行）仍比帖面內高矮約 100px，放得下。
     .invitation__quote {
       margin: calc(22 * var(--u)) 0 0;
       font-size: 20px;
@@ -290,27 +329,50 @@
       font-size: calc(11 * var(--u));
     }
 
-    .invitation__name-zh {
-      font-size: calc(31 * var(--u));
-    }
-
+    // 桌機的英文名在中文姓名上方（手機在照片與姓名之間）。
     .invitation__name-en {
-      margin: calc(14 * var(--u)) 0 calc(20 * var(--u));
+      margin: 0 0 calc(16 * var(--u));
       font-size: calc(16 * var(--u));
     }
 
-    // 直式的日期置中；橫式整欄靠左，日期跟著靠左，兩側短線保留。
-    .invitation__date {
-      justify-content: flex-start;
-      gap: calc(14 * var(--u));
-      margin-top: 0;
+    .invitation__couple {
+      margin: 0;
     }
 
-    .invitation__date-line {
-      width: calc(34 * var(--u));
+    .invitation__parents {
+      margin-top: calc(18 * var(--u));
+    }
+
+    .invitation__role,
+    .invitation__parent dt {
+      margin-bottom: calc(8 * var(--u));
+      font-size: calc(10 * var(--u));
+      letter-spacing: 0.26em;
+    }
+
+    .invitation__name {
+      margin-top: 0;
+      font-size: calc(31 * var(--u));
+    }
+
+    .invitation__parent dd {
+      margin: 0;
+      font-size: calc(14 * var(--u));
+      line-height: 1.9;
+      letter-spacing: 0.1em;
+    }
+
+    .invitation__invite {
+      gap: calc(14 * var(--u));
+      margin-top: calc(18 * var(--u));
+    }
+
+    .invitation__invite-text {
+      font-size: calc(13 * var(--u));
     }
 
     .invitation__date-text {
+      margin: 0;
       font-size: calc(35 * var(--u));
     }
 
@@ -325,7 +387,7 @@
     }
 
     .invitation__row {
-      grid-template-columns: calc(58 * var(--u)) 1fr;
+      grid-template-columns: calc(58 * var(--u)) max-content;
       gap: calc(12 * var(--u));
 
       dt {
@@ -350,40 +412,41 @@
     position: relative;
     flex: 1;
     min-width: 0;
+    text-align: center;
   }
 
-  // 雙方家長左右並排、標籤在上，上下各一條細線；中間不加分隔線（新人要求拿掉）。
-  .invitation__parents {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: calc(18 * var(--u));
-    margin: 0 0 calc(18 * var(--u));
-    padding: calc(14 * var(--u)) 0;
-    border-top: 1px solid rgba(217, 188, 198, 0.9);
-    border-bottom: 1px solid rgba(217, 188, 198, 0.9);
-    font-family: 'Noto Serif TC', serif;
-
-    dt {
-      margin: 0 0 calc(8 * var(--u));
-      font-size: calc(10 * var(--u));
-      letter-spacing: 0.26em;
-      color: #b08196;
-    }
-
-    dd {
-      margin: 0;
-      font-size: calc(14 * var(--u));
-      line-height: 1.9;
-      letter-spacing: 0.1em;
-      color: #4a3742;
-    }
+  // 日期、時間與場地收進同一張半透明卡片，與上方的姓名、家長分成兩塊。
+  .invitation__event {
+    margin-top: calc(16 * var(--u));
+    padding: calc(18 * var(--u)) calc(24 * var(--u));
+    background: rgba(255, 255, 255, 0.72);
+    border: 1px solid rgba(217, 188, 198, 0.7);
+    border-radius: calc(8 * var(--u));
   }
 
-  // 場地三列沿用直式卡片的列樣式，只是不包卡片、列距收緊，540 高的比例裡才放得下。
+  .invitation__date {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: calc(14 * var(--u));
+  }
+
+  .invitation__date-line {
+    width: calc(34 * var(--u));
+    height: 1px;
+    background: #d9bcc6;
+  }
+
+  // 場地四列排成兩欄：左欄地點、地址，右欄宴會廳、電話；整塊在卡片中置中，地址一行放得下。
   .invitation__venue {
     display: grid;
-    gap: calc(8 * var(--u));
-    margin: calc(16 * var(--u)) 0 0;
+    grid-template-columns: max-content max-content;
+    justify-content: center;
+    gap: calc(8 * var(--u)) calc(48 * var(--u));
+    margin: calc(14 * var(--u)) 0 0;
+    padding-top: calc(14 * var(--u));
+    border-top: 1px solid rgba(217, 188, 198, 0.7);
+    text-align: left;
     font-family: 'Noto Serif TC', serif;
   }
 }

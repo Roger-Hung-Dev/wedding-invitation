@@ -45,6 +45,11 @@ export const WEDDING_CONTENT = {
   venueName: '臻愛花園飯店',
   venueHall: '2F　東方明珠',
   /**
+   * 飯店總機，只在正式邀請函區顯示。2026-09-30 取自公開婚宴場地資料，兩個來源一致：
+   * weddingday.com.tw 的場地頁與臺中市環保局「ㄅㄨㄅㄨ網」的店家資料。新人若要改留宴會部專線，改這裡即可。
+   */
+  venuePhone: '04-2338-2669',
+  /**
    * 頁尾金色圓環內的縮寫。
    * 這裡用半形空白，不是全形 —— 全形空白的寬度等同一個字，
    * 在 20px 字級下會讓 R 與 A 各離 & 二十多 px，圓環裡看起來是散開的三個字母。
@@ -62,7 +67,7 @@ export interface WeddingSession {
   readonly id: 'lunch' | 'dinner'
   readonly label: string
   /**
-   * 膠囊上時間那一段的完整字串，含「入席」這類說明詞。
+   * 時間那一段的完整字串，含「恭請準時入席」這類說明詞（目前只有正式邀請函區在用）。
    * 賓客真正要知道的是幾點該到，光寫 18:00 會被讀成開席時間而算錯出門時間。
    */
   readonly timeDisplay: string
@@ -73,7 +78,7 @@ export interface WeddingSession {
  * 日後若加辦午宴，補一筆 id: 'lunch' 即可，框內會多一行。
  */
 export const WEDDING_SESSIONS: readonly WeddingSession[] = [
-  { id: 'dinner', label: '晚宴', timeDisplay: '18:00 入席' },
+  { id: 'dinner', label: '晚宴', timeDisplay: '18:00 恭請準時入席' },
 ]
 
 export interface GalleryPhoto {
@@ -203,19 +208,24 @@ export const WEDDING_PARENTS: { readonly groom: ParentPair; readonly bride: Pare
 }
 
 /**
- * S1.5 正式邀請函區的文案。這一區是水彩帖面：橢圓照片、中文姓名當主標、
- * 英文退為副標，底下條列雙方家長與宴席。
+ * S1.5 正式邀請函區的文案。這一區是水彩帖面：橢圓照片、新郎新娘的中文姓名當主標、
+ * 英文為副標，雙方家長男左女右列在姓名下方，「敬邀」分隔線之後才是日期與宴席。
  *
- * 這一區是全站唯一列出日期、時間、場地、宴會廳與地址的地方——S1.5 是「帖」，賓客一眼看完就知道是誰邀、哪天、在哪；
+ * 這一區是全站唯一列出日期、時間、場地、宴會廳、地址與電話的地方——S1.5 是「帖」，賓客一眼看完就知道是誰邀、哪天、在哪；
  * S3 交通資訊區只管「怎麼去」（停車示意圖與地圖導航），不再重複這些資料。刪減這裡的欄位前要想到這點。
  */
 export const INVITATION_TEXT = {
   eyebrow: 'WE ARE GETTING MARRIED',
   /**
-   * 帖面的中文姓名。與 WEDDING_CONTENT.brideGroomZh 不同：那個在兩個名字中間夾一個乘號給封面用，
-   * 帖面只要兩個名字，中間以全形空白分隔。
+   * 帖面上的新郎、新娘。名字上方各有一個「新郎／新娘」小標，男左女右，
+   * 與下方雙方家長的左右一致（照紙本喜帖的排法）。
    */
-  nameZh: '洪承孝　李怡安',
+  couple: {
+    groom: { label: '新郎', name: '洪承孝' },
+    bride: { label: '新娘', name: '李怡安' },
+  },
+  /** 家長與日期之間那條分隔線中央的字，表示以上具名者邀請。 */
+  invitedBy: '敬邀',
   /** 中文姓名之下的英文副標，全大寫並拉開字距，不用花體。 */
   nameEn: 'ROGER & AMY',
   /**
@@ -242,6 +252,7 @@ export const INVITATION_TEXT = {
     venue: '地　點',
     hall: '宴會廳',
     address: '地　址',
+    phone: '電　話',
   },
   /** 帖面的收尾句，固定兩行。直式帖放在最底下，桌機的橫式帖放在照片正下方。 */
   quoteLines: ['願我們的故事，', '從今天起有了共同的名字。'] as readonly string[],
