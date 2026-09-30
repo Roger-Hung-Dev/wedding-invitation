@@ -125,6 +125,13 @@ function paintPeel(el: HTMLElement, direction: StoryTurnDirection, progress: num
 const SWIPE_THRESHOLD_PX = 40
 
 /**
+ * 水平位移至少要是垂直位移的幾倍才算翻頁（約 27 度以內的斜度）。
+ * 只比「水平大於垂直」的話，往下滑時手指斜斜帶過（例如橫 50、直 40）也會翻頁；
+ * 真的想翻頁的人是橫著滑，這個倍率擋得掉斜滑、又不必刻意滑得筆直。
+ */
+const SWIPE_DIRECTION_RATIO = 2
+
+/**
  * 滑完之後多久之內不受理照片點擊。
  *
  * 手指在照片上滑動放開時，瀏覽器仍然會補一個 click，那會讓「點照片翻頁」跟著觸發，
@@ -270,11 +277,20 @@ export class StoryComponent {
 
     const dx = event.clientX - start.x
     const dy = event.clientY - start.y
-    // 垂直位移較大時當成捲動頁面，不翻頁 —— 賓客往下讀的動作不該把書翻掉。
-    if (Math.abs(dx) < SWIPE_THRESHOLD_PX || Math.abs(dx) <= Math.abs(dy)) return
+    // 斜度不夠橫的當成捲動頁面，不翻頁 —— 賓客往下讀的動作不該把書翻掉。
+    if (Math.abs(dx) < SWIPE_THRESHOLD_PX || Math.abs(dx) < Math.abs(dy) * SWIPE_DIRECTION_RATIO) return
 
     this.lastSwipeAt = Date.now()
     this.turn(dx < 0 ? 'next' : 'prev')
+  }
+
+  /**
+   * 瀏覽器接手了這次觸控（開始捲動頁面或雙指縮放），這次手勢一律不翻頁。
+   * 不能和 onSwipeEnd 共用：取消事件帶的座標是 (0, 0)，拿來算位移，
+   * 從書的右上方往下滑時會被算成「往左滑了一大段」而翻頁。
+   */
+  protected onSwipeCancel(): void {
+    this.swipeStart = null
   }
 
   protected onKeydown(event: KeyboardEvent): void {
