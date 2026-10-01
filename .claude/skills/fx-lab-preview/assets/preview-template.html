@@ -1,0 +1,245 @@
+<title>__FX_NAME__預覽</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@600&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* 版面：剪輯室監看螢幕 —— 左側 16:9 舞台＋時間軸，右側參數盤；下方是提案說明。刻意只做深色（監看環境），不跟隨主題 */
+:root {
+  --bg: #121417;            /* 剪輯室底 */
+  --panel: #1b1e23;         /* 參數盤 */
+  --line: #2c3037;
+  --fg: #e8e4dc;            /* 暖白字 */
+  --muted: #9a958c;
+  --accent: #d9b56a;        /* 婚禮金（與片頭片尾的 #E7C873 同族） */
+  --cut: #c46a5a;           /* 切點標記 */
+  --font-display: "Noto Serif TC", "Songti TC", serif;
+  --font-body: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, Consolas, monospace;
+  color-scheme: dark;
+}
+html, body { background: var(--bg); color: var(--fg); }
+body { font-family: var(--font-body); line-height: 1.6; padding-inline: 16px; padding-block: 20px 40px; }
+.wrap { max-width: 1180px; margin: 0 auto; display: grid; gap: 20px; }
+header { display: grid; gap: 6px; }
+.chip { justify-self: start; font-size: 12px; letter-spacing: .08em; color: var(--bg); background: var(--accent); padding: 2px 10px; border-radius: 999px; font-weight: 700; }
+h1 { font-family: var(--font-display); font-size: clamp(24px, 4vw, 34px); margin: 0; text-wrap: balance; font-weight: 600; }
+.lede { color: var(--muted); margin: 0; max-width: 65ch; }
+.studio { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 20px; align-items: start; }
+@media (max-width: 860px) { .studio { grid-template-columns: minmax(0, 1fr); } }
+.stage { display: grid; gap: 10px; min-width: 0; }
+.screen { position: relative; width: 100%; max-width: 100%; aspect-ratio: 16 / 9; background: #000; border: 1px solid var(--line); }
+canvas#view { width: 100%; height: 100%; display: block; }
+.safe { position: absolute; inset: 5%; border: 1px dashed rgba(217, 181, 106, .45); pointer-events: none; }
+.transport { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+button, select { font: inherit; color: var(--fg); background: var(--panel); border: 1px solid var(--line); border-radius: 6px; padding: 6px 12px; cursor: pointer; }
+button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+button.primary { background: var(--accent); color: var(--bg); border-color: var(--accent); font-weight: 700; }
+.tc { font-family: var(--font-mono); font-variant-numeric: tabular-nums; font-size: 15px; min-width: 9ch; }
+.scrub { position: relative; }
+.scrub input { width: 100%; accent-color: var(--accent); }
+.cuts { position: absolute; inset: 0; pointer-events: none; }
+.cuts i { position: absolute; top: -4px; width: 2px; height: 8px; background: var(--cut); }
+.panel { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 16px; display: grid; gap: 14px; min-width: 0; }
+.panel h2 { font-size: 13px; letter-spacing: .1em; color: var(--muted); margin: 0; font-weight: 500; }
+.param { display: grid; gap: 4px; }
+.param label { display: flex; justify-content: space-between; gap: 8px; font-size: 14px; }
+.param output { font-family: var(--font-mono); color: var(--accent); font-variant-numeric: tabular-nums; }
+.param input { width: 100%; accent-color: var(--accent); }
+.variants { display: flex; flex-wrap: wrap; gap: 6px; }
+.variants button[aria-pressed="true"] { border-color: var(--accent); color: var(--accent); }
+.notation { font-family: var(--font-mono); background: var(--bg); border: 1px solid var(--line); border-radius: 6px; padding: 10px; word-break: break-all; user-select: all; }
+.json { font-family: var(--font-mono); font-size: 12px; color: var(--muted); white-space: pre-wrap; word-break: break-all; margin: 0; }
+.notes { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
+.notes section { min-width: 0; }
+.notes h3 { font-family: var(--font-display); font-size: 17px; margin: 0 0 6px; font-weight: 600; }
+.notes p, .notes li { color: var(--muted); margin: 0; }
+.notes ul { margin: 0; padding-left: 1.2em; }
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto; } }
+</style>
+
+<div class="wrap">
+  <header>
+    <span class="chip" id="cat">__分類__</span>
+    <h1 id="fxname">__FX_NAME__</h1>
+    <p class="lede" id="mood">__意境一句話__</p>
+  </header>
+
+  <div class="studio">
+    <div class="stage">
+      <div class="screen"><canvas id="view" width="960" height="540" aria-label="特效預覽畫面"></canvas><div class="safe" id="safe" hidden></div></div>
+      <div class="scrub"><input id="scrub" type="range" min="0" max="1000" value="0" aria-label="時間軸"><div class="cuts" id="cuts"></div></div>
+      <div class="transport">
+        <button id="play" class="primary">播放</button>
+        <span class="tc" id="tc">0:00.00</span>
+        <label>速度 <select id="speed"><option value="0.25">0.25×</option><option value="0.5">0.5×</option><option value="1" selected>1×</option></select></label>
+        <label><input type="checkbox" id="safeBox"> 安全框 90%</label>
+      </div>
+    </div>
+
+    <aside class="panel">
+      <h2>版本</h2>
+      <div class="variants" id="variants"></div>
+      <h2>參數</h2>
+      <div id="params"></div>
+      <h2>分鏡寫法</h2>
+      <div class="notation" id="notation"></div>
+      <button id="copy">複製寫法</button>
+      <h2>JSON</h2>
+      <pre class="json" id="json"></pre>
+    </aside>
+  </div>
+
+  <div class="notes">
+    <section><h3>使用時機</h3><p id="when">__使用時機__</p></section>
+    <section><h3>演算法要點</h3><ul id="algo"><li>__演算法__</li></ul></section>
+    <section><h3>要注意的地方</h3><ul id="caveat"><li>__已知坑__</li></ul></section>
+  </div>
+</div>
+
+<script>
+// ════════════════ fx-lab 只改這一段 ════════════════
+// 畫布 960×540＝成片 1920×1080 的 1/2；從成片 px 換算請乘 S
+const S = 0.5;
+// 示範照片：data URI（由 fx-lab 嵌入縮小版），留空時用程式畫的示意照片
+const PHOTOS = [];
+const FX = {
+  name: "溶接", category: "轉場",
+  mood: "前一張照片慢慢化進下一張，情緒不中斷。",
+  when: "同章節內情緒連續的鏡頭。",
+  algo: ["以切點為中心，前後各 duration/2", "權重 smoothstep，兩鏡直接混合", "交疊時兩鏡的運鏡都在跑"],
+  caveat: ["duration/2 不能超過相鄰鏡頭長度的一半"],
+  duration: 6,                 // 預覽總長（秒），循環播放
+  cuts: [3],                   // 切點，畫在時間軸上
+  params: [
+    { key: "duration", label: "溶接長度", min: 0.2, max: 2.5, step: 0.1, value: 0.8, unit: "s" },
+  ],
+  variants: [                  // 2～3 個候選版本；只覆寫和預設不同的參數
+    { label: "一般 0.8s", set: { duration: 0.8 } },
+    { label: "抒情 1.5s", set: { duration: 1.5 } },
+  ],
+  notation: (P) => `溶接 ${P.duration}s`,
+  json: (P) => ({ type: "dissolve", duration: P.duration }),
+  // 回傳本格畫面；t＝秒，P＝參數，img＝照片陣列
+  render(ctx, t, P, img) {
+    const cut = 3, h = P.duration / 2;
+    const shotA = () => drawPortrait(ctx, img[0], lerp(1, 1.08, t / 3));
+    const shotB = () => drawPortrait(ctx, img[1], lerp(1, 1.08, (t - 3) / 3));
+    if (t < cut - h) return shotA();
+    if (t >= cut + h) return shotB();
+    shotA();
+    ctx.globalAlpha = ease((t - (cut - h)) / P.duration);
+    shotB();
+    ctx.globalAlpha = 1;
+  },
+};
+// ════════════════ 以下是共用工具，不需要改 ════════════════
+
+const lerp = (a, b, p) => a + (b - a) * p;
+const ease = (p) => { p = Math.min(1, Math.max(0, p)); return p * p * (3 - 2 * p); };
+const W = 960, H = 540, BACKDROP = "#1E2A33";
+
+// A 版型：模糊底＋直式照片置中（高＝畫面高×k）
+function drawPortrait(ctx, im, k = 1, dx = 0) {
+  ctx.save();
+  ctx.filter = "blur(18px) brightness(.6)";
+  const sb = Math.max(W / im.width, H / im.height) * 1.1;
+  ctx.drawImage(im, (W - im.width * sb) / 2, (H - im.height * sb) / 2, im.width * sb, im.height * sb);
+  ctx.restore();
+  ctx.fillStyle = "rgba(30,42,51,.4)"; ctx.fillRect(0, 0, W, H);
+  const h = H * k, w = h * im.width / im.height;
+  ctx.drawImage(im, (W - w) / 2 + dx * S, (H - h) / 2, w, h);
+}
+// H 版型：滿版（k＝倍率）
+function drawFull(ctx, im, k = 1, dx = 0) {
+  const s = Math.max(W / im.width, H / im.height) * k;
+  ctx.drawImage(im, (W - im.width * s) / 2 + dx * S, (H - im.height * s) / 2, im.width * s, im.height * s);
+}
+
+// 沒有照片時的示意圖：直式、有天空地面與兩個人影的色塊
+function fakePhoto(i) {
+  const c = document.createElement("canvas"); c.width = 400; c.height = 600;
+  const g = c.getContext("2d");
+  const hues = [[28, 60], [150, 45], [200, 55], [340, 55]][i % 4];
+  const sky = g.createLinearGradient(0, 0, 0, 600);
+  sky.addColorStop(0, `hsl(${hues[0]} ${hues[1]}% 78%)`); sky.addColorStop(1, `hsl(${hues[0] + 20} ${hues[1]}% 42%)`);
+  g.fillStyle = sky; g.fillRect(0, 0, 400, 600);
+  g.fillStyle = `hsl(${hues[0] + 40} 30% 28%)`; g.fillRect(0, 430, 400, 170);
+  g.fillStyle = "rgba(20,20,24,.85)";
+  [[160, 300], [240, 290]].forEach(([x, y]) => { g.beginPath(); g.arc(x, y - 40, 22, 0, 7); g.fill(); g.fillRect(x - 26, y - 14, 52, 150); });
+  g.fillStyle = "rgba(255,255,255,.7)"; g.font = "bold 28px sans-serif"; g.fillText(`示意照片 ${i + 1}`, 24, 50);
+  return c;
+}
+
+const ctx = document.getElementById("view").getContext("2d");
+let images = [], P = {}, t = 0, playing = false, last = 0;
+const $ = (id) => document.getElementById(id);
+
+function loadImages() {
+  const srcs = PHOTOS.length ? PHOTOS : [];
+  return Promise.all(srcs.map((s) => new Promise((ok) => { const im = new Image(); im.onload = () => ok(im); im.onerror = () => ok(null); im.src = s; })))
+    .then((ims) => { images = ims.filter(Boolean); while (images.length < 4) images.push(fakePhoto(images.length)); });
+}
+
+function fmt(x) { const m = Math.floor(x / 60), s = (x % 60).toFixed(2).padStart(5, "0"); return `${m}:${s}`; }
+
+function draw() {
+  ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.globalAlpha = 1; ctx.filter = "none";
+  ctx.fillStyle = "#000"; ctx.fillRect(0, 0, W, H);
+  try { FX.render(ctx, t, P, images); } catch (e) { ctx.fillStyle = "#c46a5a"; ctx.font = "16px sans-serif"; ctx.fillText("預覽程式錯誤：" + e.message, 20, 30); }
+  $("tc").textContent = fmt(t);
+  $("scrub").value = Math.round((t / FX.duration) * 1000);
+}
+
+function refreshText() {
+  $("notation").textContent = FX.notation(P);
+  $("json").textContent = JSON.stringify(FX.json(P));
+  document.querySelectorAll("#params output").forEach((o) => { const p = FX.params.find((x) => x.key === o.dataset.k); o.textContent = P[p.key] + (p.unit || ""); });
+  document.querySelectorAll("#params input").forEach((i) => { i.value = P[i.dataset.k]; });
+  const cur = JSON.stringify(P);
+  document.querySelectorAll("#variants button").forEach((b, i) => b.setAttribute("aria-pressed", String(JSON.stringify({ ...defaults(), ...FX.variants[i].set }) === cur)));
+}
+
+function defaults() { return Object.fromEntries(FX.params.map((p) => [p.key, p.value])); }
+
+function build() {
+  $("fxname").textContent = FX.name; $("cat").textContent = FX.category; $("mood").textContent = FX.mood;
+  $("when").textContent = FX.when;
+  $("algo").innerHTML = ""; FX.algo.forEach((a) => { const li = document.createElement("li"); li.textContent = a; $("algo").append(li); });
+  $("caveat").innerHTML = ""; FX.caveat.forEach((a) => { const li = document.createElement("li"); li.textContent = a; $("caveat").append(li); });
+  P = defaults();
+  FX.params.forEach((p) => {
+    const d = document.createElement("div"); d.className = "param";
+    d.innerHTML = `<label for="p-${p.key}"><span></span><output data-k="${p.key}"></output></label><input id="p-${p.key}" data-k="${p.key}" type="range" min="${p.min}" max="${p.max}" step="${p.step}">`;
+    d.querySelector("span").textContent = p.label;
+    d.querySelector("input").addEventListener("input", (e) => { P[p.key] = +e.target.value; refreshText(); draw(); });
+    $("params").append(d);
+  });
+  FX.variants.forEach((v) => {
+    const b = document.createElement("button"); b.textContent = v.label;
+    b.addEventListener("click", () => { P = { ...defaults(), ...v.set }; refreshText(); draw(); });
+    $("variants").append(b);
+  });
+  FX.cuts.forEach((c) => { const i = document.createElement("i"); i.style.left = `${(c / FX.duration) * 100}%`; $("cuts").append(i); });
+  refreshText();
+}
+
+function tick(now) {
+  if (playing) { t = (t + ((now - last) / 1000) * +$("speed").value) % FX.duration; draw(); }
+  last = now; requestAnimationFrame(tick);
+}
+
+$("play").addEventListener("click", () => { playing = !playing; $("play").textContent = playing ? "暫停" : "播放"; });
+$("scrub").addEventListener("input", (e) => { t = (e.target.value / 1000) * FX.duration; draw(); });
+$("safeBox").addEventListener("change", (e) => { $("safe").hidden = !e.target.checked; });
+$("copy").addEventListener("click", () => {
+  const txt = $("notation").textContent;
+  navigator.clipboard.writeText(txt).then(() => { $("copy").textContent = "已複製"; setTimeout(() => ($("copy").textContent = "複製寫法"), 1500); })
+    .catch(() => { const r = document.createRange(); r.selectNodeContents($("notation")); getSelection().removeAllRanges(); getSelection().addRange(r); });
+});
+
+build();
+loadImages().then(() => {
+  t = FX.cuts[0] || 0; draw();
+  if (!matchMedia("(prefers-reduced-motion: reduce)").matches) { playing = true; $("play").textContent = "暫停"; }
+  requestAnimationFrame((n) => { last = n; tick(n); });
+});
+</script>
