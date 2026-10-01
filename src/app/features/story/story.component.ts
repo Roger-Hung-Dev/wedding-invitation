@@ -125,11 +125,18 @@ function paintPeel(el: HTMLElement, direction: StoryTurnDirection, progress: num
 const SWIPE_THRESHOLD_PX = 40
 
 /**
- * 水平位移至少要是垂直位移的幾倍才算翻頁（約 27 度以內的斜度）。
+ * 水平位移至少要是垂直位移的幾倍才算翻頁（約 34 度以內的斜度）。
  * 只比「水平大於垂直」的話，往下滑時手指斜斜帶過（例如橫 50、直 40）也會翻頁；
- * 真的想翻頁的人是橫著滑，這個倍率擋得掉斜滑、又不必刻意滑得筆直。
+ * 曾經訂 2 倍，但拇指橫滑自然會畫出弧線（例如橫 80、直 45），常被誤擋成「滑了沒反應」。
  */
-const SWIPE_DIRECTION_RATIO = 2
+const SWIPE_DIRECTION_RATIO = 1.5
+
+/**
+ * 一次手勢期間頁面捲動超過這個距離，就當成在往下讀、不翻頁。
+ * 這是分辨「捲動」與「翻頁」最可靠的依據：瀏覽器真的把頁面捲動了，使用者的意圖就是捲動。
+ * 留幾 px 的餘裕，是因為橫滑時手指的微小直向晃動偶爾會帶動頁面一兩 px。
+ */
+const SWIPE_SCROLL_TOLERANCE_PX = 6
 
 /**
  * 滑完之後多久之內不受理照片點擊。
@@ -191,7 +198,7 @@ export class StoryComponent {
     this.breakpoint.isDesktop() ? this.text.hintDesktop : this.text.hint,
   )
 
-  private swipeStart: { x: number; y: number; id: number } | null = null
+  private swipeStart: { x: number; y: number; id: number; scrollY: number } | null = null
   private lastSwipeAt = 0
 
   /** 賓客目前是否用雙指把頁面放大了。放大時書上的水平滑動要讓給瀏覽器移動畫面。 */
@@ -258,37 +265,40 @@ export class StoryComponent {
   /**
    * 觸控滑動翻頁。一本書在手機上，直覺是用手滑而不是點小箭頭。
    *
-   * 只收 touch：滑鼠拖曳在桌機是選取文字的動作，把它也當成翻頁會讓人選不到字。
-   * 頁面放大時也不收：那時的水平滑動是在移動畫面找字，翻掉會讓人找不到剛才看的那一段。
-   * 鍵盤與報讀器走的是翻頁鈕那條路，所以按鈕不能因為有了手勢就拿掉。
+   * 用 touch 事件而不是 pointer 事件：pointer 事件在瀏覽器接手手勢時會發 pointercancel 就斷掉，
+   * 而 iOS Safari（LINE 內建瀏覽器同核心）連單純的橫滑都可能發 pointercancel，
+   * 收到取消就不翻頁的話 iPhone 上橫滑會翻不動；取消事件的座標又是 (0, 0)，拿來算位移會誤翻。
+   * touch 事件在頁面捲動時照樣送到 touchend、座標可靠，再用「這次手勢有沒有讓頁面捲動」分辨意圖。
+   *
+   * 只有單指才算：第二根手指放上來就是在捏放。頁面放大時也不收：那時的水平滑動是在移動畫面找字。
+   * 桌機沒有 touch 事件，滑鼠拖曳照常是選取文字。鍵盤與報讀器走的是翻頁鈕那條路，所以按鈕不能拿掉。
    */
-  protected onSwipeStart(event: PointerEvent): void {
-    if (event.pointerType !== 'touch' || !event.isPrimary || this.pageZoomed()) {
+  protected onSwipeStart(event: TouchEvent): void {
+    if (event.touches.length > 1 || this.pageZoomed()) {
       this.swipeStart = null
       return
     }
-    this.swipeStart = { x: event.clientX, y: event.clientY, id: event.pointerId }
+    const touch = event.changedTouches[0]
+    this.swipeStart = { x: touch.clientX, y: touch.clientY, id: touch.identifier, scrollY: window.scrollY }
   }
 
-  protected onSwipeEnd(event: PointerEvent): void {
+  protected onSwipeEnd(event: TouchEvent): void {
     const start = this.swipeStart
+    const touch = Array.from(event.changedTouches).find((t) => t.identifier === start?.id)
+    if (!start || !touch) return
     this.swipeStart = null
-    if (!start || event.pointerId !== start.id) return
 
-    const dx = event.clientX - start.x
-    const dy = event.clientY - start.y
-    // 斜度不夠橫的當成捲動頁面，不翻頁 —— 賓客往下讀的動作不該把書翻掉。
+    // 頁面被捲動了，就是在往下讀 —— 賓客往下讀的動作不該把書翻掉。
+    if (Math.abs(window.scrollY - start.scrollY) > SWIPE_SCROLL_TOLERANCE_PX) return
+
+    const dx = touch.clientX - start.x
+    const dy = touch.clientY - start.y
     if (Math.abs(dx) < SWIPE_THRESHOLD_PX || Math.abs(dx) < Math.abs(dy) * SWIPE_DIRECTION_RATIO) return
 
     this.lastSwipeAt = Date.now()
     this.turn(dx < 0 ? 'next' : 'prev')
   }
 
-  /**
-   * 瀏覽器接手了這次觸控（開始捲動頁面或雙指縮放），這次手勢一律不翻頁。
-   * 不能和 onSwipeEnd 共用：取消事件帶的座標是 (0, 0)，拿來算位移，
-   * 從書的右上方往下滑時會被算成「往左滑了一大段」而翻頁。
-   */
   protected onSwipeCancel(): void {
     this.swipeStart = null
   }

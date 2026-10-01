@@ -22,9 +22,9 @@
     <div
       class="story__slot"
       [class.story__slot--zoomed]="pageZoomed()"
-      (pointerdown)="onSwipeStart($event)"
-      (pointerup)="onSwipeEnd($event)"
-      (pointercancel)="onSwipeCancel()"
+      (touchstart)="onSwipeStart($event)"
+      (touchend)="onSwipeEnd($event)"
+      (touchcancel)="onSwipeCancel()"
     >
       <!--
         手機單頁版式與桌機雙頁版式都固定渲染在 DOM 中，只用 CSS media query 切換顯示，
