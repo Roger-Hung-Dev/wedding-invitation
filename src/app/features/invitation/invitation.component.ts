@@ -29,36 +29,15 @@ export class InvitationComponent {
   protected readonly text = INVITATION_TEXT
   protected readonly parents = WEDDING_PARENTS
   protected readonly photoUrl = INVITATION_PHOTO_URL
-  /**
-   * 地址拆成「台中市烏日區」與「高鐵路三段 168 號」兩段，每段各自不斷行。
-   * 手機帖的字級放大後地址放不進一行，讓瀏覽器自由換行會斷成「…三段 168」／「號」；
-   * 拆段後只會在行政區之後換行。找不到「區／鄉／鎮」時整串當一段。
-   */
-  protected readonly addressParts = splitAfterDistrict(WEDDING_LINKS.venueAddress)
+  protected readonly address = WEDDING_LINKS.venueAddress
 
   /**
-   * 日期下方那一行，例如「星期六 · 晚宴 18:00」＋「恭請準時入席」，拆成兩段的理由同地址：
-   * 窄手機放不下一行時，只在兩段之間換行，不會把「恭請準時入席」拆散。
+   * 日期下方那一行，例如「星期六 · 晚宴 18:00 恭請準時入席」。
    * 字距靠 CSS 的 letter-spacing 拉開，不在字串裡塞空白 —— 那會讓資料變成排版的一部分。
    *
    * 本場只有晚宴一場，取第一筆即可；日後加辦午宴時這裡要改成逐場列出，
    * 否則帖面只會顯示其中一場。
    */
-  protected readonly dateSubParts = splitDateSub(
-    WEDDING_CONTENT.dateSubDisplay,
-    WEDDING_SESSIONS[0].label,
-    WEDDING_SESSIONS[0].timeDisplay,
-  )
-}
-
-function splitAfterDistrict(address: string): string[] {
-  const match = /^(.*?[區鄉鎮])(.+)$/.exec(address)
-  return match ? [match[1], match[2]] : [address]
-}
-
-/** timeDisplay 是「18:00 恭請準時入席」：時間接在前段，後面的敬語自成一段。 */
-function splitDateSub(weekday: string, sessionLabel: string, timeDisplay: string): string[] {
-  const [time, ...courtesy] = timeDisplay.split(' ')
-  const lead = `${weekday} · ${sessionLabel} ${time}`
-  return courtesy.length > 0 ? [lead, courtesy.join(' ')] : [lead]
+  protected readonly dateSubDisplay =
+    `${WEDDING_CONTENT.dateSubDisplay} · ${WEDDING_SESSIONS[0].label} ${WEDDING_SESSIONS[0].timeDisplay}`
 }

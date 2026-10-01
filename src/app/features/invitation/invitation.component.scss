@@ -2,19 +2,8 @@
 // 手機與平板用直式帖（固定 390px 寬），桌機換成橫式水彩帖（畫面寬的 84%，依畫面寬等比縮放）。
 // 兩張帖都不做響應式重排 —— 它是「一張帖」，只能整張等比縮放，
 // 各元素分別伸縮的話，暈染的位置、橢圓與字級的比例都會跑掉。
-// 排版取自比稿「電子喜帖帖面排版」的手機 1 與電腦 6；字級依「電子喜帖放大比稿」的直 4／橫 4 整體放大：
-// 新人反映帖面傳到手機上看字太小，直式整張收進一個手機畫面（390 × 844），橫式字級放大 1.4 倍。
+// 排版取自比稿「電子喜帖帖面排版」的手機 1 與電腦 6；字型、字級、顏色沿用原本的帖面，改版時刻意不動。
 // 兩張帖共用同一組元素樣式，橫式那張覆寫尺寸、間距與排法（見檔案最後）。
-
-// 字級倍率：原帖面字級 × 倍率。間距與照片尺寸不跟著倍率走，是比稿上為了塞進畫面另外收緊的值。
-$sheet-scale: 1.15;
-$landscape-scale: 1.4;
-
-// 橫式字級：原稿字級 × 倍率 × --u（--u 是帖面寬的 1/960，見檔案最後）。
-@function landscape-font($size) {
-  @return calc(#{$size * $landscape-scale} * var(--u));
-}
-
 :host {
   display: block;
 }
@@ -28,14 +17,13 @@ $landscape-scale: 1.4;
 }
 
 // 帖面本體。暈染與 overflow 都掛在這一層，位置才會跟著帖面走而不是跟著螢幕寬度走。
-// 390 寬時整張高約 844，剛好一個手機畫面：傳截圖或從封面按 SCROLL 下來，都能一眼看完整張帖。
 .invitation__sheet {
   position: relative;
   overflow: hidden;
   width: 100%;
   max-width: 390px;
   margin: 0 auto;
-  padding: 0 0 24px;
+  padding: 0 0 34px;
 }
 
 .invitation__wash {
@@ -74,24 +62,22 @@ $landscape-scale: 1.4;
 
 .invitation__inner {
   position: relative;
-  padding: 28px 24px 0;
+  padding: 54px 30px 0;
   text-align: center;
 }
 
 .invitation__eyebrow {
-  margin: 0 0 12px;
+  margin: 0 0 22px;
   font-family: 'Noto Serif TC', serif;
-  font-size: 11px * $sheet-scale;
-  line-height: 1.4;
+  font-size: 11px;
   letter-spacing: 0.46em;
   color: #b08196;
 }
 
 // 正圓角橢圓。曾經用過上窄下寬的蛋形，配直幅照片會讀成倒立的雞蛋。
-// 139 × 172 是字級放大後、整張仍收在 844 高之內剩下的空間（原帖 200 × 248），比例不變。
 .invitation__portrait {
-  width: 139px;
-  height: 172px;
+  width: 200px;
+  height: 248px;
   margin: 0 auto;
   border-radius: 50%;
   overflow: hidden;
@@ -108,10 +94,9 @@ $landscape-scale: 1.4;
 }
 
 .invitation__name-en {
-  margin: 12px 0 0;
-  font-size: 16px * $sheet-scale;
+  margin: 24px 0 0;
+  font-size: 16px;
   font-weight: 400;
-  line-height: 1.3;
   letter-spacing: 0.34em;
   color: #a88c97;
 }
@@ -121,13 +106,9 @@ $landscape-scale: 1.4;
 .invitation__parents {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  margin: 12px 0 0;
+  margin: 22px 0 0;
   font-family: 'Noto Serif TC', serif;
   font-weight: 400;
-}
-
-.invitation__parents {
-  margin-top: 8px;
 }
 
 .invitation__person {
@@ -138,16 +119,15 @@ $landscape-scale: 1.4;
 .invitation__role,
 .invitation__parent dt {
   display: block;
-  font-size: 11.5px * $sheet-scale;
-  line-height: 1.4;
+  font-size: 11.5px;
   letter-spacing: 0.2em;
   color: #b08196;
 }
 
 .invitation__name {
   display: block;
-  margin-top: 2px;
-  font-size: 31px * $sheet-scale;
+  margin-top: 4px;
+  font-size: 31px;
   font-weight: 500;
   letter-spacing: 0.18em;
   line-height: 1.3;
@@ -155,9 +135,9 @@ $landscape-scale: 1.4;
 }
 
 .invitation__parent dd {
-  margin: 2px 0 0;
-  font-size: 15.5px * $sheet-scale;
-  line-height: 1.6;
+  margin: 4px 0 0;
+  font-size: 15.5px;
+  line-height: 1.75;
   letter-spacing: 0.04em;
   color: #4a3742;
 }
@@ -167,7 +147,7 @@ $landscape-scale: 1.4;
   display: flex;
   align-items: center;
   gap: 14px;
-  margin: 14px 0 0;
+  margin: 28px 0 0;
 }
 
 .invitation__invite-line {
@@ -178,8 +158,7 @@ $landscape-scale: 1.4;
 
 .invitation__invite-text {
   font-family: 'Noto Serif TC', serif;
-  font-size: 13px * $sheet-scale;
-  line-height: 1.4;
+  font-size: 13px;
   letter-spacing: 0.24em;
   // 字距加在字尾會讓置中偏左，左側補同寬的內距抵銷
   padding-left: 0.24em;
@@ -188,41 +167,33 @@ $landscape-scale: 1.4;
 
 // 手機的日期兩側不加短線（上方已有「敬邀」的分隔線，再加會顯得重複）；桌機卡片內的日期保留短線。
 .invitation__date-text {
-  margin: 8px 0 0;
-  font-size: 35px * $sheet-scale;
-  line-height: 1.2;
+  margin: 20px 0 0;
+  font-size: 35px;
   letter-spacing: 0.1em;
   color: #5c4450;
 }
 
 // 干支年夾在西元日期與星期之間：一行國曆、一行農曆、一行時間，由粗到細三階讀下來。
+// 農曆 15、星期 14 是長輩看得清楚的下限；星期那行在 14px 時寬約 296，360 寬手機的可用寬 300 剛好放得下，再放大會換行。
 .invitation__date-lunar {
-  margin: 4px 0 0;
+  margin: 12px 0 0;
   font-family: 'Noto Serif TC', serif;
-  font-size: 15px * $sheet-scale;
-  line-height: 1.5;
+  font-size: 15px;
   letter-spacing: 0.24em;
   color: #8a7080;
 }
 
-// 390 寬時剛好一行；更窄的手機在「18:00」與「恭請準時入席」之間換行（見 invitation__keep）。
 .invitation__date-sub {
-  margin: 2px 0 0;
+  margin: 7px 0 0;
   font-family: 'Noto Serif TC', serif;
-  font-size: 14px * $sheet-scale;
-  line-height: 1.5;
+  font-size: 14px;
   letter-spacing: 0.3em;
   color: #b08196;
 }
 
-// 一段字內不換行，只在段與段之間換行（地址、星期那一行由元件拆好段）。
-.invitation__keep {
-  white-space: nowrap;
-}
-
 .invitation__card {
-  margin: 14px 24px 0;
-  padding: 12px 16px;
+  margin: 28px 24px 0;
+  padding: 22px 20px;
   position: relative;
   text-align: left;
   background: rgba(255, 255, 255, 0.72);
@@ -230,40 +201,40 @@ $landscape-scale: 1.4;
   border-radius: 8px;
   backdrop-filter: blur(3px);
   display: grid;
-  gap: 4px;
+  gap: 13px;
   font-family: 'Noto Serif TC', serif;
 }
 
-// 標籤欄寬隨字級等比放大，放得下「宴會廳」三個字不斷行。地址在放大後一行放不下，斷在行政區之後成兩行。
+// 標籤欄 58px 是量出來的：放得下「宴會廳」三個字不斷行，又不會把地址那行擠到換行。字級一動就要重量一次。
 // 標籤與內容上下置中（不是對齊基線）：標籤字小，對基線會讓標籤看起來偏上。
 .invitation__row {
   display: grid;
-  grid-template-columns: 58px * $sheet-scale 1fr;
-  gap: 10px;
+  grid-template-columns: 58px 1fr;
+  gap: 12px;
   align-items: center;
 
   dt {
-    font-size: 11.5px * $sheet-scale;
+    font-size: 11.5px;
     letter-spacing: 0.2em;
     color: #b08196;
   }
 
   dd {
     margin: 0;
-    font-size: 15.5px * $sheet-scale;
-    line-height: 1.6;
+    font-size: 15.5px;
+    line-height: 1.75;
     letter-spacing: 0.04em;
     color: #4a3742;
   }
 }
 
-// 斜體引言跟著帖面一起放大，不再沿用全站引言的 16px：帖面是一張圖，單獨一句不放大，比例會跑掉。
+// 全站斜體引言（本句、新人介紹的引言與收尾句、故事書、相簿與蔬食心意的引言）字級統一：手機 16px、桌機 20px。
 .invitation__quote {
   position: relative;
-  margin: 12px 24px 0;
+  margin: 24px 34px 0;
   font-style: italic;
-  font-size: 16px * $sheet-scale;
-  line-height: 1.75;
+  font-size: 16px;
+  line-height: 1.85;
   color: #8a7080;
   text-align: center;
 
@@ -302,7 +273,7 @@ $landscape-scale: 1.4;
   // 帖面寬度為畫面寬的 84%，整張依 960 × 640 的原稿等比縮放、置中。
   // 每個尺寸都寫成「原稿數值 × --u」，--u 是帖面寬的 1/960；
   // 只縮放外框、字級不跟著縮放的話，照片與文字的比例會跑掉，暈染也對不上原稿的位置。
-  // 字級是原稿 × 1.4（landscape-font）；為了放進同樣 960 × 640 的帖面，四周內距與各段間距比原稿收緊。
+  // 高度由 540 加到 640：多了新郎新娘小標、「敬邀」與電話，原本的高度放不下。字距用 em，會自己跟著字級走。
   //
   // --u 取「寬度換算」與「高度換算」的較小值：封面的 SCROLL 鈕會把這一段捲到畫面頂端，
   // 整段（帖面＋上下留白）要一次放進一個畫面。只看寬度的話，1366 × 657 這類筆電整段約 870 高，
@@ -313,11 +284,11 @@ $landscape-scale: 1.4;
     position: relative;
     display: flex;
     align-items: center;
-    gap: calc(32 * var(--u));
+    gap: calc(36 * var(--u));
     width: calc(960 * var(--u));
     height: calc(640 * var(--u));
     margin: 0 auto;
-    padding: calc(32 * var(--u)) calc(44 * var(--u));
+    padding: calc(40 * var(--u)) calc(52 * var(--u));
 
     .invitation__wash {
       filter: blur(calc(44 * var(--u)));
@@ -355,84 +326,85 @@ $landscape-scale: 1.4;
       box-shadow: 0 calc(14 * var(--u)) calc(32 * var(--u)) calc(-20 * var(--u)) rgba(74, 55, 66, 0.5);
     }
 
-    // 引言跟著帖面一起放大（理由同手機帖），左欄寬度就是依這句在 1.4 倍時兩行放得下來定的。
+    // 與其他區塊的斜體引言同為 20px；只有矮螢幕把帖面縮小時才跟著等比縮小——
+    // 固定 20px 會比縮小後的照片寬，把右邊的內文擠到貼著卡片邊框。17 是 20px 剛好不比照片寬的換算值。
     .invitation__quote {
-      margin: calc(20 * var(--u)) 0 0;
-      font-size: landscape-font(17);
+      margin: calc(22 * var(--u)) 0 0;
+      font-size: min(20px, calc(17 * var(--u)));
     }
 
     .invitation__eyebrow {
-      margin: 0;
-      font-size: landscape-font(11);
+      margin: 0 0 calc(14 * var(--u));
+      font-size: calc(11 * var(--u));
     }
 
     // 桌機的英文名在中文姓名上方（手機在照片與姓名之間）。
     .invitation__name-en {
-      margin: calc(8 * var(--u)) 0 0;
-      font-size: landscape-font(16);
+      margin: 0 0 calc(16 * var(--u));
+      font-size: calc(16 * var(--u));
     }
 
     .invitation__couple {
-      margin: calc(12 * var(--u)) 0 0;
+      margin: 0;
     }
 
     .invitation__parents {
-      margin-top: calc(10 * var(--u));
+      margin-top: calc(18 * var(--u));
     }
 
     .invitation__role,
     .invitation__parent dt {
-      margin-bottom: calc(4 * var(--u));
-      font-size: landscape-font(10);
+      margin-bottom: calc(8 * var(--u));
+      font-size: calc(10 * var(--u));
       letter-spacing: 0.26em;
     }
 
     .invitation__name {
       margin-top: 0;
-      font-size: landscape-font(31);
+      font-size: calc(31 * var(--u));
     }
 
     .invitation__parent dd {
       margin: 0;
-      font-size: landscape-font(14);
-      line-height: 1.6;
+      font-size: calc(14 * var(--u));
+      line-height: 1.9;
       letter-spacing: 0.1em;
     }
 
     .invitation__invite {
       gap: calc(14 * var(--u));
-      margin-top: calc(12 * var(--u));
+      margin-top: calc(18 * var(--u));
     }
 
     .invitation__invite-text {
-      font-size: landscape-font(13);
+      font-size: calc(13 * var(--u));
     }
 
     .invitation__date-text {
       margin: 0;
-      font-size: landscape-font(35);
+      font-size: calc(35 * var(--u));
     }
 
     .invitation__date-lunar {
-      margin-top: calc(8 * var(--u));
-      font-size: landscape-font(15);
+      margin-top: calc(12 * var(--u));
+      font-size: calc(13 * var(--u));
     }
 
     .invitation__date-sub {
-      margin-top: calc(2 * var(--u));
-      font-size: landscape-font(14);
+      margin-top: calc(7 * var(--u));
+      font-size: calc(12 * var(--u));
     }
 
     .invitation__row {
-      grid-template-columns: landscape-font(48) max-content;
-      gap: calc(10 * var(--u));
+      grid-template-columns: calc(58 * var(--u)) max-content;
+      gap: calc(12 * var(--u));
 
       dt {
-        font-size: landscape-font(11.5);
+        font-size: calc(11.5 * var(--u));
       }
 
       dd {
-        font-size: landscape-font(15.5);
+        font-size: calc(15.5 * var(--u));
       }
     }
   }
@@ -440,7 +412,6 @@ $landscape-scale: 1.4;
   .invitation__visual {
     position: relative;
     flex: none;
-    width: calc(290 * var(--u));
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -455,8 +426,8 @@ $landscape-scale: 1.4;
 
   // 日期、時間與場地收進同一張半透明卡片，與上方的姓名、家長分成兩塊。
   .invitation__event {
-    margin-top: calc(12 * var(--u));
-    padding: calc(14 * var(--u)) calc(20 * var(--u));
+    margin-top: calc(16 * var(--u));
+    padding: calc(18 * var(--u)) calc(24 * var(--u));
     background: rgba(255, 255, 255, 0.72);
     border: 1px solid rgba(217, 188, 198, 0.7);
     border-radius: calc(8 * var(--u));
@@ -475,20 +446,16 @@ $landscape-scale: 1.4;
     background: #d9bcc6;
   }
 
-  // 場地排成三列：地點與宴會廳並排一列，地址、電話各一列。字級放大後地址太長，與電話並排會超出卡片。
+  // 場地四列排成兩欄：左欄地點、地址，右欄宴會廳、電話；整塊在卡片中置中，地址一行放得下。
   .invitation__venue {
     display: grid;
     grid-template-columns: max-content max-content;
     justify-content: center;
-    gap: calc(4 * var(--u)) calc(32 * var(--u));
-    margin: calc(10 * var(--u)) 0 0;
-    padding-top: calc(10 * var(--u));
+    gap: calc(8 * var(--u)) calc(48 * var(--u));
+    margin: calc(14 * var(--u)) 0 0;
+    padding-top: calc(14 * var(--u));
     border-top: 1px solid rgba(217, 188, 198, 0.7);
     text-align: left;
     font-family: 'Noto Serif TC', serif;
-  }
-
-  .invitation__row--wide {
-    grid-column: 1 / -1;
   }
 }

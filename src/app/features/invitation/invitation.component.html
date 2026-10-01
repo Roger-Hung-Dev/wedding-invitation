@@ -52,7 +52,7 @@
 
       <p class="invitation__date-text anim-fade-up">{{ text.dateDisplay }}</p>
       <p class="invitation__date-lunar anim-fade-up">{{ text.lunarDate }}</p>
-      <p class="invitation__date-sub anim-fade-up">@for (part of dateSubParts; track part; let last = $last) {<span class="invitation__keep">{{ part }}</span>@if (!last) {&ngsp;}}</p>
+      <p class="invitation__date-sub anim-fade-up">{{ dateSubDisplay }}</p>
     </div>
 
     <dl class="invitation__card anim-fade-up">
@@ -66,7 +66,7 @@
       </div>
       <div class="invitation__row">
         <dt>{{ text.rowLabels.address }}</dt>
-        <dd>@for (part of addressParts; track part) {<span class="invitation__keep">{{ part }}</span>}</dd>
+        <dd>{{ address }}</dd>
       </div>
       <div class="invitation__row">
         <dt>{{ text.rowLabels.phone }}</dt>
@@ -145,7 +145,7 @@
           <span class="invitation__date-line" aria-hidden="true"></span>
         </div>
         <p class="invitation__date-lunar">{{ text.lunarDate }}</p>
-        <p class="invitation__date-sub">@for (part of dateSubParts; track part; let last = $last) {<span class="invitation__keep">{{ part }}</span>@if (!last) {&ngsp;}}</p>
+        <p class="invitation__date-sub">{{ dateSubDisplay }}</p>
 
         <dl class="invitation__venue">
           <div class="invitation__row">
@@ -156,9 +156,9 @@
             <dt>{{ text.rowLabels.hall }}</dt>
             <dd>{{ content.venueHall }}</dd>
           </div>
-          <div class="invitation__row invitation__row--wide">
+          <div class="invitation__row">
             <dt>{{ text.rowLabels.address }}</dt>
-            <dd>@for (part of addressParts; track part) {<span class="invitation__keep">{{ part }}</span>}</dd>
+            <dd>{{ address }}</dd>
           </div>
           <div class="invitation__row">
             <dt>{{ text.rowLabels.phone }}</dt>
