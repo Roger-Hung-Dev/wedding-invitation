@@ -1,0 +1,1324 @@
+{
+ "schema": "storyboard/v2",
+ "title": "Our Moments",
+ "source": {
+  "pen": "D:\\SideProject\\wedding-invitation\\.claude\\docs\\design\\wedding-photo-slideshow.pen",
+  "note": "由第 2 版 render.py 的 SHOTS 轉出（v1 分鏡稿缺參數，數值以程式實作為準）"
+ },
+ "output": {
+  "width": 1920,
+  "height": 1080,
+  "fps": 60,
+  "duration": 240,
+  "video": {
+   "codec": "libx264",
+   "preset": "slow",
+   "crf": 16,
+   "maxrate": "20M",
+   "bufsize": "40M",
+   "profile": "high",
+   "level": "4.2"
+  },
+  "audio": {
+   "codec": "aac",
+   "bitrate": "320k",
+   "rate": 48000
+  }
+ },
+ "audio": {
+  "file": "D:\\婚禮籌備\\婚紗輪播影片\\產生器\\music_240.wav"
+ },
+ "assets": {
+  "photoDir": "D:\\婚禮籌備\\婚紗照\\全部毛片",
+  "fontDir": "D:\\婚禮籌備\\婚紗輪播影片\\fonts"
+ },
+ "palette": {
+  "backdrop": "#1E2A33"
+ },
+ "quality": {
+  "sharpen": {
+   "radius": 1.2,
+   "percent": 70,
+   "threshold": 2
+  },
+  "tileSharpenPercent": 60
+ },
+ "grades": {
+  "原色": [],
+  "暖褐復古": [
+   {
+    "op": "mul",
+    "v": [
+     1.035,
+     1.0,
+     0.93
+    ]
+   },
+   {
+    "op": "sat",
+    "v": 0.88
+   },
+   {
+    "op": "lin",
+    "a": 0.95,
+    "b": 0.03
+   }
+  ],
+  "暖褐復古・暗部壓": [
+   {
+    "op": "mul",
+    "v": [
+     1.035,
+     1.0,
+     0.93
+    ]
+   },
+   {
+    "op": "sat",
+    "v": 0.88
+   },
+   {
+    "op": "lin",
+    "a": 0.95,
+    "b": 0.03
+   },
+   {
+    "op": "gamma",
+    "v": 1.08
+   }
+  ],
+  "明亮通透": [
+   {
+    "op": "lin",
+    "a": 1.03,
+    "b": 0.01
+   },
+   {
+    "op": "sat",
+    "v": 1.05
+   }
+  ],
+  "明亮通透・副歌": [
+   {
+    "op": "lin",
+    "a": 1.03,
+    "b": 0.01
+   },
+   {
+    "op": "sat",
+    "v": 1.14
+   },
+   {
+    "op": "contrast",
+    "v": 1.06
+   }
+  ],
+  "金黃暖調": [
+   {
+    "op": "mul",
+    "v": [
+     1.05,
+     1.015,
+     0.91
+    ]
+   },
+   {
+    "op": "sat",
+    "v": 1.03
+   }
+  ],
+  "粉橘夕陽": [
+   {
+    "op": "mul",
+    "v": [
+     1.035,
+     0.995,
+     0.985
+    ]
+   },
+   {
+    "op": "contrast",
+    "v": 0.94,
+    "offset": 0.012
+   }
+  ]
+ },
+ "opening": {
+  "style": "focus-pull",
+  "start": 0,
+  "end": 15,
+  "out": {
+   "type": "black",
+   "out": 0.5,
+   "in": 1.5
+  },
+  "params": {
+   "photo": "dobe-5488.jpg",
+   "grade": "暖褐復古・暗部壓",
+   "scale": [
+    1.08,
+    1.04,
+    1.0
+   ],
+   "blur": 27,
+   "brightness": 0.55,
+   "focusStart": 5,
+   "focusEnd": 7.5,
+   "fadeIn": 1.5,
+   "gradient": {
+    "color": "#0A0C0E",
+    "alpha": 0.6,
+    "height": 378
+   },
+   "title": {
+    "text": "Roger & Amy",
+    "font": "CG-Italic.ttf",
+    "size": 182,
+    "wght": 300,
+    "tracking": 7.28,
+    "color": "#FFFFFF",
+    "cx": 960,
+    "boxTop": 389,
+    "boxH": 220,
+    "in": 1.0,
+    "fade": 1.5,
+    "exitScale": 1.12,
+    "exitBlur": 23,
+    "exitBox": [
+     380,
+     330,
+     1540,
+     670
+    ]
+   },
+   "subtitles": {
+    "in": 8.0,
+    "fade": 1.0,
+    "lines": [
+     {
+      "text": "A WEDDING FILM",
+      "font": "CG.ttf",
+      "size": 42,
+      "wght": 500,
+      "tracking": 12.6,
+      "color": "#E7C873",
+      "x": 134,
+      "boxTop": 860,
+      "boxH": 51
+     },
+     {
+      "text": "洪承孝　李怡安",
+      "font": "NotoSerifTC-VF.ttf",
+      "size": 33,
+      "wght": 400,
+      "tracking": 13.2,
+      "color": "#FFFFFFE0",
+      "x": 134,
+      "boxTop": 925,
+      "boxH": 47
+     }
+    ]
+   }
+  }
+ },
+ "shots": [
+  {
+   "id": "S1-01",
+   "start": 15,
+   "end": 18,
+   "chapter": "台中國漫館",
+   "grade": "暖褐復古",
+   "layout": "A",
+   "photos": [
+    "dobe-5182.jpg"
+   ],
+   "motion": {
+    "type": "zoom",
+    "from": 1.15,
+    "to": 1.0
+   },
+   "out": {
+    "type": "dissolve",
+    "duration": 0.8
+   }
+  },
+  {
+   "id": "S1-02",
+   "start": 18,
+   "end": 24,
+   "chapter": "台中國漫館",
+   "grade": "暖褐復古",
+   "layout": "A",
+   "photos": [
+    "dobe-5249.jpg"
+   ],
+   "motion": {
+    "type": "zoom",
+    "from": 1.1,
+    "to": 1.0
+   },
+   "out": {
+    "type": "dissolve",
+    "duration": 0.8
+   }
+  },
+  {
+   "id": "S1-03",
+   "start": 24,
+   "end": 29,
+   "chapter": "台中國漫館",
+   "grade": "暖褐復古",
+   "layout": "H",
+   "photos": [
+    "dobe-5113.jpg"
+   ],
+   "motion": {
+    "type": "pan",
+    "dir": "right",
+    "distance": 160,
+    "scale": 1.1
+   },
+   "out": {
+    "type": "dissolve",
+    "duration": 0.8
+   }
+  },
+  {
+   "id": "S1-04",
+   "start": 29,
+   "end": 34,
+   "chapter": "台中國漫館",
+   "grade": "暖褐復古",
+   "layout": "A",
+   "photos": [
+    "dobe-5123.jpg"
+   ],
+   "motion": {
+    "type": "zoom",
+    "from": 1.0,
+    "to": 1.08
+   },
+   "out": {
+    "type": "dissolve",
+    "duration": 0.8
+   }
+  },
+  {
+   "id": "S1-05",
+   "start": 34,
+   "end": 39,
+   "chapter": "台中國漫館",
+   "grade": "暖褐復古",
+   "layout": "B",
+   "photos": [
+    "dobe-5186.jpg",
+    "dobe-5172.jpg"
+   ],
+   "motion": {
+    "type": "split-counter",
+    "left": [
+     1.0,
+     1.06
+    ],
+    "right": [
+     1.06,
+     1.0
+    ]
+   },
+   "out": {
+    "type": "push",
+    "dir": "right",
+    "duration": 0.6
+   }
+  },
+  {
+   "id": "S1-06",
+   "start": 39,
+   "end": 43,
+   "chapter": "台中國漫館",
+   "grade": "暖褐復古",
+   "layout": "A",
+   "photos": [
+    "dobe-5121.jpg"
+   ],
+   "motion": {
+    "type": "zoom",
+    "from": 1.0,
+    "to": 1.08
+   },
+   "out": {
+    "type": "cut"
+   }
+  },
+  {
+   "id": "S1-07",
+   "start": 43,
+   "end": 48,
+   "chapter": "台中國漫館",
+   "grade": "暖褐復古",
+   "layout": "A",
+   "photos": [
+    "dobe-5212.jpg"
+   ],
+   "motion": {
+    "type": "zoom",
+    "from": 1.0,
+    "to": 1.03
+   },
+   "out": {
+    "type": "dissolve",
+    "duration": 0.8
+   }
+  },
+  {
+   "id": "S1-08",
+   "start": 48,
+   "end": 52,
+   "chapter": "台中國漫館",
+   "grade": "暖褐復古",
+   "layout": "A",
+   "photos": [
+    "dobe-5228.jpg"
+   ],
+   "motion": {
+    "type": "pan",
+    "dir": "right",
+    "distance": 90,
+    "scale": 1.05
+   },
+   "out": {
+    "type": "cut"
+   }
+  },
+  {
+   "id": "S1-09",
+   "start": 52,
+   "end": 58,
+   "chapter": "台中國漫館",
+   "grade": "暖褐復古",
+   "layout": "A",
+   "photos": [
+    "dobe-5150.jpg"
+   ],
+   "motion": {
+    "type": "pan",
+    "dir": "left",
+    "distance": 90,
+    "scale": 1.05
+   },
+   "out": {
+    "type": "dissolve",
+    "duration": 0.8
+   }
+  },
+  {
+   "id": "S1-10",
+   "start": 58,
+   "end": 64,
+   "chapter": "台中國漫館",
+   "grade": "暖褐復古",
+   "layout": "A",
+   "photos": [
+    "dobe-5190.jpg"
+   ],
+   "motion": {
+    "type": "zoom",
+    "from": 1.0,
+    "to": 1.08
+   },
+   "out": {
+    "type": "dissolve",
+    "duration": 0.8
+   }
+  },
+  {
+   "id": "S1-11",
+   "start": 64,
+   "end": 70,
+   "chapter": "台中國漫館",
+   "grade": "暖褐復古",
+   "layout": "A",
+   "photos": [
+    "dobe-5240.jpg"
+   ],
+   "motion": {
+    "type": "zoom",
+    "from": 1.1,
+    "to": 1.0
+   },
+   "out": {
+    "type": "black",
+    "out": 0.5,
+    "in": 1.5
+   }
+  },
+  {
+   "id": "S2-01",
+   "start": 70,
+   "end": 73,
+   "chapter": "苗栗環保公園",
+   "grade": "明亮通透",
+   "layout": "A",
+   "photos": [
+    "dobe-5388.jpg"
+   ],
+   "motion": {
+    "type": "zoom",
+    "from": 1.15,
+    "to": 1.0
+   },
+   "out": {
+    "type": "dissolve",
+    "duration": 0.8
+   }
+  },
+  {
+   "id": "S2-02",
+   "start": 73,
+   "end": 79,
+   "chapter": "苗栗環保公園",
+   "grade": "明亮通透",
+   "layout": "A",
+   "photos": [
+    "dobe-5253.jpg"
+   ],
+   "motion": {
+    "type": "zoom",
+    "from": 1.0,
+    "to": 1.08
+   },
+   "out": {
+    "type": "dissolve",
+    "duration": 0.8
+   }
+  },
+  {
+   "id": "S2-03",
+   "start": 79,
+   "end": 84,
+   "chapter": "苗栗環保公園",
+   "grade": "明亮通透",
+   "layout": "A",
+   "photos": [
+    "dobe-5280.jpg"
+   ],
+   "motion": {
+    "type": "zoom",
+    "from": 1.1,
+    "to": 1.0
+   },
+   "out": {
+    "type": "dissolve",
+    "duration": 0.8
+   }
+  },
+  {
+   "id": "S2-04",
+   "start": 84,
+   "end": 89,
+   "chapter": "苗栗環保公園",
+   "grade": "明亮通透",
+   "layout": "B",
+   "photos": [
+    "dobe-5329.jpg",
+    "dobe-5294.jpg"
+   ],
+   "motion": {
+    "type": "split-counter",
+    "left": [
+     1.0,
+     1.06
+    ],
+    "right": [
+     1.06,
+     1.0
+    ]
+   },
+   "out": {
+    "type": "push",
+    "dir": "right",
+    "duration": 0.6
+   }
+  },
+  {
+   "id": "S2-05",
+   "start": 89,
+   "end": 94,
+   "chapter": "苗栗環保公園",
+   "grade": "明亮通透",
+   "layout": "A",
+   "photos": [
+    "dobe-5308.jpg"
+   ],
+   "motion": {
+    "type": "zoom",
+    "from": 1.0,
+    "to": 1.08
+   },
+   "out": {
+    "type": "dissolve",
+    "duration": 0.8
+   }
+  },
+  {
+   "id": "S2-06",
+   "start": 94,
+   "end": 98,
+   "chapter": "苗栗環保公園",
+   "grade": "明亮通透・副歌",
+   "layout": "A",
+   "photos": [
+    "dobe-5425.jpg"
+   ],
+   "motion": {
+    "type": "pan",
+    "dir": "left",
+    "distance": 90,
+    "scale": 1.05
+   },
+   "out": {
+    "type": "flash",
+    "pre": 0.08,
+    "post": 0.22,
+    "peak": 0.85
+   }
+  },
+  {
+   "id": "S2-07",
+   "start": 98,
+   "end": 102,
+   "chapter": "苗栗環保公園",
+   "grade": "明亮通透・副歌",
+   "layout": "A",
+   "photos": [
+    "dobe-5439.jpg"
+   ],
+   "motion": {
+    "type": "zoom",
+    "from": 1.0,
+    "to": 1.08
+   },
+   "out": {
+    "type": "cut"
+   }
+  },
+  {
+   "id": "S2-08",
+   "start": 102,
+   "end": 105,
+   "chapter": "苗栗環保公園",
+   "grade": "明亮通透・副歌",
+   "layout": "H",
+   "photos": [
+    "dobe-5347.jpg"
+   ],
+   "motion": {
+    "type": "pan",
+    "dir": "right",
+    "distance": 160,
+    "scale": 1.1
+   },
+   "out": {
+    "type": "cut"
+   }
+  },
+  {
+   "id": "S2-09",
+   "start": 105,
+   "end": 108,
+   "chapter": "苗栗環保公園",
+   "grade": "明亮通透・副歌",
+   "layout": "A",
+   "photos": [
+    "dobe-5410.jpg"
+   ],
+   "motion": {
+    "type": "still"
+   },
+   "out": {
+    "type": "cut"
+   }
+  },
+  {
+   "id": "S2-10",
+   "start": 108,
+   "end": 111,
+   "chapter": "苗栗環保公園",
+   "grade": "明亮通透・副歌",
+   "layout": "B",
+   "photos": [
+    "dobe-5436.jpg",
+    "dobe-5438.jpg"
+   ],
+   "motion": {
+    "type": "split-late",
+    "delay": 0.2,
+    "fade": 0.3
+   },
+   "out": {
+    "type": "push",
+    "dir": "left",
+    "duration": 0.6
+   }
+  },
+  {
+   "id": "S2-11",
+   "start": 111,
+   "end": 114,
+   "chapter": "苗栗環保公園",
+   "grade": "明亮通透・副歌",
+   "layout": "A",
+   "photos": [
+    "dobe-5441.jpg"
+   ],
+   "motion": {
+    "type": "zoom",
+    "from": 1.0,
+    "to": 1.08
+   },
+   "out": {
+    "type": "cut"
+   }
+  },
+  {
+   "id": "S2-12",
+   "start": 114,
+   "end": 117,
+   "chapter": "苗栗環保公園",
+   "grade": "明亮通透・副歌",
+   "layout": "A",
+   "photos": [
+    "dobe-5419.jpg"
+   ],
+   "motion": {
+    "type": "zoom",
+    "from": 1.0,
+    "to": 1.08
+   },
+   "out": {
+    "type": "cut"
+   }
+  },
+  {
+   "id": "S2-13",
+   "start": 117,
+   "end": 120,
+   "chapter": "苗栗環保公園",
+   "grade": "明亮通透・副歌",
+   "layout": "H",
+   "photos": [
+    "dobe-5352.jpg"
+   ],
+   "motion": {
+    "type": "zoom",
+    "from": 1.0,
+    "to": 1.08
+   },
+   "out": {
+    "type": "dissolve",
+    "duration": 0.8
+   }
+  },
+  {
+   "id": "S2-14",
+   "start": 120,
+   "end": 125,
+   "chapter": "苗栗環保公園",
+   "grade": "明亮通透",
+   "layout": "A",
+   "photos": [
+    "dobe-5310.jpg"
+   ],
+   "motion": {
+    "type": "zoom",
+    "from": 1.0,
+    "to": 1.08
+   },
+   "out": {
+    "type": "dissolve",
+    "duration": 0.8
+   }
+  },
+  {
+   "id": "S2-15",
+   "start": 125,
+   "end": 130,
+   "chapter": "苗栗環保公園",
+   "grade": "明亮通透",
+   "layout": "A",
+   "photos": [
+    "dobe-5418.jpg"
+   ],
+   "motion": {
+    "type": "zoom",
+    "from": 1.1,
+    "to": 1.0
+   },
+   "out": {
+    "type": "black",
+    "out": 0.5,
+    "in": 1.5
+   }
+  },
+  {
+   "id": "S3-01",
+   "start": 130,
+   "end": 133,
+   "chapter": "苗栗火炎山",
+   "grade": "金黃暖調",
+   "layout": "H",
+   "photos": [
+    "dobe-5488.jpg"
+   ],
+   "motion": {
+    "type": "zoom",
+    "from": 1.15,
+    "to": 1.0
+   },
+   "out": {
+    "type": "dissolve",
+    "duration": 1.5
+   }
+  },
+  {
+   "id": "S3-02",
+   "start": 133,
+   "end": 140,
+   "chapter": "苗栗火炎山",
+   "grade": "金黃暖調",
+   "layout": "A",
+   "photos": [
+    "dobe-5461.jpg"
+   ],
+   "motion": {
+    "type": "zoom",
+    "from": 1.0,
+    "to": 1.08
+   },
+   "out": {
+    "type": "dissolve",
+    "duration": 1.5
+   }
+  },
+  {
+   "id": "S3-03",
+   "start": 140,
+   "end": 145,
+   "chapter": "苗栗火炎山",
+   "grade": "金黃暖調",
+   "layout": "A",
+   "photos": [
+    "dobe-5456.jpg"
+   ],
+   "motion": {
+    "type": "pan",
+    "dir": "right",
+    "distance": 90,
+    "scale": 1.05
+   },
+   "out": {
+    "type": "dissolve",
+    "duration": 1.5
+   }
+  },
+  {
+   "id": "S3-04",
+   "start": 145,
+   "end": 152,
+   "chapter": "苗栗火炎山",
+   "grade": "金黃暖調",
+   "layout": "A",
+   "photos": [
+    "dobe-5494.jpg"
+   ],
+   "motion": {
+    "type": "zoom",
+    "from": 1.0,
+    "to": 1.08
+   },
+   "out": {
+    "type": "dissolve",
+    "duration": 1.5
+   }
+  },
+  {
+   "id": "S3-05",
+   "start": 152,
+   "end": 157,
+   "chapter": "苗栗火炎山",
+   "grade": "金黃暖調",
+   "layout": "A",
+   "photos": [
+    "dobe-5492.jpg"
+   ],
+   "motion": {
+    "type": "zoom",
+    "from": 1.0,
+    "to": 1.08
+   },
+   "out": {
+    "type": "dissolve",
+    "duration": 1.5
+   }
+  },
+  {
+   "id": "S3-06",
+   "start": 157,
+   "end": 164,
+   "chapter": "苗栗火炎山",
+   "grade": "金黃暖調",
+   "layout": "A",
+   "photos": [
+    "dobe-5471.jpg"
+   ],
+   "motion": {
+    "type": "pan",
+    "dir": "right",
+    "distance": 90,
+    "scale": 1.05
+   },
+   "out": {
+    "type": "dissolve",
+    "duration": 1.5
+   }
+  },
+  {
+   "id": "S3-07",
+   "start": 164,
+   "end": 169,
+   "chapter": "苗栗火炎山",
+   "grade": "金黃暖調",
+   "layout": "A",
+   "photos": [
+    "dobe-5480.jpg"
+   ],
+   "motion": {
+    "type": "pan",
+    "dir": "left",
+    "distance": 90,
+    "scale": 1.05
+   },
+   "out": {
+    "type": "dissolve",
+    "duration": 1.5
+   }
+  },
+  {
+   "id": "S3-08",
+   "start": 169,
+   "end": 175,
+   "chapter": "苗栗火炎山",
+   "grade": "金黃暖調",
+   "layout": "A",
+   "photos": [
+    "dobe-5474.jpg"
+   ],
+   "motion": {
+    "type": "zoom",
+    "from": 1.0,
+    "to": 1.08
+   },
+   "out": {
+    "type": "dissolve",
+    "duration": 1.5
+   }
+  },
+  {
+   "id": "S3-09",
+   "start": 175,
+   "end": 180,
+   "chapter": "苗栗火炎山",
+   "grade": "金黃暖調",
+   "layout": "A",
+   "photos": [
+    "dobe-5464.jpg"
+   ],
+   "motion": {
+    "type": "pan",
+    "dir": "right",
+    "distance": 90,
+    "scale": 1.05
+   },
+   "out": {
+    "type": "dissolve",
+    "duration": 1.5
+   }
+  },
+  {
+   "id": "S3-10",
+   "start": 180,
+   "end": 185,
+   "chapter": "苗栗火炎山",
+   "grade": "金黃暖調",
+   "layout": "H",
+   "photos": [
+    "dobe-5485.jpg"
+   ],
+   "motion": {
+    "type": "zoom",
+    "from": 1.1,
+    "to": 1.0
+   },
+   "out": {
+    "type": "black",
+    "out": 0.5,
+    "in": 1.5
+   }
+  },
+  {
+   "id": "S4-01",
+   "start": 185,
+   "end": 187,
+   "chapter": "苗栗松柏港",
+   "grade": "粉橘夕陽",
+   "layout": "A",
+   "photos": [
+    "dobe-5505.jpg"
+   ],
+   "motion": {
+    "type": "zoom",
+    "from": 1.15,
+    "to": 1.0
+   },
+   "out": {
+    "type": "dissolve",
+    "duration": 0.8
+   }
+  },
+  {
+   "id": "S4-02",
+   "start": 187,
+   "end": 190,
+   "chapter": "苗栗松柏港",
+   "grade": "粉橘夕陽",
+   "layout": "A",
+   "photos": [
+    "dobe-5533.jpg"
+   ],
+   "motion": {
+    "type": "zoom",
+    "from": 1.0,
+    "to": 1.08
+   },
+   "out": {
+    "type": "cut"
+   }
+  },
+  {
+   "id": "S4-03",
+   "start": 190,
+   "end": 192,
+   "chapter": "苗栗松柏港",
+   "grade": "粉橘夕陽",
+   "layout": "A",
+   "photos": [
+    "dobe-5549.jpg"
+   ],
+   "motion": {
+    "type": "pan",
+    "dir": "right",
+    "distance": 90,
+    "scale": 1.05
+   },
+   "out": {
+    "type": "cut"
+   }
+  },
+  {
+   "id": "S4-04",
+   "start": 192,
+   "end": 195,
+   "chapter": "苗栗松柏港",
+   "grade": "粉橘夕陽",
+   "layout": "A",
+   "photos": [
+    "dobe-5557.jpg"
+   ],
+   "motion": {
+    "type": "zoom",
+    "from": 1.0,
+    "to": 1.08
+   },
+   "out": {
+    "type": "cut"
+   }
+  },
+  {
+   "id": "S4-05",
+   "start": 195,
+   "end": 197,
+   "chapter": "苗栗松柏港",
+   "grade": "粉橘夕陽",
+   "layout": "A",
+   "photos": [
+    "dobe-5559.jpg"
+   ],
+   "motion": {
+    "type": "zoom",
+    "from": 1.0,
+    "to": 1.08
+   },
+   "out": {
+    "type": "cut"
+   }
+  },
+  {
+   "id": "S4-06",
+   "start": 197,
+   "end": 200,
+   "chapter": "苗栗松柏港",
+   "grade": "粉橘夕陽",
+   "layout": "A",
+   "photos": [
+    "dobe-5569.jpg"
+   ],
+   "motion": {
+    "type": "pan",
+    "dir": "right",
+    "distance": 90,
+    "scale": 1.05
+   },
+   "out": {
+    "type": "cut"
+   }
+  },
+  {
+   "id": "S4-07",
+   "start": 200,
+   "end": 202,
+   "chapter": "苗栗松柏港",
+   "grade": "粉橘夕陽",
+   "layout": "A",
+   "photos": [
+    "dobe-5521.jpg"
+   ],
+   "motion": {
+    "type": "zoom",
+    "from": 1.0,
+    "to": 1.08
+   },
+   "out": {
+    "type": "flash",
+    "pre": 0.08,
+    "post": 0.22,
+    "peak": 0.85
+   }
+  },
+  {
+   "id": "S4-08",
+   "start": 202,
+   "end": 205,
+   "chapter": "苗栗松柏港",
+   "grade": "粉橘夕陽",
+   "layout": "A",
+   "photos": [
+    "dobe-5507.jpg"
+   ],
+   "motion": {
+    "type": "zoom",
+    "from": 1.1,
+    "to": 1.0
+   },
+   "out": {
+    "type": "cut"
+   }
+  },
+  {
+   "id": "S4-09",
+   "start": 205,
+   "end": 207,
+   "chapter": "苗栗松柏港",
+   "grade": "粉橘夕陽",
+   "layout": "A",
+   "photos": [
+    "dobe-5555.jpg"
+   ],
+   "motion": {
+    "type": "zoom",
+    "from": 1.0,
+    "to": 1.08
+   },
+   "out": {
+    "type": "flash",
+    "pre": 0.08,
+    "post": 0.22,
+    "peak": 0.85
+   }
+  },
+  {
+   "id": "S4-10",
+   "start": 207,
+   "end": 210,
+   "chapter": "苗栗松柏港",
+   "grade": "粉橘夕陽",
+   "layout": "C",
+   "photos": [
+    "dobe-5249.jpg",
+    "dobe-5253.jpg",
+    "dobe-5439.jpg",
+    "dobe-5461.jpg"
+   ],
+   "motion": {
+    "type": "stagger",
+    "interval": 0.3,
+    "fade": 0.4
+   },
+   "out": {
+    "type": "flash",
+    "pre": 0.08,
+    "post": 0.22,
+    "peak": 0.85
+   }
+  },
+  {
+   "id": "S4-11",
+   "start": 210,
+   "end": 213,
+   "chapter": "苗栗松柏港",
+   "grade": "粉橘夕陽",
+   "layout": "A",
+   "photos": [
+    "dobe-5552.jpg"
+   ],
+   "motion": {
+    "type": "still"
+   },
+   "out": {
+    "type": "cut"
+   }
+  },
+  {
+   "id": "S4-12",
+   "start": 213,
+   "end": 219,
+   "chapter": "苗栗松柏港",
+   "grade": "粉橘夕陽",
+   "layout": "A",
+   "photos": [
+    "dobe-5575.jpg"
+   ],
+   "motion": {
+    "type": "zoom",
+    "from": 1.0,
+    "to": 1.08
+   },
+   "out": {
+    "type": "dissolve",
+    "duration": 0.8
+   }
+  },
+  {
+   "id": "S4-13",
+   "start": 219,
+   "end": 225,
+   "chapter": "苗栗松柏港",
+   "grade": "粉橘夕陽",
+   "layout": "A",
+   "photos": [
+    "dobe-5543.jpg"
+   ],
+   "motion": {
+    "type": "zoom",
+    "from": 1.1,
+    "to": 1.0
+   },
+   "out": {
+    "type": "black",
+    "out": 0.5,
+    "in": 1.5
+   }
+  }
+ ],
+ "ending": {
+  "style": "photo-thanks-monogram",
+  "start": 225,
+  "end": 240,
+  "params": {
+   "photo": {
+    "name": "dobe-5575.jpg",
+    "grade": "原色",
+    "panelWidth": 720,
+    "push": [
+     1.0,
+     1.05
+    ],
+    "pushDur": 5,
+    "dim": {
+     "from": 0.15,
+     "to": 0.6,
+     "at": 5,
+     "dur": 1
+    }
+   },
+   "divider": {
+    "color": "#E7C873",
+    "alpha": 0.7,
+    "width": 2
+   },
+   "thanks": {
+    "text": "Thank You",
+    "font": "GreatVibes.ttf",
+    "size": 180,
+    "color": "#E7C873",
+    "cx": 1322,
+    "boxTop": 339,
+    "boxH": 225,
+    "in": 1.5,
+    "fade": 1.0,
+    "ornament": {
+     "y": 585,
+     "inner": 21,
+     "outer": 161,
+     "diamond": 6,
+     "color": "#E7C873"
+    }
+   },
+   "lines": [
+    {
+     "text": "謝謝每一位陪伴我們走到這裡的人，",
+     "font": "NotoSerifTC-VF.ttf",
+     "size": 40,
+     "wght": 400,
+     "color": "#FFFFFFCC",
+     "cx": 1322,
+     "boxTop": 606,
+     "boxH": 68,
+     "in": 5.5,
+     "fade": 1.0
+    },
+    {
+     "text": "今天，謝謝你們在這裡。",
+     "font": "NotoSerifTC-VF.ttf",
+     "size": 40,
+     "wght": 400,
+     "color": "#FFFFFFCC",
+     "cx": 1322,
+     "boxTop": 674,
+     "boxH": 68,
+     "in": 7.5,
+     "fade": 1.0
+    }
+   ],
+   "monogram": {
+    "in": 10.5,
+    "dissolve": 1.0,
+    "bg": "#0E1216",
+    "ring": {
+     "diameter": 128,
+     "stroke": 1.5,
+     "color": "#E7C873"
+    },
+    "text": {
+     "text": "R & A",
+     "font": "GreatVibes.ttf",
+     "size": 45,
+     "color": "#E7C873",
+     "cx": 960,
+     "boxTop": 512,
+     "boxH": 56
+    }
+   },
+   "fadeOut": 1.0
+  }
+ }
+}
