@@ -19,6 +19,22 @@
 | Angular 前端工程（20+） | 直呼 `front-end-angular-engineer` | standalone 元件 ＋ Signals、路由、Reactive Forms、Transloco、Jest |
 | 設計稿產線 | `/design-lead <需求>` | 從 Figma 讀取分析、繪製到設計檔、把設計疑問標到畫面上 |
 | 程式碼審查 | 直呼 `code-reviewer` | 完成一段程式碼後、或提交前把關 |
+| 輪播影片分鏡 | 直呼 `storyboard-artist` | 照片＋配樂 → 規劃表 → 畫進 v2 分鏡稿 .pen 並標註特效 |
+| 分鏡稿轉影片 | 直呼 `storyboard-video-renderer` | 指定 .pen → 輸出指定規格 mp4；補實作新特效 |
+| 特效實驗室 | 直呼 `fx-lab` | 文字描述 → artifact 預覽 → 使用者裁決 → 寫進 fx-* 特效庫 |
+
+### 輪播影片產線的分工（三個子代理）
+
+```
+fx-lab ──（裁決通過）──▶ fx-* 特效技術文件 ◀── 兩邊都照這裡的寫法與演算法
+                              │
+storyboard-artist ──畫──▶ v2 分鏡稿 .pen ──讀──▶ storyboard-video-renderer ──▶ mp4
+```
+
+- **格式契約**是 `storyboard-pen-format`：分鏡稿怎麼命名、每個欄位怎麼寫。畫稿與讀稿兩邊都以它為準。
+- 產生器程式在 `.claude/skills/storyboard-video-render/scripts/`。它已用第 2 版成片逐格驗證：1,569 個時間點像素完全相同。
+- 子代理不能問使用者問題。需要裁決時（例如 fx-lab 的預覽），子代理會停下來回報；主控端轉問使用者後，再把結果帶回去。
+- 現有的 `wedding-photo-slideshow.pen` 是 **v1 格式**，產生器不能直接讀。v1 缺版型欄與特效參數。要用新產線重產，先請 `storyboard-artist` 以 `upgrade` 模式升級成 v2。
 
 ### 設計稿產線的三個前提（不照做會出事）
 
@@ -39,6 +55,12 @@
   - 對應 skills：`design-handoff-contract`、`pen-authoring`、`pen-flow-diagram`、`pen-screen-drawing`、`pen-scenario-sequence`、`pen-shared-component-library`
 - `design-question-curator`：設計稿產線 worker（step `annotate`）＋ 直呼的逐題結案迴圈（`resolve`）。
   - 對應 skills：`design-handoff-contract`、`pen-authoring`、`pen-screen-drawing`
+- `storyboard-artist`：輪播影片分鏡師（plan／draw／revise／upgrade）。
+  - 對應 skills：`storyboard-pen-format`、`storyboard-planning`、`pen-authoring`、`fx-camera-motion`、`fx-transition`、`fx-title-opening`、`fx-title-ending`
+- `storyboard-video-renderer`：分鏡稿 → 影片。對 .pen 只能唯讀（frontmatter 掛了 `pen-readonly-guard` hook）。
+  - 對應 skills：`storyboard-video-render`、`storyboard-pen-format`、`fx-*` 四份
+- `fx-lab`：特效發想與預覽，裁決通過後擴充 `fx-*` 特效庫。
+  - 對應 skills：`fx-lab-preview`、`fx-*` 四份
 
 > **組長 `design-lead` 是 skill ＋ slash command，不是 agent。** 別去 `.claude/agents/` 找它，那裡沒有這個檔。派工能力只存在於主控端，因為子代理不能再派發子代理。
 
@@ -81,16 +103,18 @@ D:\SideProject\wedding-invitation\
 └── .claude\
     ├── settings.json          # hooks 接線（進版控）
     ├── settings.local.json    # MCP 免提示核准＋密鑰真值（不進版控）
-    ├── agents\                # 5 個：front-end-angular-engineer、code-reviewer、
-    │                          #        figma-reader、pen-drawer、design-question-curator
-    ├── skills\                # 17 個（angular-* 6、ui-bootstrap5、common-user-browser、
-    │                          #        git-commit-convention、design-* 與 pen-* 8）
+    ├── agents\                # 8 個：front-end-angular-engineer、code-reviewer、
+    │                          #        figma-reader、pen-drawer、design-question-curator、
+    │                          #        storyboard-artist、storyboard-video-renderer、fx-lab
+    ├── skills\                # 25 個（angular-* 6、ui-bootstrap5、common-user-browser、
+    │                          #        git-commit-convention、design-* 與 pen-* 8、
+    │                          #        storyboard-* 3、fx-* 5）
     ├── commands\
     │   └── design-lead.md     # 設計稿產線組長入口 /design-lead
     ├── workflows\
     │   ├── figma-pen-team.js  # 產線編排（read／draw-flow／draw-screen／draw-scenario／annotate）
     │   └── pen-export-png.js  # 下游交付：設計檔 → png ＋ _index.md ＋ _layout-spec.md
-    └── hooks\                 # 5 個守門 script（見下）
+    └── hooks\                 # 6 個守門 script（見下）
 ```
 
 實際的 Angular 專案原始碼之後放在本目錄底下（`src/`、`angular.json` 等），與 `.claude/` 並列。
@@ -104,6 +128,9 @@ D:\SideProject\wedding-invitation\
 | `figma-pen-prompt-reminder.ps1` | UserPromptSubmit | 不擋，只在提到 Figma 卻沒給設計檔路徑時提醒 |
 | `enforce-commit-convention.ps1` | PreToolUse `Bash\|PowerShell` | commit 訊息不符 Conventional Commits |
 | `check-comment-standards.ps1` | PostToolUse `Edit\|Write\|MultiEdit` | `.ts` 寫入後掃註解違規並要求當場修正（不擋寫入，只回饋） |
+| `pen-readonly-guard.ps1` | PreToolUse `mcp__pencil-server__execute`（**只掛在 `storyboard-video-renderer` 的 frontmatter**，不在 settings.json） | 該子代理對 .pen 執行任何寫入函式 |
+
+⚠️ hook 的 `.ps1` 要存成**帶 BOM 的 UTF-8**。Windows PowerShell 5.1 讀到沒有 BOM 的中文腳本會解析失敗；hook 因此安靜地不生效，也不會報錯。
 
 ⚠️ **hooks 是 session 啟動時載入快照的。** 這些是籌組當下寫進 `settings.json` 的，第一次在本專案開 Claude Code 就會生效；但日後若手動改了 `settings.json`，**要重啟 Claude Code 才算數**，而且沒生效時完全沒有錯誤訊息，只是安靜地不觸發。
 
