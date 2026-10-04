@@ -1,0 +1,44 @@
+name: Deploy redirect to GitHub Pages
+
+# 喜帖本體已改由 Cloudflare Pages 部署（push main 時 Cloudflare 自己建置）。
+# 這裡只把舊網址 roger-hung-dev.github.io/wedding-invitation/ 換成轉址頁，
+# 讓已經拿到舊連結的賓客自動跳到新網址。只有轉址頁本身改動時才重新部署。
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'redirect/github-pages/**'
+      - '.github/workflows/deploy-redirect.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: redirect/github-pages
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

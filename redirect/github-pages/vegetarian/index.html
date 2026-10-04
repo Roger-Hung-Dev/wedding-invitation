@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="utf-8">
+  <title>Roger &amp; Amy 婚禮邀請函</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <link rel="canonical" href="https://roger-amy-wedding.pages.dev/vegetarian/">
+
+  <!--
+    舊網址（GitHub Pages）的轉址頁。喜帖已搬到 Cloudflare Pages，
+    但已經有賓客拿到舊連結，所以舊網址保留、改成打開就跳到新網址。
+
+    GitHub Pages 不能設定伺服器端的 301，只能靠頁面自己跳：
+    script 依目前路徑換算新網址（/wedding-invitation/vegetarian/ → /vegetarian/），
+    用 location.replace 讓「上一頁」不會卡回這一頁；noscript 的 refresh 是關掉 JS 時的後備。
+
+    分享資訊與 src/index.html 相同 —— 有人在 LINE 再轉傳舊連結時，預覽卡片才不會變成空白。
+    三個檔（index.html、vegetarian/index.html、404.html）內容相同，只有 canonical 與 refresh 的目標不同。
+  -->
+  <meta property="og:title" content="We are Getting Married! 洪承孝 &amp; 李怡安 婚禮邀請函">
+  <meta property="og:description" content="2026 . 12 . 12 星期六　臻愛花園飯店　誠摯邀請您見證我們的幸福時刻，並回覆您的出席意願。">
+  <meta property="og:image" content="https://roger-amy-wedding.pages.dev/assets/images/og-share.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:url" content="https://roger-amy-wedding.pages.dev/">
+  <meta property="og:site_name" content="Roger &amp; Amy 婚禮邀請函">
+  <meta property="og:locale" content="zh_TW">
+  <meta property="og:type" content="website">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="We are Getting Married! 洪承孝 &amp; 李怡安 婚禮邀請函">
+  <meta name="twitter:description" content="2026 . 12 . 12 星期六　臻愛花園飯店　誠摯邀請您見證我們的幸福時刻，並回覆您的出席意願。">
+  <meta name="twitter:image" content="https://roger-amy-wedding.pages.dev/assets/images/og-share.jpg">
+
+  <script>
+    (function () {
+      var NEW_ORIGIN = 'https://roger-amy-wedding.pages.dev'
+      var OLD_BASE = '/wedding-invitation'
+      var path = location.pathname
+      if (path.indexOf(OLD_BASE) === 0) path = path.slice(OLD_BASE.length)
+      path = path.replace(/index\.html$/, '')
+      if (path.charAt(0) !== '/') path = '/' + path
+      location.replace(NEW_ORIGIN + path + location.search + location.hash)
+    })()
+  </script>
+  <noscript><meta http-equiv="refresh" content="0; url=https://roger-amy-wedding.pages.dev/vegetarian/"></noscript>
+
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #fbf7f4;
+      color: #5a2a35;
+      font-family: system-ui, -apple-system, "PingFang TC", "Microsoft JhengHei", sans-serif;
+      font-size: 18px;
+      text-align: center;
+      padding: 0 16px;
+    }
+    a {
+      color: inherit;
+    }
+  </style>
+</head>
+<body>
+  <p>喜帖已搬到新網址，正在為您轉過去…<br><a href="https://roger-amy-wedding.pages.dev/vegetarian/">沒有自動跳轉的話，請點這裡</a></p>
+</body>
+</html>
