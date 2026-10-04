@@ -33,7 +33,7 @@
 
     ⚠️ 每張 img 上 [attr.fetchpriority] 一定要寫在 [attr.loading] 前面。Angular 依屬性順序套用，
     loading 一改成 eager 瀏覽器當下就送出請求；優先權若還沒改成 high，請求會以 low 送出、事後再改也無效，
-    第一批照片就會跟 3.7MB 的背景音樂用同樣的低優先權搶頻寬（實測慢速網路下整排空白十幾秒）。
+    第一批照片就會跟 2.8MB 的背景音樂用同樣的低優先權搶頻寬（實測慢速網路下整排空白十幾秒）。
   -->
   <div class="gallery__track anim-reveal-mask" #track (scroll)="onTrackScroll()">
     @for (photo of store.photos; track photo.id; let i = $index) {
