@@ -98,7 +98,7 @@ export interface GalleryPhoto {
  * 桌機兩種版式都不受張數影響：自動捲動的位移與時長依張數計算，
  * 減少動態效果時的靜態網格是 flex-wrap 每列三張，17 張排成六列、最後一列兩張置中。
  *
- * 路徑不加開頭斜線 —— 網站部署在 GitHub Pages 子路徑下，絕對路徑會在上線後 404。
+ * 路徑不加開頭斜線 —— 一律依 <base href> 解析，部署位置換到子路徑（例如 GitHub Pages）時才不會 404。
  * 資料夾是 weddingphotos/，不是 gallery/ —— gallery/ 放的是交往故事書那五張。
  */
 export const GALLERY_PHOTOS: readonly GalleryPhoto[] = [
@@ -469,7 +469,7 @@ export interface AboutProfile {
  * 頭頂與新郎同在 y≈125，交疊在腰前的雙手完整露出（指尖 y≈775）。三個條件同時成立的代價是
  * 人物比新郎小約 14% —— 再放大，不是頭頂要往上移、就是手會被切掉。
  * 換照片時要重新量這幾個位置，兩張卡才看起來一樣大。
- * 路徑不加開頭斜線 —— 網站部署在 GitHub Pages 子路徑下，絕對路徑會在上線後 404。
+ * 路徑不加開頭斜線 —— 一律依 <base href> 解析，部署位置換到子路徑（例如 GitHub Pages）時才不會 404。
  */
 export const ABOUT_PROFILES: readonly AboutProfile[] = [
   {
@@ -621,7 +621,7 @@ export const INFO_TEXT = {
   /**
    * 停車示意圖。原稿是 .claude/docs/design/parking-map/ 的 V01 喜帖雅緻版，
    * 在該處執行 src/build.mjs 會一併覆寫這個檔，不要直接手改網站這一份。
-   * 路徑不加開頭斜線，理由同 GALLERY_PHOTOS（GitHub Pages 子路徑）。
+   * 路徑不加開頭斜線，理由同 GALLERY_PHOTOS。
    */
   parkingMapUrl: 'assets/images/parking-map.svg',
   /** 圖上的資訊只存在於圖裡，替代文字要把重點講完，螢幕報讀器的使用者才拿得到同樣的內容。 */
