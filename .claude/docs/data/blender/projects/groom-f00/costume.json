@@ -1,0 +1,295 @@
+{
+  "name": "米色三件式西裝",
+  "source": "新郎婚紗照（正面、背面）＋使用者指定鞋子",
+  "summary": "米色（卡其）三件式西裝：敞開的單排扣外套（劍領、左胸口袋、兩側有蓋口袋、袖口 4 顆扣）、同色 V 領背心（4 顆深色扣、前下襬兩個尖角）、同色直筒西裝褲；白襯衫（領子、袖口露出一點）、深藍色領結；米白色休閒鞋（照片看不到鞋子，使用者指定）。",
+  "colors": {
+    "suit": [
+      0.69,
+      0.56,
+      0.45
+    ],
+    "suit_shade": [
+      0.41,
+      0.31,
+      0.245
+    ],
+    "lapel": [
+      0.71,
+      0.58,
+      0.47
+    ],
+    "lapel_shade": [
+      0.43,
+      0.33,
+      0.26
+    ],
+    "vest": [
+      0.67,
+      0.545,
+      0.44
+    ],
+    "vest_shade": [
+      0.4,
+      0.3,
+      0.235
+    ],
+    "pants": [
+      0.68,
+      0.55,
+      0.445
+    ],
+    "pants_shade": [
+      0.4,
+      0.3,
+      0.24
+    ],
+    "pocket": [
+      0.59,
+      0.47,
+      0.375
+    ],
+    "pocket_shade": [
+      0.355,
+      0.265,
+      0.205
+    ],
+    "shirt": [
+      0.93,
+      0.93,
+      0.93
+    ],
+    "shirt_shade": [
+      0.7,
+      0.72,
+      0.8
+    ],
+    "bowtie": [
+      0.012,
+      0.03,
+      0.097
+    ],
+    "bowtie_shade": [
+      0.005,
+      0.012,
+      0.045
+    ],
+    "button": [
+      0.06,
+      0.04,
+      0.028
+    ],
+    "button_shade": [
+      0.03,
+      0.02,
+      0.014
+    ]
+  },
+  "keep_vroid": [
+    "Shoes"
+  ],
+  "needs_body_fill": true,
+  "components": {
+    "bodice": {
+      "enabled": false
+    },
+    "ruffle": {
+      "enabled": false
+    },
+    "sash": {
+      "enabled": false
+    },
+    "rosette": {
+      "enabled": false
+    },
+    "sash_tails": {
+      "enabled": false
+    },
+    "skirt": {
+      "enabled": false
+    },
+    "drape": {
+      "enabled": false
+    },
+    "cascade": {
+      "enabled": false
+    },
+    "hair_bow": {
+      "enabled": false
+    },
+    "earrings": {
+      "enabled": false
+    },
+    "shoes": {
+      "recolor": [
+        0.93,
+        0.9,
+        0.83
+      ]
+    }
+  },
+  "suit": {
+    "voxel": 0.004,
+    "crotch": 0.785,
+    "pants_waist": 0.927,
+    "pants_hem_front": 0.078,
+    "pants_hem_back": 0.057,
+    "pants_ease_waist": 0.006,
+    "pants_ease_hip": 0.01,
+    "pants_ease_leg": 0.013,
+    "pants_taper": 0.35,
+    "collar_off": 0.006,
+    "collar_points": [
+      [
+        0.006,
+        1.312
+      ],
+      [
+        0.036,
+        1.306
+      ],
+      [
+        0.015,
+        1.283
+      ]
+    ],
+    "collar_point_off": 0.0085,
+    "cuff_x0": 0.49,
+    "cuff_x1": 0.52,
+    "cuff_ease": 0.006,
+    "vest_off": 0.008,
+    "vest_off_hem": 0.006,
+    "vest_top": 1.322,
+    "vest_v_bottom": 1.138,
+    "vest_v_w": 0.051,
+    "vest_v_top": 1.326,
+    "vest_hem_side": 0.886,
+    "vest_hem_point": 0.843,
+    "vest_point_x": 0.02,
+    "vest_notch": 0.87,
+    "vest_buttons": [
+      1.106,
+      1.037,
+      0.968,
+      0.9
+    ],
+    "jacket_hem": 0.767,
+    "jacket_ease_side": 0.022,
+    "jacket_ease_front": 0.03,
+    "jacket_ease_back": 0.022,
+    "jacket_chest_min": 0.162,
+    "jacket_waist_min": 0.158,
+    "jacket_ex": 2.8,
+    "jacket_collar_ease": 0.012,
+    "sleeve_ease": 0.014,
+    "sleeve_end": 0.507,
+    "break_z": 1.056,
+    "open_w": [
+      [
+        1.056,
+        0.0284
+      ],
+      [
+        1.212,
+        0.0303
+      ],
+      [
+        1.303,
+        0.044
+      ],
+      [
+        1.6,
+        0.044
+      ]
+    ],
+    "open_w_hem": 0.064,
+    "notch_z": 1.258,
+    "lapel_w": 0.064,
+    "collar_w": 0.03,
+    "lapel_top": 1.3,
+    "chest_pocket": [
+      0.106,
+      1.177
+    ],
+    "chest_pocket_size": [
+      0.062,
+      0.014
+    ],
+    "flap_pocket": [
+      0.115,
+      0.945
+    ],
+    "flap_pocket_size": [
+      0.062,
+      0.022
+    ],
+    "bowtie_z": 1.3,
+    "bowtie_w": 0.044,
+    "bowtie_h": 0.015,
+    "bowtie_gap": 0.017,
+    "outline": {
+      "width": 0.0011,
+      "color": [
+        0.22,
+        0.16,
+        0.12
+      ],
+      "mix": 0.5
+    },
+    "collar_bottom": [
+      1.302,
+      1.327,
+      1.345
+    ],
+    "collar_top": [
+      1.318,
+      1.363,
+      1.381
+    ],
+    "collar_gap_deg": 10,
+    "bowtie_d": 0.007,
+    "shoulder_pad": 0.008,
+    "jacket_up_z": [
+      1.25,
+      1.28,
+      1.31,
+      1.34,
+      1.37,
+      1.42
+    ],
+    "jacket_up_xlim": 0.124,
+    "jacket_collar": [
+      1.348,
+      0.5,
+      0.3
+    ],
+    "shirt_top": [
+      1.3636,
+      0.66,
+      0.41
+    ],
+    "shoulder_grow": [
+      [
+        0.06,
+        1.12,
+        0.0,
+        0.0
+      ],
+      [
+        0.1,
+        1.15,
+        0.003,
+        0.5
+      ],
+      [
+        0.14,
+        1.15,
+        0.006,
+        1.0
+      ]
+    ],
+    "jacket_collar_r": 0.11
+  },
+  "extra_scripts": [
+    "costume_extra_suit"
+  ]
+}

@@ -1,0 +1,212 @@
+{
+ "idle": {
+  "body_vmax": 0.4,
+  "body_jerk": 0.0,
+  "seam": 0.3,
+  "finger_vmax": 0.3,
+  "frames": 48
+ },
+ "wave": {
+  "body_vmax": 7.1,
+  "body_jerk": 2.6,
+  "seam": 7.1,
+  "finger_vmax": 7.0,
+  "frames": 48
+ },
+ "wave2": {
+  "body_vmax": 8.2,
+  "body_jerk": 2.9,
+  "seam": 8.2,
+  "finger_vmax": 8.2,
+  "frames": 48
+ },
+ "clap": {
+  "body_vmax": 4.0,
+  "body_jerk": 1.8,
+  "seam": 4.0,
+  "finger_vmax": 4.0,
+  "frames": 48
+ },
+ "bow": {
+  "body_vmax": 3.7,
+  "body_jerk": 0.7,
+  "seam": 0.0,
+  "finger_vmax": 0.5,
+  "frames": 72
+ },
+ "nod": {
+  "body_vmax": 2.4,
+  "body_jerk": 0.6,
+  "seam": 0.3,
+  "finger_vmax": 0.2,
+  "frames": 48
+ },
+ "shake": {
+  "body_vmax": 6.0,
+  "body_jerk": 1.5,
+  "seam": 6.0,
+  "finger_vmax": 0.0,
+  "frames": 48
+ },
+ "squat": {
+  "body_vmax": 4.5,
+  "body_jerk": 2.2,
+  "seam": 0.0,
+  "finger_vmax": 3.9,
+  "frames": 72
+ },
+ "march": {
+  "body_vmax": 5.9,
+  "body_jerk": 0.8,
+  "seam": 5.9,
+  "finger_vmax": 3.3,
+  "frames": 48
+ },
+ "walk": {
+  "body_vmax": 5.9,
+  "body_jerk": 0.7,
+  "seam": 3.7,
+  "finger_vmax": 2.3,
+  "frames": 48
+ },
+ "turn": {
+  "body_vmax": 11.2,
+  "body_jerk": 1.9,
+  "seam": 0.0,
+  "finger_vmax": 11.0,
+  "frames": 72
+ },
+ "spin": {
+  "body_vmax": 10.5,
+  "body_jerk": 0.8,
+  "seam": 0.0,
+  "finger_vmax": 10.5,
+  "frames": 72
+ },
+ "jump": {
+  "body_vmax": 13.6,
+  "body_jerk": 3.0,
+  "seam": 0.0,
+  "finger_vmax": 13.6,
+  "frames": 60
+ },
+ "cheer": {
+  "body_vmax": 2.0,
+  "body_jerk": 0.7,
+  "seam": 0.2,
+  "finger_vmax": 0.0,
+  "frames": 48
+ },
+ "heart": {
+  "body_vmax": 1.3,
+  "body_jerk": 0.2,
+  "seam": 1.3,
+  "finger_vmax": 0.5,
+  "frames": 48
+ },
+ "fheart": {
+  "body_vmax": 1.4,
+  "body_jerk": 0.2,
+  "seam": 1.4,
+  "finger_vmax": 0.6,
+  "frames": 48
+ },
+ "kiss": {
+  "body_vmax": 11.2,
+  "body_jerk": 3.4,
+  "seam": 1.1,
+  "finger_vmax": 11.2,
+  "frames": 84
+ },
+ "peace": {
+  "body_vmax": 1.2,
+  "body_jerk": 0.5,
+  "seam": 1.0,
+  "finger_vmax": 0.0,
+  "frames": 48
+ },
+ "point": {
+  "body_vmax": 0.8,
+  "body_jerk": 0.2,
+  "seam": 0.8,
+  "finger_vmax": 0.8,
+  "frames": 48
+ },
+ "hips": {
+  "body_vmax": 0.9,
+  "body_jerk": 0.0,
+  "seam": 0.9,
+  "finger_vmax": 0.0,
+  "frames": 48
+ },
+ "stretch": {
+  "body_vmax": 13.9,
+  "body_jerk": 2.8,
+  "seam": 0.0,
+  "finger_vmax": 13.9,
+  "frames": 96
+ },
+ "lookout": {
+  "body_vmax": 3.1,
+  "body_jerk": 0.3,
+  "seam": 3.1,
+  "finger_vmax": 0.7,
+  "frames": 72
+ },
+ "bouquet": {
+  "body_vmax": 0.7,
+  "body_jerk": 0.1,
+  "seam": 0.7,
+  "finger_vmax": 0.0,
+  "frames": 48
+ },
+ "shy": {
+  "body_vmax": 13.7,
+  "body_jerk": 2.6,
+  "seam": 0.0,
+  "finger_vmax": 13.7,
+  "frames": 72
+ },
+ "think": {
+  "body_vmax": 0.7,
+  "body_jerk": 0.1,
+  "seam": 0.7,
+  "finger_vmax": 0.3,
+  "frames": 48
+ },
+ "tilt": {
+  "body_vmax": 2.2,
+  "body_jerk": 0.3,
+  "seam": 2.2,
+  "finger_vmax": 0.3,
+  "frames": 48
+ },
+ "beckon": {
+  "body_vmax": 1.4,
+  "body_jerk": 0.4,
+  "seam": 1.4,
+  "finger_vmax": 15.4,
+  "frames": 48
+ },
+ "salute": {
+  "body_vmax": 14.9,
+  "body_jerk": 2.4,
+  "seam": 0.0,
+  "finger_vmax": 16.6,
+  "frames": 84
+ },
+ "dance": {
+  "body_vmax": 6.9,
+  "body_jerk": 3.2,
+  "seam": 0.7,
+  "finger_vmax": 5.1,
+  "frames": 48
+ },
+ "curtsy": {
+  "body_vmax": 4.1,
+  "body_jerk": 1.4,
+  "seam": 0.0,
+  "finger_vmax": 4.2,
+  "frames": 72
+ }
+}

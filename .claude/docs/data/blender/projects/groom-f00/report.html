@@ -1,0 +1,257 @@
+<title>承孝 3D 角色工作簿</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@600;800&family=Noto+Sans+TC:wght@400;500;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* 版面：左側固定的階段目錄＋右側長卷；每個階段一張「工作檯」，影片是主角，數字放在影片下方 */
+:root {
+  --bg: #f4eef0; --paper: #fbf8f9; --ink: #33252b; --muted: #8b7680; --line: #e3d6db;
+  --accent: #a8456a; --accent-soft: #f1dbe3; --ok: #2f7d5b; --ok-soft: #dcefe5; --bad: #b2552e; --bad-soft: #f7e2d6;
+  --f-display: "Noto Serif TC", "PMingLiU", serif;
+  --f-body: "Noto Sans TC", "Microsoft JhengHei", system-ui, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #1f181b; --paper: #2a2125; --ink: #f2e7eb; --muted: #b7a2ab; --line: #43363c;
+  --accent: #e88aab; --accent-soft: #4a2e39; --ok: #7fd1a8; --ok-soft: #22392f; --bad: #f0a07a; --bad-soft: #45302a; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #1f181b; --paper: #2a2125; --ink: #f2e7eb; --muted: #b7a2ab; --line: #43363c;
+  --accent: #e88aab; --accent-soft: #4a2e39; --ok: #7fd1a8; --ok-soft: #22392f; --bad: #f0a07a; --bad-soft: #45302a; color-scheme: dark }
+* { box-sizing: border-box }
+body { background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 15px; line-height: 1.7; }
+.shell { max-width: 1200px; margin: 0 auto; padding-inline: 16px; padding-block: 28px 64px; display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 32px; }
+nav.toc { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 20px); align-self: start; display: grid; gap: 4px; }
+nav.toc .brand { font-family: var(--f-display); font-weight: 800; font-size: 20px; line-height: 1.3; margin-bottom: 14px; }
+nav.toc a { color: var(--muted); text-decoration: none; padding: 6px 10px; border-radius: 8px; font-size: 14px; display: grid; grid-template-columns: 26px 1fr; }
+nav.toc a span { font-family: var(--f-mono); font-size: 12px; padding-top: 2px; }
+nav.toc a:hover, nav.toc a:focus-visible { background: var(--accent-soft); color: var(--ink); outline: none; }
+main { display: grid; gap: 40px; min-width: 0; }
+header.top { display: grid; gap: 10px; }
+.eyebrow { font-family: var(--f-mono); font-size: 12px; letter-spacing: .14em; color: var(--accent); text-transform: uppercase; }
+h1 { font-family: var(--f-display); font-weight: 800; font-size: clamp(28px, 4.2vw, 44px); line-height: 1.2; margin: 0; text-wrap: balance; }
+.lede { max-width: 62ch; color: var(--muted); margin: 0; }
+.stats { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 6px; }
+.stat { background: var(--paper); border: 1px solid var(--line); border-radius: 10px; padding: 8px 14px; font-size: 13px; color: var(--muted); }
+.stat b { display: block; font-family: var(--f-mono); font-size: 20px; color: var(--ink); font-weight: 500; }
+section.stage { display: grid; gap: 18px; scroll-margin-top: 20px; }
+.stage-head { display: grid; grid-template-columns: auto 1fr; gap: 4px 14px; align-items: baseline; border-top: 2px solid var(--ink); padding-top: 14px; }
+.stage-head .num { font-family: var(--f-mono); font-size: 13px; color: var(--accent); grid-row: span 2; padding-top: 6px; }
+h2 { font-family: var(--f-display); font-size: 26px; margin: 0; line-height: 1.3; text-wrap: balance; }
+.stage-head p { margin: 0; color: var(--muted); max-width: 66ch; }
+.bench { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+.panel { background: var(--paper); border: 1px solid var(--line); border-radius: 14px; padding: 14px; display: grid; gap: 10px; min-width: 0; align-content: start; }
+.panel h3 { font-size: 15px; margin: 0; font-weight: 700; }
+.panel p { margin: 0; font-size: 14px; color: var(--muted); }
+.panel video, .panel img { width: 100%; max-width: 100%; display: block; border-radius: 10px; background: var(--bg); }
+.wide { grid-column: 1 / -1; }
+ul.facts { margin: 0; padding-left: 1.1em; display: grid; gap: 6px; font-size: 14px; }
+.grid30 { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 14px; }
+figure.clip { margin: 0; background: var(--paper); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; display: grid; align-content: start; }
+figure.clip .vid { aspect-ratio: 2 / 3; background: var(--bg); }
+figure.clip video { width: 100%; height: 100%; object-fit: cover; display: block; }
+figcaption { display: grid; grid-template-columns: auto 1fr; gap: 2px 8px; padding: 10px 12px 4px; align-items: baseline; }
+figcaption .no { font-family: var(--f-mono); font-size: 12px; color: var(--muted); }
+figcaption b { font-size: 15px; }
+.chip { grid-column: 1 / -1; justify-self: start; font-size: 12px; padding: 1px 9px; border-radius: 99px; }
+.chip { background: var(--accent-soft); color: var(--muted); }
+.chip.ok { background: var(--ok-soft); color: var(--ok); }
+.chip.bad { background: var(--bad-soft); color: var(--bad); }
+figure.clip dl { margin: 0; padding: 4px 12px 10px; display: grid; grid-template-columns: 1fr; gap: 0; }
+figure.clip dl div { display: flex; justify-content: space-between; gap: 6px; font-size: 12px; border-bottom: 1px dashed var(--line); padding-block: 2px; }
+figure.clip dt { color: var(--muted); }
+figure.clip dd { margin: 0; font-family: var(--f-mono); font-variant-numeric: tabular-nums; }
+figure.clip .note, figure.clip .fix { margin: 0; padding: 0 12px 10px; font-size: 12px; color: var(--muted); }
+figure.clip .fix { color: var(--accent); }
+.pending { display: grid; place-items: center; height: 100%; min-height: 120px; color: var(--muted); font-size: 13px; letter-spacing: .1em; background: repeating-linear-gradient(45deg, var(--bg), var(--bg) 8px, var(--paper) 8px, var(--paper) 16px); border-radius: 10px; }
+.pending.wide169 { aspect-ratio: 16 / 9; }
+.legend { display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: 13px; color: var(--muted); }
+.legend b { color: var(--ink); font-weight: 500; }
+.scenes { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 16px; }
+.scene video { aspect-ratio: 16 / 9; }
+.stills { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
+.compare { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.compare figure { margin: 0; display: grid; gap: 4px; }
+.compare figcaption { padding: 0; display: block; font-size: 12px; color: var(--muted); }
+.compare img { aspect-ratio: 2 / 3; object-fit: cover; }
+.limits { background: var(--paper); border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 12px; padding: 14px 18px; }
+.limits h3 { margin: 0 0 6px; font-size: 15px; }
+@media (max-width: 820px) {
+  .shell { grid-template-columns: minmax(0, 1fr); }
+  nav.toc { position: static; display: flex; flex-wrap: wrap; gap: 6px; }
+  nav.toc .brand { width: 100%; margin: 0; }
+  nav.toc a { grid-template-columns: auto auto; gap: 6px; background: var(--paper); border: 1px solid var(--line); }
+  .scenes { grid-template-columns: minmax(0, 1fr); }
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto } }
+</style>
+
+<div class="shell">
+  <nav class="toc" aria-label="階段">
+    <div class="brand">承孝<br>3D 角色工作簿</div>
+    <a href="#s1"><span>01</span>身體完成度</a>
+    <a href="#s2"><span>02</span>30 種動作測試</a>
+    <a href="#s3"><span>03</span>照片款服裝</a>
+    <a href="#s4"><span>04</span>情境</a>
+    <a href="#limits"><span>—</span>還沒做到的</a>
+  </nav>
+
+  <main>
+    <header class="top">
+      <div class="eyebrow">bride.vrm · Blender 5.2 · EEVEE</div>
+      <h1>新郎角色：從捏臉到演出</h1>
+      <p class="lede">用 VRoid 捏好的臉，在 Blender 補完身體、測動作、照照片做服裝，最後放進情境裡演一遍。每個動作都用程式量過穿模、腳底、轉速。</p>
+      <div class="stats">
+        <div class="stat"><b>30 / 30</b>動作檢查通過</div>
+        <div class="stat"><b>360°</b>全身轉台</div>
+        <div class="stat"><b>17</b>件服裝配件</div>
+        <div class="stat"><b>5</b>個情境短片</div>
+      </div>
+    </header>
+
+    <section class="stage" id="s1">
+      <div class="stage-head"><span class="num">01</span><h2>身體完成度：臉、身體、下身、雙手、雙腳</h2>
+        <p>VRoid 匯出時把 T 恤底下看不到的皮膚刪掉了（胸口到上腹整塊、上臂的一部分）。新郎的西裝會把身體全部包住，外觀上用不到這些皮膚；但動作測試是拿「手」去量「身體皮膚」，軀幹空著的話，手穿進胸口也量不到。所以還是把軀幹補回來，讓 02 的穿模數字有意義，然後讓角色轉一圈檢查。</p></div>
+      <div class="bench">
+        <div class="panel"><h3>全身 360°</h3><video src="videos/turn_body.mp4" poster="pictures/posters/turn_body.jpg" autoplay muted loop playsinline></video><p>角色自己轉、燈光固定，所以背面也打得到光，看得清楚接縫。</p></div>
+        <div class="panel"><h3>臉部 360°</h3><video src="videos/turn_face.mp4" poster="pictures/posters/turn_face.jpg" autoplay muted loop playsinline></video><p>轉到一半會眨一次眼，順便確認眼皮表情正常。</p></div>
+        <div class="panel"><h3>做了什麼</h3><ul class="facts"><li>軀幹：用截面輪廓合成上半身（男性，不做胸部），靠近原本皮膚的地方自動吸附貼合；正面平滑、沒有黑色內衣帶，背面沒有凸起。</li><li>上臂：沿用原本手臂的真實截面往肩膀放大。接縫處有一點點色差和小階梯，但便服 T 恤和西裝都會蓋住。</li><li>便服：男性不做平口小可愛，直接穿 VRoid 原本的白 T 恤、黑短褲、黑白球鞋。</li><li>手：沿用 8 種手勢；表情 5 種、腳 4 個角度都檢查過，鞋底每個動作都自動貼地。</li><li>叉腰、遮眉兩個動作依新郎的骨架重新調過手的位置（存在這個專案自己的 qa/tune.json，不影響新娘）。</li></ul></div>
+        <div class="panel wide"><h3>手勢（上排：掌心；下排：手背）</h3><img src="pictures/hands_sheet.jpg" alt="六種手勢的掌心與手背" loading="lazy"><p>從左到右：放鬆、張開、握拳、指、比 YA、握持。</p></div>
+        <div class="panel wide"><h3>表情與腳</h3><img src="pictures/face_feet.jpg" alt="五種表情與鞋子四個角度" loading="lazy"></div>
+      </div>
+    </section>
+
+    <section class="stage" id="s2">
+      <div class="stage-head"><span class="num">02</span><h2>30 種動作測試</h2>
+        <p>每個動作都會循環播放。檢查分三項：手或前臂有沒有穿進身體、頭或另一隻手；腳底有沒有陷進地板或浮在空中；身體骨頭每格最多轉幾度（超過 15 度看起來就會跳）。頭髮有物理擺動。</p></div>
+      <div class="legend"><span><b>穿模</b>：最深穿入幾毫米（5 以下算碰到）</span><span><b>最大轉速</b>：身體骨頭每格最多轉幾度（24 格＝1 秒）</span><span><b>修正</b>：第一輪測出問題、修完後的前後數字</span></div>
+      <div class="grid30">
+<figure class="clip" id="a-idle"><div class="vid"><video data-src="videos/actions/idle.mp4" poster="pictures/posters/actions/idle.jpg" muted loop playsinline preload="none"></video></div>
+  <figcaption><span class="no">01</span><b>站姿待機</b><span class="chip ok">通過</span></figcaption><dl><div><dt>穿模</dt><dd>0 mm</dd></div><div><dt>最大轉速</dt><dd>0.4°/格</dd></div><div><dt>腳底</dt><dd>貼地</dd></div><div><dt>長度</dt><dd>2.0 秒</dd></div></dl></figure>
+<figure class="clip" id="a-wave"><div class="vid"><video data-src="videos/actions/wave.mp4" poster="pictures/posters/actions/wave.jpg" muted loop playsinline preload="none"></video></div>
+  <figcaption><span class="no">02</span><b>單手揮手</b><span class="chip ok">通過</span></figcaption><dl><div><dt>穿模</dt><dd>0 mm</dd></div><div><dt>最大轉速</dt><dd>7.1°/格</dd></div><div><dt>腳底</dt><dd>貼地</dd></div><div><dt>長度</dt><dd>2.0 秒</dd></div></dl></figure>
+<figure class="clip" id="a-wave2"><div class="vid"><video data-src="videos/actions/wave2.mp4" poster="pictures/posters/actions/wave2.jpg" muted loop playsinline preload="none"></video></div>
+  <figcaption><span class="no">03</span><b>雙手揮手</b><span class="chip ok">通過</span></figcaption><dl><div><dt>穿模</dt><dd>0 mm</dd></div><div><dt>最大轉速</dt><dd>8.2°/格</dd></div><div><dt>腳底</dt><dd>貼地</dd></div><div><dt>長度</dt><dd>2.0 秒</dd></div></dl></figure>
+<figure class="clip" id="a-clap"><div class="vid"><video data-src="videos/actions/clap.mp4" poster="pictures/posters/actions/clap.jpg" muted loop playsinline preload="none"></video></div>
+  <figcaption><span class="no">04</span><b>拍手</b><span class="chip ok">通過</span></figcaption><dl><div><dt>穿模</dt><dd>5 mm</dd></div><div><dt>最大轉速</dt><dd>4.0°/格</dd></div><div><dt>腳底</dt><dd>貼地</dd></div><div><dt>長度</dt><dd>2.0 秒</dd></div></dl><p class="note">拍手時掌心互碰</p></figure>
+<figure class="clip" id="a-bow"><div class="vid"><video data-src="videos/actions/bow.mp4" poster="pictures/posters/actions/bow.jpg" muted loop playsinline preload="none"></video></div>
+  <figcaption><span class="no">05</span><b>鞠躬</b><span class="chip ok">通過</span></figcaption><dl><div><dt>穿模</dt><dd>0 mm</dd></div><div><dt>最大轉速</dt><dd>4.5°/格</dd></div><div><dt>腳底</dt><dd>貼地</dd></div><div><dt>長度</dt><dd>3.0 秒</dd></div></dl></figure>
+<figure class="clip" id="a-nod"><div class="vid"><video data-src="videos/actions/nod.mp4" poster="pictures/posters/actions/nod.jpg" muted loop playsinline preload="none"></video></div>
+  <figcaption><span class="no">06</span><b>點頭</b><span class="chip ok">通過</span></figcaption><dl><div><dt>穿模</dt><dd>0 mm</dd></div><div><dt>最大轉速</dt><dd>2.4°/格</dd></div><div><dt>腳底</dt><dd>貼地</dd></div><div><dt>長度</dt><dd>2.0 秒</dd></div></dl></figure>
+<figure class="clip" id="a-shake"><div class="vid"><video data-src="videos/actions/shake.mp4" poster="pictures/posters/actions/shake.jpg" muted loop playsinline preload="none"></video></div>
+  <figcaption><span class="no">07</span><b>搖頭</b><span class="chip ok">通過</span></figcaption><dl><div><dt>穿模</dt><dd>0 mm</dd></div><div><dt>最大轉速</dt><dd>6.0°/格</dd></div><div><dt>腳底</dt><dd>貼地</dd></div><div><dt>長度</dt><dd>2.0 秒</dd></div></dl></figure>
+<figure class="clip" id="a-squat"><div class="vid"><video data-src="videos/actions/squat.mp4" poster="pictures/posters/actions/squat.jpg" muted loop playsinline preload="none"></video></div>
+  <figcaption><span class="no">08</span><b>蹲下站起</b><span class="chip ok">通過</span></figcaption><dl><div><dt>穿模</dt><dd>0 mm</dd></div><div><dt>最大轉速</dt><dd>4.5°/格</dd></div><div><dt>腳底</dt><dd>貼地</dd></div><div><dt>長度</dt><dd>3.0 秒</dd></div></dl><p class="note">膝蓋往外開，大腿不再互相穿過</p></figure>
+<figure class="clip" id="a-march"><div class="vid"><video data-src="videos/actions/march.mp4" poster="pictures/posters/actions/march.jpg" muted loop playsinline preload="none"></video></div>
+  <figcaption><span class="no">09</span><b>原地踏步</b><span class="chip ok">通過</span></figcaption><dl><div><dt>穿模</dt><dd>0 mm</dd></div><div><dt>最大轉速</dt><dd>5.9°/格</dd></div><div><dt>腳底</dt><dd>貼地</dd></div><div><dt>長度</dt><dd>2.0 秒</dd></div></dl></figure>
+<figure class="clip" id="a-walk"><div class="vid"><video data-src="videos/actions/walk.mp4" poster="pictures/posters/actions/walk.jpg" muted loop playsinline preload="none"></video></div>
+  <figcaption><span class="no">10</span><b>原地走路</b><span class="chip ok">通過</span></figcaption><dl><div><dt>穿模</dt><dd>0 mm</dd></div><div><dt>最大轉速</dt><dd>5.9°/格</dd></div><div><dt>腳底</dt><dd>貼地</dd></div><div><dt>長度</dt><dd>2.0 秒</dd></div></dl><p class="note">原地走（跑步機式），支撐腳每格自動貼地</p></figure>
+<figure class="clip" id="a-turn"><div class="vid"><video data-src="videos/actions/turn.mp4" poster="pictures/posters/actions/turn.jpg" muted loop playsinline preload="none"></video></div>
+  <figcaption><span class="no">11</span><b>轉身</b><span class="chip ok">通過</span></figcaption><dl><div><dt>穿模</dt><dd>0 mm</dd></div><div><dt>最大轉速</dt><dd>11.2°/格</dd></div><div><dt>腳底</dt><dd>貼地</dd></div><div><dt>長度</dt><dd>3.0 秒</dd></div></dl><p class="note">轉到背面再轉回來，頭先轉、身體跟上</p></figure>
+<figure class="clip" id="a-spin"><div class="vid"><video data-src="videos/actions/spin.mp4" poster="pictures/posters/actions/spin.jpg" muted loop playsinline preload="none"></video></div>
+  <figcaption><span class="no">12</span><b>轉一圈</b><span class="chip ok">通過</span></figcaption><dl><div><dt>穿模</dt><dd>0 mm</dd></div><div><dt>最大轉速</dt><dd>10.5°/格</dd></div><div><dt>腳底</dt><dd>貼地</dd></div><div><dt>長度</dt><dd>3.0 秒</dd></div></dl><p class="note">轉圈時手臂張開，轉速最快約每格 10 度</p></figure>
+<figure class="clip" id="a-jump"><div class="vid"><video data-src="videos/actions/jump.mp4" poster="pictures/posters/actions/jump.jpg" muted loop playsinline preload="none"></video></div>
+  <figcaption><span class="no">13</span><b>跳躍</b><span class="chip ok">通過</span></figcaption><dl><div><dt>穿模</dt><dd>0 mm</dd></div><div><dt>最大轉速</dt><dd>13.6°/格</dd></div><div><dt>腳底</dt><dd>貼地</dd></div><div><dt>長度</dt><dd>2.5 秒</dd></div></dl><p class="note">下蹲蓄力 → 拋物線騰空 20 公分 → 落地緩衝</p></figure>
+<figure class="clip" id="a-cheer"><div class="vid"><video data-src="videos/actions/cheer.mp4" poster="pictures/posters/actions/cheer.jpg" muted loop playsinline preload="none"></video></div>
+  <figcaption><span class="no">14</span><b>歡呼</b><span class="chip ok">通過</span></figcaption><dl><div><dt>穿模</dt><dd>0 mm</dd></div><div><dt>最大轉速</dt><dd>2.0°/格</dd></div><div><dt>腳底</dt><dd>貼地</dd></div><div><dt>長度</dt><dd>2.0 秒</dd></div></dl></figure>
+<figure class="clip" id="a-heart"><div class="vid"><video data-src="videos/actions/heart.mp4" poster="pictures/posters/actions/heart.jpg" muted loop playsinline preload="none"></video></div>
+  <figcaption><span class="no">15</span><b>頭上比愛心</b><span class="chip ok">通過</span></figcaption><dl><div><dt>穿模</dt><dd>0 mm</dd></div><div><dt>最大轉速</dt><dd>1.3°/格</dd></div><div><dt>腳底</dt><dd>貼地</dd></div><div><dt>長度</dt><dd>2.0 秒</dd></div></dl></figure>
+<figure class="clip" id="a-fheart"><div class="vid"><video data-src="videos/actions/fheart.mp4" poster="pictures/posters/actions/fheart.jpg" muted loop playsinline preload="none"></video></div>
+  <figcaption><span class="no">16</span><b>胸前比心</b><span class="chip ok">通過</span></figcaption><dl><div><dt>穿模</dt><dd>4 mm</dd></div><div><dt>最大轉速</dt><dd>1.4°/格</dd></div><div><dt>腳底</dt><dd>貼地</dd></div><div><dt>長度</dt><dd>2.0 秒</dd></div></dl><p class="note">指尖碰在一起比心</p></figure>
+<figure class="clip" id="a-kiss"><div class="vid"><video data-src="videos/actions/kiss.mp4" poster="pictures/posters/actions/kiss.jpg" muted loop playsinline preload="none"></video></div>
+  <figcaption><span class="no">17</span><b>飛吻</b><span class="chip ok">通過</span></figcaption><dl><div><dt>穿模</dt><dd>0 mm</dd></div><div><dt>最大轉速</dt><dd>11.6°/格</dd></div><div><dt>腳底</dt><dd>貼地</dd></div><div><dt>長度</dt><dd>3.5 秒</dd></div></dl><p class="note">手到嘴邊再往外送，掌心翻轉改成逐格平滑</p></figure>
+<figure class="clip" id="a-peace"><div class="vid"><video data-src="videos/actions/peace.mp4" poster="pictures/posters/actions/peace.jpg" muted loop playsinline preload="none"></video></div>
+  <figcaption><span class="no">18</span><b>比YA</b><span class="chip ok">通過</span></figcaption><dl><div><dt>穿模</dt><dd>0 mm</dd></div><div><dt>最大轉速</dt><dd>1.2°/格</dd></div><div><dt>腳底</dt><dd>貼地</dd></div><div><dt>長度</dt><dd>2.0 秒</dd></div></dl></figure>
+<figure class="clip" id="a-point"><div class="vid"><video data-src="videos/actions/point.mp4" poster="pictures/posters/actions/point.jpg" muted loop playsinline preload="none"></video></div>
+  <figcaption><span class="no">19</span><b>指向前方</b><span class="chip ok">通過</span></figcaption><dl><div><dt>穿模</dt><dd>0 mm</dd></div><div><dt>最大轉速</dt><dd>0.8°/格</dd></div><div><dt>腳底</dt><dd>貼地</dd></div><div><dt>長度</dt><dd>2.0 秒</dd></div></dl></figure>
+<figure class="clip" id="a-hips"><div class="vid"><video data-src="videos/actions/hips.mp4" poster="pictures/posters/actions/hips.jpg" muted loop playsinline preload="none"></video></div>
+  <figcaption><span class="no">20</span><b>雙手叉腰</b><span class="chip ok">通過</span></figcaption><dl><div><dt>穿模</dt><dd>0 mm</dd></div><div><dt>最大轉速</dt><dd>0.5°/格</dd></div><div><dt>腳底</dt><dd>貼地</dd></div><div><dt>長度</dt><dd>2.0 秒</dd></div></dl><p class="note">手搭在短褲上（量到的是衣服底下的皮膚）</p><p class="fix">修正：穿模 20→-0 mm</p></figure>
+<figure class="clip" id="a-stretch"><div class="vid"><video data-src="videos/actions/stretch.mp4" poster="pictures/posters/actions/stretch.jpg" muted loop playsinline preload="none"></video></div>
+  <figcaption><span class="no">21</span><b>伸懶腰</b><span class="chip ok">通過</span></figcaption><dl><div><dt>穿模</dt><dd>0 mm</dd></div><div><dt>最大轉速</dt><dd>13.9°/格</dd></div><div><dt>腳底</dt><dd>貼地</dd></div><div><dt>長度</dt><dd>4.0 秒</dd></div></dl></figure>
+<figure class="clip" id="a-lookout"><div class="vid"><video data-src="videos/actions/lookout.mp4" poster="pictures/posters/actions/lookout.jpg" muted loop playsinline preload="none"></video></div>
+  <figcaption><span class="no">22</span><b>手遮眉遠眺</b><span class="chip ok">通過</span></figcaption><dl><div><dt>穿模</dt><dd>0 mm</dd></div><div><dt>最大轉速</dt><dd>3.1°/格</dd></div><div><dt>腳底</dt><dd>貼地</dd></div><div><dt>長度</dt><dd>3.0 秒</dd></div></dl><p class="note">手貼在額頭上</p><p class="fix">修正：穿模 8→-0 mm</p></figure>
+<figure class="clip" id="a-bouquet"><div class="vid"><video data-src="videos/actions/bouquet.mp4" poster="pictures/posters/actions/bouquet.jpg" muted loop playsinline preload="none"></video></div>
+  <figcaption><span class="no">23</span><b>捧花</b><span class="chip ok">通過</span></figcaption><dl><div><dt>穿模</dt><dd>7 mm</dd></div><div><dt>最大轉速</dt><dd>0.8°/格</dd></div><div><dt>腳底</dt><dd>貼地</dd></div><div><dt>長度</dt><dd>2.0 秒</dd></div></dl><p class="note">雙手合握</p></figure>
+<figure class="clip" id="a-shy"><div class="vid"><video data-src="videos/actions/shy.mp4" poster="pictures/posters/actions/shy.jpg" muted loop playsinline preload="none"></video></div>
+  <figcaption><span class="no">24</span><b>害羞摀臉</b><span class="chip ok">通過</span></figcaption><dl><div><dt>穿模</dt><dd>0 mm</dd></div><div><dt>最大轉速</dt><dd>13.7°/格</dd></div><div><dt>腳底</dt><dd>貼地</dd></div><div><dt>長度</dt><dd>3.0 秒</dd></div></dl><p class="note">雙手貼臉頰、閉眼害羞</p></figure>
+<figure class="clip" id="a-think"><div class="vid"><video data-src="videos/actions/think.mp4" poster="pictures/posters/actions/think.jpg" muted loop playsinline preload="none"></video></div>
+  <figcaption><span class="no">25</span><b>思考</b><span class="chip ok">通過</span></figcaption><dl><div><dt>穿模</dt><dd>0 mm</dd></div><div><dt>最大轉速</dt><dd>0.7°/格</dd></div><div><dt>腳底</dt><dd>貼地</dd></div><div><dt>長度</dt><dd>2.0 秒</dd></div></dl><p class="note">改用 IK 定位：食指點下巴，左手托住右手肘</p></figure>
+<figure class="clip" id="a-tilt"><div class="vid"><video data-src="videos/actions/tilt.mp4" poster="pictures/posters/actions/tilt.jpg" muted loop playsinline preload="none"></video></div>
+  <figcaption><span class="no">26</span><b>歪頭</b><span class="chip ok">通過</span></figcaption><dl><div><dt>穿模</dt><dd>16 mm</dd></div><div><dt>最大轉速</dt><dd>2.2°/格</dd></div><div><dt>腳底</dt><dd>貼地</dd></div><div><dt>長度</dt><dd>2.0 秒</dd></div></dl><p class="note">雙手在背後交握，手指本來就會疊在一起</p></figure>
+<figure class="clip" id="a-beckon"><div class="vid"><video data-src="videos/actions/beckon.mp4" poster="pictures/posters/actions/beckon.jpg" muted loop playsinline preload="none"></video></div>
+  <figcaption><span class="no">27</span><b>招手</b><span class="chip ok">通過</span></figcaption><dl><div><dt>穿模</dt><dd>0 mm</dd></div><div><dt>最大轉速</dt><dd>1.4°/格</dd></div><div><dt>腳底</dt><dd>貼地</dd></div><div><dt>長度</dt><dd>2.0 秒</dd></div></dl><p class="note">掌心朝上、手指一開一合</p><p class="fix">修正：最大轉速 15→1°/格</p></figure>
+<figure class="clip" id="a-salute"><div class="vid"><video data-src="videos/actions/salute.mp4" poster="pictures/posters/actions/salute.jpg" muted loop playsinline preload="none"></video></div>
+  <figcaption><span class="no">28</span><b>敬禮</b><span class="chip ok">通過</span></figcaption><dl><div><dt>穿模</dt><dd>3 mm</dd></div><div><dt>最大轉速</dt><dd>14.9°/格</dd></div><div><dt>腳底</dt><dd>貼地</dd></div><div><dt>長度</dt><dd>3.5 秒</dd></div></dl><p class="note">手指尖停在右眉角</p></figure>
+<figure class="clip" id="a-dance"><div class="vid"><video data-src="videos/actions/dance.mp4" poster="pictures/posters/actions/dance.jpg" muted loop playsinline preload="none"></video></div>
+  <figcaption><span class="no">29</span><b>跳舞擺動</b><span class="chip ok">通過</span></figcaption><dl><div><dt>穿模</dt><dd>0 mm</dd></div><div><dt>最大轉速</dt><dd>4.3°/格</dd></div><div><dt>腳底</dt><dd>貼地</dd></div><div><dt>長度</dt><dd>2.0 秒</dd></div></dl></figure>
+<figure class="clip" id="a-curtsy"><div class="vid"><video data-src="videos/actions/curtsy.mp4" poster="pictures/posters/actions/curtsy.jpg" muted loop playsinline preload="none"></video></div>
+  <figcaption><span class="no">30</span><b>屈膝禮</b><span class="chip ok">通過</span></figcaption><dl><div><dt>穿模</dt><dd>0 mm</dd></div><div><dt>最大轉速</dt><dd>4.0°/格</dd></div><div><dt>腳底</dt><dd>貼地</dd></div><div><dt>長度</dt><dd>3.0 秒</dd></div></dl><p class="note">右腳往後交叉、雙膝彎曲、雙手提裙</p></figure>
+      </div>
+    </section>
+
+    <section class="stage" id="s3">
+      <div class="stage-head"><span class="num">03</span><h2>米色三件式西裝</h2>
+        <p>照婚紗照做的米色（卡其）三件式西裝。外套是敞開的單排扣：劍領（有缺口）、左胸口袋、兩側有蓋口袋、袖口 4 顆扣，長度到胯下。裡面是同色 V 領背心（4 顆深色扣、前下襬兩個尖角）、白襯衫（領子和袖口露出一點）、深藍色領結。同色直筒西裝褲蓋到鞋面。照片看不到鞋子，照使用者指定換成米白色休閒鞋。顏色以照片裡的白襯衫當白色基準校正後取色，最後再調灰一點對齊照片。</p></div>
+      <div class="bench">
+        <div class="panel"><h3>服裝 360°</h3><video src="videos/turn_costume.mp4" poster="pictures/posters/turn_costume.jpg" autoplay muted loop playsinline></video></div>
+        <div class="panel"><h3>和照片對照</h3>
+          <div class="compare"><figure><img src="pictures/ref_front.jpg" alt="照片正面" loading="lazy"><figcaption>照片正面</figcaption></figure><figure><img src="pictures/costume_front.jpg" alt="3D 正面" loading="lazy"><figcaption>3D 正面</figcaption></figure>
+          <figure><img src="pictures/ref_back.jpg" alt="照片背面" loading="lazy"><figcaption>照片背面</figcaption></figure><figure><img src="pictures/costume_back.jpg" alt="3D 背面" loading="lazy"><figcaption>3D 背面</figcaption></figure></div></div>
+        <div class="panel"><h3>穿著服裝動起來</h3><video src="videos/costume_moves.mp4" poster="pictures/posters/costume_moves.jpg" autoplay muted loop playsinline></video><p>揮手、轉圈、跳躍：裙擺慢半拍、轉圈時張開、落地時往外撐。</p></div>
+        
+      </div>
+    </section>
+
+    <section class="stage" id="s4">
+      <div class="stage-head"><span class="num">04</span><h2>情境（5 段）</h2>
+        <p>道具和場景都在 Blender 裡用程式做；手要碰到道具的地方（報紙邊、相機、捧花、刀柄、手機）用 IK 算手臂角度，所以手會真的抓在道具上。</p></div>
+      <div class="scenes">
+<div class="panel scene"><h3>01　木椅上看報紙　<span class="chip ok">便服</span></h3>
+  <video src="videos/scenes/s1.mp4" poster="pictures/posters/scenes/s1.jpg" controls muted loop playsinline preload="metadata"></video>
+  <p>坐在木椅上讀《婚禮日報》，右手抓住頁角把報紙翻過去，最後把報紙放低、轉頭對鏡頭笑。翻頁的那張紙會捲起、自由端慢半拍。</p></div>
+<div class="panel scene"><h3>02　攝影棚當攝影師　<span class="chip ok">服裝</span></h3>
+  <video src="videos/scenes/s2.mp4" poster="pictures/posters/scenes/s2.jpg" controls muted loop playsinline preload="metadata"></video>
+  <p>舉相機對棚內的花台拍兩張（柔光箱閃燈），放下來看螢幕開心一下，再蹲低拍一張。左手托鏡頭、右手食指按快門。</p></div>
+<div class="panel scene"><h3>03　花園拋捧花　<span class="chip ok">服裝</span></h3>
+  <video src="videos/scenes/s3.mp4" poster="pictures/posters/scenes/s3.jpg" controls muted loop playsinline preload="metadata"></video>
+  <p>捧花微笑 → 轉身背對 → 數拍子 → 往後上方拋出，捧花轉著飛向鏡頭 → 轉回來跳起來歡呼。</p></div>
+<div class="panel scene"><h3>04　切婚禮蛋糕　<span class="chip ok">服裝</span></h3>
+  <video src="videos/scenes/s4.mp4" poster="pictures/posters/scenes/s4.jpg" controls muted loop playsinline preload="metadata"></video>
+  <p>雙手握刀慢慢切進三層蛋糕，停住看鏡頭笑，拔刀後左手放開、在臉旁比 YA。</p></div>
+<div class="panel scene"><h3>05　氣球牆前自拍　<span class="chip ok">服裝</span></h3>
+  <video src="videos/scenes/s5.mp4" poster="pictures/posters/scenes/s5.jpg" controls muted loop playsinline preload="metadata"></video>
+  <p>右手舉手機，換三個姿勢各拍一張（螢幕閃白）：比 YA 眨眼、手貼臉頰、側臉比小愛心，最後放低手機看照片。</p></div>
+      </div>
+    </section>
+
+    <section class="stage" id="limits">
+      <div class="limits"><h3>還沒做到的</h3>
+        <ul class="facts">
+<li>身體是 VRoid 預設的窄肩、寬臀體型：外套刻意把胸口撐寬成直筒，但下襬在臀部還是略往外擴，沒有照片那麼合身。</li>
+<li>這個角色脖子很短（下巴下緣幾乎貼著領口）：襯衫領只在脖子兩側和後面露出一小圈，正面主要看到領結；照片上的白領子比較明顯。</li>
+<li>領結是純深藍色，照片上的細斜紋沒有做。</li>
+<li>西裝沒有真的布料模擬，是跟著骨架變形：蹲下時外套後下襬會出現一小段皺褶線（褲腰微微透出），轉圈、跳躍時外套下襬不會飄起來。</li>
+<li>米白色休閒鞋是把 VRoid 原本的球鞋換色做的，鞋側的白色條紋和白鞋底保留。</li>
+<li>頭髮沿用 VRoid 的黑色短髮，沒有照照片調整造型。</li>
+<li>動作測試用便服（T 恤＋短褲）渲染。「拍手」「捧花」「歪頭」是雙手互碰或手背在身後貼著下背的動作，量到 5～16 mm 的接觸（掌心相碰、手指交扣、拇指貼著下背），已拍近照確認是正常接觸、不是破圖。</li>
+<li>「屈膝禮」「捧花」「害羞摀臉」是沿用新娘動作庫的動作，男性角色語意上可能不太適合，照樣列出。</li>
+<li>情境只做了前 5 段：第 6 段「宴會廳轉圈」使用者決定先不做。</li>
+<li>手肘彎很深時（攝影棚舉相機、切蛋糕比 YA），皮膚會從西裝袖子的手肘戳出一小塊；主鏡頭角度看不到，換成正面或左後方拍才會露出來。</li>
+<li>動作庫的「比 YA」手勢在新郎手上會變成像手指槍，切蛋糕那段改用自訂手勢；其他地方用到比 YA 要再檢查。</li>
+<li>自拍那段的「小愛心」手勢，從鏡頭只看得出拇指食指捏在下巴旁，看不出交叉的愛心形狀。</li>
+<li>看報紙那段沿用預設的《婚禮日報》，內頁是新娘的報導。</li>
+        </ul></div>
+    </section>
+  </main>
+</div>
+
+<script>
+// 只播放畫面內的動作影片，避免 30 支同時解碼
+const vids = document.querySelectorAll("video[data-src]");
+const io = new IntersectionObserver(es => {
+  for (const e of es) {
+    const v = e.target;
+    if (e.isIntersecting) { if (!v.src) v.src = v.dataset.src; v.play().catch(() => {}); }
+    else v.pause();
+  }
+}, { rootMargin: "200px" });
+vids.forEach(v => io.observe(v));
+</script>

@@ -1,0 +1,590 @@
+{
+  "name": "粉色歐根紗平口蓬裙",
+  "source": "新娘婚紗照（正面、背面）",
+  "summary": "粉色平口馬甲（上緣翻摺、左上斜向腰中央的大花瓣）＋胸口褶邊、腰帶正中央一個軟蝴蝶結（兩個圓耳圈＋中間的結＋兩條 V 字剪尾緞帶）、兩層不對稱歐根紗垂墜（外短內長、貼著裙身往下垂、下擺捲邊）、背後右側四片從腰帶垂下的荷葉瀑布（外層短內層長、下擺波浪起伏），深粉襯裙＋兩層長短不一的半透明紗裙（兩層下擺各一圈荷葉邊），配粉色球鞋、後腦歐根紗蝴蝶結、花朵耳環",
+  "colors": {
+    "main": [
+      0.92,
+      0.66,
+      0.68
+    ],
+    "main_shade": [
+      0.7,
+      0.4,
+      0.47
+    ],
+    "organza": [
+      0.97,
+      0.84,
+      0.87
+    ],
+    "organza_shade": [
+      0.78,
+      0.49,
+      0.56
+    ],
+    "lining": [
+      0.78,
+      0.38,
+      0.47
+    ],
+    "lining_shade": [
+      0.58,
+      0.25,
+      0.36
+    ],
+    "tulle": [
+      0.95,
+      0.8,
+      0.85
+    ],
+    "tulle_shade": [
+      0.8,
+      0.6,
+      0.68
+    ],
+    "sash": [
+      0.9,
+      0.6,
+      0.65
+    ],
+    "sash_shade": [
+      0.68,
+      0.37,
+      0.45
+    ],
+    "hair_bow": [
+      0.95,
+      0.66,
+      0.68
+    ],
+    "hair_bow_shade": [
+      0.8,
+      0.5,
+      0.56
+    ],
+    "metal": [
+      0.93,
+      0.93,
+      0.95
+    ],
+    "metal_shade": [
+      0.62,
+      0.62,
+      0.7
+    ],
+    "peplum_in": [
+      0.92,
+      0.68,
+      0.72
+    ],
+    "peplum_in_shade": [
+      0.7,
+      0.4,
+      0.48
+    ],
+    "peplum_out": [
+      0.98,
+      0.86,
+      0.89
+    ],
+    "peplum_out_shade": [
+      0.8,
+      0.52,
+      0.58
+    ],
+    "cascade_a": [
+      0.98,
+      0.86,
+      0.89
+    ],
+    "cascade_a_shade": [
+      0.78,
+      0.48,
+      0.55
+    ],
+    "cascade_b": [
+      0.92,
+      0.7,
+      0.74
+    ],
+    "cascade_b_shade": [
+      0.68,
+      0.39,
+      0.47
+    ],
+    "hem_under": [
+      0.86,
+      0.6,
+      0.66
+    ],
+    "hem_under_shade": [
+      0.68,
+      0.4,
+      0.48
+    ],
+    "tulle_hem": [
+      0.97,
+      0.86,
+      0.9
+    ],
+    "tulle_hem_shade": [
+      0.8,
+      0.62,
+      0.7
+    ],
+    "petal": [
+      0.97,
+      0.8,
+      0.82
+    ],
+    "petal_shade": [
+      0.72,
+      0.43,
+      0.5
+    ]
+  },
+  "organza_alpha": 1.0,
+  "tulle_alpha": 0.32,
+  "tulle_hem_alpha": 0.7,
+  "keep_vroid": [
+    "Shoes"
+  ],
+  "needs_body_fill": true,
+  "components": {
+    "bodice": {
+      "enabled": true,
+      "neckline": "strapless",
+      "top_z": 1.232,
+      "top_slant": 0.28,
+      "bottom_z": 0.955,
+      "offset": 0.006
+    },
+    "ruffle": {
+      "enabled": true,
+      "layers": [
+        [
+          0.045,
+          0.014,
+          0.012,
+          9,
+          0.0
+        ],
+        [
+          0.06,
+          0.024,
+          0.02,
+          6,
+          0.9
+        ],
+        [
+          0.06,
+          0.03,
+          0.022,
+          4,
+          2.1
+        ]
+      ]
+    },
+    "sash": {
+      "enabled": true,
+      "z0": 0.962,
+      "z1": 0.997,
+      "offset": 0.0105
+    },
+    "rosette": {
+      "enabled": false,
+      "center": [
+        0.05,
+        -0.125,
+        0.985
+      ],
+      "scale": 1.6,
+      "replaced_by": "scripts/costume_extra_layers.py（layers.bow：軟蝴蝶結）"
+    },
+    "sash_tails": {
+      "enabled": false,
+      "top": [
+        0.05,
+        -0.12,
+        0.975
+      ],
+      "replaced_by": "scripts/costume_extra_layers.py（layers.bow.tails）"
+    },
+    "skirt": {
+      "enabled": true,
+      "profile": "ball",
+      "length": "floor",
+      "lining": true,
+      "tulle_layers": 2,
+      "train": 0.2
+    },
+    "drape": {
+      "enabled": false,
+      "replaced_by": "scripts/costume_extra_layers.py（layers.peplum：兩層）",
+      "high_z": 0.78,
+      "low_z": 0.38,
+      "high_angle": -60,
+      "folds": 7
+    },
+    "cascade": {
+      "enabled": false,
+      "replaced_by": "scripts/costume_extra_layers.py（layers.cascade）",
+      "tiers": 5,
+      "side": "right"
+    },
+    "hair_bow": {
+      "enabled": true,
+      "z": 1.5,
+      "scale": 1.0
+    },
+    "earrings": {
+      "enabled": true,
+      "style": "flower"
+    },
+    "shoes": {
+      "recolor": [
+        0.93,
+        0.7,
+        0.7
+      ]
+    }
+  },
+  "layers": {
+    "lining_hem": 0.1,
+    "tulle_outer_hem": [
+      0.16,
+      0.08
+    ],
+    "peplum": [
+      {
+        "name": "PeplumIn",
+        "color": "peplum_in",
+        "high_z": 0.64,
+        "low_z": 0.34,
+        "high_angle": -65,
+        "gap": 0.012,
+        "margin": 0.005,
+        "folds": 13,
+        "fold_amp": 0.04,
+        "fold_ph": 0.4,
+        "curl": [
+          0.006,
+          0.005
+        ],
+        "hem_wave": [
+          0.03,
+          6,
+          0.5
+        ],
+        "roll": [
+          0.004,
+          190
+        ],
+        "curl_n": 4,
+        "thick": 0.0025
+      },
+      {
+        "name": "PeplumOut",
+        "color": "peplum_out",
+        "high_z": 0.82,
+        "low_z": 0.52,
+        "high_angle": -55,
+        "gap": 0.01,
+        "margin": 0.005,
+        "folds": 9,
+        "fold_amp": 0.045,
+        "fold_ph": 1.3,
+        "curl": [
+          0.007,
+          0.006
+        ],
+        "bumps": [
+          [
+            25,
+            28,
+            0.08,
+            1.2
+          ]
+        ],
+        "hem_wave": [
+          0.035,
+          5,
+          1.9
+        ],
+        "roll": [
+          0.0045,
+          190
+        ],
+        "curl_n": 4,
+        "thick": 0.0025
+      }
+    ],
+    "waist_cinch": {
+      "z_lo": 0.86,
+      "z_ref": 0.98,
+      "step": 0.0015,
+      "sash_bottom": 0.962
+    },
+    "cascade": {
+      "style": "hang",
+      "top_z": 0.958,
+      "margin": 0.004,
+      "stack": 0.002,
+      "cover": 0.0035,
+      "K": 44,
+      "R": 24,
+      "roll": [
+        0.005,
+        200
+      ],
+      "curl_n": 5,
+      "end_taper": 0.4,
+      "thick": 0.003,
+      "panels": [
+        {
+          "top": [
+            95,
+            117
+          ],
+          "span": [
+            93,
+            152
+          ],
+          "low_z": 0.47,
+          "side_z": [
+            0.6,
+            0.58
+          ],
+          "skew": 0.45,
+          "folds": 4,
+          "fold_amp": 0.03,
+          "wave_z": 0.045,
+          "color": 0
+        },
+        {
+          "top": [
+            95,
+            114
+          ],
+          "span": [
+            93,
+            140
+          ],
+          "low_z": 0.53,
+          "side_z": [
+            0.64,
+            0.64
+          ],
+          "skew": 0.45,
+          "folds": 3,
+          "fold_amp": 0.028,
+          "wave_z": 0.04,
+          "color": 1
+        },
+        {
+          "top": [
+            95,
+            111
+          ],
+          "span": [
+            93,
+            128
+          ],
+          "low_z": 0.6,
+          "side_z": [
+            0.69,
+            0.7
+          ],
+          "skew": 0.45,
+          "folds": 3,
+          "fold_amp": 0.026,
+          "wave_z": 0.035,
+          "color": 0
+        },
+        {
+          "top": [
+            95,
+            108
+          ],
+          "span": [
+            93,
+            117
+          ],
+          "low_z": 0.67,
+          "side_z": [
+            0.75,
+            0.76
+          ],
+          "skew": 0.45,
+          "folds": 2,
+          "fold_amp": 0.022,
+          "wave_z": 0.03,
+          "color": 1
+        }
+      ]
+    },
+    "frills": [
+      {
+        "on": "Tulle2",
+        "top": [
+          0.2,
+          0.12
+        ],
+        "bottom": [
+          0.13,
+          0.05
+        ],
+        "gap": 0.008,
+        "margin": 0.003,
+        "flare": 0.02,
+        "wave": 0.012,
+        "waves": 40,
+        "scallop": 0.015,
+        "scallop_n": 26
+      },
+      {
+        "on": "Tulle1",
+        "top": [
+          0.075,
+          0.075
+        ],
+        "bottom": [
+          0.006,
+          0.006
+        ],
+        "gap": 0.008,
+        "margin": 0.003,
+        "flare": 0.02,
+        "wave": 0.012,
+        "waves": 48,
+        "scallop": 0.015,
+        "scallop_n": 26
+      }
+    ],
+    "tails_margin": 0.008,
+    "bodice_folds": {
+      "cuff": {
+        "x0": -0.12,
+        "x1": 0.12,
+        "h": 0.042,
+        "lift": 0.01
+      },
+      "diagonal": {
+        "p0": [
+          0.118,
+          1.165
+        ],
+        "p1": [
+          0.012,
+          0.992
+        ],
+        "w0": 0.06,
+        "w1": 0.028,
+        "lift": 0.016
+      }
+    },
+    "shading": {
+      "shift": 0.0,
+      "toony": 0.75
+    },
+    "opaque": [
+      "OrganzaMat"
+    ],
+    "hashed": [],
+    "outline": {
+      "width": 0.0013,
+      "color": [
+        0.55,
+        0.28,
+        0.36
+      ],
+      "mix": 0.5,
+      "materials": [
+        "OrganzaMat",
+        "SashMat",
+        "PeplumInMat",
+        "PeplumOutMat",
+        "CascadeAMat",
+        "CascadeBMat",
+        "HemUnderMat",
+        "PetalMat"
+      ]
+    },
+    "rosette_z_min": 0.955,
+    "bow": {
+      "center": [
+        0.008,
+        0.978
+      ],
+      "margin": 0.004,
+      "loops": [
+        {
+          "side": -1,
+          "len": 0.066,
+          "depth": 0.028,
+          "hw": [
+            0.007,
+            0.026
+          ],
+          "tilt": 18,
+          "round": 1.0,
+          "root": 0.008,
+          "droop": 0.004
+        },
+        {
+          "side": 1,
+          "len": 0.062,
+          "depth": 0.028,
+          "hw": [
+            0.007,
+            0.026
+          ],
+          "tilt": 13,
+          "round": 1.0,
+          "root": 0.008,
+          "droop": 0.005
+        }
+      ],
+      "knot": {
+        "w": 0.012,
+        "ry": 0.013,
+        "rz": 0.016,
+        "base": 0.011
+      },
+      "tails": [
+        {
+          "side": 1,
+          "len": 0.26,
+          "w": [
+            0.016,
+            0.022
+          ],
+          "spread": 0.07,
+          "sway": 0.014,
+          "twist": 0.6,
+          "phase": 0.0,
+          "vcut": 0.022,
+          "start": -0.006
+        },
+        {
+          "side": -1,
+          "len": 0.2,
+          "w": [
+            0.016,
+            0.021
+          ],
+          "spread": 0.035,
+          "sway": 0.01,
+          "twist": -0.5,
+          "phase": 0.6,
+          "vcut": 0.02,
+          "start": -0.006
+        }
+      ]
+    }
+  },
+  "extra_scripts": [
+    "costume_extra_pink_ballgown"
+  ]
+}

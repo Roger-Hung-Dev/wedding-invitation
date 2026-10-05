@@ -40,6 +40,7 @@
 | `photos` | 檔名，相對 `assets.photoDir` |
 | `motion` | 見 fx-camera-motion 各條目的 JSON |
 | `out` | 本鏡→下一鏡的轉場，見 fx-transition |
+| `characters` | 選填（分鏡稿有 `列-角色` 才有）。3D 角色出場清單，每筆：`role`、`project`（Blender 專案）、`action`（動作庫代號）或 `newAction`（待新增的動作描述）、`from`／`to`（九宮格）、`height`（全身高÷畫面高）、`start`／`end`（從本鏡開頭算的秒）、`facing`、`outfit`（costume／base）、`framing`、`expression`、`enter`／`exit`（`{type: cut/fade/slide, duration}`）。**渲染器目前忽略這個欄位**，之後由 Blender 渲染透明角色片段再合成 |
 
 ## 時間規則
 
