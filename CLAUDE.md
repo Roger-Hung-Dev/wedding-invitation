@@ -22,6 +22,25 @@
 | 輪播影片分鏡 | 直呼 `storyboard-artist` | 照片＋配樂 → 規劃表 → 畫進 v2 分鏡稿 .pen 並標註特效 |
 | 分鏡稿轉影片 | 直呼 `storyboard-video-renderer` | 指定 .pen → 輸出指定規格 mp4；補實作新特效 |
 | 特效實驗室 | 直呼 `fx-lab` | 文字描述 → artifact 預覽 → 使用者裁決 → 寫進 fx-* 特效庫 |
+| 3D 角色工作室（一條龍） | `/blender-studio` | 問齊參數 → 建角色 → 做情境 → 發布成果網頁（Claude Artifact） |
+| 3D 角色建置 | 直呼 `blender-creator` | VRoid `.vroid`＋真人照片 → 01 身體完成度、02 動作測試、03 照片款服裝；事後改服裝 |
+| 3D 角色情境 | 直呼 `blender-scenario-creator` | 情境描述＋角色專案 → 情境影片／圖片 |
+| 動作庫擴充 | 直呼 `blender-animation-append` | 動作描述 → 寫進共用動作庫、檢查通過才入庫 |
+
+### 3D 角色產線的分工（三個子代理＋一條 workflow）
+
+```
+/blender-studio（主控端問齊參數）──▶ workflow blender-character-studio
+    ├─ blender-creator ──────────▶ projects/<名稱>/（.blend、qa/、pictures/、videos/）
+    ├─ blender-scenario-creator ─▶ 同一個專案的 videos/scenes、pictures/scenes（每段情境一次）
+    └─ 發布成果網頁（blender-report-page）
+blender-animation-append ──▶ 共用動作庫（blender-motion-library 的 actions_custom.py ＋ library/actions_catalog.json）
+```
+
+- 資料都在 `.claude/docs/data/blender/`：`projects/<名稱>/` 一個角色一個資料夾；`library/` 是預設資料庫（手勢、表情、腳、30 種動作、粉色蓬裙禮服，來自範例專案 `projects/bride`）。資料夾說明見那裡的 `README.md`。
+- **臉部模型只收 `.vroid`，但 VRoid MCP 不能匯出 VRM。** 使用者要先在 VRoid Studio 開 .vroid → 按 F8 → 存成 VRM 1.0（放在 .vroid 旁邊同檔名）。沒有 VRM 時 `blender-creator` 會停下來回報，不會硬做。
+- **Blender 要開著**（MCP for Blender 外掛啟動）。VRM 匯入只能在 GUI Blender；長時間渲染改用背景 Blender（`blender.exe -b … -P bl_cli.py`），可並行、不受 MCP 120 秒限制。
+- 影格 png 放系統暫存 `%TEMP%\blender-work\<名稱>\`，專案裡只放 mp4／jpg 成品。`.blend` 與 `source/`（使用者的原檔與照片）不進版控。
 
 ### 輪播影片產線的分工（三個子代理）
 
@@ -61,6 +80,14 @@ storyboard-artist ──畫──▶ v2 分鏡稿 .pen ──讀──▶ storyb
   - 對應 skills：`storyboard-video-render`、`storyboard-pen-format`、`fx-*` 四份
 - `fx-lab`：特效發想與預覽，裁決通過後擴充 `fx-*` 特效庫。
   - 對應 skills：`fx-lab-preview`、`fx-*` 四份
+- `blender-creator`：3D 角色建置（.vroid＋照片 → 01 身體、02 動作測試、03 服裝；改服裝）。工具含整個 `mcp__blender`。
+  - 對應 skills：`blender-character-build`、`blender-motion-library`、`blender-report-page`
+- `blender-scenario-creator`：3D 角色情境（情境描述＋專案 → 影片／圖片）。
+  - 對應 skills：`blender-scenario`、`blender-motion-library`、`blender-report-page`
+- `blender-animation-append`：擴充共用動作庫（檢查通過才入庫）。
+  - 對應 skills：`blender-motion-library`
+
+> **`blender-studio` 也是 skill（slash command `/blender-studio`），不是 agent**：它在主控端問齊參數後呼叫 workflow `blender-character-studio`。
 
 > **組長 `design-lead` 是 skill ＋ slash command，不是 agent。** 別去 `.claude/agents/` 找它，那裡沒有這個檔。派工能力只存在於主控端，因為子代理不能再派發子代理。
 
@@ -103,17 +130,20 @@ D:\SideProject\wedding-invitation\
 └── .claude\
     ├── settings.json          # hooks 接線（進版控）
     ├── settings.local.json    # MCP 免提示核准＋密鑰真值（不進版控）
-    ├── agents\                # 8 個：front-end-angular-engineer、code-reviewer、
+    ├── agents\                # 11 個：front-end-angular-engineer、code-reviewer、
     │                          #        figma-reader、pen-drawer、design-question-curator、
-    │                          #        storyboard-artist、storyboard-video-renderer、fx-lab
-    ├── skills\                # 25 個（angular-* 6、ui-bootstrap5、common-user-browser、
+    │                          #        storyboard-artist、storyboard-video-renderer、fx-lab、
+    │                          #        blender-creator、blender-scenario-creator、blender-animation-append
+    ├── skills\                # 30 個（angular-* 6、ui-bootstrap5、common-user-browser、
     │                          #        git-commit-convention、design-* 與 pen-* 8、
-    │                          #        storyboard-* 3、fx-* 5）
+    │                          #        storyboard-* 3、fx-* 5、blender-* 5）
     ├── commands\
     │   └── design-lead.md     # 設計稿產線組長入口 /design-lead
     ├── workflows\
     │   ├── figma-pen-team.js  # 產線編排（read／draw-flow／draw-screen／draw-scenario／annotate）
-    │   └── pen-export-png.js  # 下游交付：設計檔 → png ＋ _index.md ＋ _layout-spec.md
+    │   ├── pen-export-png.js  # 下游交付：設計檔 → png ＋ _index.md ＋ _layout-spec.md
+    │   └── blender-character-studio.js  # 3D 角色：建角色 → 情境 → 發布成果網頁
+    ├── docs\data\blender\     # 3D 角色專案（projects/）與預設資料庫（library/）
     └── hooks\                 # 6 個守門 script（見下）
 ```
 
@@ -144,6 +174,8 @@ D:\SideProject\wedding-invitation\
 - 已納入：
   - `chrome-devtools`（`chrome-devtools-mcp@1.5.0`）—— 供 `common-user-browser` 驅動系統 Chrome 做 UI 檢視與截圖對稿。
   - `figma-bridge`（`@gethopp/figma-mcp-bridge`）—— 供 `figma-reader` 讀 Figma 設計稿。⚠️ 未釘版（抓最新），與「server 應釘版」的規範不一致；要團隊重現時改成 `@gethopp/figma-mcp-bridge@<版本>`。
+  - `blender`（`mcp-for-blender@2.1.3`，走 `uvx`，已設 `DISABLE_TELEMETRY`）—— 讓 Claude 操作 Blender 做 3D 角色動畫與算圖。**本機要先裝 Blender（5.2）與 uv**，並在 Blender 的 Add-ons 啟用「Interface: MCP for Blender」。**使用時 Blender 要開著**：外掛預設「Auto-Start Server」，開啟 Blender 就會在 port 9876 等連線；沒連上時在 3D 視窗按 N →「MCP for Blender」分頁手動按啟動。⚠️ 這個 server 能在 Blender 裡執行任意 Python。
+    - ⚠️ **剛裝完 uv 時 MCP 會連線失敗（CONNECTION_CLOSED）**：終端機若在安裝前就開著，Claude Code 繼承的 PATH 裡沒有 `uvx`。整個終端機重開即可；或用 `claude mcp add --scope local blender -e DISABLE_TELEMETRY=true -- "<uvx.exe 完整路徑>" mcp-for-blender@2.1.3` 加一條只在本機生效的覆寫（不進版控）。
 - **地端 MCP（不在 `.mcp.json`）**：`pencil-server` —— 由 **Pencil Desktop app** 隨附，登錄在使用者層級（`~/.claude.json`），跨專案可用。**本機必須先安裝 Pencil Desktop**（`C:\Users\<user>\AppData\Local\Programs\Pencil\`）這個 MCP 才會出現，`pen-drawer` 與 `design-question-curator` 沒有它就完全動不了。
 - 核准：`.claude/settings.local.json` 的 `enableAllProjectMcpServers: true`（不進版控）。
 

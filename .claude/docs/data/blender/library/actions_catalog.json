@@ -1,0 +1,246 @@
+{
+ "version": 1,
+ "note": "動作目錄：gen_page.py 與各代理讀這份。blender-animation-append 新增動作時要同步加一筆（source=custom）。",
+ "actions": [
+  {
+   "key": "idle",
+   "name": "站姿待機",
+   "frames": 48,
+   "source": "default",
+   "note": "雙腳踩住不動（腳底鎖定）：重心在兩腳間輕輕左右移、骨盆微側傾、呼吸、眨眼",
+   "contact_note": ""
+  },
+  {
+   "key": "wave",
+   "name": "單手揮手",
+   "frames": 48,
+   "source": "default",
+   "note": "",
+   "contact_note": ""
+  },
+  {
+   "key": "wave2",
+   "name": "雙手揮手",
+   "frames": 48,
+   "source": "default",
+   "note": "",
+   "contact_note": ""
+  },
+  {
+   "key": "clap",
+   "name": "拍手",
+   "frames": 48,
+   "source": "default",
+   "note": "",
+   "contact_note": "拍手時掌心互碰"
+  },
+  {
+   "key": "bow",
+   "name": "鞠躬",
+   "frames": 72,
+   "source": "default",
+   "note": "雙腳原地不動，從髖關節前彎約 35°、臀部自然後移、頭跟著低下，停一下再慢慢起身。女性雙手上下交疊放在小腹前；男性背打直、幾乎全從髖關節彎，雙手併指、掌心朝大腿，整段貼在大腿外側的褲縫上，只沿著褲縫往下滑（看 project.json 的 gender，沒有就看 body.bust）",
+   "contact_note": "女性版雙手上下交疊（量到約 1.4 mm 的手碰手）；男性版手貼在大腿外側"
+  },
+  {
+   "key": "nod",
+   "name": "點頭",
+   "frames": 48,
+   "source": "default",
+   "note": "",
+   "contact_note": ""
+  },
+  {
+   "key": "shake",
+   "name": "搖頭",
+   "frames": 48,
+   "source": "default",
+   "note": "",
+   "contact_note": ""
+  },
+  {
+   "key": "squat",
+   "name": "蹲下站起",
+   "frames": 72,
+   "source": "default",
+   "note": "膝蓋往外開，大腿不再互相穿過",
+   "contact_note": ""
+  },
+  {
+   "key": "march",
+   "name": "原地踏步",
+   "frames": 48,
+   "source": "default",
+   "note": "",
+   "contact_note": ""
+  },
+  {
+   "key": "walk",
+   "name": "原地走路",
+   "frames": 48,
+   "source": "default",
+   "note": "原地走（跑步機式），支撐腳每格自動貼地",
+   "contact_note": ""
+  },
+  {
+   "key": "turn",
+   "name": "轉身",
+   "frames": 72,
+   "source": "default",
+   "note": "轉到背面再轉回來，頭先轉、身體跟上",
+   "contact_note": ""
+  },
+  {
+   "key": "spin",
+   "name": "轉一圈",
+   "frames": 72,
+   "source": "default",
+   "note": "轉圈時手臂張開，轉速最快約每格 10 度",
+   "contact_note": ""
+  },
+  {
+   "key": "jump",
+   "name": "跳躍",
+   "frames": 60,
+   "source": "default",
+   "note": "下蹲蓄力 → 拋物線騰空 20 公分 → 落地緩衝",
+   "contact_note": ""
+  },
+  {
+   "key": "cheer",
+   "name": "歡呼",
+   "frames": 48,
+   "source": "default",
+   "note": "",
+   "contact_note": ""
+  },
+  {
+   "key": "heart",
+   "name": "頭上比愛心",
+   "frames": 48,
+   "source": "default",
+   "note": "",
+   "contact_note": ""
+  },
+  {
+   "key": "fheart",
+   "name": "胸前比心",
+   "frames": 48,
+   "source": "default",
+   "note": "",
+   "contact_note": "指尖碰在一起比心"
+  },
+  {
+   "key": "kiss",
+   "name": "飛吻",
+   "frames": 84,
+   "source": "default",
+   "note": "手到嘴邊再往外送，掌心翻轉改成逐格平滑",
+   "contact_note": ""
+  },
+  {
+   "key": "peace",
+   "name": "比YA",
+   "frames": 48,
+   "source": "default",
+   "note": "",
+   "contact_note": ""
+  },
+  {
+   "key": "point",
+   "name": "指向前方",
+   "frames": 48,
+   "source": "default",
+   "note": "",
+   "contact_note": ""
+  },
+  {
+   "key": "hips",
+   "name": "雙手叉腰",
+   "frames": 48,
+   "source": "default",
+   "note": "雙腳固定、下半身和軀幹不動，只有頭和脖子輕輕歪、轉",
+   "contact_note": "手搭在腰上"
+  },
+  {
+   "key": "stretch",
+   "name": "伸懶腰",
+   "frames": 96,
+   "source": "default",
+   "note": "",
+   "contact_note": ""
+  },
+  {
+   "key": "lookout",
+   "name": "手遮眉遠眺",
+   "frames": 72,
+   "source": "default",
+   "note": "",
+   "contact_note": "手貼在額頭上"
+  },
+  {
+   "key": "bouquet",
+   "name": "捧花",
+   "frames": 48,
+   "source": "default",
+   "note": "雙腳固定，重心輕輕左右移；上身只平移不旋轉，合握的雙手維持同樣的握法",
+   "contact_note": "雙手合握（量到約 3 mm 的手碰手）"
+  },
+  {
+   "key": "shy",
+   "name": "害羞摀臉",
+   "frames": 72,
+   "source": "default",
+   "note": "雙手貼臉頰、閉眼害羞",
+   "contact_note": ""
+  },
+  {
+   "key": "think",
+   "name": "思考",
+   "frames": 48,
+   "source": "default",
+   "note": "改用 IK 定位：食指點下巴，左手托住右手肘",
+   "contact_note": ""
+  },
+  {
+   "key": "tilt",
+   "name": "歪頭",
+   "frames": 48,
+   "source": "default",
+   "note": "",
+   "contact_note": "雙手在背後交握，手指本來就會疊在一起"
+  },
+  {
+   "key": "beckon",
+   "name": "招手",
+   "frames": 48,
+   "source": "default",
+   "note": "掌心朝上、手指一開一合",
+   "contact_note": ""
+  },
+  {
+   "key": "salute",
+   "name": "敬禮",
+   "frames": 84,
+   "source": "default",
+   "note": "手指尖停在右眉角",
+   "contact_note": ""
+  },
+  {
+   "key": "dance",
+   "name": "跳舞擺動",
+   "frames": 48,
+   "source": "default",
+   "note": "左右踏步（step-touch）：一拍一步，腳抬起再踩下、重心左右換、每拍膝蓋下沉，手臂舉在胸前跟著擺",
+   "contact_note": ""
+  },
+  {
+   "key": "curtsy",
+   "name": "屈膝禮",
+   "frames": 72,
+   "source": "default",
+   "note": "右腳往後交叉、雙膝彎曲、雙手提裙",
+   "contact_note": ""
+  }
+ ]
+}
