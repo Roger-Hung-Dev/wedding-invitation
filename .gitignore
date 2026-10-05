@@ -45,3 +45,17 @@ Thumbs.db
 /src/assets/audio/background_zip.mp3
 /src/assets/audio/background_2.mp3
 /src/assets/audio/background_2_zip.mp3
+
+# === Blender 角色專案（.claude/docs/data/blender/projects/）===
+# .blend 單檔 13～15MB、可由 VRM＋腳本重建；source/ 是使用者的 .vroid／VRM／真人照片原檔。
+# 進版控的是 project.json、costume.json、scripts/、qa/、小尺寸的 pictures/、videos/ 成品。
+.claude/docs/data/blender/projects/*/*.blend
+.claude/docs/data/blender/projects/*/*.blend1
+.claude/docs/data/blender/projects/*/source/
+
+# 捏臉模型與真人照片原檔（VRM 13MB、照片 9～11MB）：理由同上 source/，只有 vroid-checklist.md 進版控
+.claude/docs/design/animation-photo/*.vrm
+.claude/docs/design/animation-photo/*.jpg
+
+# 開場影片動態分鏡預覽的 mp4：可用 storyboard-video-render 的 animatic.py 重產，線上預覽頁也有一份
+.claude/docs/storyboard/*-animatic/*.mp4
