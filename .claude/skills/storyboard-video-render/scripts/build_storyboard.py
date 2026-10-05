@@ -119,6 +119,97 @@ def photo_names(where, text):
     return names
 
 
+# 3D 角色列（列-角色，寫法見 storyboard-pen-format §4.1）。渲染器還不會合成角色：這裡只檢查寫法、帶進 storyboard.json，
+# 給之後 Blender 渲染透明角色片段與合成用。
+_BLENDER_DATA = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "docs", "data", "blender")
+CHAR_ROLES = {"新娘": "bride", "新郎": "groom"}
+CHAR_SPOTS = {"左上", "中上", "右上", "左", "中", "右", "左下", "中下", "右下"}
+CHAR_CHOICES = {"朝向": ["正面", "左", "右", "背面"], "服裝": {"禮服": "costume", "便服": "base"}, "取景": ["全身", "半身"]}
+CHAR_MOVES = {"進場": {"直接": "cut", "淡入": "fade", "滑入": "slide"}, "出場": {"直接": "cut", "淡出": "fade", "滑出": "slide"}}
+_catalog = None
+
+
+def action_keys():
+    global _catalog
+    if _catalog is None:
+        p = os.path.join(_BLENDER_DATA, "library", "actions_catalog.json")
+        with open(p, encoding="utf-8") as f:
+            _catalog = {x["key"] for x in json.load(f)["actions"]}
+    return _catalog
+
+
+def char_move(where, key, text):
+    m = re.match(r"^(\S+?)(?:\s*(\d+(?:\.\d+)?)\s*s)?$", text)
+    kind = CHAR_MOVES[key].get(m[1]) if m else None
+    if not kind:
+        err(where, f"角色{key}「{text}」：可用寫法 {'／'.join(CHAR_MOVES[key])}，可加秒數（例：{list(CHAR_MOVES[key])[1]} 0.3s）")
+        return None
+    return {"type": kind, "duration": 0 if kind == "cut" else num(m[2] or 0.3)}
+
+
+def characters(where, text, dur):
+    """「新娘｜wave｜右下→中下｜高 55%｜0.5～2.5s｜朝向：左」一行一筆 → list；「—（無）」→ []"""
+    out = []
+    for line in (text or "").splitlines():
+        line = strip_note(line)
+        if line in NO_CAPTION:
+            continue
+        f = re.split(r"\s*｜\s*", line)
+        if len(f) < 5:
+            err(where, f"角色「{line}」：至少要 5 欄「角色｜動作｜位置｜大小｜起～訖s」")
+            continue
+        role, act, spot, size, span, opts = f[0], f[1], f[2], f[3], f[4], f[5:]
+        proj = CHAR_ROLES.get(role) or (role if os.path.isdir(os.path.join(_BLENDER_DATA, "projects", role)) else None)
+        if not proj:
+            err(where, f"角色「{role}」：寫「新娘」「新郎」，或 Blender 專案名稱（projects/ 底下的資料夾）")
+        c = {"role": role, "project": proj, "action": None, "newAction": None}
+        if act.startswith("新動作"):
+            c["newAction"] = re.sub(r"^新動作\s*[:：]\s*", "", act)
+        elif act in action_keys():
+            c["action"] = act
+        else:
+            err(where, f"角色動作「{act}」不在動作庫（library/actions_catalog.json）；動作庫沒有的寫「新動作：描述」")
+        a, _, b = spot.partition("→")
+        a, b = a.strip(), (b.strip() or a.strip())
+        if a not in CHAR_SPOTS or b not in CHAR_SPOTS:
+            err(where, f"角色位置「{spot}」：用九宮格 {' '.join(sorted(CHAR_SPOTS))}，移動寫「右下→中下」")
+        c["from"], c["to"] = a, b
+        m = re.match(r"^高\s*(\d+(?:\.\d+)?)\s*%$", size)
+        if not m:
+            err(where, f"角色大小「{size}」：寫「高 55%」（全身高度 ÷ 畫面高度）")
+        c["height"] = num(float(m[1]) / 100) if m else None
+        m = re.match(r"^(\d+(?:\.\d+)?)\s*[～~]\s*(\d+(?:\.\d+)?)\s*s$", span)
+        if not m:
+            err(where, f"角色時間「{span}」：寫「0.5～2.5s」（從本鏡開頭算起的秒數）")
+            c["start"] = c["end"] = None
+        else:
+            c["start"], c["end"] = num(float(m[1])), num(float(m[2]))
+            if c["start"] >= c["end"] or (dur is not None and c["end"] > dur + 1e-6):
+                err(where, f"角色時間「{span}」要在本鏡 0～{num(dur) if dur is not None else '?'} 秒內，且起點 < 訖點")
+        c.update({"facing": "正面", "outfit": "costume", "framing": "全身", "expression": None,
+                  "enter": {"type": "fade", "duration": 0.3}, "exit": {"type": "fade", "duration": 0.3}})
+        for o in opts:
+            k, sep, v = o.partition("：")
+            k, v = k.strip(), v.strip()
+            if not sep:
+                err(where, f"角色選填欄「{o}」要寫成「鍵：值」")
+            elif k in CHAR_MOVES:
+                c["enter" if k == "進場" else "exit"] = char_move(where, k, v)
+            elif k in CHAR_CHOICES:
+                if v not in CHAR_CHOICES[k]:
+                    err(where, f"角色{k}「{v}」：可用 {'／'.join(CHAR_CHOICES[k])}")
+                elif k == "服裝":
+                    c["outfit"] = CHAR_CHOICES[k][v]
+                else:
+                    c["facing" if k == "朝向" else "framing"] = v
+            elif k == "表情":
+                c["expression"] = v
+            else:
+                err(where, f"角色選填欄「{k}」不認得；可用 朝向／進場／出場／服裝／取景／表情")
+        out.append(c)
+    return out
+
+
 def grade_plan(where, text):
     """「明亮通透｜S2-06～S2-13：明亮通透・副歌」→ (基底, [(起, 迄, 預設)])"""
     if not text:
@@ -249,9 +340,12 @@ def build(raw):
             for a, b, name in plan:
                 if a <= sid <= b:
                     g = name
-            shots.append({"id": sid, "start": num(s) if s is not None else s, "end": num(e) if e is not None else e,
-                          "chapter": row["chapter"], "grade": g, "layout": lay, "photos": photos,
-                          "motion": mo, "out": tr})
+            shot = {"id": sid, "start": num(s) if s is not None else s, "end": num(e) if e is not None else e,
+                    "chapter": row["chapter"], "grade": g, "layout": lay, "photos": photos,
+                    "motion": mo, "out": tr}
+            if "角色" in r:                     # 選填列：沒有這一列的舊稿，輸出與以前完全相同
+                shot["characters"] = characters(where, r["角色"], (e - s) if s is not None and e is not None else None)
+            shots.append(shot)
 
     sb = {
         "schema": "storyboard/v2",
@@ -338,6 +432,12 @@ def main():
     with open(a.out, "w", encoding="utf-8") as f:
         json.dump(sb, f, ensure_ascii=False, indent=1)
     print(f"ok：{len(sb['shots'])} 鏡，{sb['output']['duration']} 秒 → {a.out}")
+    chars = [(s["id"], c) for s in sb["shots"] for c in s.get("characters", [])]
+    if chars:
+        print(f"3D 角色：{len(chars)} 段（渲染器尚未合成角色，要先由 Blender 渲染透明角色片段）")
+        for sid, c in chars:
+            if c["newAction"]:
+                print(f"  ⚠️ {sid} {c['role']} 要新動作：{c['newAction']}（交給 blender-animation-append）")
 
 
 if __name__ == "__main__":

@@ -54,6 +54,7 @@ storyboard-artist ──畫──▶ v2 分鏡稿 .pen ──讀──▶ storyb
 - 產生器程式在 `.claude/skills/storyboard-video-render/scripts/`。它已用第 2 版成片逐格驗證：1,569 個時間點像素完全相同。
 - 子代理不能問使用者問題。需要裁決時（例如 fx-lab 的預覽），子代理會停下來回報；主控端轉問使用者後，再把結果帶回去。
 - 現有的 `wedding-photo-slideshow.pen` 是 **v1 格式**，產生器不能直接讀。v1 缺版型欄與特效參數。要用新產線重產，先請 `storyboard-artist` 以 `upgrade` 模式升級成 v2。
+- **照片片裡要有 3D 角色互動**（照片與運鏡仍是 2D）：鏡頭卡多畫一列 `列-角色`（寫法見 `storyboard-pen-format` §4.1，動作用動作庫代號）。解析器會檢查並寫進 `storyboard.json` 的 `shots[].characters`；**渲染器還不會合成角色**，之後要補「Blender 渲染透明角色片段 → 疊到照片上」這一段。
 
 ### 設計稿產線的三個前提（不照做會出事）
 
