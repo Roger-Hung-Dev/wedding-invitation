@@ -1,3 +1,6 @@
+// Bootstrap 5 只支援「先設 $primary 等變數、再 @import」的覆寫方式，換成 @use 就沒辦法覆寫；
+// 要等 Bootstrap 6 才支援模組寫法。所以這裡保留 @import，並在 angular.json 的
+// stylePreprocessorOptions.sass.silenceDeprecations 關掉 import 過時提醒——升級 Bootstrap 6 時要一起拿掉。
 @import 'bootstrap/scss/functions';
 
 $primary: #DB2777;
@@ -10,10 +13,16 @@ $border-radius: 1rem;
 @import 'bootstrap/scss/root';
 
 @import 'bootstrap/scss/reboot';
-@import 'bootstrap/scss/grid';
 @import 'bootstrap/scss/toasts';
 
+// 全站版面都是自寫樣式，Bootstrap 工具類別只有通知小框（toast-container.component.ts）用到這幾種。
+// 不篩的話會產生上千個用不到的類別，樣式表多出約 70 kB，讓首頁超過 500 kB 的大小預算。
+// 新增元件要用其他工具類別時，把對應的 key 加進這份清單。
 @import 'bootstrap/scss/utilities';
+$utilities: map-get-multiple(
+  $utilities,
+  ('position', 'top', 'end', 'padding', 'margin', 'margin-end', 'display', 'align-items', 'border')
+);
 @import 'bootstrap/scss/utilities/api';
 
 @import 'styles/tokens';

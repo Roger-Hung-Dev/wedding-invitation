@@ -42,6 +42,11 @@
             "styles": [
               "src/styles.scss"
             ],
+            "stylePreprocessorOptions": {
+              "sass": {
+                "silenceDeprecations": ["import"]
+              }
+            },
             "server": "src/main.server.ts",
             "outputMode": "static",
             "security": {
