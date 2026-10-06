@@ -115,16 +115,17 @@
   }
 
   /*
-    桌機左右併排：左停車圖、右地圖＋導航鈕。手機的白卡外框在這裡拿掉——停車圖本身就有米白底與燙金框，
-    再包一層白卡只會吃掉圖的寬度，圖上的入口標籤已經夠小了。
+    桌機第一列左右併排：左停車圖、右地圖＋導航鈕；第二列交通圖橫跨整列。手機的白卡外框在這裡拿掉——
+    停車圖與交通圖本身就有米白底與燙金框，再包一層白卡只會吃掉圖的寬度，圖上的入口標籤已經夠小了。
     停車圖欄給得比地圖寬（6：5），多出來的寬度都花在讓圖上的字大一點。
+    手機的閱讀順序（停車圖 → 交通圖 → 地圖）就是 DOM 順序，桌機改用 grid 指定位置，不必另外調 order。
   */
   .info__layout {
     margin-top: 48px;
     width: min(1120px, 100%);
-    flex-direction: row;
-    align-items: stretch;
-    gap: 40px;
+    display: grid;
+    grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+    gap: 56px 40px;
     background: transparent;
     border-radius: 0;
     padding: 0;
@@ -132,9 +133,14 @@
   }
 
   .info__parking {
-    flex: 6 1 0;
-    min-width: 0;
+    grid-column: 1;
+    grid-row: 1;
     gap: 12px;
+  }
+
+  .info__transit {
+    grid-column: 1 / -1;
+    grid-row: 2;
   }
 
   .info__parking-link {
@@ -147,8 +153,8 @@
   }
 
   .info__map-block {
-    flex: 5 1 0;
-    min-width: 0;
+    grid-column: 2;
+    grid-row: 1;
     gap: 20px;
   }
 

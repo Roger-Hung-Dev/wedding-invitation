@@ -25,6 +25,24 @@
       </figcaption>
     </figure>
 
+    <figure class="info__parking info__transit">
+      <a class="info__parking-link" [href]="text.transitMapUrl" target="_blank" rel="noopener">
+        <img
+          class="info__parking-img"
+          [src]="text.transitMapUrl"
+          [alt]="text.transitMapAlt"
+          width="1200"
+          height="1640"
+          loading="lazy"
+          decoding="async"
+        />
+      </a>
+      <figcaption class="info__parking-hint">
+        <app-icon name="external-link" [size]="14" color="var(--color-text-muted)" />
+        <span>{{ text.transitMapZoomHint }}</span>
+      </figcaption>
+    </figure>
+
     <div class="info__map-block">
       <div class="info__map-preview">
         <iframe
