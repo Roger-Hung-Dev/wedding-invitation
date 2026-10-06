@@ -1,0 +1,129 @@
+<title>交通區塊排版預覽</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Tangerine:wght@700&family=Cormorant+Infant:wght@400;600&family=Noto+Serif+TC:wght@400;600;700&display=swap">
+<style>
+/* 版面：上方說明＋寬度切換列，下面一個「舞台」模擬網站交通區塊。舞台寬度切成 1280（電腦）或 390（手機），
+   區塊樣式照網站 info.component.scss，只把 @media 換成 @container，才能在同一個視窗裡模擬兩種寬度。 */
+:root {
+  color-scheme: light;
+  --bg-page: #F4EEF1;
+  --color-bg-blush: #FDF2F8;
+  --color-bg-ivory: #FFFBF7;
+  --color-surface: #FFFFFF;
+  --color-primary: #DB2777;
+  --color-accent-gold: #CA8A04;
+  --color-gold-soft: #E7C873;
+  --color-text-main: #831843;
+  --color-text-muted: #7A5560;
+  --color-border-soft: #F0D9E2;
+  --shadow-rose: #8318431F;
+  --hsr: #CA8A04; --tra: #831843; --mrt: #4F7F5B; --bus: #DB2777;
+  --font-script: 'Tangerine', cursive;
+  --font-body: 'Cormorant Infant', 'Noto Serif TC', serif;
+  --font-serif: 'Noto Serif TC', 'Songti TC', 'PMingLiU', serif;
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+}
+*, *::before, *::after { box-sizing: border-box; }
+body { background: var(--bg-page); color: var(--color-text-main); font-family: var(--font-serif); padding-inline: 16px; padding-block: 0 80px; }
+.intro { max-width: 900px; margin: 0 auto; padding-block: 36px 8px; }
+.intro h1 { font-size: clamp(24px, 4.5vw, 34px); letter-spacing: 2px; margin: 0 0 12px; text-wrap: balance; }
+.intro p { color: var(--color-text-muted); line-height: 1.85; font-size: 15px; margin: 0 0 8px; max-width: 68ch; }
+.bar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 10; display: flex; justify-content: center; padding: 12px 0; background: var(--bg-page); }
+.seg { display: inline-flex; background: #FFFFFF; border: 1px solid var(--color-border-soft); border-radius: 999px; padding: 4px; }
+.seg button { appearance: none; border: 0; background: transparent; font: inherit; font-size: 15px; padding: 8px 18px; border-radius: 999px; color: var(--color-text-muted); cursor: pointer; }
+.seg button[aria-pressed="true"] { background: var(--color-text-main); color: #FFFFFF; }
+.seg button:focus-visible { outline: 3px solid var(--color-accent-gold); outline-offset: 2px; }
+.viewport { overflow-x: auto; padding-block: 16px 8px; }
+.stage { container: stage / inline-size; margin: 0 auto; width: 1280px; background: var(--color-bg-blush); border-radius: 18px; overflow: hidden; box-shadow: 0 10px 30px #83184322; }
+body.phone .stage { width: 410px; border-radius: 34px; border: 10px solid #2B2026; }
+
+/* ===== 網站交通區塊（現況，照 info.component.scss） ===== */
+.info { display: flex; flex-direction: column; align-items: center; padding: 64px 24px; background: var(--color-bg-blush); font-family: var(--font-body); }
+.eyebrow { font-family: var(--font-display); font-size: 14px; font-weight: 600; letter-spacing: 5px; color: var(--color-accent-gold); }
+.script { font-family: var(--font-script); font-size: 34px; font-weight: 700; color: var(--color-primary); margin: 4px 0 0; line-height: 1.1; }
+.layout { margin-top: 24px; width: 342px; max-width: 100%; display: flex; flex-direction: column; gap: 22px; background: var(--color-surface); border-radius: 20px; padding: 24px; box-shadow: 0 8px 28px var(--shadow-rose); }
+.fig { margin: 0; display: flex; flex-direction: column; gap: 10px; }
+.fig a { display: block; border-radius: 12px; overflow: hidden; }
+.fig img { display: block; width: 100%; height: auto; }
+.hint { display: flex; align-items: center; justify-content: center; gap: 6px; font-family: var(--font-serif); font-size: 13px; letter-spacing: 1px; color: var(--color-text-muted); }
+.map-block { display: flex; flex-direction: column; gap: 16px; }
+.map-preview { height: 220px; border-radius: 12px; overflow: hidden; position: relative; background: var(--color-bg-ivory); }
+.map-preview img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.map-preview span { position: absolute; left: 10px; bottom: 10px; font-size: 12px; background: #FFFFFFE6; color: var(--color-text-muted); padding: 3px 8px; border-radius: 6px; font-family: var(--font-serif); }
+.nav-btn { height: 52px; border-radius: 26px; background: var(--color-accent-gold); display: flex; align-items: center; justify-content: center; text-decoration: none; color: #FFFFFF; font-family: var(--font-serif); font-size: 15px; font-weight: 600; letter-spacing: 1px; }
+
+/* ===== 新增：V1 交通圖（與停車圖同款：整張圖＋點圖開大圖） ===== */
+/* 手機版順序：停車圖 → 交通圖 → Google 地圖＋導航鈕（電腦版維持第一列停車圖＋地圖、第二列交通圖） */
+.fig-transit { order: 1; }
+.map-block { order: 2; }
+
+@container stage (min-width: 1024px) {
+  .info { padding: 96px clamp(24px, 8cqw, 160px); }
+  .eyebrow { font-size: 18px; letter-spacing: 6px; }
+  .script { font-size: 56px; }
+  .layout { margin-top: 48px; width: min(1120px, 100%); flex-direction: row; flex-wrap: wrap; align-items: stretch; gap: 40px; background: transparent; border-radius: 0; padding: 0; box-shadow: none; }
+  .layout > .fig { flex: 6 1 0; min-width: 0; gap: 12px; }
+  .layout > .fig a { border-radius: 24px; box-shadow: 0 8px 28px var(--shadow-rose); }
+  .hint { font-size: 14px; }
+  .map-block { flex: 5 1 0; min-width: 0; gap: 20px; }
+  .map-preview { flex: 1 1 auto; height: auto; min-height: 320px; border-radius: 24px; }
+  .nav-btn { height: 60px; border-radius: 30px; font-size: 17px; }
+
+  /* 電腦版：第一列停車圖＋地圖照舊，第二列 V1 交通圖橫跨整列 */
+  .map-block, .fig-transit { order: 0; }
+  .layout > .fig-transit { flex: 1 0 100%; margin-top: 16px; gap: 12px; }
+  .fig-transit a { border-radius: 24px; box-shadow: 0 8px 28px var(--shadow-rose); }
+}
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="ic-rail" viewBox="0 0 48 48"><rect x="10" y="5" width="28" height="30" rx="7" fill="none" stroke="currentColor" stroke-width="3.6"/><path d="M10 20h28" stroke="currentColor" stroke-width="3.2"/><circle cx="17.5" cy="28" r="2.6" fill="currentColor"/><circle cx="30.5" cy="28" r="2.6" fill="currentColor"/><path d="M16 43l4.5-8M32 43l-4.5-8" stroke="currentColor" stroke-width="3.4" stroke-linecap="round"/></symbol>
+  <symbol id="ic-coach" viewBox="0 0 48 48"><rect x="9" y="5" width="30" height="33" rx="6" fill="none" stroke="currentColor" stroke-width="3.6"/><path d="M9 23h30" stroke="currentColor" stroke-width="3.2"/><circle cx="16" cy="30.5" r="2.6" fill="currentColor"/><circle cx="32" cy="30.5" r="2.6" fill="currentColor"/><path d="M15 38v5M33 38v5" stroke="currentColor" stroke-width="4" stroke-linecap="round"/></symbol>
+  <symbol id="ic-elev" viewBox="0 0 48 48"><rect x="8" y="5" width="32" height="38" rx="4" fill="none" stroke="currentColor" stroke-width="3.4"/><path d="M24 10l-6 7h12z M24 38l-6-7h12z" fill="currentColor"/></symbol>
+</svg>
+
+<div class="intro">
+  <h1>V1 交通圖放進網站交通區塊</h1>
+  <p>做法和停車圖完全一樣：V1 整張原圖直接放上去，<b>電腦版和手機版是同一張圖、排版一模一樣</b>。圖片下方有「點圖開啟大圖，可放大查看」，點圖會另開原尺寸大圖，可以放大看小字。</p>
+  <p>用上方按鈕切換寬度看看。Google 地圖在預覽裡用截圖代替（Artifact 不能嵌 Google 地圖），網站上仍是可操作的地圖。</p>
+</div>
+
+<div class="bar">
+  <div class="seg" role="group" aria-label="預覽寬度">
+    <button type="button" id="w-desk" aria-pressed="true">電腦版（1280）</button>
+    <button type="button" id="w-phone" aria-pressed="false">手機版（390）</button>
+  </div>
+</div>
+
+<div class="viewport"><div class="stage">
+  <section class="info">
+    <div class="eyebrow">DIRECTIONS</div>
+    <h2 class="script">See You There</h2>
+
+    <div class="layout">
+      <figure class="fig"><a href="parking-map.svg" target="_blank" rel="noopener"><img src="parking-map.svg" alt="停車示意圖" width="1200" height="1110"></a><figcaption class="hint">點圖開啟大圖，可放大查看</figcaption></figure>
+      <div class="map-block"><div class="map-preview"><img src="map-preview.jpg" alt="Google 地圖示意"><span>（網站上是可操作的 Google 地圖）</span></div><a class="nav-btn" href="#" onclick="return false">開啟 Google 地圖導航</a></div>
+      <figure class="fig fig-transit"><a href="v1.svg" target="_blank" rel="noopener"><img src="v1.svg" alt="大眾運輸交通資訊：高鐵、台鐵、捷運都從高鐵台中站一樓 7 號出口出站，沿站區二路往北，穿過高鐵三路、高鐵五路到飯店停車場；公車 156 路在國際會展中心（高鐵五路）下車，往高鐵路三段方向右轉即到；抵達後走進接待大廳，搭電梯上 2F 東方明珠。" width="1200" height="1640"></a><figcaption class="hint">點圖開啟大圖，可放大查看</figcaption></figure>
+    </div>
+
+  </section>
+</div></div>
+
+<script>
+(() => {
+  const desk = document.getElementById('w-desk');
+  const phone = document.getElementById('w-phone');
+  const setW = (isPhone) => {
+    document.body.classList.toggle('phone', isPhone);
+    desk.setAttribute('aria-pressed', String(!isPhone));
+    phone.setAttribute('aria-pressed', String(isPhone));
+    try { localStorage.setItem('tx-preview-w', isPhone ? 'phone' : 'desk'); } catch (e) {}
+  };
+  desk.addEventListener('click', () => setW(false));
+  phone.addEventListener('click', () => setW(true));
+  let saved = null;
+  try { saved = localStorage.getItem('tx-preview-w'); } catch (e) {}
+  setW(saved ? saved === 'phone' : window.innerWidth < 900);
+})();
+</script>
