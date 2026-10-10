@@ -1,0 +1,148 @@
+<title>V12 情境版預覽</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=LXGW+WenKai+TC:wght@400;700&family=Noto+Sans+TC:wght@400;500;700&family=Cormorant+Garamond:wght@600&display=swap">
+<style>
+/* 版面：單欄長卷，每一幕一張「放映卡」＝影片在上、時間軸表在下、修正與已知問題收在最後；配色沿用 V12 押花情書 */
+:root {
+  --bg: #F6EFE6; --paper: #FFFBF6; --ink: #4A3B35; --muted: #85736A; --line: #E6D9CB; --chip: #EFE4D8;
+  --rose: #B95C66; --lav: #8C74A3; --sage: #6E8669;
+  --f-display: "LXGW WenKai TC", "Kaiti TC", "STKaiti", "DFKai-SB", serif;
+  --f-body: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", system-ui, sans-serif;
+  --f-num: "Cormorant Garamond", "Times New Roman", serif;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #221B19; --paper: #2D2522; --ink: #F1E7DF; --muted: #BBA79C; --line: #463A35; --chip: #3A302C;
+  --rose: #E8939A; --lav: #CDB8DD; --sage: #A9BEA4; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #221B19; --paper: #2D2522; --ink: #F1E7DF; --muted: #BBA79C; --line: #463A35; --chip: #3A302C;
+  --rose: #E8939A; --lav: #CDB8DD; --sage: #A9BEA4; color-scheme: dark }
+* { box-sizing: border-box }
+body { background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 15px; line-height: 1.75; }
+.wrap { max-width: 980px; margin: 0 auto; padding-inline: 16px; padding-block: 32px 72px; display: grid; gap: 28px; }
+header.top { display: grid; gap: 8px; }
+.eyebrow { font-size: 12px; letter-spacing: .14em; color: var(--muted); }
+h1 { font-family: var(--f-display); font-weight: 700; font-size: clamp(28px, 4.4vw, 40px); line-height: 1.25; margin: 0; text-wrap: balance; }
+.lede { margin: 0; max-width: 66ch; color: var(--muted); }
+nav.jump { display: flex; flex-wrap: wrap; gap: 8px; }
+nav.jump a { color: var(--ink); text-decoration: none; background: var(--paper); border: 1px solid var(--line); border-radius: 99px; padding: 4px 14px; font-size: 14px; }
+nav.jump a:hover, nav.jump a:focus-visible { border-color: var(--muted); outline: none; }
+section.scene { background: var(--paper); border: 1px solid var(--line); border-radius: 16px; padding: 18px; display: grid; gap: 16px; scroll-margin-top: 16px; min-width: 0; }
+.scene-head { display: grid; grid-template-columns: auto 1fr; gap: 2px 14px; align-items: baseline; }
+.no { font: 600 26px/1 var(--f-num); color: var(--rose); grid-row: span 2; }
+h2 { font-family: var(--f-display); font-weight: 700; font-size: 24px; margin: 0; line-height: 1.35; }
+.meta { margin: 0; font-size: 13px; color: var(--muted); }
+video { width: 100%; max-width: 100%; aspect-ratio: 16 / 9; display: block; border-radius: 10px; background: #1E1916; }
+.pending { aspect-ratio: 16 / 9; max-width: 100%; display: grid; place-items: center; border-radius: 10px; background: var(--chip); color: var(--muted); }
+.tl { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; min-width: 520px; }
+th, td { text-align: left; vertical-align: top; padding: 7px 10px; border-bottom: 1px solid var(--line); }
+th { font-weight: 500; color: var(--muted); font-size: 13px; white-space: nowrap; }
+td.t { font-family: var(--f-num); font-weight: 600; font-size: 16px; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.notes { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 14px; }
+.notes div { min-width: 0; }
+.notes h3 { margin: 0 0 4px; font-size: 14px; font-weight: 700; }
+.notes h3.ok { color: var(--sage); } .notes h3.warn { color: var(--rose); }
+.notes ul { margin: 0; padding-left: 1.1em; font-size: 14px; display: grid; gap: 4px; }
+footer.next { border-top: 1px solid var(--line); padding-top: 18px; display: grid; gap: 8px; font-size: 14px; }
+footer.next h2 { font-size: 20px; }
+footer.next ul { margin: 0; padding-left: 1.2em; display: grid; gap: 4px; }
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div class="eyebrow">婚禮開場影片 V12 押花情書・第二版</div>
+    <h1>V12 情境版預覽：玩具槌、路人甲、圓桌晚餐</h1>
+    <p class="lede">三段新的互動情節先做成 3D 預覽（1280×720、24fps），照設計稿的時間軸演出。字幕、鋼筆 ✕、黑板粉筆字這些 2D 元素之後在後製疊上去，所以畫面上方先空著字幕條的位置。看過覺得方向對，就用同一套場景改成 1080p 正式渲染、接回整支開場影片。</p>
+    <nav class="jump" aria-label="跳到各幕"><a href="#s02">② 玩具槌敲頭</a><a href="#s05">⑤ 路人甲擋鏡頭</a><a href="#s07">⑦ 圓桌晚餐</a></nav>
+  </header>
+
+  <section class="scene" id="s02">
+    <div class="scene-head"><span class="no">②</span><h2>玩具槌敲頭</h2><p class="meta">0:07–0:16・9 秒・新郎、新娘（服裝版）</p></div>
+    <video src="s02_hammer.mp4" poster="s02_hammer_cover.jpg" controls muted loop playsinline preload="metadata"></video>
+    <div class="tl"><table>
+      <thead><tr><th>秒</th><th>新郎</th><th>新娘</th></tr></thead>
+      <tbody>
+        <tr><td class="t">0.8–4.0</td><td>從拱門左側走進來、放慢、併腳停在拱門下，轉向鏡頭（真人動作捕捉）</td><td>提著裙子從右側走進來、放慢停下，轉向鏡頭（真人動作捕捉）</td></tr>
+        <tr><td class="t">4.0–6.0</td><td>轉頭偷看，左手悄悄伸過去想牽她</td><td>瞄到他的手，從背後抽出粉紫色玩具槌、扛上右肩</td></tr>
+        <tr><td class="t">5.6–6.0</td><td>手還伸著</td><td>跳起來把槌舉過頭</td></tr>
+        <tr><td class="t">6.0</td><td colspan="2">在空中從斜上方「啵」敲中他頭頂，畫面輕震，頭頂冒出 4 顆小星星</td></tr>
+        <tr><td class="t">6.0–7.3</td><td>雙手抱頭、縮脖子，再揉著頭傻笑</td><td>落地，把槌扛回肩上</td></tr>
+        <tr><td class="t">7.3–9.0</td><td>一起快速鞠躬</td><td>扛著槌鞠躬</td></tr>
+      </tbody></table></div>
+    <div class="notes">
+      <div><h3 class="ok">依你上次的意見改了</h3><ul>
+        <li>走路改成直接套真人動作捕捉：一段真人走路接一段真人「放慢、併腳停下」，只修腳貼地、骨盆和站定時膝蓋打直，不再像機器人或半蹲。</li><li>因為真人停步比較長，兩人改從更外側出發，約 2.7 秒從樹籬後露臉，3.95 秒走到原本的位置。</li>
+        <li>新娘用拳頭握住槌柄，手腕打直，不再像骨折。</li>
+        <li>改成跳起來由上往下敲，敲到冒小星星。</li>
+        <li>這一幕加長 1 秒（總長變 75 秒），鞠躬不用趕；本幕字幕條改成約 70% 不透明，跳起來時看得到槌和她的頭。</li>
+      </ul></div>
+      <div><h3 class="warn">已知的小地方</h3><ul>
+        <li>從正上方敲做不到：新郎比她高，手臂會扭到人做不到的角度，所以是從斜上方約 30° 敲。</li>
+        <li>蓬裙下擺和新郎的鞋子、褲管後側有重疊，從鏡頭看在他腿後面，不明顯。</li>
+        <li>停下後原地轉向鏡頭那 0.45 秒，腳掌會在地上滑一點（你同意先不修）。</li><li>4.45 秒之後新娘的蓬裙和新郎的腿交疊、舉槌時右前臂碰到頭，先擱置。</li>
+      </ul></div>
+    </div>
+  </section>
+
+  <section class="scene" id="s05">
+    <div class="scene-head"><span class="no">⑤</span><h2>路人甲擋鏡頭</h2><p class="meta">0:33–0:42・9 秒・新郎、新娘、路人甲</p></div>
+    <video src="s05_passerby.mp4" poster="s05_passerby_cover.jpg" controls muted loop playsinline preload="metadata"></video>
+    <div class="tl"><table>
+      <thead><tr><th>秒</th><th>新郎</th><th>新娘</th><th>路人甲</th></tr></thead>
+      <tbody>
+        <tr><td class="t">0.4–2.4</td><td colspan="3">焦點從前景的老相機拉到新人</td></tr>
+        <tr><td class="t">0–3.6</td><td>對老相機比 YA</td><td>捧花擺姿勢</td><td>—</td></tr>
+        <tr><td class="t">3.6–6.3</td><td>手遮眉遠眺</td><td>捧花、歪頭</td><td>3.8 秒起從畫面右邊外走進來</td></tr>
+        <tr><td class="t">6.4</td><td>點頭</td><td>開始搖頭示意</td><td>停在老相機前，舉手機「喀嚓」，剛好擋住鏡頭</td></tr>
+        <tr><td class="t">6.7–7.5</td><td>點頭</td><td>搖頭</td><td>回頭發現被畫 ✕，尷尬抓頭、鞠躬</td></tr>
+        <tr><td class="t">7.5–9.0</td><td>點頭</td><td>搖頭</td><td>轉身縮著肩往右走，跟著轉場被推出畫面</td></tr>
+      </tbody></table></div>
+    <div class="notes">
+      <div><h3 class="ok">做到的</h3><ul>
+        <li>路人甲是新做的 3D 角色：海軍藍西裝外套、白襯衫、黑框眼鏡，臉和服裝都不和新人重複。</li>
+        <li>鏡頭往右繞，看得到老相機的木頭機身、黃銅鏡頭和紅燈。</li>
+        <li>量過每一格：路人甲和手機都沒擋到兩人的臉；新娘 6.3 秒起的搖頭到 8.4 秒都看得到。</li>
+      </ul></div>
+      <div><h3 class="warn">已知的小地方</h3><ul>
+        <li>為了看得到相機側面，新人只佔畫面約 60% 高（目標是 75%）。</li>
+        <li>路人甲離鏡頭近，焦點在新人時他會有點模糊（像真的拍照的景深）。</li>
+        <li>他走進來時，約 5.1～5.4 秒經過新娘前面，蓋到她下巴附近一下。</li>
+      </ul></div>
+    </div>
+  </section>
+
+  <section class="scene" id="s07">
+    <div class="scene-head"><span class="no">⑦</span><h2>圓桌晚餐</h2><p class="meta">0:53–1:05・12 秒・新郎、新娘（服裝版，坐姿）</p></div>
+    <video src="s07_dinner.mp4" poster="s07_dinner_cover.jpg" controls muted loop playsinline preload="metadata"></video>
+    <div class="tl"><table>
+      <thead><tr><th>秒</th><th>新郎</th><th>新娘</th></tr></thead>
+      <tbody>
+        <tr><td class="t">0–4.5</td><td>拿叉子叉一小口主餐，慢慢送到她嘴邊</td><td>前傾咬下，坐回來閉眼笑著嚼、肩膀開心地晃兩下</td></tr>
+        <tr><td class="t">4.5–6.3</td><td colspan="2">放下叉子、相視一笑，慢慢拿起紅酒杯</td></tr>
+        <tr><td class="t">6.3–8.5</td><td colspan="2">7.2 秒碰杯「叮」，再一起轉向鏡頭舉杯致意；花瓣從拱門飄下</td></tr>
+        <tr><td class="t">8.5–12.0</td><td colspan="2">輕啜一口，拿著杯子對鏡頭微笑；右側小黑板之後疊上粉筆字「喝酒不開車／開車不喝酒」</td></tr>
+      </tbody></table></div>
+    <div class="notes">
+      <div><h3 class="ok">做到的</h3><ul>
+        <li>圓桌鋪落地長桌巾，擺牛排主餐、點心、水果、紅酒瓶和兩杯紅酒；鏡頭全程固定。</li>
+        <li>新娘坐著穿蓬裙，裙子收在桌巾裡，看不到壓不扁的問題。</li>
+        <li>餵食和拿杯子的手腕重做過，不再像折到。</li>
+      </ul></div>
+      <div><h3 class="warn">和設計稿不同、已知的小地方</h3><ul>
+        <li>新娘原本要托臉頰，試過托臉頰和手肘撐桌托腮都會穿進胸口或桌面，改成雙手輕放桌上、開心地晃肩。</li>
+        <li>新郎拿酒杯時，左手腕會擦過放回盤緣的叉柄；右手指尖輕搭在主餐盤邊。都很小，正式版會把叉子放回點往桌心挪。</li>
+        <li>兩人的腳和椅子在桌下有重疊，被落地桌巾擋住看不到。</li>
+      </ul></div>
+    </div>
+  </section>
+
+  <footer class="next">
+    <h2>接下來</h2>
+    <ul>
+      <li>這三段若方向沒問題：用同一套場景改成 1080p 正式渲染，再和其他幕一起合成整支開場影片（第二版總長 75 秒）。</li>
+      <li>第三幕的「愛情里程碑」進度條、第八幕的放大構圖，還要另外做 3D。</li>
+      <li>字幕、鋼筆 ✕、黑板粉筆字、節點名稱和日期在後製時疊上去。</li>
+    </ul>
+  </footer>
+</div>
