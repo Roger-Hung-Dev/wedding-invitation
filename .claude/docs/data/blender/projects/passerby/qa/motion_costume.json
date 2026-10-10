@@ -1,0 +1,16 @@
+{
+ "walk_fwd": {
+  "body_vmax": 8.1,
+  "body_jerk": 3.8,
+  "seam": 0.0,
+  "finger_vmax": 8.1,
+  "frames": 72
+ },
+ "bow": {
+  "body_vmax": 3.7,
+  "body_jerk": 0.7,
+  "seam": 0.0,
+  "finger_vmax": 0.5,
+  "frames": 72
+ }
+}

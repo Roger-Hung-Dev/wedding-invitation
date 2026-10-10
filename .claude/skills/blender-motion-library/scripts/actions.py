@@ -94,34 +94,82 @@ def a_idle(t):
                 face={"Fcl_ALL_Fun": 0.3, "Fcl_EYE_Close": blink})
 
 
-# 2 單手揮手
+# 2 單手揮手（前臂擺 12°～68°、上臂比前臂早一點把弧線從肩膀帶出來、每揮一下膝蓋沉一次、頭跟著歪；雙腳鎖在地上不滑）
 def a_wave(t):
-    P = arms_down({})
-    P["R_UpperArm"] = [("Y", 42), ("X", -12)]
-    P["R_LowerArm"] = [("Y", 48 + 20 * s(t, 3))]
-    P["Spine"] = [("Y", -2 * s(t, 3))]; P["Head"] = [("Z", -5), ("Y", 3 * s(t, 1.5))]
-    return dict(P, hands=("relax", "open"), palms=[("R", (0, -1, 0))], face={"Fcl_ALL_Joy": 0.7})
+    w = s(t, 3)                                      # 揮動：2 秒揮 3 下（整數圈，頭尾相接）
+    lead = s(t, 3, 0.12)                             # 上臂比前臂早一點，弧線從肩膀帶出來
+    bob = 0.5 - 0.5 * math.cos(2 * math.pi * 3 * t)  # 膝蓋起伏 0~1
+    P = arms_down({}, l_el=24)
+    P["R_Shoulder"] = [("Y", 4)]                     # 肩膀微微聳起
+    P["R_UpperArm"] = [("Y", 46 + 5 * lead), ("X", -14)]
+    P["R_LowerArm"] = [("Y", 40 + 28 * w)]            # 12°～68°（舊版 48±20＝28°～68°）
+    P["Spine"] = [("Y", -3 * w)]
+    P["Head"] = [("Z", -6), ("X", -2), ("Y", 4 * s(t, 3, 0.2))]
+    # 雙腳鎖在地上，骨盆往下沉＝膝蓋彎（不會滑步）
+    return dict(P, hands=("relax", "open"), palms=[("R", (0, -1, 0))],
+                root=(0, 0, -(SOFT_KNEE + 0.012 * bob) * BODY_S), feet=PLANT, face={"Fcl_ALL_Joy": 1.0})
 
 
-# 3 雙手揮手
+# 3 雙手揮手（兩手同方向擺、前臂 ±32°、上臂與肩膀跟著帶、每揮一下膝蓋沉一次、頭跟著歪；雙腳鎖在地上不滑）
 def a_wave2(t):
-    P = {"L_UpperArm": [("Y", -42), ("X", -10)], "R_UpperArm": [("Y", 42), ("X", -10)],
-         "L_LowerArm": [("Y", -(48 + 20 * s(t, 3)))], "R_LowerArm": [("Y", 48 + 20 * s(t, 3, 0.5))],
-         "Spine": [("Y", 3 * s(t, 1.5))], "Head": [("Y", 4 * s(t, 1.5))]}
-    legs(P, 0.015 * (0.5 + 0.5 * s(t, 3)))
+    w = s(t, 3); lead = s(t, 3, 0.12); bob = 0.5 - 0.5 * math.cos(2 * math.pi * 3 * t)
+    # 兩手同方向擺（像雨刷）：世界軸上左右手的角度同號增減；上臂比前臂早一點（弧線從肩膀帶出來）
+    P = {"L_Shoulder": [("Y", -4)], "R_Shoulder": [("Y", 4)],
+         "L_UpperArm": [("Y", -46 - 7 * lead), ("X", -10)], "R_UpperArm": [("Y", 46 - 7 * lead), ("X", -10)],
+         "L_LowerArm": [("Y", -(40 + 32 * w))], "R_LowerArm": [("Y", 40 - 32 * w)],
+         "Spine": [("Y", 3 * w)], "Head": [("Y", -4 * s(t, 3, 0.2)), ("X", -3)]}
     return dict(P, hands=("open", "open"), palms=[("L", (0, -1, 0)), ("R", (0, -1, 0))],
-                face={"Fcl_ALL_Joy": 1.0})
+                root=(0, 0, -(SOFT_KNEE + 0.012 * bob) * BODY_S), feet=PLANT, face={"Fcl_ALL_Joy": 1.0, "Fcl_MTH_A": 0.2})
 
 
-# 4 拍手
+# 合掌工具（拍手、跳舞共用）。合掌要掌心正對貼合，所以用 IK 直接指定手腕與手指方向；
+# 拍手手勢 clap_flat：四指伸直併攏（spread +4，正值＝往中指收）、拇指往手背收 45° 再往食指靠 40°，
+# 才不會像預設的 open 那樣拇指垂在掌心側、比掌根還突出約 6 mm，兩手一合拇指先撞在一起
+HANDS.setdefault("clap_flat", dict(HANDS["open"], Thumb=(-45, 0, 0), thumb_in=40))
+_PALM_OFF = {}
+
+
+def _palm_off():
+    """掌心表面到手骨軸的距離（rest 時掌心朝下：手骨頭部高度 − 手掌頂點最低點），每個角色量一次。
+    VRoid 的掌根（拇指根）比四指厚約 1.5 cm，合掌時掌根先碰到"""
+    if ARM.name not in _PALM_OFF:
+        body = bpy.data.objects[f"{WHO}_Body"]; nm = {g.index: g.name for g in body.vertex_groups}
+        zs = [(body.matrix_world @ v.co).z for v in body.data.vertices
+              if v.groups and nm.get(max(v.groups, key=lambda g: g.weight).group) == "J_Bip_L_Hand"]
+        _PALM_OFF[ARM.name] = ARM.data.bones["J_Bip_L_Hand"].head_local.z - min(zs)
+    return _PALM_OFF[ARM.name]
+
+
+def _clap_hands(center, up, ain=7.5, overlap=0.0015):
+    """合掌：兩手腕在 center（rest 座標）兩側、掌心正對貼合 → {"L"/"R": (手腕, 指尖點)}。
+    up＝手指方向（新娘尺寸）；兩手各往內斜 ain°（掌根和指尖同時碰到，不是只有掌根）；overlap＝互相壓進多少（m）"""
+    g = _palm_off() - overlap; out = {}
+    for sd, sg in (("L", 1), ("R", -1)):
+        w = center + Vector((sg * g, 0, 0))
+        inward = math.tan(math.radians(ain)) * Vector(up).length
+        out[sd] = (w, w + bs(-sg * inward, up[1], up[2]))
+    return out
+
+
+# 4 拍手（IK 合掌：掌心正對整片貼合、手指朝前上方；雙手最遠張開 40～44 cm、每拍膝蓋沉一次、重心左右移、頭跟著點）
+#   不用 FK 前臂往內收：手掌會順著前臂伸出去，從上方看成 V 字，只有指尖碰在一起
 def a_clap(t):
-    o = 0.5 + 0.5 * s(t, 4)
-    T = TUNE
-    P = {"L_UpperArm": [("Y", 72), ("X", -T["clap_ux"]), ("Z", -T["clap_uz"])], "R_UpperArm": [("Y", -72), ("X", -T["clap_ux"]), ("Z", T["clap_uz"])],
-         "L_LowerArm": [("X", -T["clap_fx"]), ("Z", -T["clap_close"] + 16 * o)], "R_LowerArm": [("X", -T["clap_fx"]), ("Z", T["clap_close"] - 16 * o)],
-         "Head": [("Z", 4 * s(t, 1)), ("X", 2 * s(t, 4))]}
-    breathe(P, t)
-    return dict(P, hands=("open", "open"), palms=[("L", (-1, 0, 0)), ("R", (1, 0, 0))], face={"Fcl_ALL_Joy": 0.8, "Fcl_MTH_A": 0.2})
+    o = 0.5 + 0.5 * s(t, 4)                          # 0＝合掌、1＝張到最開
+    sw = s(t, 1)
+    # 重心左右移：骨盆側傾、腰椎反向轉回同樣角度 → 上身只平移不旋轉
+    P = {"Head": [("Z", 6 * sw), ("X", 3 * s(t, 4, 0.25)), ("Y", 3 * s(t, 1, 0.25))],
+         "Hips": [("Y", -1.0 * sw)], "Spine": [("Y", 1.0 * sw)]}
+    arms_down(P); breathe(P, t)
+    cl = _clap_hands(bs(0, -0.19, 1.03), (0, -0.10, 0.065))      # 胸前合掌，手指朝前上方
+    ik = []
+    for sd, sg in (("L", 1), ("R", -1)):
+        wc, tc = cl[sd]
+        wo = bs(sg * 0.175, -0.17, 1.05); to = wo + bs(sg * 0.035, -0.10, 0.065)   # 張開：手指略往外
+        ik.append((sd, wc.lerp(wo, o), bs(sg * 0.42, 0.10, 0.85), tc.lerp(to, o), "Chest"))
+    # 掌心轉成正對：只轉手腕（split=0），IK 對好的手腕位置才不會被甩開
+    return dict(P, hands=("clap_flat", "clap_flat"), ik=ik, palms=[("L", (-1, 0, 0), 1.0, 0.0), ("R", (1, 0, 0), 1.0, 0.0)],
+                root=(0.008 * BODY_S * sw, 0, -(SOFT_KNEE + 0.008 * (1 - o)) * BODY_S), feet=PLANT,
+                face={"Fcl_ALL_Joy": 1.0, "Fcl_MTH_A": 0.25})
 
 
 # 5 鞠躬（雙腳原地不動：從髖關節前彎、臀部自然後移，頭跟著低下，停一下再慢慢起身）
@@ -208,7 +256,8 @@ def a_turn(t):
     P = arms_down({}); P["Head"] = [("Z", lead * 0.6)]; P["Spine"] = [("Z", lead * 0.3)]
     step = abs(math.sin(math.pi * seg(t, 0.08, 0.42))) + abs(math.sin(math.pi * seg(t, 0.58, 0.92)))
     legs(P, 0.02 * step)
-    return dict(P, rz=r, face={"Fcl_ALL_Fun": 0.5})
+    # no_stand_fix：原地轉身的腳在地上轉，男性站姿統一層（pose_lib.stand_fix）讓已超標的滑步再多 3～5%，先排除（2026-10-08）
+    return dict(P, rz=r, face={"Fcl_ALL_Fun": 0.5}, no_stand_fix=True)
 
 
 # 12 原地轉一圈
@@ -218,7 +267,7 @@ def a_spin(t):
     P = arms_down({}, l_out=40 * sp, r_out=40 * sp, l_el=18 + 20 * sp, r_el=18 + 20 * sp)
     P["Head"] = [("X", -6 * sp)]
     legs(P, 0.03 * sp)
-    return dict(P, rz=360 * u, hop=0.015 * sp * sp, face={"Fcl_ALL_Joy": sp})
+    return dict(P, rz=360 * u, hop=0.015 * sp * sp, face={"Fcl_ALL_Joy": sp}, no_stand_fix=True)   # 同 a_turn，排除站姿統一層
 
 
 # 13 跳躍
@@ -292,6 +341,7 @@ def a_peace(t):
     P["R_LowerArm"] = [("X", -122), ("Z", 30)]
     P["Head"] = [("Y", -8 + 3 * s(t, 2))]; P["Spine"] = [("Y", -3)]
     legs(P, 0.012 * (0.5 + 0.5 * s(t, 2)))
+    # palms 轉完掌心法線 ≈ -0.96 Y（朝鏡頭）。V 字看不出來時先查 pose_lib 的 peace 手勢 spread 正負號，不是掌心方向
     return dict(P, hands=("relax", "peace"), palms=[("R", (0, -1, 0))],
                 face={"Fcl_ALL_Joy": 0.6, "Fcl_EYE_Close_R": 1.0})
 
@@ -419,8 +469,47 @@ def _step(t, a, b, x0, x1, h):
     return x0 + (x1 - x0) * ease((u - 0.2) / 0.6), h * up, up
 
 
+# 跳舞的上半身：每拍一個定格，拍與拍之間用梯形速度曲線移過去、手勢跟著換。
+# 定格點對齊整數格（48 格裡的第 10／22／34／46 格，膝蓋最低點 0.22／0.47／0.72／0.97 的前一點），
+# 渲染出來才有一格是合掌真正貼緊的（落在兩格之間的話，前後兩格都差 2～4 mm）
+_DK = (10 / 48, 22 / 48, 34 / 48, 46 / 48)
+
+
+def _trap(u, r=0.25):
+    """梯形速度：前 r 加速、中段等速、後 r 減速。最高速＝平均的 1/(1-r) 倍（smoothstep 是 1.5 倍），兩端速度 0（定格）"""
+    u = max(0.0, min(1.0, u)); c = 1 / (2 * r * (1 - r))
+    if u < r:
+        return c * u * u
+    if u > 1 - r:
+        return 1 - c * (1 - u) ** 2
+    return (u - r / 2) / (1 - r)
+
+
+def _dance_arm(name, sd, sg):
+    """一隻手在某個定格的 (手腕, 手肘方向點, 指尖點, 掌心方向)，rest 座標（跟著 Chest 走）。位移以右手寫，左手 x 取負號。
+    掌心：指、比 YA 朝前；合掌、胸前拳頭朝中間（兩者接近，換拍時手掌不必大翻）"""
+    S = ARM.data.bones[f"J_Bip_{sd}_UpperArm"].head_local
+    def off(x, y, z): return S + bs(-sg * x, y, z)
+    if name == "pt":                                          # 往斜上方指（手腕在肩上 16 cm；再高的話換拍時前臂轉速會超過 15°/格）
+        w = off(-0.18, -0.18, 0.16); return w, off(-0.10, 0.15, -0.30), w + (w - S).normalized() * 0.11 * BODY_S, (0, -1, 0)
+    if name == "ch":                                          # 拳頭收在胸前、指節朝上
+        w = off(0.0, -0.225, -0.19); return w, off(-0.25, 0.05, -0.25), w + bs(-sg * 0.02, -0.05, 0.10), (-sg, 0, 0)
+    if name == "pc":                                          # 臉旁比 YA
+        w = off(-0.10, -0.17, 0.07); return w, off(-0.25, 0.10, -0.20), w + bs(sg * 0.02, -0.02, 0.10), (0, -1, 0)
+    w, tip = _clap_hands(bs(0.0, -0.27, 1.28), (0, -0.04, 0.11))[sd]     # 下巴前合掌
+    return w, off(-0.30, 0.0, -0.20), tip, (-sg, 0, 0)
+
+
+# 每拍定格：(右手, 左手, 右手勢, 左手勢, 頭 (Z 轉向, X 抬低頭, Y 歪頭))
+_DANCE_KEYS = [("pt", "ch", "point", "fist", (-18, -6, -3)),        # 第 1 拍：右腳往右踏，右手往右上指、頭轉右看上去
+               ("cl", "cl", "clap_flat", "clap_flat", (-3, 0, 5)),  # 第 2 拍：左腳併過來，雙手在下巴前拍一下
+               ("ch", "pt", "fist", "point", (18, -6, 3)),          # 第 3 拍：左腳往左踏，左手往左上指、頭轉左
+               ("pc", "pc", "peace", "peace", (0, 0, 7))]           # 第 4 拍：右腳併回來，雙手臉旁比 YA、歪頭
+
+
 def a_dance(t):
-    k = BODY_S; d = 0.16 * k; h = 0.04 * k             # 步幅、抬腳高度
+    # 腳：步幅 24 cm、抬腳 5.5 cm、每拍下沉 3 cm；上半身：指 → 合掌 → 指 → 比 YA（_DANCE_KEYS）
+    k = BODY_S; d = 0.24 * k; h = 0.055 * k            # 步幅、抬腳高度
     # 每隻腳的位置（相對 rest 站姿，往角色左邊為正）：一開始兩腳都在左邊（+d/2）
     if t < 0.5:
         rx, rl, ru = _step(t, 0.02, 0.21, d / 2, -d / 2, h)      # 第 1 拍：右腳往右踏
@@ -429,16 +518,27 @@ def a_dance(t):
         lx, ll, lu = _step(t, 0.52, 0.71, -d / 2, d / 2, h)      # 第 3 拍：左腳往左踏
         rx, rl, ru = _step(t, 0.79, 0.98, -d / 2, d / 2, h)      # 第 4 拍：右腳併回來
     w = 1 - 2 * seg(t, 0.14, 0.31) + 2 * seg(t, 0.64, 0.81)      # 重心：+1 在左腳、-1 在右腳（腳放下才開始換，換到一半另一腳才抬）
-    wa = 1 - 2 * seg(t, 0.16, 0.36) + 2 * seg(t, 0.66, 0.86)     # 手臂晚一點跟上
     bnc = 0.5 + 0.5 * math.cos(2 * math.pi * 4 * (t - 0.22))      # 每拍踩下時膝蓋往下沉
-    P = {"Hips": [("Y", -3 * w)], "Spine": [("Y", 4.5 * w)], "Chest": [("Y", 1.5 * w)],
-         "Head": [("Y", -2.5 * w), ("X", 3 * bnc)],
-         "L_UpperArm": [("Y", 58), ("X", -(22 + 6 * bnc))], "R_UpperArm": [("Y", -58), ("X", -(22 + 6 * bnc))],
-         "L_LowerArm": [("Y", 8), ("X", -100), ("Z", -14 + 18 * wa)], "R_LowerArm": [("Y", -8), ("X", -100), ("Z", 14 + 18 * wa)],
-         "L_Hand": [("X", -6)], "R_Hand": [("X", -6)]}
+    # 上半身：現在在哪兩個定格之間（循環：第 4 拍 → 下一圈第 1 拍）
+    tt = t if t >= _DK[0] else t + 1
+    i = max(j for j in range(4) if _DK[j] <= tt)
+    a, b = _DANCE_KEYS[i], _DANCE_KEYS[(i + 1) % 4]
+    t0, t1 = _DK[i], _DK[(i + 1) % 4] + (1 if i == 3 else 0)
+    u = _trap((tt - t0) / (t1 - t0))
+    hd = [a[4][j] + (b[4][j] - a[4][j]) * u for j in range(3)]
+    P = {"Hips": [("Y", -6 * w)], "Spine": [("Y", 8 * w)], "Chest": [("Y", 2.5 * w)],
+         "Head": [("Z", hd[0]), ("X", hd[1] + 4 * bnc), ("Y", hd[2])]}
+    arms_down(P)
+    ik, palms, hands = [], [], {}
+    for sd, sg, ai, gi in (("R", -1, 0, 2), ("L", 1, 1, 3)):
+        ka, kb = _dance_arm(a[ai], sd, sg), _dance_arm(b[ai], sd, sg)
+        ik.append((sd, ka[0].lerp(kb[0], u), ka[1].lerp(kb[1], u), ka[2].lerp(kb[2], u), "Chest"))
+        hands[sd] = a[gi] if a[gi] == b[gi] else (a[gi], b[gi], round(u, 2))
+        sp = (0.0 if a[ai] == "cl" else 0.5) * (1 - u) + (0.0 if b[ai] == "cl" else 0.5) * u   # 合掌時只轉手腕
+        palms.append((sd, tuple(Vector(ka[3]).lerp(Vector(kb[3]), u).normalized()), 1.0, sp))
     feet = {"L": (lx, 0, ll, 12 * lu), "R": (rx, 0, rl, 12 * ru)}
-    return dict(P, hands=("relax", "relax"), root=(0.75 * d / 2 * w, 0, -(0.012 + 0.016 * bnc) * k), feet=feet,
-                face={"Fcl_ALL_Joy": 0.9})
+    return dict(P, hands=(hands["L"], hands["R"]), ik=ik, palms=palms, root=(0.75 * d / 2 * w, 0, -(0.012 + 0.030 * bnc) * k),
+                feet=feet, face={"Fcl_ALL_Joy": 1.0})
 
 
 # 30 屈膝禮

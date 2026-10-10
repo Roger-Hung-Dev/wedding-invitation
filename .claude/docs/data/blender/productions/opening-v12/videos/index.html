@@ -1,0 +1,164 @@
+<title>押花情書開場片</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=LXGW+WenKai+TC:wght@400;700&family=Noto+Sans+TC:wght@400;500;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* 版面：一封攤開的信——上方放映、下方八幕章節表（點了就跳），最後是這一版的決定與待辦 */
+:root {
+  --paper: #F6EFE6;
+  --sheet: #FFFBF6;
+  --ink: #4A3B35;
+  --ink-soft: #7A6A62;
+  --rose: #B8545E;
+  --lavender: #8C74A3;
+  --sage: #6F8A6A;
+  --rule: #E3D6C8;
+  --screen: #1B1512;
+  --font-hand: "LXGW WenKai TC", "Kaiti TC", "DFKai-SB", serif;
+  --font-body: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "Consolas", monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #1D1916; --sheet: #26201C; --ink: #EFE4DA; --ink-soft: #B3A499;
+    --rose: #E8909A; --lavender: #C2AED6; --sage: #A6C29F; --rule: #3B322C; --screen: #0D0A08;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #1D1916; --sheet: #26201C; --ink: #EFE4DA; --ink-soft: #B3A499;
+  --rose: #E8909A; --lavender: #C2AED6; --sage: #A6C29F; --rule: #3B322C; --screen: #0D0A08;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--paper); color: var(--ink); font-family: var(--font-body); font-size: 15px; line-height: 1.75; }
+.wrap { max-width: 1040px; margin: 0 auto; padding-inline: 20px; padding-block: 32px 64px; display: grid; gap: 30px; }
+header { display: grid; gap: 8px; }
+.eyebrow { font-size: 12px; letter-spacing: .2em; color: var(--lavender); font-weight: 700; }
+h1 { font-family: var(--font-hand); font-weight: 700; font-size: clamp(32px, 5.5vw, 48px); line-height: 1.2; margin: 0; text-wrap: balance; }
+h1 .amp { color: var(--rose); }
+.lede { margin: 0; color: var(--ink-soft); max-width: 66ch; }
+.screen { background: var(--screen); border-radius: 10px; overflow: hidden; aspect-ratio: 16 / 9; max-width: 100%; box-shadow: 0 1px 0 var(--rule); }
+video { display: block; width: 100%; height: 100%; background: var(--screen); }
+.facts { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 13px; color: var(--ink-soft); margin: 10px 0 0; padding: 0; list-style: none; }
+.facts li { font-variant-numeric: tabular-nums; }
+.facts b { color: var(--ink); font-weight: 500; }
+
+h2 { font-family: var(--font-hand); font-weight: 700; font-size: 24px; margin: 0 0 10px; }
+.letter { background: var(--sheet); border: 1px solid var(--rule); border-radius: 6px; padding: 22px clamp(16px, 3vw, 28px); }
+.scenes { list-style: none; margin: 0; padding: 0; display: grid; }
+.scene { display: grid; grid-template-columns: 78px minmax(0, 1fr); gap: 4px 16px; padding: 12px 0; border-top: 1px dashed var(--rule); }
+.scene:first-child { border-top: 0; padding-top: 2px; }
+.jump { font: inherit; font-family: var(--font-mono); font-size: 13px; color: var(--rose); background: none; border: 1px solid var(--rose); border-radius: 999px; padding: 2px 0; cursor: pointer; height: fit-content; font-variant-numeric: tabular-nums; }
+.jump:hover { background: var(--rose); color: var(--sheet); }
+.jump:focus-visible { outline: 2px solid var(--lavender); outline-offset: 2px; }
+.scene.on .jump { background: var(--rose); color: var(--sheet); }
+.scene h3 { margin: 0; font-size: 16px; font-weight: 700; display: flex; flex-wrap: wrap; gap: 4px 10px; align-items: baseline; }
+.scene h3 .mark { font-family: var(--font-hand); color: var(--lavender); font-size: 18px; }
+.scene p { margin: 0; color: var(--ink-soft); min-width: 0; }
+.scene .tag { font-size: 11px; font-weight: 700; color: var(--sage); border: 1px solid var(--sage); border-radius: 4px; padding: 0 6px; letter-spacing: .04em; }
+
+.cols { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; }
+.cols ul { margin: 0; padding-left: 1.2em; display: grid; gap: 6px; }
+.cols li { min-width: 0; }
+.cols li::marker { color: var(--rose); }
+.note { font-size: 13px; color: var(--ink-soft); border-top: 1px solid var(--rule); padding-top: 14px; max-width: 80ch; }
+.note code { font-family: var(--font-mono); font-size: 12px; word-break: break-all; }
+@media (max-width: 680px) {
+  .cols { grid-template-columns: minmax(0, 1fr); }
+  .scene { grid-template-columns: 66px minmax(0, 1fr); }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">婚禮開場影片・V12 押花情書・紙質手寫風</div>
+    <h1>承孝 <span class="amp">&amp;</span> 怡安的幸福守則</h1>
+    <p class="lede">新郎新娘的 3D 角色在押花信紙與花園拱門之間演完 8 則觀禮小叮嚀。第 3 幕是新郎扛著緞帶把進度條拉到新娘身邊，第 4 幕的拍立得是你們的簡介照。這一版還沒有配樂。</p>
+  </header>
+
+  <section>
+    <div class="screen"><video id="film" controls playsinline preload="metadata" poster="opening-v12.jpg" src="opening-v12-web.mp4"></video></div>
+    <ul class="facts">
+      <li><b>1:12</b> 長</li>
+      <li>網頁版 <b>1280×720</b>・30fps</li>
+      <li>婚宴大螢幕用的 <b>1920×1080</b> 原檔在專案資料夾</li>
+      <li><b>無聲</b>（配樂待定）</li>
+    </ul>
+  </section>
+
+  <section class="letter" aria-labelledby="scenes-h">
+    <h2 id="scenes-h">八則小叮嚀</h2>
+    <ol class="scenes" id="scenes"></ol>
+  </section>
+
+  <section class="cols">
+    <div class="letter">
+      <h2>這一版先替你決定的</h2>
+      <ul>
+        <li>第 3 幕押花進度條縮成約 2.1 公尺，配合新郎拉緞帶的步伐；99% 卡住時他停步前傾、用力一扯。</li>
+        <li>第 5 幕新娘全程捧花，歪頭、搖頭只動頭，避免捧花穿進裙子。</li>
+        <li>第 6 幕明信片放第 5 幕兩人都正面的那一格。</li>
+        <li>第 7 幕改用高腳桌（一般桌巾會穿過蓬裙）；黑板字延到第 4.9 秒才寫，避開新郎的手。</li>
+        <li>第 7 幕字幕放在畫面下方，上方會壓到兩人的臉。</li>
+        <li>最後 9.3 秒才開始淡出，讓信封闔上、重新蓋印看得到。</li>
+      </ul>
+    </div>
+    <div class="letter">
+      <h2>還沒做到的</h2>
+      <ul>
+        <li>配樂與音效：等你選曲。</li>
+        <li>IG 帳號：畫面上暫時寫 @[新人IG帳號]。</li>
+        <li>站著轉向鏡頭時腳掌原地轉（新郎看得出一點）。</li>
+        <li>第 5 幕新郎比 YA 時食指中指黏在一起。</li>
+        <li>第 3 幕「100%」完整只停約 0.16 秒，之後換成歡迎字。</li>
+        <li>桌面偏寫實紙質、花園偏柔和卡通，兩種質感不同。</li>
+        <li>鋼筆字是逐字抹出，不是照筆順一筆一筆寫。</li>
+      </ul>
+    </div>
+  </section>
+
+  <p class="note">3D 場景、道具與兩人同框在 Blender 渲染（2,370 格），手寫字幕、大標、觀景窗括線、剪紙人形與轉場在合成階段加上。製作資料在 <code>.claude/docs/data/blender/productions/opening-v12/</code>：3D 素材清單 <code>design.md</code>、合成交接 <code>compose-handoff.md</code>、成品 <code>videos/opening-v12.mp4</code>。</p>
+</div>
+
+<script>
+const SCENES = [
+  ["①", 0, "廣播提醒", "桌面", "信封上的 R&A 蠟封裂開，信紙抽出攤平，「各位貴賓請注意！」一字一字寫在信紙上。"],
+  ["②", 7, "引言", "信紙→花園", "鏡頭掉進信紙上的拱門小畫，變成 3D 花園；兩人從拱門柱後走出來，在拱門下鞠躬、屈膝行禮。"],
+  ["③", 15, "歡迎", "花園", "新郎扛著緞帶把押花進度條往新娘拉，花一朵朵開；卡在 99% 用力一扯，100% 花瓣雨，新娘在拱門下歡呼。"],
+  ["④", 23, "男女主角", "桌面", "兩張拍立得滑進來、用紙膠帶貼住，照片從白顯影成你們的簡介照，名字與介紹句寫在白邊。"],
+  ["⑤", 32, "攝影團隊", "花園", "前景老相機紅燈閃爍、焦點拉到新人；剪紙小人跑進來擋鏡頭，被鋼筆打一個叉。"],
+  ["⑥", 41, "手機與打卡", "桌面", "緞帶自己繞手機打成蝴蝶結、轉成靜音；明信片滑入、帳號用鋼筆寫上，蓋下郵戳。"],
+  ["⑦", 52, "飲食與敬酒", "花園", "兩人在高腳桌旁碰杯、拿點心咬一口；鏡頭推近小黑板，粉筆寫出「喝酒不開車，開車不喝酒」。"],
+  ["⑧", 62, "倒數登場", "信紙→花園", "押花拼成 3、2、1；穿過拱門小畫回到花園，兩人揮手比愛心；信封闔上、重新蓋上蠟封。"],
+];
+const film = document.getElementById("film");
+const list = document.getElementById("scenes");
+const fmt = (s) => Math.floor(s / 60) + ":" + String(s % 60).padStart(2, "0");
+list.replaceChildren(...SCENES.map(([mark, t, name, where, text]) => {
+  const li = document.createElement("li");
+  li.className = "scene"; li.dataset.t = t;
+  const b = document.createElement("button");
+  b.type = "button"; b.className = "jump"; b.textContent = fmt(t);
+  b.setAttribute("aria-label", "從 " + fmt(t) + " 開始播放：" + name);
+  b.addEventListener("click", () => { film.currentTime = t + 0.05; film.play().catch(() => {}); });
+  const h = document.createElement("h3");
+  h.innerHTML = '<span class="mark">' + mark + '</span><span></span><span class="tag"></span>';
+  h.children[1].textContent = name; h.children[2].textContent = where;
+  const p = document.createElement("p");
+  p.textContent = text;
+  const body = document.createElement("div");
+  body.append(h, p);
+  li.append(b, body);
+  return li;
+}));
+film.addEventListener("timeupdate", () => {
+  const t = film.currentTime;
+  const items = [...list.children];
+  items.forEach((li, i) => {
+    const s = +li.dataset.t, e = i + 1 < items.length ? +items[i + 1].dataset.t : 72;
+    li.classList.toggle("on", t >= s && t < e);
+  });
+});
+</script>

@@ -15,7 +15,10 @@ from PIL import Image
 ap = argparse.ArgumentParser(); ap.add_argument("--project", required=True); ap.add_argument("--only", default="")
 a = ap.parse_args()
 P = os.path.abspath(a.project); M = json.load(open(os.path.join(P, "project.json"), encoding="utf8"))
-WORK = os.path.join(tempfile.gettempdir(), "blender-work", M["name"])
+# 和 blender_env.py 的 WORK 同一套規則：BLENDER_WORK_ROOT → D 槽 → 系統暫存
+WORK_ROOT = os.environ.get("BLENDER_WORK_ROOT") or (
+    r"D:\render-work\blender-work" if os.path.isdir("D:\\") else os.path.join(tempfile.gettempdir(), "blender-work"))
+WORK = os.path.join(WORK_ROOT, M["name"])
 ENC = os.path.join(os.path.dirname(__file__), "..", "..", "blender-motion-library", "scripts", "encode.py")
 only = set(x for x in a.only.split(",") if x)
 want = lambda k: not only or k in only

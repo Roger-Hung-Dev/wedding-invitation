@@ -12,7 +12,7 @@
 #   REPO   專案 repo 根目錄            SKILLS  .claude/skills
 #   PROJ   這個角色專案的資料夾         MANIFEST  PROJ/project.json 的內容
 #   WHO    物件名稱前綴（例：bride → bride_Armature、bride_Body）
-#   WORK   系統暫存的工作資料夾（影格 png、檢查圖；不進 repo）
+#   WORK   工作資料夾（影格 png、檢查圖；不進 repo）：BLENDER_WORK_ROOT 或 D:\render-work\blender-work 底下的 <專案名稱>
 #   QA     PROJ/qa（量測結果、調好的參數）  PICS  PROJ/pictures   VIDS  PROJ/videos
 #   LIB    .claude/docs/data/blender/library（預設資料庫）
 #   use(*names)  依名稱載入各 skill 的 scripts/<name>.py（找不到就報錯）
@@ -46,7 +46,11 @@ if not os.path.exists(_mf):
     raise RuntimeError(f"找不到 {_mf}：專案要先用 blender-character-build 的 new_project.py 建立")
 MANIFEST = json.load(open(_mf, encoding="utf8"))
 WHO = MANIFEST["who"]
-WORK = os.path.join(tempfile.gettempdir(), "blender-work", MANIFEST["name"])
+# 影格量大（一個角色就幾百 MB～1 GB），預設放 D 槽，避免塞爆 C 槽的系統暫存；
+# 環境變數 BLENDER_WORK_ROOT 可覆寫，沒有 D 槽的機器才退回系統暫存。export_media.py 用同一套規則
+WORK_ROOT = os.environ.get("BLENDER_WORK_ROOT") or (
+    r"D:\render-work\blender-work" if os.path.isdir("D:\\") else os.path.join(tempfile.gettempdir(), "blender-work"))
+WORK = os.path.join(WORK_ROOT, MANIFEST["name"])
 QA = os.path.join(PROJ, "qa"); PICS = os.path.join(PROJ, "pictures"); VIDS = os.path.join(PROJ, "videos")
 for _d in (WORK, QA, PICS, VIDS):
     os.makedirs(_d, exist_ok=True)

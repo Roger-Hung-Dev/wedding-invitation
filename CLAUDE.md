@@ -26,6 +26,7 @@
 | 3D 角色建置 | 直呼 `blender-creator` | VRoid `.vroid`＋真人照片 → 01 身體完成度、02 動作測試、03 照片款服裝；事後改服裝 |
 | 3D 角色情境 | 直呼 `blender-scenario-creator` | 情境描述＋角色專案 → 情境影片／圖片 |
 | 動作庫擴充 | 直呼 `blender-animation-append` | 動作描述 → 寫進共用動作庫、檢查通過才入庫 |
+| 整支片批次審看 | 主控端呼叫 workflow `film-scene-review` | 多幕 3D 情境一起渲出快速預覽 → 彙整成審看網頁 → 使用者一次給逐幕回饋 → 照回饋修 → 確認的幕才做完整品質 |
 
 ### 3D 角色產線的分工（三個子代理＋一條 workflow）
 
@@ -40,7 +41,10 @@ blender-animation-append ──▶ 共用動作庫（blender-motion-library 的 
 - 資料都在 `.claude/docs/data/blender/`：`projects/<名稱>/` 一個角色一個資料夾；`library/` 是預設資料庫（手勢、表情、腳、30 種動作、粉色蓬裙禮服，來自範例專案 `projects/bride`）。資料夾說明見那裡的 `README.md`。
 - **臉部模型只收 `.vroid`，但 VRoid MCP 不能匯出 VRM。** 使用者要先在 VRoid Studio 開 .vroid → 按 F8 → 存成 VRM 1.0（放在 .vroid 旁邊同檔名）。沒有 VRM 時 `blender-creator` 會停下來回報，不會硬做。
 - **Blender 要開著**（MCP for Blender 外掛啟動）。VRM 匯入只能在 GUI Blender；長時間渲染改用背景 Blender（`blender.exe -b … -P bl_cli.py`），可並行、不受 MCP 120 秒限制。
-- 影格 png 放系統暫存 `%TEMP%\blender-work\<名稱>\`，專案裡只放 mp4／jpg 成品。`.blend` 與 `source/`（使用者的原檔與照片）不進版控。
+- **調整動作或情境時走快速迭代**：調整中只交低解析、無物理、只渲改到片段的快速預覽＋多角度檢查圖，一次收齊問題再修；使用者確認後才做完整渲染。規範在 `blender-motion-library` 的 `references/fast-iteration.md`，三個 Blender 子代理的定義都已寫入。
+- **一支片有好幾幕要一起看時**（例：開場影片各幕），由主控端呼叫 workflow `film-scene-review`：每幕一個情境子代理並行出快速預覽，彙整成一個審看網頁，使用者一次給「第 N 幕：…」的回饋，再照回饋跑下一輪。規範在 `fast-iteration.md` §5。
+- **動作來源與兩關審看（2026-10-10 起）**：角色動作一律用 Mixamo 現成動畫原樣套上（不用 CMU；劇情不改、挑最接近的、套用後可微調但不破壞動作結構）。多幕影片分兩關：第 1 關先審骨骼動作（3D 骨架播放器，workflow `stage: 'skeleton'`），每一幕都確認後第 2 關才審低畫質預覽（`stage: 'preview'`）。兩關的審看網頁都要有逐幕回覆框＋Ctrl+V 貼圖，回饋存在網頁的 db，主控端直接讀。規範在 `fast-iteration.md` §0、§0.5。
+- 影格 png 放 `D:\render-work\blender-work\<名稱>\`（C 槽容易滿，`blender_env.py` 預設就指這裡；環境變數 `BLENDER_WORK_ROOT` 可覆寫），專案裡只放 mp4／jpg 成品。`.blend` 與 `source/`（使用者的原檔與照片）不進版控。
 
 ### 輪播影片產線的分工（三個子代理）
 
@@ -143,7 +147,8 @@ D:\SideProject\wedding-invitation\
     ├── workflows\
     │   ├── figma-pen-team.js  # 產線編排（read／draw-flow／draw-screen／draw-scenario／annotate）
     │   ├── pen-export-png.js  # 下游交付：設計檔 → png ＋ _index.md ＋ _layout-spec.md
-    │   └── blender-character-studio.js  # 3D 角色：建角色 → 情境 → 發布成果網頁
+    │   ├── blender-character-studio.js  # 3D 角色：建角色 → 情境 → 發布成果網頁
+    │   └── film-scene-review.js         # 多幕 3D 影片批次審看：各幕快速預覽／修正 → 審看網頁
     ├── docs\data\blender\     # 3D 角色專案（projects/）與預設資料庫（library/）
     └── hooks\                 # 6 個守門 script（見下）
 ```
@@ -183,9 +188,22 @@ D:\SideProject\wedding-invitation\
 ## 版控
 
 - **`.claude/` 底下的骨架（agents／skills／commands／hooks／workflows／settings.json）都進版控。** clone 下來就是完整的工作區，不必再跑一次籌組腳本。`git status` 會多出幾十個檔，那是預期的，不是複製出錯。
-- **只有兩類東西不進版控**：`.env*` 與 `.claude/settings.local.json`（後者裝的是 MCP 密鑰真值）。
+- **骨架裡只有兩類東西不進版控**：`.env*` 與 `.claude/settings.local.json`（後者裝的是 MCP 密鑰真值）。資料區另外排除角色專案的 `.blend`／`source/`、捏臉 VRM 與真人照片原檔、動態分鏡預覽 mp4（見 `.gitignore`）。
 - **骨架有兩條更新路徑，會打架**：重跑母工作區的 `scaffold-project.ps1`（以母版覆寫，`-Force` 時 `agents/`／`skills/` 整個清掉重建）vs 直接改本專案的檔案再 commit。**要在本專案客製骨架，就不要再重跑腳本**，否則客製會被無聲蓋掉。
 - `.gitattributes` 把 `.claude/workflows/*.js` 釘成 LF。**不要拿掉** —— Windows 的 `core.autocrlf` 換成 CRLF 後，Workflow 工具會以 `script contains control characters` 拒絕執行那些 script。
+
+### 合併回 main 與部署（必守）
+
+- **push 到 `main` 就會觸發 Cloudflare Pages 部署正式喜帖網站**（https://roger-amy-wedding.pages.dev/）。所以：
+- **合併回 `main` 之前一律先問使用者**，就算使用者先前說過「commit」也一樣 —— 要問兩件事：
+  1. 要不要合併回 `main`（還是先留在分支）。
+  2. 這次要不要部署。
+- **不部署時**：push 上去的最新一筆 commit（合併時就是合併 commit）訊息**開頭**必須是 `[CF-Pages-Skip]`，例：`[CF-Pages-Skip] Merge branch 'feat/xxx'`。
+  - Cloudflare 只認**寫在訊息最開頭**的標記（不分大小寫；`[CI Skip]`、`[Skip CI]` 等也可以），寫在中間或結尾無效。
+  - 合併要用 `git merge --no-ff -F <訊息檔>` 產生合併 commit；快轉合併（fast-forward）的話，最新一筆是分支上的普通 commit，沒有標記就會部署。
+  - 這則訊息無法同時符合 Conventional Commits 格式，是唯一允許的例外；內文要寫明「依使用者要求不部署」。commit 格式 hook 不檢查 `-F` 讀入的訊息，所以不會被擋。
+  - push 後確認沒部署：GitHub 上該 commit 的 check runs 不應出現「Cloudflare Pages」（`https://api.github.com/repos/Roger-Hung-Dev/wedding-invitation/commits/<sha>/check-runs`）。
+- **要部署時**：照一般 Conventional Commits 訊息合併即可，push 後同一個網址確認「Cloudflare Pages」檢查是 success。
 
 ## 語言規則
 

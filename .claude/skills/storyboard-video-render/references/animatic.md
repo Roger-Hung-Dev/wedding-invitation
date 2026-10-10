@@ -90,7 +90,9 @@ python $SK/animatic.py video --work WORK --plan PLAN.md --rules RULES.json --out
 python $SK/animatic.py index --work WORK --plan PLAN.md --rules RULES.json --out OUTDIR
 ```
 
-每版先輸出無損中間檔（`WORK/tmp/`），再以 CRF 18 起逐級調高壓到 5.8 MB 內；封面取 ③ 最後一句字幕出現 1.2 秒後。10 版平行約 1～2 分鐘。
+每版先輸出無損中間檔（`WORK/tmp/`），再以 CRF 18 起逐級調高壓到 5.8 MB 內；封面取 ③ 最後一句字幕出現 1.2 秒後。10 版平行約 1～2 分鐘（有 `cam` 鏡頭運動的版本較慢，單版約 5～8 分鐘）。
+
+分批輸出到同一個資料夾時，`index` 加 `--batch N`：保留 index.json 裡其他批的版本、依版號合併，並寫 `batch`／`category` 欄（`category` 取規劃表的「風格類別」，沒有時用 `--category`，例：第一批 `--batch 1 --category 主題扮演`）。
 
 ---
 
@@ -132,6 +134,42 @@ python $SK/animatic.py index --work WORK --plan PLAN.md --rules RULES.json --out
 }
 ```
 
+### 第二批（V11～V25）新增的寫法
+
+全部是「規則檔有寫才啟用」，沒寫的鏡走原本的路徑（第一批 250 格逐像素回歸驗證過）。
+
+| 位置 | 寫法 | 用途 |
+| --- | --- | --- |
+| 規劃表 | `【場景字】`／`【場景字・大標】` | 解析成 `scene: true` 的字幕：跟著場景被鏡頭推拉平移；版本預設進場另設 `scene_in`／`scene_big_in` |
+| 規劃表 | `- **風格類別**：浪漫` | `index --batch N` 時寫進 `category` |
+| 規劃表 | 角色大小 `高 18%（走近到 32%）`／`（走遠縮到 30%）` | 角色框在該段時間內線性變大／變小（「鏡頭推近到」「升空後縮小」不算，交給 `cam`） |
+| 版本 | `"pair": true` | 同時段寫在同一格位置的兩人並排（新郎左、新娘右）；從兩側走到同一格時終點也並排 |
+| 版本／鏡 | `"qfps": 12` | 場景、角色框以每秒 12 格抽格（字幕不抽格），黏土定格感 |
+| 鏡 | `"cam": {"keys": [[秒, cx, cy, 倍率, "lin"?], …], "ext": [左, 上, 右, 下], "char_key": i, "chars": "world"\|"screen"}` | 3D 場景幕的鏡頭推拉平移（2D 代替）。`(cx, cy)`＝畫面中心對準的縮圖座標；`ext`＝鏡頭要移到縮圖沒畫的地方時延伸的範圍（用縮圖邊緣的顏色帶補）；角色框以第 `char_key` 個關鍵格的鏡頭為準擺在規劃表寫的位置 |
+| 鏡 | `"char_boxes": {"新郎": [x, y, w, h]}` | 角色框放進指定位置（拍立得、窗戶、漫畫格、泡泡裡） |
+| 鏡 | `"color_spread": {"t", "d", "center", "map": [暗→亮色], "mix"}` | 黑白→彩色擴散的替代：灰階換成暖色漸層，飽和的粉紅保留 |
+| 鏡 | `"iris": {"t": 0, "d": 0.4}` | 圓形虹膜打開（老電影開場） |
+| 圖層規則 | `"screen": true`／`"front": true` | 不跟鏡頭動（黑邊、觀景窗框、日期戳）／畫在角色框前面（桌面、窗框）。字幕預設不跟鏡頭動，`subs` 規則 `"world": true` 可改 |
+| 圖層規則 | `"anchor": {"who": "新娘", "dx", "dy", "ay": "bottom"}` | 黏在角色框上（新娘框下的禮服粉條、頭上的手繪皇冠） |
+| 圖層規則 | `"within": [x0, y0, x1, y1]` | 只套到外框中心在範圍內的同名圖層（各漫畫格自己的網點）。⚠️ 整張大小的 path（外框 0,0,480,270）分不出來，改用 `id:` |
+| 圖層規則 | `"noclean": true` | 框裡的字保留在原圖（天燈上的數字），不拆出來另外疊 |
+| 圖層規則 | `"counter_seq": true, "seq_n": 10` | 逐格亮起的總格數（縮圖只畫 9 格、第 10 格到 100% 才補時） |
+| `subs` 規則 | `"hide"`／`"front"`／`"out"`／`"move"` | 不補畫（字已用物件畫出）／畫在角色框前／出場方式／跟著物件移動（字寫在游進來的海龜殼上） |
+| `counter` | `"slot": "圖層id"` | 縮圖寫成「99% → 100%」的文字圖層：借它的位置與字型跑計數，原圖層不畫 |
+| `counter` | `"slots": ["id", "id", [x, y, w]], "keep": true, "out": {…}` | 倒數每個數字畫在自己的位置（燈泡數字板、氣球、天燈），可累積不消失、可設飛走 |
+| `counter` | `"none": true` | 數字已在物件上，不另外畫 |
+| `extras` | `{"kind": "rect", "box", "fill", "stroke", "sw", "r", "shape": "ellipse", "text", "style"}` | 縮圖沒畫、規劃表寫了的物件用簡化色塊代替（看板、計程車、桌面、海灘球） |
+| `extras` | `{"kind": "copy", "id", "card"?, "dx", "dy", "clean"?}` | 複製縮圖圖層（可取同版別張卡；`clean` 用抹掉字的版本） |
+| `extras` | `{"kind": "scene", "card": "V12-02", "exclude": "字幕\|…"}` | 借別張卡的整個場景（規劃表寫「同 ②」、縮圖沒畫的段落） |
+| `extras` | `{"kind": "confetti", "origin", "region", "n", "colors", "g", "shape", "aspect", "burst", "seed"}` | 紙花、糖珠、花瓣、氣球（`g` 負值往上飄） |
+| 進場 | `blur`（`r0`）／`squash`（`w0`）／`beat`（逐字放大回彈）／`type` 加 `cf`（逐字淡入） | 燭光模糊淡入、黏土壓扁回彈、歌舞節拍跳字、星光逐字亮起 |
+| 循環 | `jitter`（`amp`、`period`） | 蠟筆線條每 0.08 秒抖動 |
+| 顯現 | `reveal.dir: "iris"` | 從中心往外的圓形顯現（橢圓相框打開） |
+
+- 新種類的 `extras`（rect／copy／scene／confetti）預設畫在所有字幕下面一層；要蓋過字幕或指定層次用 `z`／`z_after`。
+- 補畫圖示（🔔🔕🚕📷✦✕✓♥♔✿✋）用 Windows 內建的 `Segoe UI Symbol`（單色），字型表已登記。
+- 分批時另開工作目錄（例 `WORK/b2/`），`index --batch 2` 會保留 index.json 裡其他批的版本，依版號合併。
+
 - 座標：`box`、`center` 是縮圖座標（480×270）；`dist`、`move`、`pivot`、`origin` 是 1920 座標；時間一律從本鏡開頭算。
 - `in.fx`：`fade`／`pop`（0→110→100%）／`slide`（`from`＋`dist`）／`drop`（由上彈落）／`scale`（`s0`）／`slam`（大→小砸下）／`flip`（垂直翻牌）／`flipx`（水平翻開）／`wipe`（左→右顯現）／`type`（逐字，`rate`）／`bounce`（單字彈跳）／`burst`（從 `origin` 噴出）；皆可加 `delay`。
 - `loop.fx`：`blink`（`period`、`min`、`duty`）／`glow`／`pulse`／`float`／`hfloat`／`sway`／`spin`（`dps`，`from`～`until` 之間轉，之後停住）／`drift`／`fall`（重力）／`shake`（`times`）／`steps`（階梯位移）／`gauge`（指針跟百分比轉，配 `pivot`）；`zphase` 讓同規則的多個圖層錯開相位。
@@ -147,6 +185,10 @@ python $SK/animatic.py index --work WORK --plan PLAN.md --rules RULES.json --out
 - **唯讀守門 hook 比對不分大小寫**：JS 裡出現 `.replace(`、`.delete(` 也會被擋，改用 split／join。
 - `execute` 整份文件走訪偶爾回 `interrupted`，重試或改用 `Get(id)` 查單一節點。
 - C 槽滿時 `Export` 會報 `ENOSPC`：輸出路徑一律放 D 槽。
+- **匯出圖比外框大很多時 prep 會跑很久**：漫畫放射背景外框 1920×1080，匯出卻是 4800×4800，定位要搜幾十萬個位置（V24-01／V24-08 單張跑了一個多小時）。prep 的 `place.json` 是全部跑完才寫，所以別等它：另開一次 prep 只跑其他版本先檢查。
+- 匯出的 `Export` 每個檔都會印一行，整批會塞爆上下文：script 最後加 `Print("PAD …")` 讓結果存檔，只 grep 摘要。
+- 匯出 id 不必手抄：匯出 script 在 Pencil 裡用同一套走訪規則自己收集（頂層圖層＋縮圖內容＋框內文字）。
+- 對應報告裡「（縮圖沒有，PIL 補畫）」的字幕會借同鏡時段不重疊的字幕位置；借到的位置不合（例：借到看板上的場景字、借到窄小的名牌框）時用 `subs` 規則的 `box` 指定。
 
 ## 限制（回報時要講清楚）
 

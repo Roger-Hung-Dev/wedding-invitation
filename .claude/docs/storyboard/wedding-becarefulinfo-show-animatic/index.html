@@ -3,7 +3,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@600;700&family=Noto+Sans+TC:wght@400;500;700&family=IBM+Plex+Mono:wght@500&display=swap">
 <style>
-/* 版面：試映室——左邊放映（影片＋八段時間軸＋本版說明），右邊十個版本的片單；窄螢幕上下疊 */
+/* 版面：試映室——左邊放映（影片＋八段時間軸＋本版說明），右邊依風格分組的 25 版片單；窄螢幕上下疊 */
 :root {
   --bg: #F5F1F3;
   --surface: #FFFFFF;
@@ -14,6 +14,9 @@
   --accent: #94631A;
   --accent-soft: #F1E3CC;
   --screen: #0E0B11;
+  --c3d: #3F5FE0;
+  --cmix: #0E9F74;
+  --c2d: #757E87;
   --font-display: "Noto Serif TC", "Songti TC", "PMingLiU", serif;
   --font-body: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", system-ui, sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, "Consolas", monospace;
@@ -22,93 +25,106 @@
   :root:not([data-theme="light"]) {
     --bg: #151219; --surface: #1E1924; --sunken: #19151E; --line: #372F3F;
     --fg: #EEE7F0; --muted: #A79BAF; --accent: #E0B46C; --accent-soft: #3A2E22; --screen: #060508;
+    --c3d: #8EA2FF; --cmix: #4FD3A8; --c2d: #A3ABB3;
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
   --bg: #151219; --surface: #1E1924; --sunken: #19151E; --line: #372F3F;
   --fg: #EEE7F0; --muted: #A79BAF; --accent: #E0B46C; --accent-soft: #3A2E22; --screen: #060508;
+  --c3d: #8EA2FF; --cmix: #4FD3A8; --c2d: #A3ABB3;
   color-scheme: dark;
 }
 * { box-sizing: border-box; }
 body { background: var(--bg); color: var(--fg); font-family: var(--font-body); font-size: 15px; line-height: 1.7; }
-.wrap { max-width: 1180px; margin: 0 auto; padding-inline: 20px; padding-block: 28px 56px; display: grid; gap: 28px; }
-header { display: grid; gap: 10px; max-width: 70ch; }
+.wrap { max-width: 1200px; margin: 0 auto; padding-inline: 20px; padding-block: 28px 56px; display: grid; gap: 28px; }
+header { display: grid; gap: 10px; max-width: 72ch; }
 .eyebrow { font-size: 12px; letter-spacing: .18em; color: var(--accent); font-weight: 700; }
 h1 { font-family: var(--font-display); font-size: clamp(30px, 5vw, 44px); line-height: 1.2; margin: 0; text-wrap: balance; }
 .lede { color: var(--muted); margin: 0; }
 .notice { display: flex; flex-wrap: wrap; gap: 8px 18px; align-items: center; background: var(--accent-soft); border-radius: 10px; padding: 10px 14px; font-size: 14px; }
 .notice strong { font-weight: 700; }
-.notice span { color: var(--fg); }
 .notice span::before { content: "・"; color: var(--accent); }
 
-.stage { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 24px; align-items: start; }
+.stage { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 24px; align-items: start; }
 .player { display: grid; gap: 14px; min-width: 0; }
 .screen { background: var(--screen); border-radius: 12px; overflow: hidden; aspect-ratio: 16 / 9; max-width: 100%; }
 video { display: block; width: 100%; height: 100%; background: var(--screen); }
 
-.now { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 14px; }
+.now { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 12px; }
 .now h2 { font-family: var(--font-display); font-size: 24px; margin: 0; line-height: 1.3; text-wrap: balance; }
-.vid { font-family: var(--font-mono); font-size: 13px; color: var(--accent); }
-.dur { font-family: var(--font-mono); font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.vid, .dur { font-family: var(--font-mono); font-size: 13px; font-variant-numeric: tabular-nums; }
+.vid { color: var(--accent); }
+.dur { color: var(--muted); }
+.cat { font-size: 12px; line-height: 1.6; padding: 1px 9px; border-radius: 999px; border: 1px solid var(--accent); color: var(--accent); }
 
 .timeline { display: flex; gap: 3px; width: 100%; }
-.seg { flex: 1 1 0; min-width: 0; border: 0; padding: 0; background: none; cursor: pointer; text-align: left; color: inherit; font: inherit; display: grid; gap: 4px; }
+.seg { flex: 1 1 0; min-width: 0; border: 0; padding: 0; background: none; cursor: pointer; text-align: left; color: inherit; font: inherit; display: grid; gap: 3px; }
 .seg .bar { height: 8px; border-radius: 4px; background: var(--line); position: relative; overflow: hidden; }
 .seg .fill { position: absolute; inset: 0 auto 0 0; width: 0; background: var(--accent); }
 .seg .lab { font-size: 12px; line-height: 1.3; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .seg .lab b { color: var(--fg); font-weight: 700; margin-right: 2px; }
-.seg .tc { font-family: var(--font-mono); font-size: 11px; color: var(--muted); font-variant-numeric: tabular-nums; }
-.seg.on .lab b, .seg.on .lab { color: var(--accent); }
+.seg .meta { display: flex; gap: 6px; align-items: center; font-family: var(--font-mono); font-size: 11px; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; overflow: hidden; }
+.comp { font-family: var(--font-body); font-size: 10px; font-weight: 700; letter-spacing: .02em; }
+.comp.c3d { color: var(--c3d); } .comp.cmix { color: var(--cmix); } .comp.c2d { color: var(--c2d); }
+.seg.on .lab, .seg.on .lab b { color: var(--accent); }
 .seg:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
 .hint { font-size: 12px; color: var(--muted); margin: -4px 0 0; }
 
 .detail { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 24px; border-top: 1px solid var(--line); padding-top: 16px; }
-.detail .concept { grid-column: 1 / -1; margin: 0; font-size: 16px; }
+.detail .concept { grid-column: 1 / -1; margin: 0; font-size: 16px; max-width: 75ch; }
 .detail h3 { font-size: 13px; letter-spacing: .08em; color: var(--muted); margin: 0 0 4px; font-weight: 700; }
-.detail p { margin: 0; min-width: 0; }
 .chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; padding: 0; list-style: none; }
 .chips li { font-size: 13px; line-height: 1.5; padding: 2px 9px; border-radius: 999px; background: var(--sunken); border: 1px solid var(--line); }
 .chips.dim li { color: var(--muted); background: transparent; border-style: dashed; }
 
-.reel { display: grid; gap: 8px; }
-.reel h2 { font-size: 13px; letter-spacing: .12em; color: var(--muted); margin: 0; font-weight: 700; }
-.reel ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
-.pick { width: 100%; display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 10px; align-items: center; padding: 6px; border-radius: 10px; border: 1px solid transparent; background: none; color: inherit; font: inherit; text-align: left; cursor: pointer; }
+.reel { display: grid; gap: 10px; min-width: 0; }
+.filters { display: flex; flex-wrap: wrap; gap: 6px; }
+.filter { font: inherit; font-size: 13px; padding: 3px 10px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--fg); cursor: pointer; }
+.filter small { font-family: var(--font-mono); color: var(--muted); margin-left: 3px; }
+.filter[aria-pressed="true"] { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+.filter[aria-pressed="true"] small { color: inherit; opacity: .7; }
+.filter:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.list { display: grid; gap: 14px; }
+.group h3 { font-size: 12px; letter-spacing: .14em; color: var(--muted); margin: 0 0 6px; font-weight: 700; }
+.group ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+.pick { width: 100%; display: grid; grid-template-columns: 92px minmax(0, 1fr); gap: 10px; align-items: center; padding: 5px; border-radius: 10px; border: 1px solid transparent; background: none; color: inherit; font: inherit; text-align: left; cursor: pointer; }
 .pick:hover { background: var(--sunken); }
 .pick:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .pick[aria-current="true"] { background: var(--surface); border-color: var(--accent); }
-.pick img { width: 96px; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 6px; display: block; background: var(--screen); }
+.pick img { width: 92px; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 6px; display: block; background: var(--screen); }
 .pick .t { display: grid; gap: 1px; min-width: 0; }
 .pick .t b { font-size: 14px; font-weight: 500; line-height: 1.4; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
 .pick .t small { font-family: var(--font-mono); font-size: 11px; color: var(--muted); }
 
-footer { color: var(--muted); font-size: 13px; border-top: 1px solid var(--line); padding-top: 14px; max-width: 80ch; }
+footer { color: var(--muted); font-size: 13px; border-top: 1px solid var(--line); padding-top: 14px; max-width: 85ch; }
 footer code { font-family: var(--font-mono); font-size: 12px; word-break: break-all; }
 
+@media (min-width: 901px) {
+  .reel { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 12px); max-height: calc(100vh - 24px); overflow: auto; padding-right: 4px; }
+}
 @media (max-width: 900px) {
   .stage { grid-template-columns: minmax(0, 1fr); }
-  .reel ol { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
+  .group ol { grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); }
 }
 @media (max-width: 560px) {
   .detail { grid-template-columns: minmax(0, 1fr); }
-  .seg .lab span { display: none; }
-  .seg .tc { display: none; }
-  .reel ol { grid-template-columns: minmax(0, 1fr); }
+  .seg .lab span, .seg .meta .tc { display: none; }
+  .group ol { grid-template-columns: minmax(0, 1fr); }
 }
-@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; scroll-behavior: auto !important; } }
 </style>
 
 <div class="wrap">
   <header>
     <div class="eyebrow">承孝 ✕ 怡安・婚禮開場影片比稿</div>
     <h1>開場片試映室</h1>
-    <p class="lede">10 個版本都照同一份「幸福守則」腳本：廣播提醒、引言、歡迎、男女主角、攝影團隊、手機與打卡、飲食與敬酒、倒數登場。選一版播放，或點時間軸跳到想看的那一段。</p>
+    <p class="lede">25 個版本都照同一份「幸福守則」腳本：廣播提醒、引言、歡迎、男女主角、攝影團隊、手機與打卡、飲食與敬酒、倒數登場。第一批 10 版是主題扮演，第二批 15 版是風格篇。用右邊的分類挑一版播放，或點時間軸跳到想看的那一段。</p>
     <div class="notice" role="note">
       <strong>這是動態分鏡預覽，不是成品</strong>
       <span>3D 角色先用佔位框代替，框裡寫動作</span>
+      <span>3D 場景是簡化色塊，鏡頭移動用平面推拉代替</span>
       <span>沒有配樂和音效</span>
-      <span>畫面取自分鏡稿縮圖，部分動態是簡化版</span>
     </div>
   </header>
 
@@ -118,10 +134,11 @@ footer code { font-family: var(--font-mono); font-size: 12px; word-break: break-
       <div class="now">
         <span class="vid" id="nowId"></span>
         <h2 id="nowTitle"></h2>
+        <span class="cat" id="nowCat"></span>
         <span class="dur" id="nowDur"></span>
       </div>
       <div class="timeline" id="timeline" aria-label="八個段落，點一下跳到該段"></div>
-      <p class="hint">點時間軸的段落可以直接跳過去。</p>
+      <p class="hint" id="hint">點時間軸的段落可以直接跳過去。</p>
       <div class="detail">
         <p class="concept" id="concept"></p>
         <div>
@@ -136,50 +153,58 @@ footer code { font-family: var(--font-mono); font-size: 12px; word-break: break-
     </div>
 
     <nav class="reel" aria-label="版本片單">
-      <h2>片單</h2>
-      <ol id="reel"></ol>
+      <div class="filters" id="filters" role="group" aria-label="依風格篩選"></div>
+      <div class="list" id="list"></div>
     </nav>
   </section>
 
   <footer>
-    看的時候可以留意：每句字幕停留夠不夠長輩讀完、哪一段太趕或太拖、哪種風格最像你們。選定版本後，再做 3D 角色動作、配樂和正式動態。分鏡稿在 <code>.claude/docs/design/wedding-becarefulinfo-show.pen</code>，規劃表在 <code>.claude/docs/storyboard/wedding-becarefulinfo-show-plan.md</code>。
+    看的時候可以留意：每句字幕停留夠不夠長輩讀完、哪一段太趕或太拖、哪種風格最像你們。時間軸下的小字標出每一幕是 <span class="comp c3d">3D 場景</span>、<span class="comp cmix">混合</span> 還是 <span class="comp c2d">2D 圖文</span>（第二批才有）。選定版本後，再做 3D 角色動作、搭景、配樂和正式動態。分鏡稿在 <code>.claude/docs/design/wedding-becarefulinfo-show.pen</code>，規劃表在 <code>.claude/docs/storyboard/wedding-becarefulinfo-show-plan.md</code>（V01～V10）與 <code>-plan-2.md</code>（V11～V25）。
   </footer>
 </div>
 
 <script>
-const VERSIONS = [{"id": "V01", "title": "原稿整理版（比較基準）", "seconds": 72.0, "concept": "使用者原腳本照順序整理，內容幾乎不改，只補齊秒數、角色、動態、轉場、音效。", "made": "ATTENTION 彈出與紅光閃爍、喇叭音波、字幕單字彈跳、進度條 0→99%（卡住抖動）→100%、紙花從拉砲噴出落下、對開卡片翻開、介紹字依時段出現與消失、相機落定與 REC 閃爍、IG 貼文框滑入、啤酒香檳杯飛入、大標左右滑入、倒數 3‧2‧1 砸下＋畫面震動、指針一秒一圈", "simplified": "靜音手機、碰杯泡沫、皇冠掉落、仙女棒星點、光門與拍手亮片縮圖沒畫，未做", "shots": [["①", 0.0, 7.0], ["②", 7.0, 14.0], ["③", 14.0, 22.0], ["④", 22.0, 31.0], ["⑤", 31.0, 40.0], ["⑥", 40.0, 52.0], ["⑦", 52.0, 62.0], ["⑧", 62.0, 72.0]]}, {"id": "V02", "title": "幸福航空 RA1212 機上安全須知", "seconds": 70.0, "concept": "婚宴廳變成「幸福航空 RA1212 班機」機艙，新郎當機長、新娘當座艙長，用機上安全示範的口吻講完守則，最後「降落」迎新人。", "made": "翻牌看板逐字出現、燈號亮起、安全須知卡抽出、字幕印刷掃描、小飛機沿航線前進＋虛線逐格亮、已登機印章蓋下、機組員證上下滑入擺盪、示範圖依序彈出與打勾、手機震動、娛樂螢幕滑入、禁止酒駕標誌蓋下、機窗倒數", "simplified": "空服餐車、窗外雲層掠過、雲開陽光與彩帶、綠色勾勾未做", "shots": [["①", 0.0, 6.0], ["②", 6.0, 13.0], ["③", 13.0, 21.0], ["④", 21.0, 30.0], ["⑤", 30.0, 39.0], ["⑥", 39.0, 50.0], ["⑦", 50.0, 60.0], ["⑧", 60.0, 70.0]]}, {"id": "V03", "title": "幸福大冒險・新手教學（8-bit 像素 RPG）", "seconds": 69.0, "concept": "把注意事項做成電玩「新手教學」：選角色、讀取血條、三個任務、最後 FINAL STAGE 倒數過關。", "made": "對話框展開、RPG 逐字打字、▼游標閃爍、像素雲階梯移動、卷軸展開、愛心血條逐格補滿＋百分比、LEVEL UP 落下、金幣星星噴出、手套游標移動、NPC 巡走、道具欄依序出現、像素貼文卡飛入、紅框警示、計程車開入、像素數字倒數、STAGE CLEAR", "simplified": "角色像素化與像素溶解轉場（待 fx-lab，先用一般溶接）、賓客走進走道 MISS、像素煙火未做", "shots": [["①", 0.0, 6.0], ["②", 6.0, 13.0], ["③", 13.0, 21.0], ["④", 21.0, 30.0], ["⑤", 30.0, 39.0], ["⑥", 39.0, 50.0], ["⑦", 50.0, 59.0], ["⑧", 59.0, 69.0]]}, {"id": "V04", "title": "今晚首映《我們結婚了》（復古電影院映前須知）", "seconds": 72.0, "concept": "婚宴廳化身老戲院，注意事項是「映前須知」，新人是今晚首映的影帝影后，最後膠卷倒數、布幕大開。", "made": "聚光燈打亮、燈泡依序亮、灰塵飄、膠片刮痕閃爍、金框描邊、膠卷百分比＋片格逐格亮、片名卡開圈、彩帶灑落、海報垂降、狗仔閃光、膠卷盤轉動、拍立得依序釘上、大標由下捲入、膠卷倒數扇形掃動＋跳格抖動", "simplified": "布幕拉開、失焦對焦、NG 印章倒帶、燒穿光洞、布幕大開與聚光燈交叉未做", "shots": [["①", 0.0, 7.0], ["②", 7.0, 15.0], ["③", 15.0, 23.0], ["④", 23.0, 32.0], ["⑤", 32.0, 41.0], ["⑥", 41.0, 52.0], ["⑦", 52.0, 62.0], ["⑧", 62.0, 72.0]]}, {"id": "V05", "title": "幸福新聞台 LIVE（新聞快報）", "seconds": 70.0, "concept": "把注意事項做成「插播快訊」：新郎是主播、新娘是現場記者，SNG 連線到婚禮現場，最後獨家直擊新人進場。", "made": "快訊條急掃＋閃光掃過、子母畫面翻入、字幕條滑出、訊號格逐格亮＋百分比、LIVE 彈出、人物圖卡翻轉入場、對焦框收縮鎖定、社群牆滾入、帳號紅框閃兩次、菜色依序落桌、宣導條急掃、紅框脈動、翻頁鐘倒數", "simplified": "地球儀台標、跑馬燈、雪花雜訊卡頓、推近主播台、獨家印章、人影遮鏡未做；新聞色塊斜向擦除（待 fx-lab）先用推移", "shots": [["①", 0.0, 6.0], ["②", 6.0, 13.0], ["③", 13.0, 21.0], ["④", 21.0, 30.0], ["⑤", 30.0, 39.0], ["⑥", 39.0, 50.0], ["⑦", 50.0, 60.0], ["⑧", 60.0, 70.0]]}, {"id": "V06", "title": "幸福號升空任務（太空任務控制中心）", "seconds": 72.0, "concept": "婚禮是一次升空任務：任務簡報、燃料加注、組員名單、通訊規範，最後火箭倒數點火，新人「升空」登場。", "made": "星空移動、警示燈光掃過、HUD 括線收合、等寬字逐字輸出與方塊游標、航線點依序亮＋小火箭飛行、燃料槽依百分比填滿、蒸氣、識別證掃描出現、任務徽章旋轉落定、人影飄入準星＋✕、撥桿撥到靜音、全息貼文閃爍、訊號波紋、補給品失重漂浮、倒數後火箭加速飛出畫面", "simplified": "刻度環反向旋轉、點火火光煙霧與愛心煙圈未做", "shots": [["①", 0.0, 7.0], ["②", 7.0, 15.0], ["③", 15.0, 23.0], ["④", 23.0, 32.0], ["⑤", 32.0, 41.0], ["⑥", 41.0, 52.0], ["⑦", 52.0, 62.0], ["⑧", 62.0, 72.0]]}, {"id": "V07", "title": "週末超級綜藝秀（90 年代綜藝／VHS）", "seconds": 70.0, "concept": "一捲 90 年代綜藝節目錄影帶：霓虹字卡、罐頭笑聲、主持人拿麥克風帶動，注意事項變成節目單元。", "made": "VHS 追蹤雜訊、霓虹字卡閃現、大標粉青交替閃、舞台燈掃動、燈泡跑馬、字幕綜藝跳字、儀表指針 0→99→100 擺動、紙花彩帶噴發、看板貼紙彈出搖晃、手持晃動、暫停畫面、大哥大天線抽出與震動、傳真吐紙、螢光筆畫線、大標砸下＋畫面震動、霓虹數字從深處飛出", "simplified": "VHS 雜訊跳接（待 fx-lab，先硬切）、RGB 錯位、倒帶、轉盤旋轉、彩帶炮與乾冰未做", "shots": [["①", 0.0, 6.0], ["②", 6.0, 13.0], ["③", 13.0, 21.0], ["④", 21.0, 30.0], ["⑤", 30.0, 39.0], ["⑥", 39.0, 50.0], ["⑦", 50.0, 60.0], ["⑧", 60.0, 70.0]]}, {"id": "V08", "title": "幸福 App 使用教學（手機 App 新手引導）", "seconds": 70.0, "concept": "把婚禮當成一支新 App：推播通知、安裝進度、好友推薦、權限詢問、設定開關，最後「新人上線」開直播。", "made": "推播彈下堆疊、App 卡片縮放進場、插畫小人浮動、安裝百分比＋完成後開啟按鈕與紙花、檔案卡依序滑入、REC 閃爍、九宮格亮起、禁止圖示、動態牆滑入、叫車按鈕呼吸、點擊漣漪、計程車開入、倒數環每秒收縮＋數字上捲", "simplified": "相機權限對話框、設定頁開關、菜單卡輪播、加好友變好友、直播介面愛心縮圖沒畫，未做", "shots": [["①", 0.0, 6.0], ["②", 6.0, 13.0], ["③", 13.0, 21.0], ["④", 21.0, 30.0], ["⑤", 30.0, 39.0], ["⑥", 39.0, 50.0], ["⑦", 50.0, 60.0], ["⑧", 60.0, 70.0]]}, {"id": "V09", "title": "幸福守則故事書（童話立體繪本）", "seconds": 75.0, "concept": "一本會自己翻頁的立體繪本，新人是王子與公主，森林小動物示範守則，最後城堡大門打開。節奏最慢、最溫柔，適合長輩。", "made": "鈴鐺搖晃與光圈、燙金閃光掃過、光點漂浮、立體書元件依序立起、小鳥繞飛、手寫筆跡由左到右寫出、彩虹依百分比畫出＋星星滾動、城堡亮燈與煙火花瓣、肖像金框翻起、皇冠花環飛入、小動物依序跳上座位、小熊站起＋打叉、魔鏡變貼文框、南瓜馬車駛入、花瓣數字倒數、門縫金光", "simplified": "翻頁轉場（待 fx-lab）先用推移、鏡面水波、藤蔓愛心花、大門打開、繪本闔上未做", "shots": [["①", 0.0, 7.0], ["②", 7.0, 15.0], ["③", 15.0, 24.0], ["④", 24.0, 34.0], ["⑤", 34.0, 43.0], ["⑥", 43.0, 55.0], ["⑦", 55.0, 65.0], ["⑧", 65.0, 75.0]]}, {"id": "V10", "title": "幸福號 1212 次列車進站廣播", "seconds": 68.0, "concept": "婚禮是一班「幸福號」列車：月台 LED 看板、站名牌、車票、車廂禮儀，最後列車抵達「永遠站」，車門打開迎新人。長輩最熟悉的車站廣播口吻。", "made": "LED 看板掃描亮起、字幕跑馬燈捲入、站名牌降下、箭頭交替閃、逐字出現、列車減速駛入＋LED 進度方塊逐格亮、車門打開與彩帶、車票吐出、車廂上下晃、走道警示線閃、貼文框出現、LED 帳號跑入、便當蓋與香檳推車推入、隧道出口白光、看板邊框紅燈、LED 點陣倒數、車門滑開", "simplified": "窗外風景流動、剪票孔、站名牌翻成永遠站、門內暖光未做", "shots": [["①", 0.0, 6.0], ["②", 6.0, 13.0], ["③", 13.0, 21.0], ["④", 21.0, 30.0], ["⑤", 30.0, 39.0], ["⑥", 39.0, 50.0], ["⑦", 50.0, 59.0], ["⑧", 59.0, 68.0]]}];
+const VERSIONS = [{"id": "V01", "title": "原稿整理版（比較基準）", "seconds": 72.0, "batch": 1, "category": "主題扮演", "concept": "使用者原腳本照順序整理，內容幾乎不改，只補齊秒數、角色、動態、轉場、音效。", "made": "ATTENTION 彈出與紅光閃爍、喇叭音波、字幕單字彈跳、進度條 0→99%（卡住抖動）→100%、紙花從拉砲噴出落下、對開卡片翻開、介紹字依時段出現與消失、相機落定與 REC 閃爍、IG 貼文框滑入、啤酒香檳杯飛入、大標左右滑入、倒數 3‧2‧1 砸下＋畫面震動、指針一秒一圈", "simplified": "靜音手機、碰杯泡沫、皇冠掉落、仙女棒星點、光門與拍手亮片縮圖沒畫，未做", "shots": [["①", 0.0, 7.0, ""], ["②", 7.0, 14.0, ""], ["③", 14.0, 22.0, ""], ["④", 22.0, 31.0, ""], ["⑤", 31.0, 40.0, ""], ["⑥", 40.0, 52.0, ""], ["⑦", 52.0, 62.0, ""], ["⑧", 62.0, 72.0, ""]]}, {"id": "V02", "title": "幸福航空 RA1212 機上安全須知", "seconds": 70.0, "batch": 1, "category": "主題扮演", "concept": "婚宴廳變成「幸福航空 RA1212 班機」機艙，新郎當機長、新娘當座艙長，用機上安全示範的口吻講完守則，最後「降落」迎新人。", "made": "翻牌看板逐字出現、燈號亮起、安全須知卡抽出、字幕印刷掃描、小飛機沿航線前進＋虛線逐格亮、已登機印章蓋下、機組員證上下滑入擺盪、示範圖依序彈出與打勾、手機震動、娛樂螢幕滑入、禁止酒駕標誌蓋下、機窗倒數", "simplified": "空服餐車、窗外雲層掠過、雲開陽光與彩帶、綠色勾勾未做", "shots": [["①", 0.0, 6.0, ""], ["②", 6.0, 13.0, ""], ["③", 13.0, 21.0, ""], ["④", 21.0, 30.0, ""], ["⑤", 30.0, 39.0, ""], ["⑥", 39.0, 50.0, ""], ["⑦", 50.0, 60.0, ""], ["⑧", 60.0, 70.0, ""]]}, {"id": "V03", "title": "幸福大冒險・新手教學（8-bit 像素 RPG）", "seconds": 69.0, "batch": 1, "category": "主題扮演", "concept": "把注意事項做成電玩「新手教學」：選角色、讀取血條、三個任務、最後 FINAL STAGE 倒數過關。", "made": "對話框展開、RPG 逐字打字、▼游標閃爍、像素雲階梯移動、卷軸展開、愛心血條逐格補滿＋百分比、LEVEL UP 落下、金幣星星噴出、手套游標移動、NPC 巡走、道具欄依序出現、像素貼文卡飛入、紅框警示、計程車開入、像素數字倒數、STAGE CLEAR", "simplified": "角色像素化與像素溶解轉場（待 fx-lab，先用一般溶接）、賓客走進走道 MISS、像素煙火未做", "shots": [["①", 0.0, 6.0, ""], ["②", 6.0, 13.0, ""], ["③", 13.0, 21.0, ""], ["④", 21.0, 30.0, ""], ["⑤", 30.0, 39.0, ""], ["⑥", 39.0, 50.0, ""], ["⑦", 50.0, 59.0, ""], ["⑧", 59.0, 69.0, ""]]}, {"id": "V04", "title": "今晚首映《我們結婚了》（復古電影院映前須知）", "seconds": 72.0, "batch": 1, "category": "主題扮演", "concept": "婚宴廳化身老戲院，注意事項是「映前須知」，新人是今晚首映的影帝影后，最後膠卷倒數、布幕大開。", "made": "聚光燈打亮、燈泡依序亮、灰塵飄、膠片刮痕閃爍、金框描邊、膠卷百分比＋片格逐格亮、片名卡開圈、彩帶灑落、海報垂降、狗仔閃光、膠卷盤轉動、拍立得依序釘上、大標由下捲入、膠卷倒數扇形掃動＋跳格抖動", "simplified": "布幕拉開、失焦對焦、NG 印章倒帶、燒穿光洞、布幕大開與聚光燈交叉未做", "shots": [["①", 0.0, 7.0, ""], ["②", 7.0, 15.0, ""], ["③", 15.0, 23.0, ""], ["④", 23.0, 32.0, ""], ["⑤", 32.0, 41.0, ""], ["⑥", 41.0, 52.0, ""], ["⑦", 52.0, 62.0, ""], ["⑧", 62.0, 72.0, ""]]}, {"id": "V05", "title": "幸福新聞台 LIVE（新聞快報）", "seconds": 70.0, "batch": 1, "category": "主題扮演", "concept": "把注意事項做成「插播快訊」：新郎是主播、新娘是現場記者，SNG 連線到婚禮現場，最後獨家直擊新人進場。", "made": "快訊條急掃＋閃光掃過、子母畫面翻入、字幕條滑出、訊號格逐格亮＋百分比、LIVE 彈出、人物圖卡翻轉入場、對焦框收縮鎖定、社群牆滾入、帳號紅框閃兩次、菜色依序落桌、宣導條急掃、紅框脈動、翻頁鐘倒數", "simplified": "地球儀台標、跑馬燈、雪花雜訊卡頓、推近主播台、獨家印章、人影遮鏡未做；新聞色塊斜向擦除（待 fx-lab）先用推移", "shots": [["①", 0.0, 6.0, ""], ["②", 6.0, 13.0, ""], ["③", 13.0, 21.0, ""], ["④", 21.0, 30.0, ""], ["⑤", 30.0, 39.0, ""], ["⑥", 39.0, 50.0, ""], ["⑦", 50.0, 60.0, ""], ["⑧", 60.0, 70.0, ""]]}, {"id": "V06", "title": "幸福號升空任務（太空任務控制中心）", "seconds": 72.0, "batch": 1, "category": "主題扮演", "concept": "婚禮是一次升空任務：任務簡報、燃料加注、組員名單、通訊規範，最後火箭倒數點火，新人「升空」登場。", "made": "星空移動、警示燈光掃過、HUD 括線收合、等寬字逐字輸出與方塊游標、航線點依序亮＋小火箭飛行、燃料槽依百分比填滿、蒸氣、識別證掃描出現、任務徽章旋轉落定、人影飄入準星＋✕、撥桿撥到靜音、全息貼文閃爍、訊號波紋、補給品失重漂浮、倒數後火箭加速飛出畫面", "simplified": "刻度環反向旋轉、點火火光煙霧與愛心煙圈未做", "shots": [["①", 0.0, 7.0, ""], ["②", 7.0, 15.0, ""], ["③", 15.0, 23.0, ""], ["④", 23.0, 32.0, ""], ["⑤", 32.0, 41.0, ""], ["⑥", 41.0, 52.0, ""], ["⑦", 52.0, 62.0, ""], ["⑧", 62.0, 72.0, ""]]}, {"id": "V07", "title": "週末超級綜藝秀（90 年代綜藝／VHS）", "seconds": 70.0, "batch": 1, "category": "主題扮演", "concept": "一捲 90 年代綜藝節目錄影帶：霓虹字卡、罐頭笑聲、主持人拿麥克風帶動，注意事項變成節目單元。", "made": "VHS 追蹤雜訊、霓虹字卡閃現、大標粉青交替閃、舞台燈掃動、燈泡跑馬、字幕綜藝跳字、儀表指針 0→99→100 擺動、紙花彩帶噴發、看板貼紙彈出搖晃、手持晃動、暫停畫面、大哥大天線抽出與震動、傳真吐紙、螢光筆畫線、大標砸下＋畫面震動、霓虹數字從深處飛出", "simplified": "VHS 雜訊跳接（待 fx-lab，先硬切）、RGB 錯位、倒帶、轉盤旋轉、彩帶炮與乾冰未做", "shots": [["①", 0.0, 6.0, ""], ["②", 6.0, 13.0, ""], ["③", 13.0, 21.0, ""], ["④", 21.0, 30.0, ""], ["⑤", 30.0, 39.0, ""], ["⑥", 39.0, 50.0, ""], ["⑦", 50.0, 60.0, ""], ["⑧", 60.0, 70.0, ""]]}, {"id": "V08", "title": "幸福 App 使用教學（手機 App 新手引導）", "seconds": 70.0, "batch": 1, "category": "主題扮演", "concept": "把婚禮當成一支新 App：推播通知、安裝進度、好友推薦、權限詢問、設定開關，最後「新人上線」開直播。", "made": "推播彈下堆疊、App 卡片縮放進場、插畫小人浮動、安裝百分比＋完成後開啟按鈕與紙花、檔案卡依序滑入、REC 閃爍、九宮格亮起、禁止圖示、動態牆滑入、叫車按鈕呼吸、點擊漣漪、計程車開入、倒數環每秒收縮＋數字上捲", "simplified": "相機權限對話框、設定頁開關、菜單卡輪播、加好友變好友、直播介面愛心縮圖沒畫，未做", "shots": [["①", 0.0, 6.0, ""], ["②", 6.0, 13.0, ""], ["③", 13.0, 21.0, ""], ["④", 21.0, 30.0, ""], ["⑤", 30.0, 39.0, ""], ["⑥", 39.0, 50.0, ""], ["⑦", 50.0, 60.0, ""], ["⑧", 60.0, 70.0, ""]]}, {"id": "V09", "title": "幸福守則故事書（童話立體繪本）", "seconds": 75.0, "batch": 1, "category": "主題扮演", "concept": "一本會自己翻頁的立體繪本，新人是王子與公主，森林小動物示範守則，最後城堡大門打開。節奏最慢、最溫柔，適合長輩。", "made": "鈴鐺搖晃與光圈、燙金閃光掃過、光點漂浮、立體書元件依序立起、小鳥繞飛、手寫筆跡由左到右寫出、彩虹依百分比畫出＋星星滾動、城堡亮燈與煙火花瓣、肖像金框翻起、皇冠花環飛入、小動物依序跳上座位、小熊站起＋打叉、魔鏡變貼文框、南瓜馬車駛入、花瓣數字倒數、門縫金光", "simplified": "翻頁轉場（待 fx-lab）先用推移、鏡面水波、藤蔓愛心花、大門打開、繪本闔上未做", "shots": [["①", 0.0, 7.0, ""], ["②", 7.0, 15.0, ""], ["③", 15.0, 24.0, ""], ["④", 24.0, 34.0, ""], ["⑤", 34.0, 43.0, ""], ["⑥", 43.0, 55.0, ""], ["⑦", 55.0, 65.0, ""], ["⑧", 65.0, 75.0, ""]]}, {"id": "V10", "title": "幸福號 1212 次列車進站廣播", "seconds": 68.0, "batch": 1, "category": "主題扮演", "concept": "婚禮是一班「幸福號」列車：月台 LED 看板、站名牌、車票、車廂禮儀，最後列車抵達「永遠站」，車門打開迎新人。長輩最熟悉的車站廣播口吻。", "made": "LED 看板掃描亮起、字幕跑馬燈捲入、站名牌降下、箭頭交替閃、逐字出現、列車減速駛入＋LED 進度方塊逐格亮、車門打開與彩帶、車票吐出、車廂上下晃、走道警示線閃、貼文框出現、LED 帳號跑入、便當蓋與香檳推車推入、隧道出口白光、看板邊框紅燈、LED 點陣倒數、車門滑開", "simplified": "窗外風景流動、剪票孔、站名牌翻成永遠站、門內暖光未做", "shots": [["①", 0.0, 6.0, ""], ["②", 6.0, 13.0, ""], ["③", 13.0, 21.0, ""], ["④", 21.0, 30.0, ""], ["⑤", 30.0, 39.0, ""], ["⑥", 39.0, 50.0, ""], ["⑦", 50.0, 59.0, ""], ["⑧", 59.0, 68.0, ""]]}, {"id": "V11", "title": "燭光金粉・電影感浪漫風", "seconds": 74.0, "batch": 2, "category": "浪漫", "concept": "像一部愛情電影的開場：燭光、淺景深、金粉在光束裡飄，鏡頭緩慢推移；字幕是電影片頭那種優雅的襯線字。沒有扮演主題，靠光線和節奏營造浪漫。", "made": "上下寬銀幕黑邊、字幕從模糊淡入、燭火點燃與金粉上飄、3D 場景的鏡頭推近／後退／環繞／上搖（用 2D 推拉平移代替）、兩人沿長廊走近變大、燭火由近到遠一根根點亮＋百分比卡在 99%、名牌金框由下往上描出、錄影紅燈閃爍、賓客剪影走進來擋鏡頭、手機鈴鐺被劃掉後換成金框貼文、柔焦壓暗後大標浮現、計程車燈閃、燙金倒數、雙門向兩側打開與白光湧出、兩人走進門內縮小", "simplified": "淺景深拉焦、碰杯閃光未做；手機與鈴鐺縮圖沒畫，用簡化色塊與圖示代替", "shots": [["①", 0.0, 7.0, "3D 場景"], ["②", 7.0, 15.0, "3D 場景"], ["③", 15.0, 24.0, "3D 場景"], ["④", 24.0, 34.0, "混合"], ["⑤", 34.0, 43.0, "3D 場景"], ["⑥", 43.0, 55.0, "2D 圖文"], ["⑦", 55.0, 65.0, "3D 場景"], ["⑧", 65.0, 74.0, "混合"]]}, {"id": "V12", "title": "押花情書・紙質手寫風", "seconds": 72.0, "batch": 2, "category": "浪漫", "concept": "一封寫給賓客的情書：俯拍桌面上的信紙、押花、蠟封、鋼筆字，注意事項一句一句「寫」出來；有幾幕鏡頭「掉進」信紙上的水彩小畫，變成 3D 花園拱門。", "made": "字幕以鋼筆筆跡逐字寫出、信紙從信封抽出、押花飄落、鏡頭掉進水彩小畫（推近代替）、兩人從拱門兩側走到拱門下、花苞一朵朵綻放＋百分比、花瓣雨、拍立得滑入與紙膠帶、照片顯影後角色才動、老相機紅燈閃、手繪觀景窗括線、剪紙人形擋鏡頭被鋼筆畫叉、緞帶綁住手機與震動、明信片滑入與郵戳蓋下、鏡頭推近到小黑板、粉筆字逐字寫出、押花倒數、鏡頭穿過拱門小畫回到 3D 花園（借 ② 的花園場景）", "simplified": "紙張滑動帶陰影的轉場用推移代替（待 fx-lab）、前景與背景拉焦未做、信封最後自己闔上未做", "shots": [["①", 0.0, 7.0, "2D 圖文"], ["②", 7.0, 15.0, "混合"], ["③", 15.0, 23.0, "2D 圖文"], ["④", 23.0, 32.0, "混合"], ["⑤", 32.0, 41.0, "3D 場景"], ["⑥", 41.0, 52.0, "2D 圖文"], ["⑦", 52.0, 62.0, "3D 場景"], ["⑧", 62.0, 72.0, "混合"]]}, {"id": "V13", "title": "月光星空・夏夜露台風", "seconds": 73.0, "batch": 2, "category": "浪漫", "concept": "一個晴朗的夏夜：星星連成星座、月光灑在頂樓露台；字像星光一樣一顆顆亮起；3D 場景是一座掛滿串燈的頂樓露台。", "made": "字幕每字像星光由暗到亮、星空漂移、星星依序連線畫出喇叭星座與光波紋、流星劃過、鏡頭從 110% 拉到 100%、串燈明滅、兩人看月亮再轉身、發光星星沿弧線一顆顆亮起＋百分比、星環畫出與大頭照顯影、星線與愛心星、REC 紅點閃、螢火蟲飛到鏡頭前擋住、手機像鞦韆掛在月亮上擺盪、星星放大成貼文框、流星光痕寫出帳號、鏡頭從桌前上搖到夜空（2D 垂直移動代替）、星座字寫出大標、流星拖光尾劃出倒數、流星雨與鏡頭推近", "simplified": "薄雲飄過月亮、取景框十字對焦未做；⑦ 桌前的小圓桌縮圖沒畫，用簡化色塊代替", "shots": [["①", 0.0, 7.0, "2D 圖文"], ["②", 7.0, 15.0, "3D 場景"], ["③", 15.0, 24.0, "3D 場景"], ["④", 24.0, 33.0, "2D 圖文"], ["⑤", 33.0, 42.0, "3D 場景"], ["⑥", 42.0, 53.0, "2D 圖文"], ["⑦", 53.0, 63.0, "混合"], ["⑧", 63.0, 73.0, "混合"]]}, {"id": "V14", "title": "法式黑白膠片・一抹粉紅風", "seconds": 70.0, "batch": 2, "category": "浪漫", "concept": "一部法國老電影：全片黑白加膠片顆粒，只有新娘的粉紅禮服與玫瑰保留顏色；歐洲石板街角、咖啡館、花店；字幕是打字機字卡。最後一幕顏色從新娘身上擴散，整個畫面變成全彩。", "made": "圓形虹膜開場、膠片刮痕閃爍與暗角明暗跳動、字幕打字機逐字打出＋游標閃、鏡頭跟著兩人向左橫移、鴿子飛起、新娘框下的粉紅條（代表唯一彩色的禮服）跟著新娘走、櫥窗玻璃上的玫瑰一朵朵塗上＋百分比、OPEN 牌翻面與粉紅花瓣噴出、橢圓相框虹膜打開與照片跳格、粉紅領結與花冠貼上、觀景窗十字線、騎腳踏車剪影擋鏡頭後蓋 NG 字卡、手機鈴鐺被粉紅斜線劃掉、自拍（借 ② 的街景當背景）後閃白定格縮進貼文框、鏡頭從咖啡座右移到 A 字黑板（2D 平移代替）、粉紅底線劃過、打字機倒數與路燈閃、數到 1 後顏色從新娘身上圓形擴散、鏡頭慢推與花瓣灑落", "simplified": "黑白局部保色直接用縮圖的黑白＋粉紅（待 fx-lab）；黑白→彩色擴散是把灰階換成暖色漸層，不是真的全彩（待 fx-lab）；騎腳踏車路人與咖啡桌縮圖沒畫，用剪影色塊代替", "shots": [["①", 0.0, 6.0, "2D 圖文"], ["②", 6.0, 13.0, "3D 場景"], ["③", 13.0, 21.0, "3D 場景"], ["④", 21.0, 30.0, "2D 圖文"], ["⑤", 30.0, 39.0, "3D 場景"], ["⑥", 39.0, 50.0, "混合"], ["⑦", 50.0, 60.0, "3D 場景"], ["⑧", 60.0, 70.0, "混合"]]}, {"id": "V15", "title": "手繪童話動畫・魔法光點風", "seconds": 74.0, "batch": 2, "category": "迪士尼風格", "concept": "像經典手繪 2D 動畫電影的開場：水粉畫背景、原創的小藍鳥與小松鼠當助手，一道魔法光點飛過把字「畫」出來；3D 角色用描邊卡通渲染，疊在手繪背景上。", "made": "圓形虹膜開場、小藍鳥與牽牛花喇叭冒音符、魔法光點從左飛到右拖出花體字框、字幕在光點經過處由左到右亮起、兩人沿小徑走近變大、光點小精靈繞飛、松鼠點頭、小藍鳥沿樹枝一盞盞點亮燈籠＋百分比、彩虹光點噴出、兩扇窗依序推開（窗框擋住下半身）、名牌緞帶拉開、愛心花開、魔法相機星星閃光與紅莓果燈、大蒲公英擋鏡頭後被小藍鳥啄散、松鼠噓手機與震動、水滴漣漪變成貼文框、小藍鳥叼緞帶橫越、小動物偷吃、緞帶橫幅拉開、橡果計程車開進來、螢火蟲聚成倒數、森林亮起暖光與星星落下", "simplified": "3D 角色描邊卡通渲染（待 fx-lab）是佔位框；樹葉掃過的轉場用推移代替、最後的圓形收合用淡出至黑代替（皆待 fx-lab）；聲波圈與手機上的音符縮圖沒畫，未做", "shots": [["①", 0.0, 7.0, "2D 圖文"], ["②", 7.0, 15.0, "混合"], ["③", 15.0, 24.0, "混合"], ["④", 24.0, 33.0, "混合"], ["⑤", 33.0, 42.0, "混合"], ["⑥", 42.0, 54.0, "2D 圖文"], ["⑦", 54.0, 64.0, "混合"], ["⑧", 64.0, 74.0, "混合"]]}, {"id": "V16", "title": "溫馨 3D 動畫電影・幸福小鎮風", "seconds": 72.0, "batch": 2, "category": "迪士尼風格", "concept": "一座像 3D 動畫電影裡的迷你婚禮小鎮：圓潤的房子、彩色屋頂、鐘樓；每則注意事項發生在不同的店（麵包店、照相館、郵局、餐館）；字幕多半做成小鎮裡的布條、看板、燈牌。", "made": "鏡頭從高空下降推近鐘樓、喇叭彈一下冒音符與聲波、布條從鐘樓滾落展開後捲回、鴿子飛起、兩人走進街道、雙面布條翻面、花盆冒花與小貓伸懶腰、溫度計液柱往上爬＋百分比卡在 99%（烤箱冒煙抖動）、烤箱門彈開愛心蛋糕跳出與糖珠噴滿、鏡頭輕推、看板從地面彈起與大頭照翻轉、鏡頭橫移、小煙火、柔光燈閃與紅燈閃、小狗鑽到相機前再坐到旁邊、公告看板鈴鐺翻成靜音並抖動、相機無人機飛來閃光、燈牌逐字亮起帳號、鏡頭橫移到計程車（2D 平移代替）＋車身霓虹字依序亮起、鐘面倒數、全鎮窗戶依序亮燈與紙花、鏡頭升空拉遠成俯瞰", "simplified": "3D 橫移轉場用推移代替（待 fx-lab）；小鎮計程車與相機無人機縮圖沒畫，用簡化色塊與圖示代替；香檳塔流下、窗戶打開未做", "shots": [["①", 0.0, 7.0, "3D 場景"], ["②", 7.0, 15.0, "3D 場景"], ["③", 15.0, 23.0, "3D 場景"], ["④", 23.0, 32.0, "3D 場景"], ["⑤", 32.0, 41.0, "3D 場景"], ["⑥", 41.0, 52.0, "3D 場景"], ["⑦", 52.0, 62.0, "3D 場景"], ["⑧", 62.0, 72.0, "3D 場景"]]}, {"id": "V17", "title": "歌舞音樂劇・歡唱風", "seconds": 66.0, "batch": 2, "category": "迪士尼風格", "concept": "像動畫電影裡的經典歌舞段落：舞台燈一亮，新人變成主唱，字幕跟著節拍像歌詞一樣彈出來（內容就是注意事項，不是任何真實歌曲）；大樓梯、聚光燈、彩帶炮。", "made": "字幕每字跟著節拍放大 130% 回彈（先以每字 0.08 秒排，選定後要配樂拍點）、全黑中指揮棒敲三下後舞台燈一排排亮起、光軌留下音符、布幕拉開與聚光燈、鏡頭推近上仰、10 盞大燈依序亮起＋百分比、群舞剪影跳起與彩帶噴發、鏡頭小角度環繞（2D 平移代替）、聚光燈打在新郎→甩到新娘→合成大光圈、節目單從上方降下、觀眾剪影搖擺、站起來的剪影被拉回座位、手機合唱團一支支變靜音並抖動、拍立得閃光後大螢幕框成貼文、長桌從升降台升起、霓虹招牌降下與字閃兩下、燈泡數字一個個垂降累積、彩帶炮與鏡頭快速上仰推近", "simplified": "舞台換景滑台用推移代替（待 fx-lab）；階梯依序亮燈只做微微脈動；霓虹招牌縮圖沒畫，用簡化色塊代替；膠卷盤轉動、Tag 圖示未做", "shots": [["①", 0.0, 6.0, "3D 場景"], ["②", 6.0, 13.0, "3D 場景"], ["③", 13.0, 21.0, "混合"], ["④", 21.0, 30.0, "混合"], ["⑤", 30.0, 38.0, "2D 圖文"], ["⑥", 38.0, 48.0, "3D 場景"], ["⑦", 48.0, 57.0, "3D 場景"], ["⑧", 57.0, 66.0, "3D 場景"]]}, {"id": "V18", "title": "夢幻夜間遊行・煙火城堡風", "seconds": 73.0, "batch": 2, "category": "迪士尼風格", "concept": "一場夜間燈光遊行：一輛輛發光花車緩緩經過，每輛花車載著一則注意事項（燈飾字、LED 螢幕、燈牌）；遠方是原創造型的童話城堡，最後煙火倒數。", "made": "喇叭花車由左駛到中央停住、燈泡跑馬、光點音符噴出、城堡塔尖亮星、燈飾字以燈泡字效果亮起、背景路燈往左流動（跟拍感）、星星列車駛入時車頂星星一節節點亮＋百分比、城堡上空第一發煙火、主角花車駛入、鏡頭慢推、愛心氣球升起、相機花車由右駛入與鏡頭筒伸縮、閃光燈每 2 秒閃、站起來的剪影冒驚嘆號後出現綠色勾勾、手機花車駛入後鈴鐺翻成靜音並抖動、自拍閃光與螢幕框成貼文、鏡頭橫移到花車尾端燈牌與計程車小花車（2D 平移代替）、煙火倒數與愛心煙火、鏡頭升高拉遠", "simplified": "花車尾端燈牌與計程車小花車縮圖沒畫，用簡化色塊代替；城堡由下往上全亮只做心形窗閃爍", "shots": [["①", 0.0, 7.0, "3D 場景"], ["②", 7.0, 15.0, "3D 場景"], ["③", 15.0, 23.0, "3D 場景"], ["④", 23.0, 32.0, "3D 場景"], ["⑤", 32.0, 41.0, "混合"], ["⑥", 41.0, 52.0, "3D 場景"], ["⑦", 52.0, 62.0, "3D 場景"], ["⑧", 62.0, 73.0, "混合"]]}, {"id": "V19", "title": "海底泡泡冒險風", "seconds": 73.0, "batch": 2, "category": "迪士尼風格", "concept": "一趟海底冒險：陽光從水面灑下光柱、珊瑚與海草搖曳，一隻原創小海龜當嚮導；新人站在一顆巨大透明泡泡裡（不會濕），注意事項裝在泡泡裡浮上來。", "made": "水面光柱搖曳、浮游光點上升、海草擺動、海螺吹泡泡、第一句包在大泡泡裡浮起後啵地破掉、兩人站在大泡泡裡從海底升到中央、小海龜游過、小海龜一口一口吹泡泡排成一列＋百分比、彩色泡泡噴出與魚群繞圈、貝殼依序張開與大頭照珍珠光、魚群游來排成名字、愛心泡泡升起、潛水相機紅燈閃、觀景窗框疊上、河豚游到鏡頭前鼓成一顆球再洩氣游走、章魚的手機一支支變靜音冒 zzz、大泡泡浮上來變成貼文框、大海龜背著燈牌游進前景、水母倒數與脈動、泡泡載著兩人往上升與陽光灑下", "simplified": "泡泡擦除轉場用溶接代替（待 fx-lab）；大海龜計程車縮圖沒畫，用簡化色塊代替；⑧ 鏡頭往上仰未做（改成泡泡上升）", "shots": [["①", 0.0, 7.0, "2D 圖文"], ["②", 7.0, 15.0, "3D 場景"], ["③", 15.0, 24.0, "混合"], ["④", 24.0, 33.0, "2D 圖文"], ["⑤", 33.0, 42.0, "3D 場景"], ["⑥", 42.0, 53.0, "混合"], ["⑦", 53.0, 63.0, "3D 場景"], ["⑧", 63.0, 73.0, "混合"]]}, {"id": "V20", "title": "草地野餐・晨光手繪風", "seconds": 70.0, "batch": 2, "category": "生活自然", "concept": "週末早晨在公園草地野餐：樹影、格紋野餐墊、藤編籃；畫面上有手繪線條小插圖（雲、小鳥、皇冠）點綴；字是手寫感的圓體。", "made": "鏡頭從樹冠往下搖到收音機（2D 垂直移動代替）、陽光光斑閃動、收音機輕晃與手繪音符聲波、彩旗飄、兩人牽手從右側遠處走到野餐墊旁、蒲公英種子與手繪小雲飄、草莓一顆顆變紅＋百分比、籃子彈開飄出氣球與紙花、鏡頭從左往右平移、黑板粉筆字寫出、拍立得被風吹晃、頭上畫出手繪皇冠與小花圈、手繪線條逐筆畫出再上色、相機紅燈閃、手繪箭頭指向相機、小人站起來被打紅圈叉後小狗拉他坐下變勾勾、手機跳進藤籃與震動、新娘舉起木製拍照框與快門閃、螢光筆畫底與 Tag 彈跳、鏡頭右移帶入畫架小黑板、數字氣球一顆顆升起飛走、一大把彩色氣球升起、手繪小鳥飛過、鏡頭慢推", "simplified": "手機跳進籃子用簡化色塊代替；小人回頭只用箭頭表示", "shots": [["①", 0.0, 6.0, "3D 場景"], ["②", 6.0, 13.0, "3D 場景"], ["③", 13.0, 21.0, "3D 場景"], ["④", 21.0, 30.0, "3D 場景"], ["⑤", 30.0, 39.0, "2D 圖文"], ["⑥", 39.0, 50.0, "3D 場景"], ["⑦", 50.0, 60.0, "3D 場景"], ["⑧", 60.0, 70.0, "3D 場景"]]}, {"id": "V21", "title": "陽台小花園・手作日常風", "seconds": 71.0, "batch": 2, "category": "生活自然", "concept": "一個普通的週末在家：陽台盆栽、灑進來的陽光、窗台上打盹的貓；便利貼、牛皮紙標籤、手帳把注意事項「貼」在生活物件上（植物名牌、冰箱、手帳）；新郎偷吃蛋糕被新娘抓包，呼應「監督新郎減肥」。", "made": "字幕手寫逐字寫出、鏡頭慢推、紗簾飄動、收音機聲波、貓咪呼嚕、便利貼被風吹落、新郎從屋內走出來、新娘澆花（水滴）後放下澆水壺鞠躬、龜背芋葉晃動、幼苗一節節長高＋木尺百分比、花苞冒出搖晃後開成向日葵、冰箱門打開（冰箱燈照亮新郎）再關上露出叉腰的新娘、名字標籤一格格打出、愛心磁鐵彈一下、剪貼簿翻頁、相機貼紙紅燈閃、小人貼紙一個個貼上、被移到走道的小人打叉後貼回變勾勾、手機翻面與桌面震動、自拍閃光、鏡頭推近到手帳、鏡頭左移到冰箱大便條（2D 平移代替）、麥克筆字寫出、牆上串燈倒數、城市小煙火、貓咪跳上欄杆、鏡頭拉遠", "simplified": "冰箱門、向日葵、⑦ 前段的餐桌縮圖沒畫，用簡化色塊代替；自拍後螢幕框成貼文未做；推近到手帳時背景放大會變模糊", "shots": [["①", 0.0, 6.0, "3D 場景"], ["②", 6.0, 14.0, "3D 場景"], ["③", 14.0, 23.0, "3D 場景"], ["④", 23.0, 32.0, "3D 場景"], ["⑤", 32.0, 41.0, "2D 圖文"], ["⑥", 41.0, 52.0, "3D 場景"], ["⑦", 52.0, 62.0, "3D 場景"], ["⑧", 62.0, 71.0, "3D 場景"]]}, {"id": "V22", "title": "海邊日落・底片隨拍風", "seconds": 72.0, "batch": 2, "category": "生活自然", "concept": "一天的海邊小旅行：沙灘、浪花、日落、營火；像用底片相機隨手拍——偶爾漏光、角落有日期戳；字寫在沙灘上、衝浪板上、漂流木牌上；最後放天燈倒數。", "made": "浪花一波波沖上、沙上的字浮現後被浪抹掉再浮現下一組、橘色漏光與日期戳、鏡頭緩慢推進、鏡頭跟著兩人橫移＋手持微晃、腳印、海鷗、膠卷捲出後每格依序顯影＋百分比（第 10 格泛紅光停住）、漏光掃過與拍立得飄落、鏡頭從右往左平移、衝浪板名字逐字刷出與大頭照貼紙、相機紅燈閃、觀景窗框與日期戳疊上、海灘球彈跳進來擋住鏡頭後被風吹走、手機滑進草編海灘包（包包抖動、吊飾變靜音）、拍立得閃光、照片飛到曬衣繩上變成貼文、漂流木牌字逐字燙出、鏡頭右搖到木製指示牌（2D 平移代替）、營火搖曳與火星、天燈一盞盞從兩人手上升起、數十盞天燈升空", "simplified": "海灘包、海灘球、木製指示牌縮圖沒畫，用簡化色塊代替；沙上寫字的凹陷效果只做淡入", "shots": [["①", 0.0, 7.0, "3D 場景"], ["②", 7.0, 15.0, "3D 場景"], ["③", 15.0, 23.0, "2D 圖文"], ["④", 23.0, 32.0, "3D 場景"], ["⑤", 32.0, 41.0, "3D 場景"], ["⑥", 41.0, 52.0, "混合"], ["⑦", 52.0, 62.0, "3D 場景"], ["⑧", 62.0, 72.0, "3D 場景"]]}, {"id": "V23", "title": "黏土定格動畫風", "seconds": 65.0, "batch": 2, "category": "有趣俏皮", "concept": "整支片像黏土定格動畫：每秒 12 格的抽格感、黏土上有指紋、字是黏土搓成的條狀字母；場景是一張工作桌上的黏土小世界，新郎偷吃被新娘抓包的笑點也做進去。", "made": "場景與角色框每秒 12 格抽格（字幕不抽格）、字幕壓扁→回彈進場、黏土喇叭扭出來、黏土字一個個從喇叭口蹦上桌再被擀麵棍滾過壓掉、黏土門彈開、蝸牛爬過、黏土球越滾越大跟著刻度前進＋百分比、球卡住被擠扁抖動後炸成黏土碎片、相框捏成形、甜甜圈滾到新郎腳邊後被沒收變愛心、攝影機鏡頭伸縮與紅燈閃、站起來的小觀眾被黏土手按回椅子、黏土鈴鐺被捏扁加斜線與震動、黏土照片貼上螢幕、黏土食物一道道長出來、黏土泡泡、黏土計程車開進前景、黏土數字從上方砸下＋桌面震動、炸成紙花與小觀眾湧上、鏡頭小幅推近", "simplified": "黏土材質是縮圖的平面色塊（待 fx-lab）；黏土計程車與黏土照片縮圖沒畫，用簡化色塊代替；小觀眾回頭未做", "shots": [["①", 0.0, 6.0, "3D 場景"], ["②", 6.0, 13.0, "3D 場景"], ["③", 13.0, 20.0, "3D 場景"], ["④", 20.0, 29.0, "3D 場景"], ["⑤", 29.0, 37.0, "3D 場景"], ["⑥", 37.0, 47.0, "3D 場景"], ["⑦", 47.0, 56.0, "3D 場景"], ["⑧", 56.0, 65.0, "3D 場景"]]}, {"id": "V24", "title": "普普漫畫格・對話泡泡風", "seconds": 63.0, "batch": 2, "category": "有趣俏皮", "concept": "一本美式普普漫畫：網點、粗黑框分格、對話泡泡、擬聲大字；畫面在分格之間跳來跳去；3D 角色用描邊＋網點著色融入漫畫格。", "made": "漫畫格依序「啪」地跳出、擬聲字 150→100% 砸進來並抖動、畫面震動、速度線與放射背景、喇叭震動冒鋸齒聲波、對話泡泡與黃色旁白框彈出、格框被撞歪、蓄力條一格格填滿＋百分比（99% 冒汗珠、整格發抖）、POW! 爆炸與紙花、角色介紹格的名字砸入與 READY! 擬聲字、相機紅燈閃、新娘走到鏡頭前越來越大後跳出大 ✕ 與 !!、四格漫畫依字幕依序翻開（鈴鈴被打叉、手機抖動嗡嗡、愛心數字狂跳、帳號外框閃紅兩次）、CHEERS!、鋸齒警告泡泡彈出、擬聲數字倒數＋背景每秒換色、兩人從畫面下方跳進來與紙花", "simplified": "3D 角色描邊網點著色（待 fx-lab）是佔位框；翻頁轉場用推移代替；POW!／READY!／✕／警告泡泡縮圖沒畫，用文字與色塊代替；最後定格成漫畫大合照未做", "shots": [["①", 0.0, 6.0, "2D 圖文"], ["②", 6.0, 12.0, "混合"], ["③", 12.0, 19.0, "2D 圖文"], ["④", 19.0, 27.0, "混合"], ["⑤", 27.0, 35.0, "3D 場景"], ["⑥", 35.0, 45.0, "混合"], ["⑦", 45.0, 54.0, "混合"], ["⑧", 54.0, 63.0, "混合"]]}, {"id": "V25", "title": "蠟筆塗鴉亂入風", "seconds": 66.0, "batch": 2, "category": "有趣俏皮", "concept": "3D 小婚禮場景是「真的」，但有一隻看不見的手拿蠟筆在上面亂畫：替新郎畫皇冠、把小蛋糕畫成三層大蛋糕、把擋鏡頭的塗鴉小人用橡皮擦掉；字是抖抖的蠟筆手寫。", "made": "蠟筆線條每 0.08 秒抖動、蠟筆畫出喇叭與聲波、字幕以蠟筆筆跡逐字寫出、頭頂畫出對話泡泡再寫字、閃閃線條與小花、地上格子一格格塗色＋百分比（最後一格空白、頭上畫問號）、彩虹格子與紙花、皇冠與仙女棒依序畫出、箭頭指向介紹、手上畫出花束、大愛心塗滿、相機紅燈閃、塗鴉小人觀眾畫出來、站起來擋鏡頭的小人被橡皮擦擦成蠟筆屑、白紙上畫手機與大叉再被一筆擦開露出兩人、沿兩人外圍畫出貼文框與愛心塗滿、杯子蛋糕加畫成三層、雞腿披薩薯條依序畫出、杯口星星、計程車與大標、蠟筆數字畫出後被亂塗蓋掉、煙火星星彩帶狂畫、鏡頭慢推", "simplified": "塗鴉沒有真的貼合角色動作（待 fx-lab，角色框是固定的）；蠟筆一筆擦過的轉場用推移代替（待 fx-lab）；白紙上的手機、計程車、亂塗用簡化圖形與文字代替", "shots": [["①", 0.0, 6.0, "2D 圖文"], ["②", 6.0, 13.0, "混合"], ["③", 13.0, 21.0, "混合"], ["④", 21.0, 30.0, "混合"], ["⑤", 30.0, 38.0, "混合"], ["⑥", 38.0, 48.0, "混合"], ["⑦", 48.0, 57.0, "混合"], ["⑧", 57.0, 66.0, "混合"]]}];
 const SEG = { "①": "廣播提醒", "②": "引言", "③": "歡迎", "④": "男女主角", "⑤": "攝影團隊", "⑥": "手機與打卡", "⑦": "飲食與敬酒", "⑧": "倒數登場" };
+const CATS = ["主題扮演", "浪漫", "迪士尼風格", "生活自然", "有趣俏皮"];
+const COMP = { "3D 場景": ["c3d", "3D"], "混合": ["cmix", "混合"], "2D 圖文": ["c2d", "2D"] };
 const $ = (id) => document.getElementById(id);
 const video = $("player");
 const fmt = (s) => { s = Math.round(s); return Math.floor(s / 60) + ":" + String(s % 60).padStart(2, "0"); };
-const splitList = (t) => (t || "").replace(/未做$/, "").split(/[、]/).map((x) => x.trim()).filter(Boolean);
+const splitList = (t) => (t || "").split(/[、；]/).map((x) => x.trim()).filter(Boolean);
 let current = null;
+let filter = "全部";
 
 function chips(el, items) {
   el.replaceChildren(...items.map((t) => { const li = document.createElement("li"); li.textContent = t; return li; }));
 }
 
 function buildTimeline(v) {
-  const tl = $("timeline");
-  tl.replaceChildren(...v.shots.map(([mark, s, e]) => {
+  $("timeline").replaceChildren(...v.shots.map(([mark, s, e, comp]) => {
     const b = document.createElement("button");
     b.type = "button"; b.className = "seg"; b.style.flexGrow = String(e - s);
     b.dataset.s = s; b.dataset.e = e;
-    b.setAttribute("aria-label", mark + " " + SEG[mark] + "，" + fmt(s) + " 開始");
-    b.innerHTML = '<div class="bar"><div class="fill"></div></div><div class="lab"><b>' + mark + '</b><span>' + SEG[mark] + '</span></div><div class="tc">' + fmt(s) + '</div>';
+    const c = COMP[comp];
+    b.setAttribute("aria-label", mark + " " + SEG[mark] + (comp ? "（" + comp + "）" : "") + "，" + fmt(s) + " 開始");
+    b.innerHTML = '<div class="bar"><div class="fill"></div></div><div class="lab"><b>' + mark + '</b><span>' + SEG[mark] + '</span></div>' +
+      '<div class="meta"><span class="tc">' + fmt(s) + '</span>' + (c ? '<span class="comp ' + c[0] + '">' + c[1] + '</span>' : '') + '</div>';
     b.addEventListener("click", () => { video.currentTime = s + 0.01; video.play().catch(() => {}); });
     return b;
   }));
+  $("hint").textContent = v.batch === 2 ? "點時間軸的段落可以直接跳過去；小字是這一幕的畫面構成。" : "點時間軸的段落可以直接跳過去。";
 }
 
 function paintProgress() {
   const t = video.currentTime;
   for (const b of $("timeline").children) {
     const s = +b.dataset.s, e = +b.dataset.e;
-    const p = Math.max(0, Math.min(1, (t - s) / (e - s)));
-    b.querySelector(".fill").style.width = (p * 100) + "%";
+    b.querySelector(".fill").style.width = (Math.max(0, Math.min(1, (t - s) / (e - s))) * 100) + "%";
     b.classList.toggle("on", t >= s && t < e);
   }
+}
+
+function markCurrent() {
+  for (const b of document.querySelectorAll(".pick")) b.setAttribute("aria-current", String(b.dataset.id === current));
 }
 
 function select(id, autoplay) {
@@ -192,31 +217,60 @@ function select(id, autoplay) {
   if (autoplay) video.play().catch(() => {});
   $("nowId").textContent = v.id;
   $("nowTitle").textContent = v.title;
+  $("nowCat").textContent = v.category;
   $("nowDur").textContent = fmt(v.seconds);
   $("concept").textContent = v.concept;
   chips($("made"), splitList(v.made));
   chips($("simplified"), splitList(v.simplified));
   buildTimeline(v);
   paintProgress();
-  for (const b of document.querySelectorAll(".pick")) b.setAttribute("aria-current", String(b.dataset.id === v.id));
+  markCurrent();
   try { localStorage.setItem("animatic-version", v.id); } catch (e) {}
   if (location.hash !== "#" + v.id) history.replaceState(null, "", "#" + v.id);
 }
 
-$("reel").replaceChildren(...VERSIONS.map((v) => {
-  const li = document.createElement("li");
-  const b = document.createElement("button");
-  b.type = "button"; b.className = "pick"; b.dataset.id = v.id;
-  b.innerHTML = '<img alt="" loading="lazy" src="' + v.id + '.jpg"><span class="t"><small>' + v.id + "・" + fmt(v.seconds) + '</small><b></b></span>';
-  b.querySelector("b").textContent = v.title;
-  b.addEventListener("click", () => select(v.id, !video.paused || video.currentTime > 0));
-  li.append(b);
-  return li;
-}));
+function renderFilters() {
+  const opts = ["全部", ...CATS];
+  $("filters").replaceChildren(...opts.map((c) => {
+    const n = c === "全部" ? VERSIONS.length : VERSIONS.filter((v) => v.category === c).length;
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "filter";
+    b.setAttribute("aria-pressed", String(c === filter));
+    b.innerHTML = c + "<small>" + n + "</small>";
+    b.addEventListener("click", () => { filter = c; renderFilters(); renderList(); });
+    return b;
+  }));
+}
+
+function renderList() {
+  const cats = filter === "全部" ? CATS : [filter];
+  $("list").replaceChildren(...cats.map((c) => {
+    const sec = document.createElement("section");
+    sec.className = "group";
+    const h = document.createElement("h3");
+    h.textContent = c + (c === "主題扮演" ? "・第一批" : "・第二批");
+    const ol = document.createElement("ol");
+    ol.append(...VERSIONS.filter((v) => v.category === c).map((v) => {
+      const li = document.createElement("li");
+      const b = document.createElement("button");
+      b.type = "button"; b.className = "pick"; b.dataset.id = v.id;
+      b.innerHTML = '<img alt="" loading="lazy" src="' + v.id + '.jpg"><span class="t"><small>' + v.id + "・" + fmt(v.seconds) + '</small><b></b></span>';
+      b.querySelector("b").textContent = v.title;
+      b.addEventListener("click", () => select(v.id, !video.paused || video.currentTime > 0));
+      li.append(b);
+      return li;
+    }));
+    sec.append(h, ol);
+    return sec;
+  }));
+  markCurrent();
+}
 
 video.addEventListener("timeupdate", paintProgress);
 video.addEventListener("seeked", paintProgress);
 
+renderFilters();
+renderList();
 let start = (location.hash || "").slice(1);
 if (!VERSIONS.some((v) => v.id === start)) {
   try { start = localStorage.getItem("animatic-version") || ""; } catch (e) { start = ""; }

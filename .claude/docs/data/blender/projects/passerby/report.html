@@ -1,0 +1,197 @@
+<title>路人甲 3D 角色工作簿</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@600;800&family=Noto+Sans+TC:wght@400;500;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* 版面：左側固定的階段目錄＋右側長卷；每個階段一張「工作檯」，影片是主角，數字放在影片下方 */
+:root {
+  --bg: #f4eef0; --paper: #fbf8f9; --ink: #33252b; --muted: #8b7680; --line: #e3d6db;
+  --accent: #a8456a; --accent-soft: #f1dbe3; --ok: #2f7d5b; --ok-soft: #dcefe5; --bad: #b2552e; --bad-soft: #f7e2d6;
+  --f-display: "Noto Serif TC", "PMingLiU", serif;
+  --f-body: "Noto Sans TC", "Microsoft JhengHei", system-ui, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #1f181b; --paper: #2a2125; --ink: #f2e7eb; --muted: #b7a2ab; --line: #43363c;
+  --accent: #e88aab; --accent-soft: #4a2e39; --ok: #7fd1a8; --ok-soft: #22392f; --bad: #f0a07a; --bad-soft: #45302a; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #1f181b; --paper: #2a2125; --ink: #f2e7eb; --muted: #b7a2ab; --line: #43363c;
+  --accent: #e88aab; --accent-soft: #4a2e39; --ok: #7fd1a8; --ok-soft: #22392f; --bad: #f0a07a; --bad-soft: #45302a; color-scheme: dark }
+* { box-sizing: border-box }
+body { background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 15px; line-height: 1.7; }
+.shell { max-width: 1200px; margin: 0 auto; padding-inline: 16px; padding-block: 28px 64px; display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 32px; }
+nav.toc { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 20px); align-self: start; display: grid; gap: 4px; }
+nav.toc .brand { font-family: var(--f-display); font-weight: 800; font-size: 20px; line-height: 1.3; margin-bottom: 14px; }
+nav.toc a { color: var(--muted); text-decoration: none; padding: 6px 10px; border-radius: 8px; font-size: 14px; display: grid; grid-template-columns: 26px 1fr; }
+nav.toc a span { font-family: var(--f-mono); font-size: 12px; padding-top: 2px; }
+nav.toc a:hover, nav.toc a:focus-visible { background: var(--accent-soft); color: var(--ink); outline: none; }
+main { display: grid; gap: 40px; min-width: 0; }
+header.top { display: grid; gap: 10px; }
+.eyebrow { font-family: var(--f-mono); font-size: 12px; letter-spacing: .14em; color: var(--accent); text-transform: uppercase; }
+h1 { font-family: var(--f-display); font-weight: 800; font-size: clamp(28px, 4.2vw, 44px); line-height: 1.2; margin: 0; text-wrap: balance; }
+.lede { max-width: 62ch; color: var(--muted); margin: 0; }
+.stats { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 6px; }
+.stat { background: var(--paper); border: 1px solid var(--line); border-radius: 10px; padding: 8px 14px; font-size: 13px; color: var(--muted); }
+.stat b { display: block; font-family: var(--f-mono); font-size: 20px; color: var(--ink); font-weight: 500; }
+section.stage { display: grid; gap: 18px; scroll-margin-top: 20px; }
+.stage-head { display: grid; grid-template-columns: auto 1fr; gap: 4px 14px; align-items: baseline; border-top: 2px solid var(--ink); padding-top: 14px; }
+.stage-head .num { font-family: var(--f-mono); font-size: 13px; color: var(--accent); grid-row: span 2; padding-top: 6px; }
+h2 { font-family: var(--f-display); font-size: 26px; margin: 0; line-height: 1.3; text-wrap: balance; }
+.stage-head p { margin: 0; color: var(--muted); max-width: 66ch; }
+.bench { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+.panel { background: var(--paper); border: 1px solid var(--line); border-radius: 14px; padding: 14px; display: grid; gap: 10px; min-width: 0; align-content: start; }
+.panel h3 { font-size: 15px; margin: 0; font-weight: 700; }
+.panel p { margin: 0; font-size: 14px; color: var(--muted); }
+.panel video, .panel img { width: 100%; max-width: 100%; display: block; border-radius: 10px; background: var(--bg); }
+.wide { grid-column: 1 / -1; }
+ul.facts { margin: 0; padding-left: 1.1em; display: grid; gap: 6px; font-size: 14px; }
+.grid30 { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 14px; }
+figure.clip { margin: 0; background: var(--paper); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; display: grid; align-content: start; }
+figure.clip .vid { aspect-ratio: 2 / 3; background: var(--bg); }
+figure.clip video { width: 100%; height: 100%; object-fit: cover; display: block; }
+figcaption { display: grid; grid-template-columns: auto 1fr; gap: 2px 8px; padding: 10px 12px 4px; align-items: baseline; }
+figcaption .no { font-family: var(--f-mono); font-size: 12px; color: var(--muted); }
+figcaption b { font-size: 15px; }
+.chip { grid-column: 1 / -1; justify-self: start; font-size: 12px; padding: 1px 9px; border-radius: 99px; }
+.chip { background: var(--accent-soft); color: var(--muted); }
+.chip.ok { background: var(--ok-soft); color: var(--ok); }
+.chip.bad { background: var(--bad-soft); color: var(--bad); }
+figure.clip dl { margin: 0; padding: 4px 12px 10px; display: grid; grid-template-columns: 1fr; gap: 0; }
+figure.clip dl div { display: flex; justify-content: space-between; gap: 6px; font-size: 12px; border-bottom: 1px dashed var(--line); padding-block: 2px; }
+figure.clip dt { color: var(--muted); }
+figure.clip dd { margin: 0; font-family: var(--f-mono); font-variant-numeric: tabular-nums; }
+figure.clip .note, figure.clip .fix { margin: 0; padding: 0 12px 10px; font-size: 12px; color: var(--muted); }
+figure.clip .fix { color: var(--accent); }
+.pending { display: grid; place-items: center; height: 100%; min-height: 120px; color: var(--muted); font-size: 13px; letter-spacing: .1em; background: repeating-linear-gradient(45deg, var(--bg), var(--bg) 8px, var(--paper) 8px, var(--paper) 16px); border-radius: 10px; }
+.pending.wide169 { aspect-ratio: 16 / 9; }
+.legend { display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: 13px; color: var(--muted); }
+.legend b { color: var(--ink); font-weight: 500; }
+.scenes { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 16px; }
+.scene video { aspect-ratio: 16 / 9; }
+.stills { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
+.compare { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.compare figure { margin: 0; display: grid; gap: 4px; }
+.compare figcaption { padding: 0; display: block; font-size: 12px; color: var(--muted); }
+.compare img { aspect-ratio: 2 / 3; object-fit: cover; }
+.limits { background: var(--paper); border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 12px; padding: 14px 18px; }
+.limits h3 { margin: 0 0 6px; font-size: 15px; }
+@media (max-width: 820px) {
+  .shell { grid-template-columns: minmax(0, 1fr); }
+  nav.toc { position: static; display: flex; flex-wrap: wrap; gap: 6px; }
+  nav.toc .brand { width: 100%; margin: 0; }
+  nav.toc a { grid-template-columns: auto auto; gap: 6px; background: var(--paper); border: 1px solid var(--line); }
+  .scenes { grid-template-columns: minmax(0, 1fr); }
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto } }
+</style>
+
+<div class="shell">
+  <nav class="toc" aria-label="階段">
+    <div class="brand">路人甲<br>3D 角色工作簿</div>
+    <a href="#s1"><span>01</span>身體完成度</a>
+    <a href="#s2"><span>02</span>9 種動作測試</a>
+    <a href="#s3"><span>03</span>照片款服裝</a>
+    <a href="#s4"><span>04</span>情境</a>
+    <a href="#limits"><span>—</span>還沒做到的</a>
+  </nav>
+
+  <main>
+    <header class="top">
+      <div class="eyebrow">passerby.vrm · Blender 5.2 · EEVEE</div>
+      <h1>路人甲：婚禮賓客</h1>
+      <p class="lede">開場影片 V12 第 5 幕「舉手機拍照、擋住鏡頭」的路人甲。VRoid 男性基底、棕色鍋蓋短髮、黑框眼鏡，臉和服裝都刻意和新郎、新娘不一樣。在 Blender 補完身體、測 6 個會用到的基本動作、做海軍藍西裝。</p>
+      <div class="stats">
+        <div class="stat"><b>9 / 9</b>動作檢查通過</div>
+        <div class="stat"><b>360°</b>全身轉台</div>
+        <div class="stat"><b>18</b>件服裝配件</div>
+        <div class="stat"><b>0</b>個情境短片</div>
+      </div>
+    </header>
+
+    <section class="stage" id="s1">
+      <div class="stage-head"><span class="num">01</span><h2>身體完成度：臉、身體、下身、雙手、雙腳</h2>
+        <p>這個角色用 VRoid 男性基底（M00），身高 170 cm，沒有照片、不像任何真人。VRoid 匯出時把 T 恤底下看不到的皮膚刪掉了（胸口、上背、肩膀）。路人甲的襯衫領口是敞開的，V 字裡看得到上胸；動作測試也是拿「手」去量「身體皮膚」，所以補回來。實量這個角色的腰腹截面，和新郎差不到 2 mm（兩人都是 VRoid 男性預設身體、只差身高），所以直接沿用新郎專案量好的補皮膚形狀，再讓角色轉一圈檢查。</p></div>
+      <div class="bench">
+        <div class="panel"><h3>全身 360°</h3><video src="videos/turn_body.mp4" poster="pictures/posters/turn_body.jpg" autoplay muted loop playsinline></video><p>角色自己轉、燈光固定，所以背面也打得到光，看得清楚接縫。</p></div>
+        <div class="panel"><h3>臉部 360°</h3><video src="videos/turn_face.mp4" poster="pictures/posters/turn_face.jpg" autoplay muted loop playsinline></video><p>轉到一半會眨一次眼，順便確認眼皮表情正常。</p></div>
+        <div class="panel"><h3>做了什麼</h3><ul class="facts"><li>軀幹：補回胸口、上背、肩膀的皮膚（男性，不做胸部）。正面胸口、鎖骨自然；轉到背面平滑，沒有凸起或階梯。</li><li>肩膀與領口：補丁一律收進 T 恤內側 5 mm，穿 T 恤時正面、背面、手放下都沒有皮膚從領口或肩膀戳出來。</li><li>上臂：沿用原本手臂的真實截面往肩膀放大。接縫處有一點色差，但位置在 T 恤袖子和西裝袖子裡面，兩套衣服都看不到。</li><li>便服：男性不做平口小可愛，直接穿 VRoid 原本的白色圓領 T 恤、黑色及膝短褲、黑白球鞋。</li><li>臉：VRoid 預設臉調成男性五官，棕色鍋蓋短髮、黑框眼鏡（VRoid 配件），和新郎、新娘都不一樣；5 種表情、眨眼都檢查過，眼鏡跟著頭轉。</li><li>手和腳：手勢圖 6 種（掌心、手背各一張）；腳 4 個角度，鞋底貼地，每個動作都自動貼地。</li></ul></div>
+        <div class="panel wide"><h3>手勢（上排：掌心；下排：手背）</h3><img src="pictures/hands_sheet.jpg" alt="六種手勢的掌心與手背" loading="lazy"><p>從左到右：放鬆、張開、握拳、指、比 YA、握持。</p></div>
+        <div class="panel wide"><h3>表情與腳</h3><img src="pictures/face_feet.jpg" alt="五種表情與鞋子四個角度" loading="lazy"></div>
+      </div>
+    </section>
+
+    <section class="stage" id="s2">
+      <div class="stage-head"><span class="num">02</span><h2>9 種動作測試</h2>
+        <p>每個動作都會循環播放。檢查分三項：手或前臂有沒有穿進身體、頭或另一隻手；腳底有沒有陷進地板或浮在空中；身體骨頭每格最多轉幾度（超過 15 度看起來就會跳）。頭髮有物理擺動。</p></div>
+      <div class="legend"><span><b>穿模</b>：最深穿入幾毫米（5 以下算碰到）</span><span><b>最大轉速</b>：身體骨頭每格最多轉幾度（24 格＝1 秒）</span><span><b>修正</b>：第一輪測出問題、修完後的前後數字</span></div>
+      <div class="grid30">
+<figure class="clip" id="a-idle"><div class="vid"><video data-src="videos/actions/idle.mp4" poster="pictures/posters/actions/idle.jpg" muted loop playsinline preload="none"></video></div>
+  <figcaption><span class="no">01</span><b>站姿待機</b><span class="chip ok">通過</span></figcaption><dl><div><dt>穿模</dt><dd>0 mm</dd></div><div><dt>最大轉速</dt><dd>0.4°/格</dd></div><div><dt>腳底</dt><dd>貼地</dd></div><div><dt>長度</dt><dd>2.0 秒</dd></div></dl><p class="note">雙腳踩住不動（腳底鎖定）：重心在兩腳間輕輕左右移、骨盆微側傾、呼吸、眨眼</p></figure>
+<figure class="clip" id="a-bow"><div class="vid"><video data-src="videos/actions/bow.mp4" poster="pictures/posters/actions/bow.jpg" muted loop playsinline preload="none"></video></div>
+  <figcaption><span class="no">02</span><b>鞠躬</b><span class="chip ok">通過</span></figcaption><dl><div><dt>穿模</dt><dd>0 mm</dd></div><div><dt>最大轉速</dt><dd>3.7°/格</dd></div><div><dt>腳底</dt><dd>貼地</dd></div><div><dt>長度</dt><dd>3.0 秒</dd></div></dl><p class="note">女性版雙手上下交疊（量到約 1.4 mm 的手碰手）；男性版手貼在大腿外側</p><p class="note">雙腳原地不動，從髖關節前彎約 35°、臀部自然後移、頭跟著低下，停一下再慢慢起身。女性雙手上下交疊放在小腹前；男性背打直、幾乎全從髖關節彎，雙手併指、掌心朝大腿，整段貼在大腿外側的褲縫上，只沿著褲縫往下滑（看 project.json 的 gender，沒有就看 body.bust）</p></figure>
+<figure class="clip" id="a-nod"><div class="vid"><video data-src="videos/actions/nod.mp4" poster="pictures/posters/actions/nod.jpg" muted loop playsinline preload="none"></video></div>
+  <figcaption><span class="no">03</span><b>點頭</b><span class="chip ok">通過</span></figcaption><dl><div><dt>穿模</dt><dd>0 mm</dd></div><div><dt>最大轉速</dt><dd>2.4°/格</dd></div><div><dt>腳底</dt><dd>貼地</dd></div><div><dt>長度</dt><dd>2.0 秒</dd></div></dl></figure>
+<figure class="clip" id="a-walk"><div class="vid"><video data-src="videos/actions/walk.mp4" poster="pictures/posters/actions/walk.jpg" muted loop playsinline preload="none"></video></div>
+  <figcaption><span class="no">04</span><b>原地走路</b><span class="chip ok">通過</span></figcaption><dl><div><dt>穿模</dt><dd>0 mm</dd></div><div><dt>最大轉速</dt><dd>5.9°/格</dd></div><div><dt>腳底</dt><dd>貼地</dd></div><div><dt>長度</dt><dd>2.0 秒</dd></div></dl><p class="note">原地走（跑步機式），支撐腳每格自動貼地</p></figure>
+<figure class="clip" id="a-turn"><div class="vid"><video data-src="videos/actions/turn.mp4" poster="pictures/posters/actions/turn.jpg" muted loop playsinline preload="none"></video></div>
+  <figcaption><span class="no">05</span><b>轉身</b><span class="chip ok">通過</span></figcaption><dl><div><dt>穿模</dt><dd>0 mm</dd></div><div><dt>最大轉速</dt><dd>11.2°/格</dd></div><div><dt>腳底</dt><dd>貼地</dd></div><div><dt>長度</dt><dd>3.0 秒</dd></div></dl><p class="note">轉到背面再轉回來，頭先轉、身體跟上</p></figure>
+<figure class="clip" id="a-walk_fwd"><div class="vid"><video data-src="videos/actions/walk_fwd.mp4" poster="pictures/posters/actions/walk_fwd.jpg" muted loop playsinline preload="none"></video></div>
+  <figcaption><span class="no">06</span><b>往前走</b><span class="chip ok">通過</span></figcaption><dl><div><dt>穿模</dt><dd>0 mm</dd></div><div><dt>最大轉速</dt><dd>8.1°/格</dd></div><div><dt>腳底</dt><dd>貼地</dd></div><div><dt>長度</dt><dd>3.0 秒</dd></div></dl><p class="note">真的往前移動（不是原地踏步）：站姿出發 → 換步 → 最後一步併腳站好，可以接 place(idle)。著地腳釘在地上不滑，腳跟抬起時繞鞋尖轉、落地時繞腳跟轉。預覽版朝 +X 走 0.9 m、4 步、3 秒；距離、步數、秒數、方向、出發點都能用參數改。新娘穿蓬裙時用 arms=&#x27;skirt&#x27;（手輕捏臀部高度的裙面），自然擺手的版本手會穿進蓬裙。2026-10-06 改上半身（使用者說新郎走路像機器人、手掌張開、側面胸口很挺）：手臂改成照步伐連續擺（鐘擺式、和腳反向；舊版用兩腳前後差，腳站著時手臂停住，一段一段頓），往前擺時手肘多彎（16°→34°）、手指改 walk_relax（放鬆微握，舊版 relax 幾乎張開）、手腕幾乎打直；肩膀和腰反向小扭轉（胸 ±5.5°、腰 ∓1.5°），頭轉回來保持朝前；走路時上身整體前傾約 4°、上背微圓，頭在骨盆前 2 cm（舊版在骨盆後 1 cm，VRoid 站姿本來就在後 3 cm，看起來像挺胸）；骨盆上下起伏 6 mm → 9 mm。頭尾站著那幾格的軀幹和舊版相同；手臂、手指換成新的放鬆姿勢（接 idle 時淡入就會換回 idle 的手）。腳的部分（換步、位置、秒數）沒改，同一組參數走出來的位置與格數和舊版一樣</p></figure>
+<figure class="clip" id="a-walk_in_photo"><div class="vid"><video data-src="videos/actions/walk_in_photo.mp4" poster="pictures/posters/actions/walk_in_photo.jpg" muted loop playsinline preload="none"></video></div>
+  <figcaption><span class="no">07</span><b>走進來舉手機拍照</b><span class="chip ok">通過</span></figcaption><dl><div><dt>穿模</dt><dd>4 mm</dd></div><div><dt>最大轉速</dt><dd>14.7°/格</dd></div><div><dt>腳底</dt><dd>貼地</dd></div><div><dt>長度</dt><dd>1.3 秒</dd></div></dl><p class="note">雙手捏著手機左右兩邊，手指在手機背面互相碰到：手對手 3.8 mm（門檻 5 以內）。手機不在檢查範圍</p><p class="note">單次動作 1.3 秒（路人甲）。從畫面右側往左快走 2 步（0.06～0.54 秒，真的往前移 0.5 m；腳離地才水平移動、任何時刻至少一腳踩地，不滑）→ 0.48～1.22 秒原地換三步轉身面向新人（背對鏡頭）：腳轉 65%（58°），其餘 32° 由骨盆以上扭過去 → 0.16～0.92 秒邊走邊用雙手把手機舉到臉前 25 cm（直拿、不舉過頭）→ 1.0 秒按快門（手機往前一點、頭微點）→ 拿著到結束。腿直接寫 FK（_leg_set），沒有用 walk／turn（那兩個有舊的滑步問題）</p></figure>
+<figure class="clip" id="a-oops_bow"><div class="vid"><video data-src="videos/actions/oops_bow.mp4" poster="pictures/posters/actions/oops_bow.jpg" muted loop playsinline preload="none"></video></div>
+  <figcaption><span class="no">08</span><b>尷尬抓頭鞠躬</b><span class="chip ok">通過</span></figcaption><dl><div><dt>穿模</dt><dd>4 mm</dd></div><div><dt>最大轉速</dt><dd>14.1°/格</dd></div><div><dt>腳底</dt><dd>貼地</dd></div><div><dt>長度</dt><dd>0.8 秒</dd></div></dl><p class="note">右手掌貼後腦勺右上方的頭髮（離頭髮 6 mm，跟著頭骨算），手指朝上、指尖超出頭頂一些；穿模 0。近照四個角度看過：從背後看手按在後腦右上方，從正面看比較像「手放在頭頂後側」，不是整隻手埋進後腦勺的頭髮。手對手 3.8 mm 是開頭雙手還拿著手機那幾格</p><p class="note">單次動作 0.8 秒（路人甲），接 walk_in_photo 結尾：0.02～0.62 秒右手離開手機、左手把手機放到胸前 → 0.02～0.52 秒上身往右扭、回頭看老相機（共轉 100°：骨盆 20°、胸腰 30°、脖子頭 50°，腳不動）→ 0～0.70 秒右手從右外側繞到後腦、0.66 秒起搓一下、苦笑 → 0.42～0.80 秒朝老相機方向快速小鞠躬 30°、縮肩 8°。結尾頭和胸口朝向畫面右側（出口），但腳還朝新人那邊（見 check_note）</p></figure>
+<figure class="clip" id="a-turn_exit"><div class="vid"><video data-src="videos/actions/turn_exit.mp4" poster="pictures/posters/actions/turn_exit.jpg" muted loop playsinline preload="none"></video></div>
+  <figcaption><span class="no">09</span><b>轉身走出去</b><span class="chip ok">通過</span></figcaption><dl><div><dt>穿模</dt><dd>0 mm</dd></div><div><dt>最大轉速</dt><dd>14.8°/格</dd></div><div><dt>腳底</dt><dd>貼地</dd></div><div><dt>長度</dt><dd>1.5 秒</dd></div></dl><p class="note">單次動作，預設 1.5 秒（路人甲），接 oops_bow 結尾：0～1.4 秒右手離開後腦、往外劃開再放下到身側（之後跟著走路前後擺 ±10°），左手拿著手機留在胸前 → 0～1.28 秒換四步轉向出口（右腳兩步各轉 61°、左腳兩步各轉 55°、最後留 12° 外八；腳離地才轉，任何時刻至少一腳踩地）→ 同時縮肩 10°、低頭 10°、上身前傾 5°，第三步起快步往右（世界 +X）走；預設第五步 1.5 秒落地時，骨盆已經從 oops_bow 結尾的位置往右走了 0.67 m</p></figure>
+      </div>
+    </section>
+
+    <section class="stage" id="s3">
+      <div class="stage-head"><span class="num">03</span><h2>海軍藍兩件式西裝（婚禮賓客）</h2>
+        <p>沒有照片，照描述做的婚禮賓客西裝，刻意和新郎、新娘都不一樣。海軍藍單排兩釦外套，敞開不扣（劍領、左胸口袋、兩側有蓋口袋、袖口 4 顆扣）；白襯衫不打領帶，第一顆扣子打開：領口切成 V 字看得到上胸，兩片領尖往外攤開，敞開的外套裡看得到襯衫前襟的扣子。炭灰色直筒西裝長褲（和外套不同色，新郎是同色套裝），黑色綁帶皮鞋配深色襪子，保留 VRoid 的黑框眼鏡。和新郎的差別：沒有背心、沒有領結或領帶、領口敞開、外套 2 顆扣（新郎 1 顆）、顏色由米色換成海軍藍＋炭灰、鞋子由深褐色換成黑色。</p></div>
+      <div class="bench">
+        <div class="panel"><h3>服裝 360°</h3><video src="videos/turn_costume.mp4" poster="pictures/posters/turn_costume.jpg" autoplay muted loop playsinline></video></div>
+        <div class="panel"><h3>和照片對照</h3>
+          <div class="compare"><figure><div class="pending">渲染中</div><figcaption>照片正面</figcaption></figure><figure><img src="pictures/costume_front.jpg" alt="3D 正面" loading="lazy"><figcaption>3D 正面</figcaption></figure>
+          <figure><div class="pending">渲染中</div><figcaption>照片背面</figcaption></figure><figure><img src="pictures/costume_back.jpg" alt="3D 背面" loading="lazy"><figcaption>3D 背面</figcaption></figure></div></div>
+        <div class="panel"><h3>穿著服裝動起來</h3><video src="videos/costume_moves.mp4" poster="pictures/posters/costume_moves.jpg" autoplay muted loop playsinline></video><p>揮手、轉圈、跳躍：西裝跟著身體一起動（沒有布料模擬，下襬不會飄）；跳起來時看得到黑色皮鞋。</p></div>
+        
+      </div>
+    </section>
+
+    <section class="stage" id="s4">
+      <div class="stage-head"><span class="num">04</span><h2>情境（0 段）</h2>
+        <p>這一版還沒做情境；做好後短片會放在這裡。</p></div>
+      <div class="scenes">
+<div class="panel"><p>這個專案還沒有情境。</p></div>
+      </div>
+    </section>
+
+    <section class="stage" id="limits">
+      <div class="limits"><h3>還沒做到的</h3>
+        <ul class="facts">
+<li>動作測試只做精簡版 6 個（站姿待機、原地走路、往前走、轉身、點頭、鞠躬）：路人甲在開場影片只出現約 2.5 秒。其他動作沒有量，網頁上會顯示「未檢查」。</li>
+<li>「原地走路」「轉身」量到的滑步超過 5 mm（367、553 mm）：這是動作庫的舊問題，新郎、新娘的數字一樣，還沒修；網頁目前不顯示滑步。「往前走」量到 900 mm 是頭尾相接那一格從終點跳回起點，扣掉後實際每格 0.4 mm、累計 0.7 mm。</li>
+<li>要用的兩個新動作（走進來舉手機拍照、尷尬抓頭鞠躬）還沒做，之後由動作庫擴充另外做。</li>
+<li>西裝和新郎用同一套版型程式：剪裁、長度、口袋位置一樣，差別在顏色、背心、領結、領口與扣子數。</li>
+<li>西裝沒有真的布料模擬，是跟著骨架變形：轉圈、跳躍時外套下襬不會飄起來。</li>
+<li>襯衫領尖是兩片平的白色領片，沒有做出捲起來的厚度；後頸外套領子上方露出的白色襯衫領，上緣有一點細小鋸齒。</li>
+<li>皮鞋是依腳的形狀程式做出來的簡化版（和新郎同款型、換成黑色），沒有縫線、鞋頭雕花；鞋帶是深灰色，在黑鞋上不太明顯。</li>
+<li>頭髮、眼鏡沿用 VRoid 匯出的樣子，沒有另外調整；臉沒有特別捏，是 VRoid 預設臉調成男性五官。</li>
+<li>動作測試用便服（T 恤＋短褲）渲染；另外用西裝渲染了「往前走」「鞠躬」兩段自我檢查（轉速 8.1／3.7°/格，在 videos/actions_costume/），確認外套下擺走路時不會被大腿頂破。</li>
+        </ul></div>
+    </section>
+  </main>
+</div>
+
+<script>
+// 只播放畫面內的動作影片，避免 30 支同時解碼
+const vids = document.querySelectorAll("video[data-src]");
+const io = new IntersectionObserver(es => {
+  for (const e of es) {
+    const v = e.target;
+    if (e.isIntersecting) { if (!v.src) v.src = v.dataset.src; v.play().catch(() => {}); }
+    else v.pause();
+  }
+}, { rootMargin: "200px" });
+vids.forEach(v => io.observe(v));
+</script>

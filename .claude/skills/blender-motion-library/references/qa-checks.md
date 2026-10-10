@@ -11,11 +11,26 @@
 | `pen_legs` | 兩腿互穿（mm） | ≤ 5 |
 | `foot_min` | 最低鞋底高度（cm），負的＝陷地 | ≥ −0.5 |
 | `foot_float` | 「最低那隻腳」離地最高的一格（cm） | ≤ 0.5（jump／cheer／spin 這類騰空動作除外） |
-| `vmax`、`jerk`、`seam` | 每格最大轉角、轉角變化、頭尾相接那格（度） | 以渲染時的 `motion.json` 為準（只算身體骨頭） |
-| `slide_step` | 滑步：踩在地上的腳，鞋底每格的水平位移最大值（mm／格） | ≤ 1 |
+| `vmax`、`jerk`、`seam` | 身體骨頭的每格最大轉角、轉角變化、頭尾相接那格（度） | 以渲染時的 `motion.json` 為準（`vmax` ≤ 15、`jerk` ≤ 6） |
+| `foot_vmax` | 腳踝（Foot）、腳趾（ToeBase）的每格最大轉角（度） | ≤ 35（不套速度突變） |
+| `slide_step` | 滑步：踩在地上的腳，鞋底每格的水平位移最大值（mm／格） | ≤ 1（真人走路 ≤ 1.1，見下；`slide_limit` 欄＝這個動作的門檻） |
 | `slide_total` | 滑步：踩在地上的腳，整段（含頭尾相接那格）水平位移累計，左右腳取大的（mm） | ≤ 5 |
 
-`motion.json`（`render_actions` 逐格量）：`body_vmax` ≤ 15°／格、`body_jerk` ≤ 6、`finger_vmax` 另計不擋。
+`motion.json`（`render_actions` 逐格量）：`body_vmax` ≤ 15°／格、`body_jerk` ≤ 6、`foot_vmax` ≤ 35°／格、`finger_vmax` 另計不擋。
+
+**骨頭分三組**（2026-10-08 使用者決定，`check_lib.bone_group`、門檻常數 `VMAX_BODY`／`VMAX_FOOT`／`JERK_BODY`、判定 `motion_ok`）：
+
+| 組 | 骨頭 | 每格轉角 | 速度突變 |
+| --- | --- | --- | --- |
+| 身體 | 手指、腳踝、腳趾以外（含大腿、小腿、手臂、手掌） | ≤ 15° | ≤ 6 |
+| 腳踝腳趾 | `J_Bip_*_Foot`、`J_Bip_*_ToeBase` | ≤ 35° | 不擋 |
+| 手指 | Thumb／Index／Middle／Ring／Little | 不擋（另計） | 不擋 |
+
+由來：套用真人動作捕捉（CMU 走路）時，腳離地蹬出那幾格腳踝、腳趾本來就會到 20～32°／格，身體骨頭仍在 15° 以內。2026-10-08 以前 `vmax`／`body_vmax` 含腳踝腳趾（`metrics.json` 的 `vmax` 還含手指），改分組後同一個動作的數字只會一樣或變小，判定不會變差；舊的量測檔要重跑才會有 `foot_vmax`。報告頁 `gen_page.py` 也判 `foot_vmax` ≤ 35（沒有這欄的舊量測不判）。
+
+**真人走路的滑步例外**（2026-10-08 使用者決定，`check_lib.slide_limit`／`slide_ok`，常數 `SLIDE_STEP_MOCAP_WALK`）：`walk_fwd` 的 `style='mocap'`（預設）每格門檻 1.1 mm，累計仍 ≤ 5 mm。
+由來：混合式真人走路照規劃器的腳印走，步幅 0.4～0.5 m（V12 的參數）比真人的 0.73 m 短，腳跟著地後腳掌放平那一格，離地 2～5 mm 的鞋底點跟著轉，
+量到 1.04～1.08 mm（新娘、新郎）；已經做過腳掌滾動照步幅縮小、腳掌旋轉時間平滑，再壓就要把腳掌滾動磨平。其他動作仍是 1 mm。
 
 ### 滑步怎麼量（`check_lib.sole_world`／`slide_between`）
 

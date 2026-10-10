@@ -136,17 +136,60 @@ class Checker:
         return r
 
     def motion(self):
-        """和上一格比：所有骨頭（含整體旋轉）在世界空間的最大轉角（度/格）"""
+        """和上一格比，世界空間（含整體旋轉）的最大轉角（度/格）→ (身體, 腳踝腳趾)。
+        身體＝手指、腳踝（Foot）、腳趾（ToeBase）以外的骨頭；腳踝腳趾另計（門檻 VMAX_FOOT）；手指不擋（2026-10-08 起不算進 vmax）"""
         A = self.arm
         cur = {pb.name: (A.matrix_world @ pb.matrix).to_quaternion() for pb in A.pose.bones if pb.name.startswith("J_Bip")}
         if self.prev is None:
             self.prev = cur; return 0.0, 0.0
-        m = max(math.degrees(min(a, 2 * math.pi - a)) for a in (q.rotation_difference(self.prev[k]).angle for k, q in cur.items()))
+        body = foot = 0.0
+        for k, q in cur.items():
+            a = q.rotation_difference(self.prev[k]).angle; d = math.degrees(min(a, 2 * math.pi - a))
+            g = bone_group(k)
+            if g == "body": body = max(body, d)
+            elif g == "foot": foot = max(foot, d)
         self.prev = cur
-        return m, 0.0
+        return body, foot
 
 
 SLIDE_Z = 0.005          # 鞋底取樣點離地 ≤ 5 mm 算「踩在地上」
+
+# 流暢度門檻（2026-10-08 使用者決定）：身體骨頭每格 ≤ 15°、速度突變 ≤ 6（只看身體骨頭）；
+# 腳踝（Foot）、腳趾（ToeBase）每格 ≤ 35°、不套速度突變（真人走路蹬地時腳踝本來就會到 20～32°/格）；手指不擋
+VMAX_BODY = 15.0
+VMAX_FOOT = 35.0
+JERK_BODY = 6.0
+_FINGERS = ("Thumb", "Index", "Middle", "Ring", "Little")
+
+
+def bone_group(name):
+    """骨頭分組：'finger'／'foot'（Foot、ToeBase）／'body'（其餘）"""
+    if any(f in name for f in _FINGERS):
+        return "finger"
+    if name.endswith("_Foot") or name.endswith("_ToeBase"):
+        return "foot"
+    return "body"
+
+
+# 滑步門檻：每格 ≤ 1 mm、累計 ≤ 5 mm。例外：真人走路（walk_fwd 的 style='mocap'）每格 ≤ 1.1 mm（2026-10-08 使用者決定）——
+# 步幅 0.4～0.5 m 時，腳跟著地後腳掌放平那一格，離地 2～5 mm 的鞋底點跟著轉，帶出 1.04～1.08 mm 的水平位移（看不出來：1 px ≈ 3 mm）
+SLIDE_STEP = 1.0
+SLIDE_STEP_MOCAP_WALK = 1.1
+SLIDE_TOTAL = 5.0
+
+
+def slide_limit(fn):
+    """這個動作的每格滑步門檻（mm）：真人走路 1.1，其餘 1.0"""
+    return SLIDE_STEP_MOCAP_WALK if getattr(fn, "style", None) == "mocap" else SLIDE_STEP
+
+
+def slide_ok(step_mm, total_mm, fn=None):
+    return step_mm <= (slide_limit(fn) if fn is not None else SLIDE_STEP) and total_mm <= SLIDE_TOTAL
+
+
+def motion_ok(vmax, jerk, foot_vmax=0.0):
+    """流暢度是否過門檻（vmax、jerk 只算身體骨頭；foot_vmax＝腳踝腳趾）"""
+    return vmax <= VMAX_BODY and jerk <= JERK_BODY and foot_vmax <= VMAX_FOOT
 
 
 def sole_world(arm):
@@ -179,15 +222,15 @@ def analyse(key, nsamp=None):
     name, fn, n = ACT[key]
     ck = Checker(ARM)
     mesh_eval(False)
-    vel = []; pens = []; feet = []
+    vel = []; fvel = []; pens = []; feet = []
     slide_mx = 0.0; slide_tot = {"L": 0.0, "R": 0.0}; sw_prev = None
     frames = list(range(n)) + [0]
     samp = set(range(0, n, max(1, n // (nsamp or 16))))
     for j, i in enumerate(frames):
         pose_frame(ARM, fn(i / n))
         bpy.context.view_layer.update()
-        a, mv = ck.motion()
-        if j > 0: vel.append(a)
+        a, fa = ck.motion()
+        if j > 0: vel.append(a); fvel.append(fa)
         sw = sole_world(ARM)
         if sw_prev is not None:
             for side, d in slide_between(sw_prev, sw).items():
@@ -198,11 +241,12 @@ def analyse(key, nsamp=None):
             r = ck.frame(); pens.append(r); feet.append(r["foot_min"])
     acc = [abs(vel[i] - vel[i - 1]) for i in range(1, len(vel))]
     res = dict(key=key, name=name, frames=n, vmax=round(max(vel), 1), jerk=round(max(acc), 1),
-               seam=round(vel[-1], 1),
+               seam=round(vel[-1], 1), foot_vmax=round(max(fvel), 1),
                pen_core=round(max(p["pen_core"] for p in pens), 1), pen_hands=round(max(p["pen_hands"] for p in pens), 1),
                pen_legs=round(max(p["pen_legs"] for p in pens), 1),
                foot_min=round(min(feet) * 100, 1), foot_float=round(max(feet) * 100, 1),
-               slide_step=round(slide_mx * 1000, 1), slide_total=round(max(slide_tot.values()) * 1000, 1))
+               slide_step=round(slide_mx * 1000, 1), slide_total=round(max(slide_tot.values()) * 1000, 1),
+               slide_limit=slide_limit(fn))
     mesh_eval(True)
     pose_frame(ARM, dict(STAND))
     return res

@@ -22,6 +22,7 @@ import argparse
 import json
 import math
 import os
+import random
 import re
 import subprocess
 import sys
@@ -90,16 +91,19 @@ def parse_subs(cell):
         raw = raw.strip()
         if not raw:
             continue
-        kind = "sub"
-        for tag, k in (("【大標】", "big"), ("【標籤】", "label")):
+        kind, scene = "sub", False
+        # 【場景字】＝文字是場景裡的實體物件（布條、黑板、燈牌）：跟著場景一起被鏡頭推拉平移
+        for tag, k, sc in (("【場景字・大標】", "big", True), ("【場景字】", "sub", True),
+                           ("【大標】", "big", False), ("【標籤】", "label", False)):
             if raw.startswith(tag):
-                kind, raw = k, raw[len(tag):]
+                kind, scene, raw = k, sc, raw[len(tag):]
+                break
         body, note = last_paren(raw)
         m = RE_WIN.search(note)
         if not m:
             raise ValueError(f"字幕沒有時段：{raw}")
         parts = [p.strip() for p in body.split("／")]
-        subs.append({"kind": kind, "text": "\n".join(parts), "parts": parts,
+        subs.append({"kind": kind, "text": "\n".join(parts), "parts": parts, "scene": scene,
                      "t0": float(m.group(1)), "t1": float(m.group(2)), "note": note})
     return subs
 
@@ -134,8 +138,12 @@ def parse_chars(cell):
             if mm:
                 enter = ({"直接": "cut", "淡入": "fade", "滑入": "slide"}[mm.group(1)],
                          float(mm.group(2) or 0.3))
+        h0 = float(re.search(r"(\d+)", size).group(1)) / 100.0
+        # 「高 18%（走近到 32%）」「高 50%（走遠縮到 30%）」：在本段時間內線性變大／變小
+        # （「鏡頭推近到」「升空後縮小」是鏡頭造成的，交給規則檔的 cam，不在這裡算）
+        mh = re.search(r"走(?:近|遠)(?:縮)?到\s*(\d+)%", size)
         out.append({"who": who, "act": label_act, "from": p[0].strip(), "to": p[-1].strip(),
-                    "move": len(p) > 1, "h": float(re.search(r"(\d+)", size).group(1)) / 100.0,
+                    "move": len(p) > 1, "h": h0, "h1": float(mh.group(1)) / 100.0 if mh else h0,
                     "t0": float(m.group(1)), "t1": float(m.group(2)), "enter": enter,
                     "orient": opt.get("朝向", "正面")})
     return out
@@ -170,7 +178,11 @@ def parse_plan(path):
         m = re.match(r"^## 版本 (\d+)：(.+)$", line)
         if m:
             cur = f"V{int(m.group(1)):02d}"
-            vers[cur] = {"id": cur, "title": m.group(2).strip(), "shots": []}
+            vers[cur] = {"id": cur, "title": m.group(2).strip(), "shots": [], "category": None}
+            continue
+        m = re.match(r"^- \*\*風格類別\*\*：(.+)$", line)
+        if cur and m:
+            vers[cur]["category"] = m.group(1).strip()
             continue
         if cur and line.startswith("| " + cur + "-"):
             cells = [c.strip() for c in line.strip().strip("|").split("|")]
@@ -548,7 +560,7 @@ def dilate(mask, r):
     return m
 
 
-def prep_card(work, card, nested, plan_shot):
+def prep_card(work, card, nested, plan_shot, big_skip=False):
     ver = card["ver"]
     ldir = os.path.join(work, "layers", ver)
     cdir = os.path.join(work, "cache", ver)
@@ -559,7 +571,14 @@ def prep_card(work, card, nested, plan_shot):
     place, worst = {}, []
     for L in card["layers"]:
         im = f32(Image.open(os.path.join(ldir, L["id"] + ".png")))
-        x, y, e = locate(C, F, im, L["x"] * SC, L["y"] * SC, L["w"] * SC, L["h"] * SC)
+        bw_, bh_ = L["w"] * SC, L["h"] * SC
+        if big_skip and im.shape[0] * im.shape[1] > 4 * bw_ * bh_:
+            # 匯出圖比外框大很多（4800×4800 的放射背景）：搜尋要幾十萬個位置，直接置中在外框中心
+            x = int(round(L["x"] * SC + (bw_ - im.shape[1]) / 2))
+            y = int(round(L["y"] * SC + (bh_ - im.shape[0]) / 2))
+            e = _after_err(C, F, im, x, y)
+        else:
+            x, y, e = locate(C, F, im, L["x"] * SC, L["y"] * SC, L["w"] * SC, L["h"] * SC)
         over_np(C, im, x, y)
         place[L["id"]] = [x, y, im.shape[1], im.shape[0], round(e, 4)]
         worst.append((e, L["id"], L["name"]))
@@ -602,8 +621,8 @@ def prep_card(work, card, nested, plan_shot):
 
 
 def _prep_one(a):
-    work, card, nested, shot = a
-    return card["id"], prep_card(work, card, nested, shot)
+    work, card, nested, shot, big_skip = a
+    return card["id"], prep_card(work, card, nested, shot, big_skip)
 
 
 def cmd_prep(args):
@@ -611,7 +630,7 @@ def cmd_prep(args):
     cards, nested = load_extract(args.work)
     shots = {s["id"]: s for v in plan.values() for s in v["shots"]}
     todo = [c for c in cards.values() if not args.vers or c["ver"] in args.vers]
-    jobs = [(args.work, c, nested, shots.get(c["id"])) for c in todo]
+    jobs = [(args.work, c, nested, shots.get(c["id"]), args.big_skip) for c in todo]
     res = {}
     with Pool(args.jobs) as pool:
         for cid, r in pool.imap_unordered(_prep_one, jobs):
@@ -647,6 +666,20 @@ FAMILY_FILES = {   # family → [(檔名, 字重或 None＝可變字型)]
     "Orbitron": [("Orbitron[wght].ttf", None)],
     "Inter": [("Inter[opsz,wght].ttf", None)],
     "Fredoka": [("Fredoka[wdth,wght].ttf", None)],
+    # 第二批（V11～V25）
+    "LXGW WenKai TC": [("LXGWWenKaiTC-Bold.ttf", 700)],
+    "Courier Prime": [("CourierPrime-Regular.ttf", 400), ("CourierPrime-Bold.ttf", 700)],
+    "Chewy": [("Chewy-Regular.ttf", 400)],
+    "Baloo 2": [("Baloo2[wght].ttf", None)],
+    "Bangers": [("Bangers-Regular.ttf", 400)],
+    "Special Elite": [("SpecialElite-Regular.ttf", 400)],
+    "Sniglet": [("Sniglet-Regular.ttf", 400), ("Sniglet-ExtraBold.ttf", 800)],
+    "Patrick Hand": [("PatrickHand-Regular.ttf", 400)],
+    "Gochi Hand": [("GochiHand-Regular.ttf", 400)],
+    "Cormorant Garamond": [("CormorantGaramond[wght].ttf", None)],
+    "Cinzel": [("Cinzel[wght].ttf", None)],
+    "Caveat": [("Caveat[wght].ttf", None)],
+    "Segoe UI Symbol": [("seguisym.ttf", 400)],   # 補畫圖示用：🔔🔕🚕📷✦✕✓★♡♪（Windows 內建、單色）
 }
 FALLBACK = "Noto Sans TC"
 _font_cache, _cmap_cache = {}, {}
@@ -972,6 +1005,8 @@ class Item:
         self.follow = None
         self.frames = None       # 依時間換圖（計數、倒數）：callable(t) → (img, x, y, extra)
         self.static = False
+        self.screen = False      # True＝疊在畫面上、不跟鏡頭推拉平移（字幕）；False＝場景裡的東西
+        self.front = False       # True＝畫在角色框前面（桌面、窗框）
 
     def visible_at(self, t):
         pre = 0
@@ -997,6 +1032,17 @@ def seg_draw(canvas, img, segs, x, y, t, it):
             if p < 1:
                 dy = -fin.get("dist", 24) * K * math.sin(math.pi * clamp01(p)) * (1 - 0.3 * p)
                 piece = mul_alpha(piece, clamp01(p * 4))
+        elif fin["fx"] == "beat":    # 逐字放大 130% 回彈（歌舞節拍跳字）
+            p = (t - ts) / fin.get("cd", 0.3)
+            if p < 1:
+                s0 = fin.get("s0", 1.3)
+                pw, ph = piece.size
+                piece, ox, oy = transform(piece, s0 + (1 - s0) * back_out(p))
+                piece = mul_alpha(piece, clamp01(p * 3))
+                paste(canvas, piece, x + x0 + ox, int(round(y + y0 + oy)))
+                continue
+        elif fin.get("cf"):          # 逐字淡入（星光由暗到亮）
+            piece = mul_alpha(piece, clamp01((t - ts) / fin["cf"]))
         paste(canvas, piece, x + x0, int(round(y + y0 + dy)))
 
 
@@ -1049,7 +1095,7 @@ def item_state(it, t, ctx):
             return None
     al, dx, dy, sc, sy, rot, sxx = 1.0, 0.0, 0.0, 1.0, None, 0.0, None
     fin = it.fin
-    if fin and fin.get("fx") not in (None, "none", "type", "bounce"):
+    if fin and fin.get("fx") not in (None, "none", "type", "bounce", "beat"):
         d = fin.get("d", 0.3)
         ta = it.a + fin.get("delay", 0)
         if t < ta:
@@ -1089,6 +1135,12 @@ def item_state(it, t, ctx):
                 al *= clamp01(p * 3)
             elif fx == "wipe":
                 pass
+            elif fx == "blur":       # 模糊淡入（模糊量在 draw_item 依進度套）
+                al *= smooth(p)
+            elif fx == "squash":     # 黏土：先扁寬再回彈到原尺寸
+                sy = max(0.05, back_out(p))
+                sxx = 1 + fin.get("w0", 0.25) * (1 - ease_out(p))
+                al *= clamp01(p * 4)
             elif fx == "burst":
                 ox, oy = fin["origin"]
                 e = 1 - ease_out(p)
@@ -1149,6 +1201,13 @@ def item_state(it, t, ctx):
                     amp = lp.get("amp", 8) * K * q
                     dx += amp * math.sin(t * 90)
                     dy += amp * 0.5 * math.cos(t * 70)
+        elif fx == "jitter":  # 蠟筆線條抖動：每 period 秒換一個隨機小位移
+            n = int(t / per)
+            r1 = math.sin(n * 12.9898 + it.z * 78.233) * 43758.5453
+            r2 = math.sin(n * 39.3468 + it.z * 11.135) * 24634.6345
+            amp = lp.get("amp", 2) * K
+            dx += amp * (2 * (r1 - math.floor(r1)) - 1)
+            dy += amp * (2 * (r2 - math.floor(r2)) - 1)
         elif fx == "steps":   # 階梯式位移（像素雲）
             n = int(t / per)
             dx += lp.get("vx", 0) * K * n
@@ -1174,6 +1233,15 @@ def item_state(it, t, ctx):
         al *= st[0]
         dx += st[1]
         dy += st[2]
+    an = getattr(it, "anchor", None)
+    if an:   # 黏在角色框上（框的左上或左下＋位移，縮圖座標），例：新娘框下緣的禮服粉標示
+        c = ctx["chars"].get(an["who"])
+        if c is None:
+            return None
+        cal, cx_, cy_, cw_, ch_, _ = c["box"]
+        al *= cal
+        dx += (cx_ + an.get("dx", 0)) * SC * K - it.x
+        dy += (cy_ + (ch_ if an.get("ay") == "bottom" else 0) + an.get("dy", 0)) * SC * K - it.y
     frac = None
     if it.reveal:
         rv = it.reveal
@@ -1220,12 +1288,16 @@ def apply_reveal(img, frac, direction):
         yy, xx = np.mgrid[0:h, 0:w]
         ang = (np.degrees(np.arctan2(xx - w / 2, -(yy - h / 2))) + 360) % 360
         a[ang > 360 * frac] = 0
+    elif direction == "iris":   # 從中心往外的圓形（虹膜打開）
+        yy, xx = np.mgrid[0:h, 0:w]
+        a[np.hypot(xx - w / 2, yy - h / 2) > frac * math.hypot(w, h) / 2] = 0
     out = img.copy()
     out.putalpha(Image.fromarray(a))
     return out
 
 
-def draw_item(canvas, it, t, ctx):
+def draw_item(canvas, it, t, ctx, off=(0, 0)):
+    """off＝畫到「世界畫布」（比畫面大、四周有延伸區）時，縮圖原點在畫布上的位置。"""
     if it.frames:
         r = it.frames(t)
         if r is None:
@@ -1237,11 +1309,22 @@ def draw_item(canvas, it, t, ctx):
     if stt is None:
         return
     al, dx, dy, sc, sy, rot, frac, sxx = stt
-    if it.fin and it.fin.get("fx") in ("type", "bounce") and it.segs is not None:
+    if off != (0, 0):
+        dx, dy = dx + off[0], dy + off[1]
+    if it.fin and it.fin.get("fx") in ("type", "bounce", "beat") and it.segs is not None:
         im = mul_alpha(img, al)
         if im is not None:
             seg_draw(canvas, im, it.segs, x + dx, y + dy, t, it)
         return
+    if it.fin and it.fin.get("fx") == "blur":
+        pb = (t - it.a - it.fin.get("delay", 0)) / it.fin.get("d", 0.6)
+        if 0 <= pb < 1:
+            r_ = it.fin.get("r0", 8) * K * (1 - smooth(pb))
+            if r_ > 0.3:
+                pad_ = int(r_ * 3) + 2
+                big = Image.new("RGBA", (img.width + 2 * pad_, img.height + 2 * pad_), (0, 0, 0, 0))
+                big.paste(img, (pad_, pad_))
+                img, x, y = big.filter(ImageFilter.GaussianBlur(r_)), x - pad_, y - pad_
     if frac is not None:
         img = apply_reveal(img, frac, (it.reveal or {}).get("dir", "l2r"))
         if img is None:
@@ -1288,7 +1371,13 @@ def rule_match(rule, L):
         return False
     if m.startswith("id:"):
         return L["id"] in m[3:].split(",")
-    return re.search(m, L["name"]) is not None
+    if re.search(m, L["name"]) is None:
+        return False
+    if "within" in rule and "x" in L:   # 只套用到外框中心落在 [x0, y0, x1, y1]（縮圖座標）裡的圖層
+        x0, y0, x1, y1 = rule["within"]
+        cx, cy = L["x"] + L["w"] / 2, L["y"] + L["h"] / 2
+        return x0 <= cx <= x1 and y0 <= cy <= y1
+    return True
 
 
 def apply_rule(it, r, ctx):
@@ -1316,8 +1405,15 @@ def apply_rule(it, r, ctx):
     if "follow" in r:
         it.follow = r["follow"]
         it.static = False
+    if "anchor" in r:
+        it.anchor = r["anchor"]
+        it.static = False
     if "pivot" in r:
         it.pivot = r["pivot"]
+    if "screen" in r:
+        it.screen = bool(r["screen"])
+    if r.get("front"):
+        it.front = True
     if r.get("static_fade") is False and it.fin and it.fin.get("auto"):
         it.fin = None
 
@@ -1417,8 +1513,36 @@ def char_geom(pos, hfrac):
     return x, y, w, h
 
 
-def build_chars(shot, color, dur):
-    """回傳每個角色的出場區段：[{segs:[…], a, b, enter}]。間隔 ≤ 1 秒的相鄰動作視為連續在場。"""
+def pair_x(pos, w, side, gap=6):
+    """兩人寫在同一格位置時並排：整組放在單人框會在的位置，新郎在左（side<0）、新娘在右。"""
+    col = POS9.get(pos, (0, 2))[0]
+    bx = [24, TH_W / 2 - w - gap / 2, TH_W - 24 - 2 * w - gap][col]
+    return bx if side < 0 else bx + w + gap
+
+
+def build_chars(shot, color, dur, pair=False, boxes=None):
+    """回傳每個角色的出場區段：[{segs:[…], a, b, enter}]。間隔 ≤ 1 秒的相鄰動作視為連續在場。
+    pair＝True 時，同一時段寫在同一格位置的兩個角色並排（縮圖就是這樣畫的），不然兩個框會疊在一起；
+    兩人從不同位置走到同一格時，終點也並排（pair_to）。
+    boxes＝{"新郎": [x, y, w, h]}：角色框改放在指定位置（拍立得、窗戶、漫畫格裡），不照九宮格。"""
+    if pair:
+        cs = shot["chars"]
+        for c in cs:
+            c["pair"] = c["pair_to"] = 0
+        for i, c1 in enumerate(cs):
+            for c2 in cs[i + 1:]:
+                if c1["who"] == c2["who"] or min(c1["t1"], c2["t1"]) - max(c1["t0"], c2["t0"]) <= 0.05:
+                    continue
+                left = c1 if c1["who"] == "新郎" or c2["who"] == "新娘" else c2
+                if c1["from"] == c2["from"] and c1["to"] == c2["to"]:
+                    for c in (c1, c2):
+                        c["pair"] = -1 if c is left else 1
+                elif c1["to"] == c2["to"]:
+                    for c in (c1, c2):
+                        c["pair_to"] = -1 if c is left else 1
+    for c in shot["chars"]:
+        if boxes and c["who"] in boxes:
+            c["box"] = boxes[c["who"]]
     by = {}
     for c in shot["chars"]:
         by.setdefault(c["who"], []).append(c)
@@ -1449,9 +1573,19 @@ def char_state(spans, who, t, base_xy=None):
         for s in segs:
             if s["t0"] <= t:
                 cur = s
-        x0, y0, w, h = char_geom(cur["from"], cur["h"])
-        if cur["move"]:
-            x1, y1, _, _ = char_geom(cur["to"], cur["h"])
+        hh = cur["h"]
+        if cur.get("h1", hh) != hh:   # 走近／走遠：高度在本段時間內線性變化
+            hh = hh + (cur["h1"] - hh) * clamp01((t - cur["t0"]) / max(1e-6, cur["t1"] - cur["t0"]))
+        x0, y0, w, h = char_geom(cur["from"], hh)
+        if cur.get("pair"):
+            x0 = pair_x(cur["from"], w, cur["pair"])
+        if cur.get("box"):
+            x0, y0, w, h = cur["box"]
+            x, y = x0, y0
+        elif cur["move"]:
+            x1, y1, _, _ = char_geom(cur["to"], hh)
+            if cur.get("pair") or cur.get("pair_to"):
+                x1 = pair_x(cur["to"], w, cur.get("pair") or cur["pair_to"])
             p = smooth((t - cur["t0"]) / max(1e-6, cur["t1"] - cur["t0"]))
             x, y = x0 + (x1 - x0) * p, y0 + (y1 - y0) * p
         else:
@@ -1592,6 +1726,10 @@ def build_shot(work, ver, shot, card, nested, place, rules, dstyle, prev_trans, 
             if re.search(rr["match"], s["text"]) and "in" in rr:
                 return dict(rr["in"])
         key = {"sub": "sub_in", "big": "big_in", "label": "label_in"}[s["kind"]]
+        if s.get("scene"):   # 場景字：可另設預設進場（寫在物件上、布條滾落…）
+            skey = "scene_big_in" if s["kind"] == "big" else "scene_in"
+            if skey in vr:
+                return dict(vr[skey])
         if key in vr:
             return dict(vr[key])
         return {"fx": "fade", "d": 0.3} if s["kind"] == "sub" else {"fx": "pop", "d": 0.35}
@@ -1603,7 +1741,8 @@ def build_shot(work, ver, shot, card, nested, place, rules, dstyle, prev_trans, 
         it.fin = sub_fx(i)
         it.fout = {"fx": "fade", "d": 0.2}
         it.text, it.style = text, style
-        if it.fin.get("fx") in ("type", "bounce"):
+        it.screen = not s.get("scene")
+        if it.fin.get("fx") in ("type", "bounce", "beat"):
             it.segs = text_segments(img, text, style)
         for rr in sr.get("subs", []):
             if re.search(rr["match"], s["text"]):
@@ -1611,17 +1750,39 @@ def build_shot(work, ver, shot, card, nested, place, rules, dstyle, prev_trans, 
                     it.loops += [dict(q) for q in rr["loop"]]
                 if "show" in rr:
                     it.a, it.b = rr["show"]
+                if "world" in rr:
+                    it.screen = not rr["world"]
+                if rr.get("front"):
+                    it.front = True
+                if "out" in rr:
+                    it.fout = dict(rr["out"])
+                if "move" in rr:
+                    it.move = dict(rr["move"])
         sub_items.setdefault(i, []).append(it)
         return it
 
     rule_hits = {}
     cr_all = sr.get("counter", {})
     z_names = {}
+    # 計數／倒數借縮圖上的文字圖層當位置與字型（縮圖寫成「99% → 100%」或每個數字各一個物件時）
+    cslot = cr_all.get("slot")
+    cslots = [q for q in cr_all.get("slots", []) if isinstance(q, str)]
+    ci_first = next((i for i, s in enumerate(subs) if counter_values(s["text"])), None)
+    slot_refs = {}
     for L in card["layers"]:
         z += 1
         z_names[L["name"]] = z
         role = a["roles"].get(L["id"], {"role": "static"})
         if role["role"] == "char":
+            continue
+        if ci_first is not None and (L["id"] == cslot or L["id"] in cslots):
+            x, y, w, h = pl["place"][L["id"]][:4]
+            img, ox, oy = to_out(load_layer(work, ver, L["id"], False, L["op"]), x, y)
+            rec = (img, ox, oy, L["style"], (L["x"], L["y"], L["w"]), L["text"], z)
+            if L["id"] == cslot:
+                counter_ref[ci_first] = rec
+            else:
+                slot_refs[L["id"]] = rec
             continue
         if role["role"] == "counter" and cr_all.get("layer") is False:
             role = {"role": "static"}
@@ -1637,7 +1798,8 @@ def build_shot(work, ver, shot, card, nested, place, rules, dstyle, prev_trans, 
             continue
         x, y, w, h = pl["place"][L["id"]][:4]
         unf = L["op"] if (role["role"] in ("sub", "counter", "lines") or any(r.get("unfade") for r in rl)) else None
-        clean = L["id"] in a["split"]
+        noclean = any(r.get("noclean") for r in rl)   # 框裡的字保留在原圖上（不拆出來另外疊）
+        clean = L["id"] in a["split"] and not noclean
         raw = load_layer(work, ver, L["id"], clean, unf)
         img, ox, oy = to_out(raw, x, y)
         if role["role"] == "counter":
@@ -1667,7 +1829,7 @@ def build_shot(work, ver, shot, card, nested, place, rules, dstyle, prev_trans, 
             apply_rule(it, r, ctx)
         items.append(it)
         # 框內拆出的字
-        for nd, si, part in a["split"].get(L["id"], []):
+        for nd, si, part in ([] if noclean else a["split"].get(L["id"], [])):
             z += 0.01
             nx, ny = pl["nested"][nd["id"]][:2]
             nraw = load_layer(work, ver, nd["id"], False, None)
@@ -1687,6 +1849,8 @@ def build_shot(work, ver, shot, card, nested, place, rules, dstyle, prev_trans, 
         if counter_values(s["text"]):
             continue
         rr = next((r for r in sr.get("subs", []) if re.search(r["match"], s["text"])), {})
+        if rr.get("hide"):   # 字已經用別的方式畫在畫面上（例：一個個黏土字物件），不補畫
+            continue
         box, style, ref = None, None, None
         if "slot" in rr:
             ids = rr["slot"]
@@ -1768,6 +1932,8 @@ def build_shot(work, ver, shot, card, nested, place, rules, dstyle, prev_trans, 
         if not vals:
             continue
         cr = sr.get("counter", {})
+        if cr.get("none"):   # 數字已經烤在物件上（天燈上的字），不另外畫
+            continue
         ref = counter_ref.get(i)
         if cr.get("layer") is False:
             ref = None
@@ -1801,16 +1967,47 @@ def build_shot(work, ver, shot, card, nested, place, rules, dstyle, prev_trans, 
                 cache[txt] = (r["img"], r["x"] + int(round(dx)), r["y"] + int(round(dy)))
             return cache[txt]
 
+        c_screen = not s.get("scene") if "world" not in cr else not cr["world"]
+
+        def slot_render(slot, v, style=style):
+            """每個數字畫在自己的位置（燈泡數字、氣球、天燈各一個）。slot＝圖層 id 或 [x, y, w]。"""
+            if isinstance(slot, str):
+                rimg_, rx_, ry_, rstyle_, rbox_, rtext_, _ = slot_refs[slot]
+                st = dict(rstyle_ or style)
+                st.update(cr.get("slot_style", {}))
+                st["a"] = st.get("a") or "center"
+                ddx, ddy = calib(rimg_, rx_, ry_, render_text(rtext_, st, rbox_))
+                r_ = render_text(v, st, rbox_)
+                return r_["img"], r_["x"] + int(round(ddx)), r_["y"] + int(round(ddy))
+            # 自訂位置：沿用同一組裡第一個圖層數字的字型與排字校正
+            ref_ = next((q for q in cr.get("slots", []) if isinstance(q, str) and q in slot_refs), None)
+            if ref_:
+                rimg_, rx_, ry_, rstyle_, rbox_, rtext_, _ = slot_refs[ref_]
+                st = dict(rstyle_ or style)
+                st.update(cr.get("slot_style", {}))
+                st["a"] = st.get("a") or "center"
+                ddx, ddy = calib(rimg_, rx_, ry_, render_text(rtext_, st, rbox_))
+                r_ = render_text(v, st, tuple(slot[:3]))
+                return r_["img"], r_["x"] + int(round(ddx)), r_["y"] + int(round(ddy))
+            r_ = render_text(v, style, tuple(slot[:3]))
+            return r_["img"], r_["x"], r_["y"]
+
         if countdown:
             n = len(vals)
             step = (s["t1"] - s["t0"]) / n
             cin = dict(cr.get("in") or vr.get("countdown_in") or {"fx": "slam", "d": 0.25})
+            slots = cr.get("slots")
             for k_, v in enumerate(vals):
-                img, x, y = rend(v)
+                img, x, y = slot_render(slots[k_], v) if slots and k_ < len(slots) else rend(v)
                 it = Item(img, x, y, s["t0"] + k_ * step, s["t0"] + (k_ + 1) * step if k_ < n - 1 else s["t1"], zc,
                           f"倒數{v}", "count")
                 it.fin = dict(cin)
                 it.fout = {"fx": "fade", "d": 0.12} if k_ < n - 1 else {"fx": "fade", "d": 0.25}
+                if "out" in cr:     # 例：數字氣球升空後飛走
+                    it.fout = dict(cr["out"])
+                if cr.get("keep"):   # 數字留在原地不消失（氣球、燈泡數字一個個累積）
+                    it.b, it.fout = (s["t1"] if not cr.get("keep_end") else cr["keep_end"]), {"fx": "fade", "d": 0.25}
+                it.screen = c_screen
                 for lp in cr.get("loop", []):
                     it.loops.append(dict(lp))
                 items.append(it)
@@ -1833,10 +2030,38 @@ def build_shot(work, ver, shot, card, nested, place, rules, dstyle, prev_trans, 
             it.frames = frames
             it.fin = dict(cr.get("in") or {"fx": "fade", "d": 0.25})
             it.fout = {"fx": "fade", "d": 0.25}
+            it.screen = c_screen
             items.append(it)
     # 額外補畫的元素（規則 extras）：規劃表寫了、縮圖沒畫的字；或匯出有誤的圖層改照參數畫
+    # 新種類的補畫物件（rect／copy／scene／confetti）預設放在所有字幕之下，字才不會被看板、紙花蓋住
+    z_under = min([it.z for it in items if it.kind in ("sub", "count")] or [z_sub]) - 0.05
     for ex in sr.get("extras", []):
-        zx = z_names.get(ex["z_after"], z_sub) + 0.5 if "z_after" in ex else ex.get("z", z_sub)
+        z_def = z_under if ex.get("kind") in ("rect", "copy", "scene", "confetti") else z_sub
+        zx = z_names.get(ex["z_after"], z_sub) + 0.5 if "z_after" in ex else ex.get("z", z_def)
+        if ex.get("kind") == "confetti":
+            # 紙花／彩帶／糖珠／花瓣：從 origin 噴出到 region 裡的隨機位置，再受重力飄落（seed 固定，每次相同）
+            rng = random.Random(ex.get("seed", 1))
+            ox_, oy_ = ex.get("origin", [240, 135])
+            rg = ex.get("region", [0, 0, 480, 200])
+            t0_, t1_ = ex.get("show", [0, dur + 5])
+            cols = ex.get("colors", ["#FF6F91", "#FFD45C", "#7CC08B", "#5BC0EB", "#B28DFF"])
+            for k_ in range(ex.get("n", 12)):
+                sz = ex.get("size", 5) * (0.7 + 0.6 * rng.random())
+                part = {"kind": "rect", "shape": ex.get("shape", "rect"), "r": 1, "fill": rng.choice(cols),
+                        "box": [rg[0] + rng.random() * rg[2], rg[1] + rng.random() * rg[3], sz, sz * ex.get("aspect", 0.6)]}
+                img, x, y = rect_img(part, dstyle)
+                it = Item(img, x, y, t0_ + k_ * ex.get("stagger", 0.0), t1_, zx, "confetti")
+                d_ = ex.get("d", 0.5)
+                it.fin = {"fx": "burst", "origin": [ox_ * SC, oy_ * SC], "d": d_} if ex.get("burst", True) else {"fx": "fade", "d": 0.2}
+                it.fout = {"fx": "fade", "d": 0.3} if t1_ < dur - 0.01 else None
+                it.loops = [{"fx": "fall", "g": ex.get("g", 160), "after": d_ if ex.get("burst", True) else 0},
+                            {"fx": "sway", "deg": ex.get("sway", 40), "period": 0.6 + rng.random(), "phase": rng.random()}]
+                if ex.get("hfloat"):
+                    it.loops.append({"fx": "hfloat", "amp": ex["hfloat"], "period": 1.5 + rng.random(), "phase": rng.random()})
+                it.screen = bool(ex.get("screen", False))
+                it.front = bool(ex.get("front", False))
+                items.append(it)
+            continue
         if ex.get("kind") == "arc":
             img, x, y = arc_img(ex)
             it = Item(img, x, y, ex.get("show", [0, dur + 5])[0], ex.get("show", [0, dur + 5])[1], zx, "arc")
@@ -1844,13 +2069,44 @@ def build_shot(work, ver, shot, card, nested, place, rules, dstyle, prev_trans, 
                 it.fin = {"fx": "fade", "d": 0.3}
             items.append(it)
             continue
-        r = render_text(ex["text"], dict(dstyle, **ex.get("style", {})), tuple(ex["box"][:3]))
-        it = Item(r["img"], r["x"], r["y"], ex.get("show", [0, dur + 5])[0], ex.get("show", [0, dur + 5])[1], zx, ex["text"])
-        it.fin = dict(ex.get("in", {"fx": "fade", "d": 0.3}))
-        it.fout = {"fx": "fade", "d": 0.2}
+        if ex.get("kind") in ("rect", "copy", "scene"):
+            # rect＝縮圖沒畫、規劃表寫了的物件，用簡化色塊代替（看板、燈牌、桌面、計程車）；
+            # copy＝複製縮圖圖層到別處（card 可指定別張卡）；scene＝借別張卡的整個場景（規劃表寫「同 ②」的）
+            if ex["kind"] == "rect":
+                img, x, y = rect_img(ex, dstyle)
+            elif ex["kind"] == "scene":
+                img, x, y = scene_img(work, ver, ex, place)
+            else:
+                px_, py_ = place[ex.get("card", card["id"])]["place"][ex["id"]][:2]
+                img, x, y = to_out(load_layer(work, ver, ex["id"], bool(ex.get("clean")), None), px_ + ex.get("dx", 0) * SC,
+                                   py_ + ex.get("dy", 0) * SC)
+                if ex.get("scale"):
+                    img, ox_, oy_ = transform(img, ex["scale"])
+                    x, y = x + ox_, y + oy_
+            sh_ = ex.get("show", [0, dur + 5])
+            it = Item(img, x, y, sh_[0], sh_[1], zx, ex.get("name", ex["kind"]))
+            it.fin = dict(ex["in"]) if "in" in ex else ({"fx": "fade", "d": 0.3} if sh_[0] > 0.01 or entering_cut else None)
+            it.fout = dict(ex["out"]) if "out" in ex else ({"fx": "fade", "d": 0.2} if sh_[1] < dur - 0.01 else None)
+        else:
+            r = render_text(ex["text"], dict(dstyle, **ex.get("style", {})), tuple(ex["box"][:3]))
+            it = Item(r["img"], r["x"], r["y"], ex.get("show", [0, dur + 5])[0], ex.get("show", [0, dur + 5])[1], zx, ex["text"])
+            it.fin = dict(ex.get("in", {"fx": "fade", "d": 0.3}))
+            it.fout = {"fx": "fade", "d": 0.2}
+            if "out" in ex:
+                it.fout = dict(ex["out"])
+            if it.fin.get("fx") in ("type", "bounce", "beat"):
+                it.segs = r["glyphs"]
         it.loops = [dict(q) for q in ex.get("loop", [])]
         if "reveal" in ex:
             it.reveal = dict(ex["reveal"])
+        if "move" in ex:
+            it.move = dict(ex["move"])
+        if "pivot" in ex:
+            it.pivot = ex["pivot"]
+        if "anchor" in ex:
+            it.anchor = ex["anchor"]
+        it.screen = bool(ex.get("screen", False))
+        it.front = bool(ex.get("front", False))
         items.append(it)
     # stagger：同一條規則命中多個圖層時，依序延遲進場；counter_seq：依百分比逐格亮起
     for r in layer_rules:
@@ -1863,7 +2119,7 @@ def build_shot(work, ver, shot, card, nested, place, rules, dstyle, prev_trans, 
                     it.fin = dict(it.fin)
                     it.fin["delay"] = it.fin.get("delay", 0) + k_ * r["stagger"]
                 if r.get("counter_seq"):
-                    it.cidx, it.cn = k_, len(hit)
+                    it.cidx, it.cn = k_, r.get("seq_n", len(hit))
                     it.static = False
     if "counter" in ctx:
         ctx["counter_end"] = ctx["counter"][1]
@@ -1874,12 +2130,187 @@ def build_shot(work, ver, shot, card, nested, place, rules, dstyle, prev_trans, 
             if it.kind in ("sub", "count") and it.frames is None and dur - 0.35 <= it.b < dur:
                 it.b, it.fout = dur + 5, None
     items.sort(key=lambda it: it.z)
-    spans = build_chars(shot, color, dur)
+    spans = build_chars(shot, color, dur, pair=sr.get("pair", vr.get("pair", False)), boxes=sr.get("char_boxes"))
     bg = bg_image(card["bg"], OW, OH)
     S = {"items": items, "spans": spans, "bg": bg, "ctx": ctx, "color": color, "shot": shot, "card": card,
          "rules": sr, "frame_shake": sr.get("frame_shake", []), "bob": sr.get("bob"), "flash": sr.get("flash", [])}
+    # 第二批新增（規則檔沒寫就不啟用，第一批的輸出不受影響）
+    if sr.get("cam"):
+        S["cam"] = prep_cam(sr["cam"], work, ver, card)
+    q = sr.get("qfps", vr.get("qfps"))
+    if q:
+        S["qfps"] = q
+    for k_ in ("color_spread", "iris"):
+        if k_ in sr:
+            S[k_] = sr[k_]
     fix_contrast(S)
     return S
+
+
+# ════════════════════════════════════════════════════════════════════════
+# 鏡頭（3D 場景幕的推拉平移）、抽格、整格效果
+# ════════════════════════════════════════════════════════════════════════
+def prep_cam(cam, work, ver, card):
+    """cam＝{"keys": [[秒, cx, cy, 倍率], …], "ext": [左, 上, 右, 下], "chars": "world"|"screen", "char_key": i}
+    keys 的 (cx, cy) 是「畫面中心對準縮圖上的哪一點」（縮圖座標，可以超出 0～480／0～270 落到延伸區）。
+    ext＝縮圖四周要延伸多少（縮圖 px）：鏡頭移到縮圖沒畫的地方時，延伸區用縮圖邊緣的顏色帶補滿。"""
+    ext = cam.get("ext", [0, 0, 0, 0])
+    l, t, r, b = [int(round(e * SC * K)) for e in ext]
+    Wd, Hd = OW + l + r, OH + t + b
+    bg = np.asarray(bg_image(card["bg"], OW, OH).convert("RGB"), np.float32)
+    if l or t or r or b:
+        th = np.asarray(Image.open(os.path.join(work, "layers", ver, card["thumb"] + ".png")).convert("RGB")
+                        .resize((OW, OH), Image.BILINEAR), np.float32)
+        Wa = np.zeros((Hd, Wd, 3), np.float32)
+        Wa[t:t + OH, l:l + OW] = th
+        st = 24
+
+        def runmed(v, k=81):
+            """沿著帶子方向的寬窗中位數：碰到縮圖邊緣的小物件（喇叭、角色框）不會被拉成一條長紋。"""
+            from numpy.lib.stride_tricks import sliding_window_view
+            pad = np.pad(v, ((k // 2, k // 2), (0, 0)), mode="edge")
+            return np.median(sliding_window_view(pad, k, axis=0), axis=-1)
+
+        if l:
+            Wa[t:t + OH, :l] = runmed(np.median(th[:, :st], 1))[:, None, :]
+        if r:
+            Wa[t:t + OH, l + OW:] = runmed(np.median(th[:, -st:], 1))[:, None, :]
+        if t:
+            Wa[:t, :] = runmed(np.median(Wa[t:t + st, :], 0))[None, :, :]
+        if b:
+            Wa[t + OH:, :] = runmed(np.median(Wa[t + OH - st:t + OH, :], 0))[None, :, :]
+        band = Image.fromarray(Wa.clip(0, 255).astype(np.uint8)).filter(ImageFilter.GaussianBlur(4))
+        Wa = np.asarray(band, np.float32).copy()
+        Wa[t:t + OH, l:l + OW] = bg      # 縮圖範圍內照常由底色＋圖層組成
+        wbg = Image.fromarray(Wa.clip(0, 255).astype(np.uint8)).convert("RGBA")
+    else:
+        wbg = Image.fromarray(bg.astype(np.uint8)).convert("RGBA")
+    keys = cam.get("keys") or [[0, TH_W / 2, TH_H / 2, 1.0]]
+    fill = tuple(int(v) for v in np.asarray(wbg.convert("RGB"))[Hd // 2, Wd // 2]) + (255,)
+    return {"keys": keys, "wbg": wbg, "off": (l, t), "chars": cam.get("chars", "world"),
+            "char_key": cam.get("char_key", 0), "fill": fill}
+
+
+def cam_state(cam, t):
+    keys = cam["keys"]
+    if t <= keys[0][0]:
+        k = keys[0]
+        return k[1], k[2], k[3]
+    if t >= keys[-1][0]:
+        k = keys[-1]
+        return k[1], k[2], k[3]
+    for a_, b_ in zip(keys, keys[1:]):
+        if a_[0] <= t <= b_[0]:
+            p = (t - a_[0]) / max(1e-6, b_[0] - a_[0])
+            e = p if (len(b_) > 4 and b_[4] == "lin") else smooth(p)
+            return tuple(a_[i] + (b_[i] - a_[i]) * e for i in (1, 2, 3))
+    k = keys[-1]
+    return k[1], k[2], k[3]
+
+
+def apply_cam(world, cam, t):
+    cx, cy, s = cam_state(cam, t)
+    l, tp = cam["off"]
+    wx, wy = cx * SC * K + l, cy * SC * K + tp
+    return world.transform((OW, OH), Image.AFFINE, (1 / s, 0, wx - OW / 2 / s, 0, 1 / s, wy - OH / 2 / s),
+                           resample=Image.BICUBIC, fillcolor=cam["fill"])
+
+
+def char_to_world(cam, x, y, w, h):
+    """角色框（縮圖座標、以畫面為準）→ 世界畫布座標：以 char_key 那一刻的鏡頭為準，那一刻角色正好在規劃表寫的位置。"""
+    k = cam["keys"][min(cam["char_key"], len(cam["keys"]) - 1)]
+    cx, cy, s = k[1], k[2], k[3]
+    return (x - TH_W / 2) / s + cx, (y - TH_H / 2) / s + cy, w / s, h / s
+
+
+def color_spread_fx(img, cs, t):
+    """黑白→彩色擴散（V14-08）：縮圖本身是黑白＋粉紅；t 之後從 center 以圓形擴散，
+    把灰階換成漸層映射的暖色（map 由暗到亮），飽和的粉紅保留原色。"""
+    if t < cs["t"]:
+        return img
+    p = smooth((t - cs["t"]) / cs.get("d", 0.8))
+    a = np.asarray(img.convert("RGB"), np.float32) / 255.0
+    lum = a @ np.array([0.299, 0.587, 0.114], np.float32)
+    stops = [np.array(hex_rgba(c)[:3], np.float32) / 255.0 for c in cs["map"]]
+    xs = np.linspace(0, 1, len(stops))
+    mapped = np.stack([np.interp(lum, xs, [s_[i] for s_ in stops]) for i in range(3)], -1)
+    sat = a.max(-1) - a.min(-1)
+    keep = np.clip((sat - 0.12) / 0.15, 0, 1)[..., None]
+    mix = cs.get("mix", 0.85)
+    col = a * (1 - mix) + mapped * mix
+    col = col * (1 - keep) + a * keep
+    cx, cy = cs["center"][0] * SC * K, cs["center"][1] * SC * K
+    yy, xx = np.mgrid[0:OH, 0:OW]
+    rmax = math.hypot(max(cx, OW - cx), max(cy, OH - cy)) + 80
+    m = np.clip((p * rmax - np.hypot(xx - cx, yy - cy)) / 80.0, 0, 1)[..., None]
+    out = a * (1 - m) + col * m
+    return Image.fromarray((out * 255).clip(0, 255).astype(np.uint8)).convert("RGBA")
+
+
+def iris_fx(img, ir, t):
+    """圓形虹膜打開（老電影開場）：t～t+d 之間圓形由中心放大，圓外是黑色。"""
+    t0, d = ir.get("t", 0), ir.get("d", 0.4)
+    if t >= t0 + d:
+        return img
+    p = smooth((t - t0) / d) if t >= t0 else 0.0
+    cx, cy = ir.get("center", [TH_W / 2, TH_H / 2])
+    cx, cy = cx * SC * K, cy * SC * K
+    rmax = math.hypot(max(cx, OW - cx), max(cy, OH - cy))
+    yy, xx = np.mgrid[0:OH, 0:OW]
+    m = np.clip((p * rmax - np.hypot(xx - cx, yy - cy)) / 3.0, 0, 1)
+    out = Image.new("RGBA", img.size, (0, 0, 0, 255))
+    out.paste(img, (0, 0), Image.fromarray((m * 255).astype(np.uint8)))
+    return out
+
+
+_ALL_CARDS = {}   # Version 建立時填入（scene 借別張卡的圖層用）
+
+
+def scene_img(work, ver, ex, place):
+    """把別張卡（同一版）的圖層照定位疊成一張場景圖；不含角色框，exclude 正規式排除字幕等圖層。"""
+    cid = ex["card"]
+    c2 = _ALL_CARDS[cid]
+    pl2 = place[cid]["place"]
+    canvas = bg_image(c2["bg"], TH_W * SC, TH_H * SC)
+    exc = re.compile(ex["exclude"]) if ex.get("exclude") else None
+    for L in c2["layers"]:
+        if is_char_box(L) or (exc and exc.search(L["name"])):
+            continue
+        im = Image.open(os.path.join(work, "layers", ver, L["id"] + ".png")).convert("RGBA")
+        paste(canvas, im, pl2[L["id"]][0], pl2[L["id"]][1])
+    return canvas.resize((OW, OH), Image.LANCZOS), 0, 0
+
+
+def rect_img(ex, dstyle):
+    """簡化物件：圓角矩形或橢圓（fill／stroke／sw／r），可帶置中文字（text＋style）。box＝縮圖座標 [x, y, w, h]。"""
+    x, y, w, h = ex["box"]
+    s = SC
+    sw = ex.get("sw", 0)
+    pad = int(math.ceil(sw * s)) + 2 + int(math.ceil(ex.get("blur", 0) * s * 3))
+    W, H = max(1, int(round(w * s))), max(1, int(round(h * s)))
+    im = Image.new("RGBA", (W + 2 * pad, H + 2 * pad), (0, 0, 0, 0))
+    d = ImageDraw.Draw(im)
+    box = [pad, pad, pad + W - 1, pad + H - 1]
+    fill = hex_rgba(ex["fill"]) if ex.get("fill") else None
+    outline = hex_rgba(ex["stroke"]) if ex.get("stroke") else None
+    if ex.get("shape") == "ellipse":
+        d.ellipse(box, fill=fill, outline=outline, width=max(1, int(round(sw * s))) if outline else 0)
+    else:
+        d.rounded_rectangle(box, radius=ex.get("r", 6) * s, fill=fill, outline=outline,
+                            width=max(1, int(round(sw * s))) if outline else 0)
+    if ex.get("blur"):   # 柔邊（光暈、陽光、暖光）
+        im = im.filter(ImageFilter.GaussianBlur(ex["blur"] * s))
+    out, ox, oy = to_out(im, x * s - pad, y * s - pad)
+    if ex.get("text"):
+        st = dict(dstyle, **ex.get("style", {}))
+        st["a"] = st.get("a") or "center"
+        fs = float(st.get("s") or 21)
+        nl = len(ex["text"].split("\n"))
+        lh = st.get("lh") or 1.25
+        by = y + (h - nl * fs * lh) / 2 + ex.get("ty", 0)
+        r = render_text(ex["text"], st, (x, by, w))
+        paste(out, r["img"], r["x"] - ox, r["y"] - oy)
+    return out, ox, oy
 
 
 def fix_contrast(S):
@@ -1889,6 +2320,8 @@ def fix_contrast(S):
         if not getattr(it, "_contrast", None):
             continue
         text, style, box = it._contrast
+        if S.get("cam") and not it.screen:
+            continue   # 跟著鏡頭動的場景字：座標在世界畫布上，不能拿畫面去比；顏色照規則檔
         tm = (it.a + it.b) / 2
         others = [o for o in S["items"] if o is not it and not getattr(o, "_contrast", None)]
         S2 = dict(S, items=others)
@@ -1896,8 +2329,10 @@ def fix_contrast(S):
         ib = ink_box(it.img, it.x, it.y)
         if not ib:
             continue
-        reg = np.asarray(frame.crop((max(0, int(ib[0])), max(0, int(ib[1])), min(OW, int(ib[2])), min(OH, int(ib[3])))),
-                         np.float32).reshape(-1, 3)
+        cb = (max(0, int(ib[0])), max(0, int(ib[1])), min(OW, int(ib[2])), min(OH, int(ib[3])))
+        if cb[2] <= cb[0] or cb[3] <= cb[1]:
+            continue
+        reg = np.asarray(frame.crop(cb), np.float32).reshape(-1, 3)
         if len(reg) == 0:
             continue
         lb = luminance(np.median(reg, 0))
@@ -1912,11 +2347,18 @@ def fix_contrast(S):
         it._contrast = None
 
 
-def render_shot(S, t):
+def shot_ctx(S, t):
     ctx = dict(S["ctx"])
     if "counter" in ctx:
         a_, b_, jump, vals = ctx["counter"]
         ctx["counter_frac"] = counter_value(t, a_, b_, jump, vals)[2] if t >= a_ else 0.0
+    return ctx
+
+
+def render_shot(S, t):
+    if S.get("cam") or S.get("qfps") or S.get("color_spread") or S.get("iris"):
+        return render_shot_world(S, t)
+    ctx = shot_ctx(S, t)
     # 角色狀態（給 follow 用）
     chars = {}
     for who in S["spans"]:
@@ -1930,11 +2372,70 @@ def render_shot(S, t):
     ctx["chars"] = chars
     canvas = S["bg"].copy()
     for it in S["items"]:
-        draw_item(canvas, it, t, ctx)
+        if not it.front:
+            draw_item(canvas, it, t, ctx)
     for who, c in chars.items():
         al, x, y, w, h, label = c["box"]
         im = char_box_img(label, w, h, S["color"])
         paste(canvas, mul_alpha(im, al), x * SC * K, y * SC * K)
+    for it in S["items"]:
+        if it.front:
+            draw_item(canvas, it, t, ctx)
+    return post_fx(S, canvas, t)
+
+
+def render_shot_world(S, t):
+    """有鏡頭運動／抽格／整格效果的鏡：場景（圖層、場景字、角色框）先畫在世界畫布上、套鏡頭，
+    再疊不跟鏡頭動的字幕。qfps＝場景以每秒 N 格抽格（字幕不抽格）。"""
+    q = S.get("qfps")
+    tw = math.floor(t * q + 1e-6) / q if q else t
+    ctx_w, ctx_s = shot_ctx(S, tw), shot_ctx(S, t)
+    cam = S.get("cam")
+    world = cam["wbg"].copy() if cam else S["bg"].copy()
+    off = cam["off"] if cam else (0, 0)
+    in_world = cam is None or cam["chars"] == "world"
+    chars = {}
+    for who in S["spans"]:
+        st = char_state(S["spans"], who, tw)
+        if not st:
+            continue
+        al, x, y, w, h, label = st
+        sp0 = S["spans"][who][0]["segs"][0]
+        bx, by, _, _ = char_geom(sp0["from"], sp0["h"])
+        if cam and in_world:
+            x, y, w, h = char_to_world(cam, x, y, w, h)
+            bx, by, _, _ = char_to_world(cam, bx, by, 0, 0)
+        chars[who] = {"state": (al, (x - bx) * SC * K, (y - by) * SC * K), "box": (al, x, y, w, h, label)}
+    ctx_w["chars"] = ctx_s["chars"] = chars
+
+    def put_chars(canvas, o):
+        for who, c in chars.items():
+            al, x, y, w, h, label = c["box"]
+            im = char_box_img(label, w, h, S["color"])
+            paste(canvas, mul_alpha(im, al), x * SC * K + o[0], y * SC * K + o[1])
+
+    for it in S["items"]:
+        if not it.screen and not it.front:
+            draw_item(world, it, tw, ctx_w, off)
+    if in_world:
+        put_chars(world, off)
+    for it in S["items"]:
+        if not it.screen and it.front:
+            draw_item(world, it, tw, ctx_w, off)
+    canvas = apply_cam(world, cam, tw) if cam else world
+    if not in_world:
+        put_chars(canvas, (0, 0))
+    if S.get("color_spread"):
+        canvas = color_spread_fx(canvas, S["color_spread"], t)
+    for it in S["items"]:
+        if it.screen:
+            draw_item(canvas, it, t, ctx_s)
+    if S.get("iris"):
+        canvas = iris_fx(canvas, S["iris"], t)
+    return post_fx(S, canvas, t)
+
+
+def post_fx(S, canvas, t):
     # 整格上下晃（車廂）
     if S.get("bob"):
         amp, per = S["bob"]
@@ -1980,6 +2481,7 @@ class Version:
     def __init__(self, work, vid, plan_v, cards, nested, rules):
         self.vid, self.plan = vid, plan_v
         self.shots = plan_v["shots"]
+        _ALL_CARDS.update(cards)
         place = json.load(open(os.path.join(work, "cache", vid, "place.json"), encoding="utf-8"))
         analyses = {s["id"]: (cards[s["id"]], analyse_shot(s, cards[s["id"]], nested), s) for s in self.shots}
         dstyle = default_sub_style(cards, nested, vid, analyses)
@@ -2145,9 +2647,18 @@ def cmd_index(args):
         dur = float(subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", f],
                                    capture_output=True, text=True).stdout.strip() or 0)
         note = (rules.get(vid, {}) or {}).get("notes", "")
-        out.append({"id": vid, "title": v["title"], "seconds": round(dur, 2), "file": f"{vid}.mp4",
-                    "poster": f"{vid}.jpg", "notes": (COMMON_NOTE + note) if note else COMMON_NOTE})
+        e = {"id": vid, "title": v["title"], "seconds": round(dur, 2), "file": f"{vid}.mp4",
+             "poster": f"{vid}.jpg", "notes": (COMMON_NOTE + note) if note else COMMON_NOTE}
+        if args.batch is not None:
+            e["batch"] = args.batch
+            e["category"] = v.get("category") or args.category
+        out.append(e)
     p = os.path.join(args.out, "index.json")
+    if args.batch is not None and os.path.exists(p):
+        # 分批：保留 index.json 裡不屬於這份規劃表的版本，依版號排序合併
+        ids = {e["id"] for e in out}
+        out = sorted([e for e in json.load(open(p, encoding="utf-8")) if e["id"] not in ids] + out,
+                     key=lambda e: e["id"])
     json.dump(out, open(p, "w", encoding="utf-8"), ensure_ascii=False, indent=2)
     print(p, len(out), "版")
 
@@ -2162,6 +2673,10 @@ def main():
     ap.add_argument("--rules")
     ap.add_argument("--out")
     ap.add_argument("--jobs", type=int, default=max(1, (os.cpu_count() or 4) - 2))
+    ap.add_argument("--batch", type=int, help="index：第幾批（指定時合併既有 index.json，並寫 batch／category 欄）")
+    ap.add_argument("--category", help="index：規劃表沒寫「風格類別」時的類別")
+    ap.add_argument("--big-skip", action="store_true",
+                    help="prep：匯出圖比外框大 4 倍以上的圖層不搜尋、直接置中（避免放射背景這類圖層跑一小時）")
     args = ap.parse_args()
     if args.cmd == "still":
         args.vers = [args.rest[0]]

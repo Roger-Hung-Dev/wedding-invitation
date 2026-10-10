@@ -40,6 +40,8 @@ Thumbs.db
 # （壓縮版 groom.jpg／bride.jpg 進版控，原始檔 dobe-5329／dobe-5557 由上面那行忽略）
 # 分鏡設計稿引用的原始檔副本（wedding-photo-slideshow.pen 用），同樣只留本機
 /.claude/docs/design/wedding-photo/
+# 輪播分鏡用的攝影原始檔（122 張、單張 10～22MB、合計約 1.3GB），理由同上
+/.claude/docs/design/slideshow-photo/
 /src/assets/images/map.png
 /src/assets/audio/background.mp3
 /src/assets/audio/background_zip.mp3
@@ -53,9 +55,17 @@ Thumbs.db
 .claude/docs/data/blender/projects/*/*.blend1
 .claude/docs/data/blender/projects/*/source/
 
+# === Blender 製作（.claude/docs/data/blender/productions/）===
+# 同框檔、整景檔（blend/couple.blend 等）可由 scripts/ 重建，單檔 30MB 上下；影格在 D:\render-work，本來就不在 repo
+.claude/docs/data/blender/productions/*/**/*.blend
+.claude/docs/data/blender/productions/*/**/*.blend1
+
 # 捏臉模型與真人照片原檔（VRM 13MB、照片 9～11MB）：理由同上 source/，只有 vroid-checklist.md 進版控
 .claude/docs/design/animation-photo/*.vrm
 .claude/docs/design/animation-photo/*.jpg
 
 # 開場影片動態分鏡預覽的 mp4：可用 storyboard-video-render 的 animatic.py 重產，線上預覽頁也有一份
 .claude/docs/storyboard/*-animatic/*.mp4
+
+# Python 執行時自動產生的快取
+__pycache__/
