@@ -45,7 +45,7 @@ pose_frame(ARM, ACT["wave"][1](0.25))
 | 變數 | 位置 | 放什麼 |
 | --- | --- | --- |
 | `PROJ` | `.claude/docs/data/blender/projects/<名稱>/` | project.json、.blend、costume.json、qa/、pictures/、videos/ |
-| `WORK` | `%TEMP%/blender-work/<名稱>/` | 影格 png、檢查圖（量大，⛔ 不進 repo） |
+| `WORK` | `D:/render-work/blender-work/<名稱>/`（環境變數 `BLENDER_WORK_ROOT` 可覆寫；沒有 D 槽才退回 `%TEMP%/blender-work/`） | 影格 png、檢查圖（量大，⛔ 不進 repo） |
 | `QA` | `PROJ/qa/` | metrics.json（穿模/腳底）、motion.json（轉速）、metrics_first.json（第一輪）、tune.json |
 | `LIB` | `.claude/docs/data/blender/library/` | 預設庫：actions_catalog.json、tune_default.json、costumes/、textures/、previews/ |
 
@@ -67,10 +67,12 @@ pose_frame(ARM, ACT["wave"][1](0.25))
 | --- | --- | --- |
 | 穿模 | ≤ 5 mm（碰觸類動作見例外） | 手/前臂頂點對身體＋頭、雙手互相、雙腿互相；最近點＋平滑法線＋射線交叉確認 |
 | 腳底 | 不陷地（≥ −0.5 cm）、不浮空（≤ 0.5 cm，跳躍類除外） | 鞋底取樣點 |
-| 流暢 | 身體骨頭每格 ≤ 15°、速度突變 ≤ 6 | 渲染時逐格量（手指另計） |
-| 滑步 | 著地腳每格 ≤ 1 mm、整段累計 ≤ 5 mm（`slide_step`／`slide_total`） | 鞋底取樣點離地 5 mm 內算著地，量相鄰兩格的水平位移。2026-10-05 才加；`walk`、`turn`、`spin`、`curtsy`、`squat`、`march`、`jump` 目前超標（使用者還沒決定要不要修），網頁也還沒顯示這一項 |
+| 流暢 | 身體骨頭每格 ≤ 15°、速度突變 ≤ 6；腳踝、腳趾（Foot、ToeBase）另計每格 ≤ 35°、不套速度突變 | 渲染時逐格量（手指另計不擋）。腳踝腳趾另計是 2026-10-08 套用真人走路時定的：蹬地那幾格腳踝本來就會到 20～32°/格 |
+| 滑步 | 著地腳每格 ≤ 1 mm（真人走路 `walk_fwd` 的 `style='mocap'` 例外 ≤ 1.1 mm）、整段累計 ≤ 5 mm（`slide_step`／`slide_total`） | 鞋底取樣點離地 5 mm 內算著地，量相鄰兩格的水平位移。真人走路的例外（2026-10-08）：步幅 0.4～0.5 m 時腳跟著地後腳掌放平那一格量到 1.04～1.08 mm（1 px ≈ 3 mm，看不出來）。2026-10-05 才加；`walk`、`turn`、`spin`、`curtsy`、`squat`、`march`、`jump` 目前超標（使用者還沒決定要不要修），網頁也還沒顯示這一項 |
 
-數字沒過不准說「通過」。手指交握、手搭在衣服上會量到幾毫米接觸 —— 要用 `contact_shots` 拍近照目視，確認後在 actions_catalog 的 `contact_note` 寫原因。細節見 [references/qa-checks.md](references/qa-checks.md)。
+數字沒過不准說「通過」。手指交握、手搭在衣服上會量到幾毫米接觸 —— 要用 `contact_shots` 拍近照目視，確認後在 actions_catalog 的 `contact_note` 寫原因。細節見 [references/qa-checks.md](references/qa-checks.md)。調整階段怎麼縮短每一輪（快速預覽、多角度檢查圖、一次收齊問題、瀏覽器即時預覽）見 [references/fast-iteration.md](references/fast-iteration.md)。
+
+**2026-10-10 起動作一律用 Mixamo 現成動畫原樣套上**（不再用 CMU）：`scripts/mixamo_retarget.py`（FBX → VRoid 骨架、接段、0.3 秒漸變），多幕影片先審骨骼（樣板 `assets/skeleton_review/viewer.html`）、再審低畫質預覽，兩關網頁都要有回覆框＋Ctrl+V 貼圖。規則見 fast-iteration.md §0、§0.5。
 
 ## 5. 預設資料庫
 

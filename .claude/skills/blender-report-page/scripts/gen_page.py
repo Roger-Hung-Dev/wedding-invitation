@@ -30,9 +30,9 @@ def media(rel):
     return rel
 
 
-def video(rel, poster, attrs='autoplay muted loop playsinline', lazy=False):
+def video(rel, poster, attrs='autoplay muted loop playsinline', lazy=False, pending="渲染中"):
     if not has(rel):
-        return '<div class="pending">渲染中</div>'
+        return f'<div class="pending">{pending}</div>'
     pa = f' poster="{media(poster)}"' if has(poster) else ""
     src = f'data-src="{media(rel)}"' if lazy else f'src="{media(rel)}"'
     return f'<video {src}{pa} {attrs}></video>'
@@ -48,16 +48,22 @@ def verdict(k, note_contact):
         return None
     pen = max(m["pen_core"], m["pen_hands"], m["pen_legs"])
     v = mo.get("body_vmax", m["vmax"]); j = mo.get("body_jerk", m["jerk"])
-    airborne = k in ("jump", "cheer", "spin") or "hop" in (note_contact or "")
+    # 本來就會離地的動作（跳躍、歡呼、轉圈，以及代號含 jump 的，例：mallet_jump_bonk）不算浮空
+    airborne = k in ("jump", "cheer", "spin") or "jump" in k or "hop" in (note_contact or "")
     feet_ok = m["foot_min"] >= -0.5 and (airborne or m["foot_float"] <= 0.5)
     issues = []
     if pen > 5 and not note_contact: issues.append(f"穿模 {pen:.0f} mm")
     if mo and v > 15: issues.append(f"轉太快 {v:.0f}°/格")
     if mo and j > 6: issues.append(f"速度突變 {j:.0f}")
+    fv = mo.get("foot_vmax", m.get("foot_vmax", 0.0))      # 腳踝、腳趾另計 ≤ 35°/格（2026-10-08；舊量測沒有這欄＝不判）
+    if mo and fv > 35: issues.append(f"腳踝轉太快 {fv:.0f}°/格")
     if not feet_ok: issues.append("腳沒貼地")
     return dict(issues=issues, pen=pen, v=v, frames=mo.get("frames", m["frames"]), foot_ok=m["foot_min"] >= -0.5)
 
 
+# report.hide_unchecked：只跑精簡版動作測試的角色（例：路人甲只測 6 個），不列沒測的動作，免得整頁都是空格
+if R.get("hide_unchecked"):
+    CAT = [c for c in CAT if c["key"] in MET]
 cards, n_ok, n_done = [], 0, 0
 for i, c in enumerate(CAT, 1):
     k = c["key"]; vd = verdict(k, c.get("contact_note"))
@@ -79,7 +85,8 @@ for i, c in enumerate(CAT, 1):
         if b["foot_min"] < -0.5: parts.append(f'腳陷地 {abs(b["foot_min"]):.1f} cm→0')
         fix = "、".join(parts)
     notes = "".join(f'<p class="note">{esc(t)}</p>' for t in (c.get("contact_note"), c.get("note")) if t)
-    cards.append(f'''<figure class="clip" id="a-{k}"><div class="vid">{video(rel, poster, 'muted loop playsinline preload="none"', lazy=True)}</div>
+    # 動作庫後來新增、這個角色還沒跑過的動作：沒有影片不是在渲染，是還沒做
+    cards.append(f'''<figure class="clip" id="a-{k}"><div class="vid">{video(rel, poster, 'muted loop playsinline preload="none"', lazy=True, pending="這個角色還沒做" if vd is None else "渲染中")}</div>
   <figcaption><span class="no">{i:02d}</span><b>{esc(c["name"])}</b>{chip}</figcaption>{dl}{notes}{f'<p class="fix">修正：{esc(fix)}</p>' if fix else ''}</figure>''')
 
 scenes = []
@@ -106,7 +113,7 @@ rep = {
     "{{BRAND}}": esc(name),
     "{{H1}}": esc(R.get("h1") or f"{name}：從捏臉到演出"),
     "{{LEDE}}": esc(R.get("lede") or "用 VRoid 捏好的臉，在 Blender 補完身體、測動作、照照片做服裝，最後放進情境裡演一遍。每個動作都用程式量過穿模、腳底、轉速。"),
-    "{{N_OK}}": str(n_ok), "{{N_ALL}}": str(len(CAT)) + ("" if n_done == len(CAT) else f"（已檢查 {n_done} 個）"),
+    "{{N_CAT}}": str(len(CAT)), "{{N_OK}}": str(n_ok), "{{N_ALL}}": str(len(CAT)) + ("" if n_done == len(CAT) else f"（已檢查 {n_done} 個）"),
     "{{N_PARTS}}": str(len(cos.get("parts", []))), "{{N_SCENES}}": str(len(M.get("scenes", []))),
     "{{S1_TEXT}}": esc(R.get("s1_text") or "VRoid 匯出時會刪掉衣服底下的皮膚；這一步把缺的部分補回來，接縫的形狀、顏色、光影都對齊原本的皮膚，然後讓角色轉一圈檢查。"),
     "{{S1_FACTS}}": "".join(f"<li>{esc(t)}</li>" for t in facts),

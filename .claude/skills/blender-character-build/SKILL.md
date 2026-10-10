@@ -41,7 +41,7 @@ export_media.py → PROJ/videos、PROJ/pictures（給 blender-report-page 做網
 2. **基礎檔 `<名稱>.blend` 不放服裝**；服裝存 `<名稱>_costume.blend`。改服裝永遠從基礎檔重建，不在舊服裝上疊。
 3. **轉台要轉角色、不要轉相機**：燈光固定，背面才打得到光（MToon 背光面是粉色陰影，接縫和破洞都看不出來）。
 4. **檢查一定要看圖**：每一步用 `Read` 看渲染出的檢查圖。「程式跑完」不算檢查。
-5. **影格放 WORK（系統暫存）**，成品才進 `PROJ/videos`、`PROJ/pictures`。
+5. **影格放 WORK（預設 `D:\render-work\blender-work\<名稱>\`）**，成品才進 `PROJ/videos`、`PROJ/pictures`。
 
 ## 3. 01 身體完成度
 

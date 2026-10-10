@@ -50,12 +50,15 @@ def snap():
 
 
 def diff(a, b):
-    body = fing = 0.0
+    """→ (身體, 手指, 腳踝腳趾) 每格最大轉角。分組和門檻與 check_lib 相同（2026-10-08）：
+    身體 ≤ 15°/格、速度突變 ≤ 6（只看身體）；腳踝（Foot）、腳趾（ToeBase）≤ 35°/格、不套速度突變；手指不擋"""
+    body = fing = foot = 0.0
     for k, q in a.items():
         x = q.rotation_difference(b[k]).angle; x = math.degrees(min(x, 2 * math.pi - x))
         if any(f in k for f in FING): fing = max(fing, x)
+        elif k.endswith("_Foot") or k.endswith("_ToeBase"): foot = max(foot, x)
         else: body = max(body, x)
-    return body, fing
+    return body, fing, foot
 
 
 for key in keys:
@@ -78,15 +81,16 @@ for key in keys:
             check_scales(ARM, allow=("Skirt_Sway",) + tuple(pb.name for pb in ARM.pose.bones if pb.name.startswith("J_Sec")))
             cur = snap()
             if i == 0:
-                first = cur; vb = []; vf = []
+                first = cur; vb = []; vf = []; vt = []
             else:
-                b_, f_ = diff(cur, prev); vb.append(b_); vf.append(f_)
+                b_, f_, t_ = diff(cur, prev); vb.append(b_); vf.append(f_); vt.append(t_)
             prev = cur
             sc.render.filepath = os.path.join(out, f"{i + 1:04d}.png")
             bpy.ops.render.render(write_still=True)
-    b_, f_ = diff(first, prev); vb.append(b_); vf.append(f_)          # 頭尾相接那一格
+    b_, f_, t_ = diff(first, prev); vb.append(b_); vf.append(f_); vt.append(t_)          # 頭尾相接那一格
     acc = [abs(vb[k] - vb[k - 1]) for k in range(1, len(vb))]
-    MOT[key] = dict(body_vmax=round(max(vb), 1), body_jerk=round(max(acc), 1), seam=round(vb[-1], 1), finger_vmax=round(max(vf), 1), frames=n)
+    MOT[key] = dict(body_vmax=round(max(vb), 1), body_jerk=round(max(acc), 1), seam=round(vb[-1], 1), finger_vmax=round(max(vf), 1),
+                    foot_vmax=round(max(vt), 1), frames=n)
     json.dump(MOT, open(MF, "w", encoding="utf8"), indent=1)
     with open(PROG, "a") as fp:
         fp.write(key + "\n")

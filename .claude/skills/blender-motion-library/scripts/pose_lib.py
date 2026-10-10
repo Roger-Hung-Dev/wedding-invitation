@@ -44,9 +44,13 @@ HANDS = {
     "point": dict(Thumb=(25, 35, 30), Index=(0, 2, 2), Middle=(85, 95, 60), Ring=(88, 95, 60), Little=(90, 95, 60), spread=-2),
     "grip":  dict(Thumb=(20, 25, 20), Index=(45, 55, 35), Middle=(50, 58, 38), Ring=(55, 60, 40), Little=(58, 62, 40), spread=-2),
     "pinch": dict(Thumb=(22, 28, 20), Index=(35, 45, 30), Middle=(20, 30, 20), Ring=(25, 35, 22), Little=(30, 40, 25), spread=0),
-    "peace": dict(Thumb=(25, 35, 30), Index=(0, 2, 2), Middle=(0, 2, 2), Ring=(88, 95, 60), Little=(90, 95, 60), spread=9, spread_mid=-1.0),
+    # 比 YA：spread 要給負值。_hand_pose 的張開是 rest 時繞世界 Z 轉，正值會讓食指往中指那側倒（中指 spread_mid=-1 也往食指倒），
+    # 兩指交叉成 X、正面看像一根手指（2026-10-06 前是 +9，就是這樣）。負值兩指才往外張成 V（指尖相距約 4 cm）
+    "peace": dict(Thumb=(25, 35, 30), Index=(0, 2, 2), Middle=(0, 2, 2), Ring=(88, 95, 60), Little=(90, 95, 60), spread=-11, spread_mid=-1.0),
     "flat":  dict(Thumb=(0, 0, 0), Index=(0, 0, 0), Middle=(0, 0, 0), Ring=(0, 0, 0), Little=(0, 0, 0), spread=0),
-    "seam":  dict(Thumb=(0, 4, 4), Index=(0, 3, 2), Middle=(0, 3, 2), Ring=(0, 3, 2), Little=(0, 3, 2), spread=-5, thumb_in=30),   # 立正貼褲縫：四指併攏伸直、拇指在手掌平面內靠到食指旁
+    # 立正貼褲縫：四指併攏伸直、拇指在手掌平面內靠到食指旁。spread 要給正值（正值＝往中指收攏）：2026-10-06 前是 -5，
+    # 四指反而散開成扇形（第 2、3 節空隙 4～6 mm）；+3 空隙 1～2 mm、食指剛好碰到中指（0.3 mm），+4 起食指會穿進中指 1 mm 以上
+    "seam":  dict(Thumb=(0, 4, 4), Index=(0, 3, 2), Middle=(0, 3, 2), Ring=(0, 3, 2), Little=(0, 3, 2), spread=3, thumb_in=30),
 }
 
 
@@ -100,8 +104,44 @@ def _hand_pose(arm, side, spec):
             rot_world(arm, f"J_Bip_{side}_{f}1", "Z", sp * k * sg)
 
 
+def stand_fix(P):
+    """男性站姿統一修正（2026-10-08 使用者同意加的共用層；女性不變，STAND_FIX=False 或 P["no_stand_fix"] 關掉）。
+    只套在腳鎖在地上（有 feet）的姿勢：VRoid rest 的骨盆骨頭本來就往前斜 13.5°、站姿骨盆沉 SOFT_KNEE（3 mm）讓膝蓋彎 8～10°，
+    看起來骨盆前傾、腿沒打直。這裡：骨盆往後轉 POSTURE_TILT、腰椎轉回同量再多 POSTURE_SPINE（上身直立），
+    骨盆的基本下沉從 SOFT_KNEE 收到 STAND_DROP（動作自己的上下起伏保留）。骨盆比站姿低 3 cm 以上（蹲、坐、屈膝禮）漸漸不套，6 cm 以下完全不套。
+    常數在 actions.py／actions_custom.py（SOFT_KNEE、BOW_FEMALE、POSTURE_*、STAND_DROP）。直接改寫 P 並標記 _stand_fixed，不會重複套"""
+    g = globals()
+    if P.get("_stand_fixed") or P.get("no_stand_fix") or not g.get("STAND_FIX", True) or g.get("BOW_FEMALE", True):
+        return P
+    if not P.get("feet"):
+        # 腿是 FK、自動貼地（ground，預設）的站姿（nod、peace、lookout、think…）：骨盆往後轉、腰椎轉回，
+        # 大腿也轉回同樣的量（腿的方向不變，否則腳會往前跑十幾公分）；膝蓋本來就是 rest（打直）不用動。不貼地的（walk_fwd 等）不套
+        if P.get("ground", True) and not P.get("_posture_done"):
+            P["_stand_fixed"] = True
+            pt = g.get("POSTURE_TILT", 0.0); pe = g.get("POSTURE_SPINE", 0.0)
+            if pt or pe:
+                P["Hips"] = [("X", -pt)] + list(P.get("Hips", [])); P["Spine"] = [("X", pt + pe)] + list(P.get("Spine", []))
+                for sd in "LR":
+                    P[f"{sd}_UpperLeg"] = [("X", pt)] + list(P.get(f"{sd}_UpperLeg", []))
+        return P
+    P["_stand_fixed"] = True
+    k = g.get("BODY_S", 1.0); x, y, z = P.get("root", (0.0, 0.0, 0.0))
+    u = max(0.0, min(1.0, (-z - 0.03 * k) / (0.03 * k))); f = 1.0 - u * u * (3 - 2 * u)
+    if f <= 0.0:
+        return P
+    if not P.get("_posture_done"):
+        pt = g.get("POSTURE_TILT", 0.0) * f; pe = g.get("POSTURE_SPINE", 0.0) * f
+        if pt or pe:
+            P["Hips"] = [("X", -pt)] + list(P.get("Hips", [])); P["Spine"] = [("X", pt + pe)] + list(P.get("Spine", []))
+    rise = max(0.0, g.get("SOFT_KNEE", 0.003) - g.get("STAND_DROP", 0.0008)) * k * f
+    P["root"] = (x, y, min(z + rise, 0.0))
+    return P
+
+
 def apply_pose(arm, P):
-    """P：{骨頭 key: [(軸, 角度), ...], 'hands': (左手勢, 右手勢)}"""
+    """P：{骨頭 key: [(軸, 角度), ...], 'hands': (左手勢, 右手勢)}。開頭先做男性站姿統一修正（stand_fix，會改寫 P）"""
+    if isinstance(P, dict):
+        stand_fix(P)
     reset_pose(arm)
     hl, hr = P.get("hands", ("relax", "relax"))
     hand_pose(arm, "L", hl); hand_pose(arm, "R", hr)
@@ -111,11 +151,68 @@ def apply_pose(arm, P):
 
 
 FACE_KEYS = ["Fcl_ALL_Fun", "Fcl_ALL_Joy", "Fcl_ALL_Angry", "Fcl_ALL_Sorrow", "Fcl_ALL_Surprised",
-             "Fcl_EYE_Close", "Fcl_EYE_Close_L", "Fcl_EYE_Close_R", "Fcl_MTH_A", "Fcl_MTH_I", "Fcl_MTH_U", "Fcl_MTH_E", "Fcl_MTH_O"]
+             "Fcl_EYE_Close", "Fcl_EYE_Close_L", "Fcl_EYE_Close_R", "Fcl_MTH_A", "Fcl_MTH_I", "Fcl_MTH_U", "Fcl_MTH_E", "Fcl_MTH_O",
+             # 2026-10-09 加：表情風格（face_style）用的分部位鍵
+             "Fcl_MTH_Fun", "Fcl_BRW_Fun", "Fcl_EYE_Surprised"]
+
+# ── 表情風格（2026-10-09，V12 使用者回饋「笑的時候不要瞇瞇眼，眼睛正常張開、嘴巴微笑」「新郎眼睛大一點」）──
+# 角色專案的 project.json 加 "face"：
+#   "smile": "open"   → Fcl_ALL_Fun／Fcl_ALL_Joy（整張臉：瞇眼＋張嘴大笑）改成只動嘴和眉：Fcl_MTH_Fun（閉嘴微笑）＋Fcl_BRW_Fun；
+#                       同時有笑的時候，Fcl_EYE_Close 小於 0.6 的部分（笑瞇、低頭半閉）拿掉，眨眼（1.0）照舊。單眼眨（_L／_R）不動
+#   "base": {鍵: 值}   → 每格都加上去的底（例：新郎 Fcl_EYE_Surprised 0.4＝眼睛開大一點）；眼睛類的底在閉眼時跟著淡掉
+# 沒有 "face" 的專案行為和以前完全一樣。動作檔裡的表情不用改。
+SMILE_MTH = 1.6          # 微笑嘴型：Fcl_MTH_Fun ＝ min(1, 1.6 × Fun ＋ Joy)（待機 Fun 0.3 → 0.48、SMILE 0.45 → 0.72、Joy 1 → 1）
+SMILE_BRW = 0.4          # 眉毛跟著嘴型的比例
+SQUINT_CUT = 0.6         # 笑的時候 Fcl_EYE_Close 低於這個值的部分拿掉（0.6→0、1.0→1.0，線性）
+_FACE_STYLE = {}
+
+
+def face_style(who=None):
+    """角色的表情風格（project.json 的 "face"）；同框時另一個角色從 PROJ 旁邊的同名專案讀"""
+    who = who or WHO
+    if who not in _FACE_STYLE:
+        st = {}
+        try:
+            if who == WHO:
+                st = MANIFEST.get("face") or {}
+            else:
+                import json as _j, os as _o
+                p = _o.path.join(_o.path.dirname(PROJ), who, "project.json")
+                if _o.path.exists(p):
+                    st = _j.load(open(p, encoding="utf8")).get("face") or {}
+        except Exception:
+            st = {}
+        _FACE_STYLE[who] = st
+    return _FACE_STYLE[who]
+
+
+def styled_face(vals, who=None):
+    """動作檔的表情 dict → 套用角色表情風格後的值"""
+    st = face_style(who)
+    if not st:
+        return vals
+    v = dict(vals)
+    if st.get("smile") == "open":
+        f, j = v.pop("Fcl_ALL_Fun", 0.0), v.pop("Fcl_ALL_Joy", 0.0)
+        mth = min(1.0, SMILE_MTH * f + j)
+        if mth > 0:
+            v["Fcl_MTH_Fun"] = max(v.get("Fcl_MTH_Fun", 0.0), mth)
+            v["Fcl_BRW_Fun"] = max(v.get("Fcl_BRW_Fun", 0.0), SMILE_BRW * mth)
+            c = v.get("Fcl_EYE_Close", 0.0)
+            if c:
+                v["Fcl_EYE_Close"] = max(0.0, (c - SQUINT_CUT) / (1 - SQUINT_CUT))
+    base = st.get("base") or {}
+    if base:
+        close = max(v.get("Fcl_EYE_Close", 0.0), v.get("Fcl_EYE_Close_L", 0.0), v.get("Fcl_EYE_Close_R", 0.0))
+        for k, b in base.items():
+            w = (1 - close) if k.startswith("Fcl_EYE_") else 1.0
+            v[k] = min(1.0, v.get(k, 0.0) + b * w)
+    return v
 
 
 def set_face(vals, who=None):
     who = who or WHO
+    vals = styled_face(vals, who)
     kb = bpy.data.objects[f"{who}_Face"].data.shape_keys.key_blocks
     for k in FACE_KEYS:
         if k in kb:

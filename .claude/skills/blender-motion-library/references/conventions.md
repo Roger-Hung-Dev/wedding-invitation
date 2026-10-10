@@ -36,6 +36,7 @@
 | `hop` | `0.2` | 貼地之後再往上抬（跳躍） |
 | `feet` | 見 actions.py 的 `PLANT` | 腳底鎖定（腿部 IK）：腳踝釘在地上固定位置，骨盆可自由移、膝蓋自動彎。重心移動、彎腰、扭腰的動作一律要寫，否則腳會跟著骨盆在地上滑。要換腳位就抬腳、移過去、再放下（例：`dance` 的 `_step`） |
 | `face` | `{"Fcl_ALL_Joy": 1}` | 表情 shape key（見 library-defaults.md） |
+| `no_stand_fix` | `True` | 不套男性站姿統一層（`pose_lib.stand_fix`，2026-10-08）。預設對男性角色、有 `feet` 或自動貼地的姿勢：骨盆往後轉 11°、腰椎轉回 12.5°（不前傾）；鎖腳的站姿骨盆基本下沉從 3 mm 收到 0.8 mm（膝蓋約 175°）；骨盆低 3～6 cm 漸漸不套（蹲、坐）。手的 IK 跟著 Hips 走、骨盆一轉手會偏的動作要寫這個（例：`taste`）；原地轉身 `turn`／`spin` 也排除。全域關掉：`STAND_FIX = False` |
 
 `pose_frame` 的順序：姿勢 → 位移/旋轉 → 貼地 → IK → twist → palms → 表情。⚠️ 貼地一定在 IK 之前，否則 IK 對好的手會被整體平移帶走。
 

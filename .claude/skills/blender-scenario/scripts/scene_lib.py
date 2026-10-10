@@ -224,6 +224,170 @@ def render_scene(name, n, frame_fn, cam_fn, res=(960, 540), outfit="costume", wa
     return round(time.time() - t0, 1)
 
 
+# ── 多角色同框（2026-10-06 為開場影片 V12 加；只新增函式，上面的既有行為不變）──
+# 做法：開 A 角色的 _costume.blend（主命名空間＝A 的 PROJ/WHO），用 add_character() 把 B 角色附加進來，
+# 拿到 B 自己的命名空間 ns（ns["ARM"]、ns["ACT"]、ns["pose_frame_at"]… 都是 B 的：體型比例、tune、鞋底取樣點各算各的）。
+# 擺位置一律用 pose_frame_at（pose_frame 的腳底鎖定與動作裡的 IK 目標都假設角色在原點面向 -Y，搬到別處會把腳拉直）。
+
+def add_character(proj_dir, blend=None, coll_name=None):
+    """把另一個角色專案的角色（身體、服裝、頭髮、碰撞體）附加進目前開著的 .blend，回傳那個角色自己的命名空間。
+    已經附加過（<who>_Armature 已存在，例：存好的同框檔）就只建命名空間。附加的物件放在 Cast_<who> 集合。"""
+    proj_dir = os.path.abspath(proj_dir)
+    man = json.load(open(os.path.join(proj_dir, "project.json"), encoding="utf8"))
+    who = man["who"]
+    if f"{who}_Armature" not in bpy.data.objects:
+        bl = man.get("blend") or {}
+        blend = blend or os.path.join(proj_dir, bl.get("costume") or f"{who}_costume.blend")
+        if not os.path.exists(blend):
+            blend = os.path.join(proj_dir, bl.get("base") or f"{who}.blend")
+        with bpy.data.libraries.load(blend, link=False) as (src, dst):
+            # 角色物件都以 <who>_ 為前綴；VRM 的頭髮碰撞體叫「J_Bip_… Collider」（另一個角色也有同名的，附加後自動加 .001）
+            dst.objects = [n for n in src.objects if n.startswith(who + "_") or " Collider" in n]
+        cname = coll_name or f"Cast_{who}"
+        c = bpy.data.collections.get(cname) or bpy.data.collections.new(cname)
+        if c.name not in bpy.context.scene.collection.children:
+            bpy.context.scene.collection.children.link(c)
+        for o in dst.objects:
+            if o is not None and c not in o.users_collection:
+                c.objects.link(o)
+    ns = {"PROJECT": proj_dir, "REPO": REPO}
+    p = os.path.join(SKILLS, "blender-motion-library", "scripts", "blender_env.py")
+    exec(compile(open(p, encoding="utf8").read(), p, "exec"), ns)
+    ns["use"]("studio", "pose_lib", "actions", "outfit_lib", "costume", "scene_lib")
+    return ns
+
+
+def place_matrix(x=0.0, y=0.0, rz=0.0):
+    """角色站位：原點移到 (x, y)、面向轉 rz 度（0＝面向 -Y，+90＝面向 +X）"""
+    return Matrix.Translation((x, y, 0.0)) @ Matrix.Rotation(math.radians(rz), 4, "Z")
+
+
+def plant_feet_at(arm, feet, M):
+    """plant_feet 的站位版：腳踝鎖在 M @（rest 腳踝位置 + (dx, dy)），膝蓋方向跟著站位轉"""
+    B = arm.data.bones; R3 = M.to_3x3()
+    for side, spec in feet.items():
+        dx, dy, lift, pitch, yaw, toe = (tuple(spec) + (0.0,) * 6)[:6]
+        a0 = B[f"J_Bip_{side}_Foot"].head_local
+        sg = 1 if side == "L" else -1
+        tgt = M @ Vector((a0.x + dx, a0.y + dy, a0.z + lift))
+        pole = R3 @ Vector((sg * FOOT_POLE[0], FOOT_POLE[1], FOOT_POLE[2]))
+        for _ in range(3):
+            ik_leg(arm, side, tgt, tgt + pole, pitch, yaw, toe)
+            err = lift - foot_sole_min(arm, side)
+            if abs(err) < 2e-5:
+                break
+            tgt.z += err
+
+
+def pose_frame_at(arm, P, x=0.0, y=0.0, rz=0.0, who=None):
+    """pose_frame 的「站到場景某處」版。動作 dict 照常寫（角色在原點、面向 -Y）；這裡把 root、feet、ik、palms 換到站位 (x, y, rz)。
+    場景自己算好的世界座標 IK（抓道具）放 P["ikw"]、世界方向的掌心放 P["palmsw"]，不再轉換。"""
+    M = place_matrix(x, y, rz); R3 = M.to_3x3()
+    apply_pose(arm, P)
+    r = Vector(P.get("root", (0, 0, 0)))
+    arm.location = M @ r
+    arm.rotation_euler = (0, 0, math.radians(rz + P.get("rz", 0)))
+    feet = P.get("feet")
+    if feet:
+        plant_feet_at(arm, feet, M)
+    if P.get("ground", not feet):
+        arm.location.z = r.z - sole_min_z(arm) + P.get("hop", 0.0)
+    for item in P.get("ik", []):
+        if len(item) > 4:                # 跟著骨頭走的目標：follow_matrix 已含骨架的世界矩陣
+            Mf = follow_matrix(arm, item[4])
+            item = (item[0],) + tuple(None if p is None else Mf @ Vector(p) for p in item[1:4])
+        else:
+            item = (item[0],) + tuple(None if p is None else M @ Vector(p) for p in item[1:4])
+        ik_arm(arm, *item)
+    for item in P.get("ikw", []):
+        ik_arm(arm, *item)
+    for side, deg in P.get("twist", []):
+        twist_forearm(arm, side, deg)
+    for item in list(P.get("palms", [])) + [None] + list(P.get("palmsw", [])):
+        if item is None:
+            R3 = Matrix.Identity(3); continue
+        side, tgt = item[0], R3 @ Vector(item[1]); w = item[2] if len(item) > 2 else 1.0
+        face_palm(arm, side, tgt, split=item[3] if len(item) > 3 else 0.5, w=w)
+    set_face(P.get("face", {}), who)
+
+
+def pose_blend_at(arm, PA, PB, w, x=0.0, y=0.0, rz=0.0, who=None, place_b=None):
+    """兩個姿勢之間淡入淡出（換動作時用，免得一格跳過去）：各擺一次、骨頭四元數 slerp、骨架位置與表情線性內插。
+    place_b＝(x, y, rz)：PB 用不同的站位（例：PA 是自帶世界座標的 walk_fwd，站位給 (0, 0, 0)；PB 是走完接的 idle）"""
+    pa, pb = (x, y, rz), tuple(place_b) if place_b is not None else (x, y, rz)
+    if w <= 1e-4:
+        return pose_frame_at(arm, PA, *pa, who)
+    if w >= 1 - 1e-4:
+        return pose_frame_at(arm, PB, *pb, who)
+    snap = []
+    for P, pl in ((PA, pa), (PB, pb)):
+        pose_frame_at(arm, P, *pl, who); bpy.context.view_layer.update()
+        snap.append(({pb.name: pb.rotation_quaternion.copy() for pb in arm.pose.bones},
+                     arm.location.copy(), arm.rotation_euler.z))
+    (qa, la, za), (qb, lb, zb) = snap
+    for pb in arm.pose.bones:
+        pb.rotation_quaternion = qa[pb.name].slerp(qb[pb.name], w)
+    arm.location = la.lerp(lb, w); arm.rotation_euler.z = za + (zb - za) * w
+    fa, fb = PA.get("face", {}), PB.get("face", {})
+    set_face({k: fa.get(k, 0.0) * (1 - w) + fb.get(k, 0.0) * w for k in set(fa) | set(fb)}, who)
+
+
+def physics_setup(arms, keep="hair"):
+    """頭髮物理準備（多個骨架）：只留名稱含 keep 的 spring（VRoid 衣服的 spring 會拉動藏起來的 T 恤骨頭），重設狀態"""
+    for A in arms:
+        sb = A.data.vrm_addon_extension.spring_bone1
+        for i in reversed(range(len(sb.springs))):
+            if keep not in sb.springs[i].vrm_name.lower():
+                sb.springs.remove(i)
+        sb.enable_animation = True
+        for sp in sb.springs:
+            for j in sp.joints:
+                j.animation_state.initialized_as_tail = False
+
+
+def render_cast(out_dir, n, pose_fn, cam_fn, arms, skirts=(), prop_fn=None, fps=24, res=(960, 540), warm=24, sub=2,
+                stills=(), still_dir=None, still_prefix="", skip_existing=True, on_frame=None):
+    """多個角色同框的渲染迴圈（頭髮＋裙擺物理）。
+    pose_fn(f)：擺好所有角色在第 f 格（浮點；物理子步驟會傳小數）的姿勢；arms＝要跑頭髮物理的骨架；
+    skirts＝各角色 skirt_phys 的 SkirtSpring；影格存 out_dir/0001.png…；skip_existing＝已存在的影格不重算
+    （物理照樣逐格模擬，所以中斷後接著跑的結果和一次跑完一樣）。on_frame(i) 在每格渲染前呼叫（例：輸出 2D 追蹤點）。回傳秒數"""
+    from bl_ext.blender_org.vrm.editor.spring_bone1 import handler as SB
+    os.makedirs(out_dir, exist_ok=True)
+    physics_setup(arms)
+    for k in skirts:
+        k.reset()
+    sc_ = bpy.context.scene
+    sc_.render.resolution_x, sc_.render.resolution_y = res; sc_.render.resolution_percentage = 100
+    dt = 1.0 / (fps * sub)
+    t0 = time.time()
+    for w in range(warm):                # 停在第 0 格空跑，讓頭髮、裙擺穩定
+        for s_i in range(sub):
+            pose_fn(0.0)
+            for k in skirts: k.step()
+            SB.update_pose_bone_rotations(bpy.context, dt)
+    for i in range(n):
+        for s_i in range(sub):
+            tt = i - 1 + (s_i + 1) / sub if i > 0 else 0.0
+            pose_fn(max(0.0, tt))
+            if prop_fn: prop_fn(max(0.0, tt))
+            for k in skirts: k.step()
+            SB.update_pose_bone_rotations(bpy.context, dt)
+        bpy.context.view_layer.update()
+        cam_fn(i)
+        if on_frame: on_frame(i)
+        path = os.path.join(out_dir, f"{i + 1:04d}.png")
+        if not (skip_existing and os.path.exists(path)):
+            sc_.render.filepath = path
+            bpy.ops.render.render(write_still=True)
+        if i in stills and still_dir:
+            import shutil
+            os.makedirs(still_dir, exist_ok=True)
+            shutil.copy2(path, os.path.join(still_dir, f"{still_prefix}{i + 1:04d}.png"))
+    for A in arms:
+        A.data.vrm_addon_extension.spring_bone1.enable_animation = False
+    return round(time.time() - t0, 1)
+
+
 def set_world(bg, floor=None):
     """每個情境自己的背景色；floor=None 時保留攝影棚地板、給顏色就換地板色、False 就藏起來"""
     w = bpy.context.scene.world

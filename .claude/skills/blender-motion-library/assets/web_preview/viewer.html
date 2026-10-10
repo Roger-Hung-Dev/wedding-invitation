@@ -1,0 +1,308 @@
+<title>新郎姿勢微調台</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=LXGW+WenKai+TC:wght@700&family=Noto+Sans+TC:wght@400;500;700&display=swap">
+<style>
+/* 版面：左邊大舞台（3D 角色即時播放），右邊控制面板（動作、時間軸、視角、滑桿、即時讀數、複製數值）；手機上舞台在上、面板在下 */
+:root {
+  --bg: #F6EFE6; --paper: #FFFBF6; --ink: #4A3B35; --muted: #85736A; --line: #E6D9CB; --chip: #EFE4D8;
+  --accent: #B95C66; --ok: #5E7A58; --warn: #B4562F; --stage: #EFE7DE;
+  --f-display: "LXGW WenKai TC", "Kaiti TC", serif;
+  --f-body: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #221B19; --paper: #2D2522; --ink: #F1E7DF; --muted: #BBA79C; --line: #463A35; --chip: #3A302C;
+  --accent: #E8939A; --ok: #A9C7A1; --warn: #F0A07A; --stage: #2A2320; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #221B19; --paper: #2D2522; --ink: #F1E7DF; --muted: #BBA79C; --line: #463A35; --chip: #3A302C;
+  --accent: #E8939A; --ok: #A9C7A1; --warn: #F0A07A; --stage: #2A2320; color-scheme: dark }
+* { box-sizing: border-box }
+html, body { height: 100%; }
+body { background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 14px; line-height: 1.6; }
+.app { height: 100%; display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 0; }
+.stage { position: relative; min-height: 0; background: var(--stage); }
+#cv { width: 100%; height: 100%; display: block; touch-action: none; }
+.hud { position: absolute; left: 12px; top: 12px; display: grid; gap: 6px; pointer-events: none; }
+.hud h1 { margin: 0; font-family: var(--f-display); font-size: 20px; }
+.hud p { margin: 0; font-size: 12px; color: var(--muted); max-width: 46ch; }
+.read { position: absolute; left: 12px; bottom: 12px; background: var(--paper); border: 1px solid var(--line); border-radius: 10px; padding: 8px 12px; display: grid; grid-template-columns: auto auto; gap: 2px 14px; font-size: 13px; font-variant-numeric: tabular-nums; }
+.read b { font-weight: 500; color: var(--muted); }
+.read .good { color: var(--ok); } .read .bad { color: var(--warn); }
+.loading { position: absolute; inset: 0; display: grid; place-items: center; color: var(--muted); font-size: 15px; }
+.panel { background: var(--paper); border-left: 1px solid var(--line); overflow-y: auto; padding: 14px 16px 24px; display: grid; gap: 14px; align-content: start; min-width: 0; }
+.grp { display: grid; gap: 8px; }
+.grp h2 { margin: 0; font-size: 13px; font-weight: 700; color: var(--muted); letter-spacing: .06em; }
+.row { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+button, select { font: 500 13px var(--f-body); color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 5px 10px; cursor: pointer; }
+button[aria-pressed="true"] { background: var(--chip); border-color: var(--muted); }
+button.primary { background: var(--accent); border-color: var(--accent); color: var(--paper); }
+button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+input[type=range] { width: 100%; accent-color: var(--accent); margin: 0; }
+.sl { display: grid; gap: 2px; }
+.sl .top { display: flex; justify-content: space-between; gap: 8px; }
+.sl label { font-weight: 500; }
+.sl output { font-variant-numeric: tabular-nums; color: var(--accent); min-width: 5ch; text-align: right; }
+.sl small { color: var(--muted); font-size: 12px; }
+.time { display: grid; grid-template-columns: auto 1fr auto; gap: 8px; align-items: center; font-variant-numeric: tabular-nums; }
+textarea { width: 100%; min-height: 110px; font: 12px/1.5 ui-monospace, Consolas, monospace; color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 8px; resize: vertical; }
+.note { font-size: 12px; color: var(--muted); margin: 0; }
+@media (max-width: 820px) {
+  .app { grid-template-columns: minmax(0, 1fr); grid-template-rows: 62vh auto; height: auto; }
+  .panel { border-left: 0; border-top: 1px solid var(--line); }
+}
+</style>
+
+<div class="app">
+  <div class="stage">
+    <canvas id="cv" aria-label="新郎 3D 預覽，可用滑鼠或手指旋轉、縮放"></canvas>
+    <div class="hud"><h1>新郎姿勢微調台</h1><p>拖曳旋轉、滾輪或雙指縮放。右邊滑桿是「在目前動作上再加一點」，拉了馬上看到；調好按「複製數值」貼回對話。</p></div>
+    <div class="read" id="read" aria-live="off">
+      <b>左膝</b><span id="rkL">—</span><b>右膝</b><span id="rkR">—</span><b>骨盆前傾</b><span id="rPel">—</span><b>上身前傾</b><span id="rTor">—</span>
+    </div>
+    <div class="loading" id="loading">載入角色中…</div>
+  </div>
+
+  <aside class="panel">
+    <div class="grp"><h2>動作</h2>
+      <div class="row">
+        <select id="clip" aria-label="選擇動作"></select>
+        <button type="button" id="play" aria-pressed="true">暫停</button>
+        <button type="button" id="slow" aria-pressed="false">慢速 0.3×</button>
+      </div>
+      <div class="time"><span id="tnow">0.00</span><input type="range" id="scrub" min="0" max="1" step="0.001" value="0" aria-label="時間軸"><span id="tdur">0.00</span></div>
+      <div class="row">
+        <button type="button" id="inplace" aria-pressed="true">原地播放</button>
+        <button type="button" id="follow" aria-pressed="true">鏡頭跟著角色</button>
+      </div>
+    </div>
+
+    <div class="grp"><h2>視角</h2>
+      <div class="row">
+        <button type="button" data-view="front">正面</button><button type="button" data-view="side">側面</button><button type="button" data-view="back">背面</button><button type="button" data-view="q">3/4</button>
+      </div>
+    </div>
+
+    <div class="grp" id="sliders"><h2>姿勢微調（在目前動作上再加）</h2></div>
+
+    <div class="grp"><h2>交回給我</h2>
+      <div class="row"><button type="button" class="primary" id="copy">複製數值</button><button type="button" id="reset">全部歸零</button></div>
+      <textarea id="out" readonly aria-label="目前的微調數值"></textarea>
+      <p class="note">膝蓋和骨盆高度的滑桿沒有自動貼地，拉大時腳可能浮起或陷進地板；那是預覽限制，套回動作庫時會重新對齊腳底。</p>
+    </div>
+  </aside>
+</div>
+
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
+<script type="module">
+import * as THREE from "three";
+import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+
+const $ = id => document.getElementById(id);
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+
+// 滑桿定義：key、標籤、範圍、說明
+const SL = [
+  ["pelvis", "骨盆前後傾", -20, 20, 0.5, "°", "負值＝骨盆往後轉（減少屁股翹）"],
+  ["spine", "腰椎", -15, 15, 0.5, "°", "正值＝腰往前彎"],
+  ["chest", "上身前傾", -15, 15, 0.5, "°", "正值＝胸口往前"],
+  ["head", "頭前後", -15, 15, 0.5, "°", "正值＝低頭"],
+  ["hipH", "骨盆高度", -6, 6, 0.1, "cm", "正值＝整個人抬高（腿會比較直）"],
+  ["knee", "膝蓋彎曲", -15, 25, 0.5, "°", "正值＝更彎、負值＝更直"],
+  ["armSwing", "手臂擺幅", 0.3, 1.8, 0.05, "×", "1＝原本的擺幅"],
+  ["armOut", "手臂外張", -10, 20, 0.5, "°", "正值＝手離身體遠一點"],
+];
+const val = Object.fromEntries(SL.map(s => [s[0], s[0] === "armSwing" ? 1 : 0]));
+const box = $("sliders");
+for (const [k, lab, mn, mx, st, unit, hint] of SL) {
+  const d = document.createElement("div"); d.className = "sl";
+  d.innerHTML = `<div class="top"><label for="s_${k}">${lab}</label><output id="o_${k}"></output></div><input type="range" id="s_${k}" min="${mn}" max="${mx}" step="${st}" value="${val[k]}"><small>${hint}</small>`;
+  box.appendChild(d);
+  const inp = d.querySelector("input"), o = d.querySelector("output");
+  const show = () => { o.textContent = (+inp.value).toFixed(st < 0.1 ? 2 : 1) + unit; };
+  inp.addEventListener("input", () => { val[k] = +inp.value; show(); writeOut(); });
+  show();
+}
+
+const cv = $("cv");
+const renderer = new THREE.WebGLRenderer({ canvas: cv, antialias: true });
+renderer.setPixelRatio(Math.min(2, devicePixelRatio));
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(30, 1, 0.05, 50);
+const controls = new OrbitControls(camera, cv);
+controls.enableDamping = true; controls.target.set(0, 0.95, 0);
+camera.position.set(0, 1.1, 4.2);
+scene.add(new THREE.HemisphereLight(0xffffff, 0xcfc4b6, 1.6));
+const sun = new THREE.DirectionalLight(0xffffff, 1.4); sun.position.set(2, 4, 3); scene.add(sun);
+const floor = new THREE.Mesh(new THREE.CircleGeometry(6, 64), new THREE.MeshLambertMaterial({ color: 0xffffff }));
+floor.rotation.x = -Math.PI / 2; scene.add(floor);
+const grid = new THREE.GridHelper(12, 24, 0x999999, 0xbbbbbb); grid.material.transparent = true; grid.material.opacity = 0.25; scene.add(grid);
+function themeColors() { scene.background = new THREE.Color(css("--stage") || "#EFE7DE"); floor.material.color.set(css("--bg") || "#F6EFE6"); }
+themeColors(); matchMedia("(prefers-color-scheme: dark)").addEventListener("change", themeColors);
+
+function resize() { const r = cv.parentElement.getBoundingClientRect(); renderer.setSize(r.width, r.height, false); camera.aspect = r.width / Math.max(1, r.height); camera.updateProjectionMatrix(); }
+addEventListener("resize", resize); resize();
+
+let model, actions = {}, cur = null, t = 0, playing = true, speed = 1, inPlace = true, follow = true;
+const B = {}, rest = {}, restPos = {};
+const NAMES = ["Root", "J_Bip_C_Hips", "J_Bip_C_Spine", "J_Bip_C_Chest", "J_Bip_C_UpperChest", "J_Bip_C_Head",
+  "J_Bip_L_UpperLeg", "J_Bip_L_LowerLeg", "J_Bip_L_Foot", "J_Bip_R_UpperLeg", "J_Bip_R_LowerLeg", "J_Bip_R_Foot",
+  "J_Bip_L_UpperArm", "J_Bip_L_LowerArm", "J_Bip_R_UpperArm", "J_Bip_R_LowerArm"];
+const DESC = { walk_fwd: "往前走（V12 ②）", idle: "站姿待機", sneak_hand: "偷牽手", bonked: "被敲抱頭", bow: "鞠躬", nod: "點頭", walk_mocap_raw: "純真人版走路（未加工）" };
+
+// 平台不直接提供 .glb，模型以 base64 文字檔發布，載入後還原成二進位再解析
+async function loadModel(onLoad, onProg, onErr) {
+  try {
+    const res = await fetch("groom.b64.txt");
+    if (!res.ok) throw new Error("HTTP " + res.status);
+    const total = +res.headers.get("content-length") || 0, reader = res.body.getReader(); const parts = []; let got = 0;
+    for (;;) { const { done, value } = await reader.read(); if (done) break; parts.push(value); got += value.length; onProg({ loaded: got, total }); }
+    const txt = new TextDecoder().decode(await new Blob(parts).arrayBuffer());
+    const bin = Uint8Array.from(atob(txt.trim()), c => c.charCodeAt(0));
+    new GLTFLoader().parse(bin.buffer, "", onLoad, onErr);
+  } catch (e) { onErr(e); }
+}
+loadModel(g => {
+  model = g.scene; scene.add(model);
+  model.traverse(o => { if (o.isMesh) { o.frustumCulled = false; } });
+  for (const n of NAMES) { B[n] = model.getObjectByName(n); if (B[n]) { rest[n] = B[n].quaternion.clone(); restPos[n] = B[n].position.clone(); } }
+  const sel = $("clip");
+  for (const c of g.animations) {
+    actions[c.name] = makeSampler(c);
+    const op = document.createElement("option"); op.value = c.name; op.textContent = DESC[c.name] || c.name; sel.appendChild(op);
+  }
+  sel.addEventListener("change", () => setClip(sel.value));
+  const first = actions.walk_fwd ? "walk_fwd" : g.animations[0].name; sel.value = first; setClip(first);
+  $("loading").style.display = "none";
+  setView("side");
+}, ev => { if (ev.total) $("loading").textContent = `載入角色中… ${Math.round(ev.loaded / ev.total * 100)}%`; },
+   err => { $("loading").textContent = "角色載入失敗，請重新整理頁面。"; console.error(err); });
+
+let rootStart = new THREE.Vector3();
+// 每一格直接從動作資料取樣該時刻的原始姿勢，再疊加滑桿調整；不靠播放器，暫停或播到最後也不會越疊越多
+function makeSampler(clip) {
+  const items = [];
+  for (const tr of clip.tracks) {
+    const pr = THREE.PropertyBinding.parseTrackName(tr.name);
+    const node = model.getObjectByName(pr.nodeName);
+    if (node && node[pr.propertyName]) items.push({ node, prop: pr.propertyName, interp: tr.createInterpolant() });
+  }
+  return { getClip: () => clip, sample(time) { for (const it of items) it.node[it.prop].fromArray(it.interp.evaluate(time)); } };
+}
+function setClip(name) {
+  cur = actions[name]; t = 0;
+  $("tdur").textContent = cur.getClip().duration.toFixed(2);
+  cur.sample(0);
+  if (B.Root) rootStart.copy(B.Root.position);
+  writeOut();
+}
+
+// 骨頭在世界座標下繞 axis 轉 ang（弧度），換算成本地旋轉
+const _pq = new THREE.Quaternion(), _q = new THREE.Quaternion(), _inv = new THREE.Quaternion();
+function rotWorld(bone, axis, ang) {
+  if (!bone || !ang) return;
+  bone.parent.updateWorldMatrix(true, false);
+  bone.parent.getWorldQuaternion(_pq); _inv.copy(_pq).invert();
+  _q.setFromAxisAngle(axis, ang);
+  bone.quaternion.premultiply(_inv.clone().multiply(_q).multiply(_pq));
+}
+function moveWorld(bone, v) {
+  if (!bone) return;
+  bone.parent.updateWorldMatrix(true, false);
+  const p = bone.parent.worldToLocal(bone.getWorldPosition(new THREE.Vector3()).add(v));
+  bone.position.copy(p);
+}
+function scaleFromRest(name, s) {
+  const b = B[name]; if (!b || s === 1) return;
+  const d = rest[name].clone().invert().multiply(b.quaternion);
+  const ang = 2 * Math.acos(Math.min(1, Math.abs(d.w)));
+  if (ang < 1e-5) return;
+  const ax = new THREE.Vector3(d.x, d.y, d.z).normalize().multiplyScalar(Math.sign(d.w) || 1);
+  b.quaternion.copy(rest[name]).multiply(new THREE.Quaternion().setFromAxisAngle(ax, ang * s));
+}
+const wp = n => B[n].getWorldPosition(new THREE.Vector3());
+const D2R = Math.PI / 180, UP = new THREE.Vector3(0, 1, 0);
+
+function frameAxes() {
+  model.updateMatrixWorld(true);
+  const lat = wp("J_Bip_L_UpperLeg").sub(wp("J_Bip_R_UpperLeg")); lat.y = 0; lat.normalize();
+  const fwd = new THREE.Vector3().crossVectors(lat, UP).normalize();
+  return { lat, fwd };
+}
+
+function applyAdjust() {
+  if (inPlace && B.Root) { B.Root.position.x = rootStart.x; B.Root.position.z = rootStart.z; }
+  model.updateMatrixWorld(true);
+  const { lat, fwd } = frameAxes();
+  B.J_Bip_C_Hips.position.copy(restPos.J_Bip_C_Hips);  // 動作資料沒有骨盆位置，每格先歸位再加，避免越疊越高
+  if (val.hipH) moveWorld(B.J_Bip_C_Hips, new THREE.Vector3(0, val.hipH / 100, 0));
+  rotWorld(B.J_Bip_C_Hips, lat, val.pelvis * D2R);
+  rotWorld(B.J_Bip_C_Spine, lat, (val.spine - val.pelvis) * D2R);
+  rotWorld(B.J_Bip_C_Chest, lat, val.chest * D2R);
+  rotWorld(B.J_Bip_C_Head, lat, val.head * D2R);
+  for (const sd of ["L", "R"]) rotWorld(B[`J_Bip_${sd}_LowerLeg`], lat, val.knee * D2R);
+  for (const n of ["J_Bip_L_UpperArm", "J_Bip_L_LowerArm", "J_Bip_R_UpperArm", "J_Bip_R_LowerArm"]) scaleFromRest(n, val.armSwing);
+  rotWorld(B.J_Bip_L_UpperArm, fwd, val.armOut * D2R);
+  rotWorld(B.J_Bip_R_UpperArm, fwd, -val.armOut * D2R);
+  model.updateMatrixWorld(true);
+  return { lat, fwd };
+}
+
+function readouts(fwd) {
+  const knee = sd => { const h = wp(`J_Bip_${sd}_UpperLeg`), k = wp(`J_Bip_${sd}_LowerLeg`), a = wp(`J_Bip_${sd}_Foot`);
+    return h.sub(k).angleTo(a.sub(k)) / D2R; };
+  const tilt = (a, b) => { const v = wp(b).sub(wp(a)).normalize(); const ang = v.angleTo(UP) / D2R; return Math.sign(v.dot(fwd)) * ang; };
+  const kl = knee("L"), kr = knee("R"), pel = tilt("J_Bip_C_Hips", "J_Bip_C_Spine"), tor = tilt("J_Bip_C_Spine", "J_Bip_C_Head");
+  const set = (id, v, good) => { const e = $(id); e.textContent = v; e.className = good ? "good" : "bad"; };
+  set("rkL", kl.toFixed(0) + "°", kl >= 165); set("rkR", kr.toFixed(0) + "°", kr >= 165);
+  set("rPel", pel.toFixed(1) + "°", Math.abs(pel) <= 6); set("rTor", tor.toFixed(1) + "°", Math.abs(tor) <= 8);
+}
+
+let view = "side";
+function setView(v) {
+  view = v; if (!model) return;
+  const { lat, fwd } = frameAxes();
+  const dir = { front: fwd.clone(), back: fwd.clone().negate(), side: lat.clone().negate(), q: fwd.clone().add(lat.clone().negate()).normalize() }[v];
+  const tg = wp("J_Bip_C_Hips"); tg.y = 0.95;
+  controls.target.copy(tg); camera.position.copy(tg).add(dir.multiplyScalar(4.2)); camera.position.y = 1.15;
+}
+document.querySelectorAll("[data-view]").forEach(b => b.addEventListener("click", () => setView(b.dataset.view)));
+
+const toggle = (id, get, set, on, off) => { const b = $(id); b.addEventListener("click", () => { set(!get()); b.setAttribute("aria-pressed", String(get())); if (on) b.textContent = get() ? on : off; }); };
+toggle("play", () => playing, v => playing = v, "暫停", "播放");
+toggle("slow", () => speed !== 1, v => speed = v ? 0.3 : 1);
+toggle("inplace", () => inPlace, v => inPlace = v);
+toggle("follow", () => follow, v => follow = v);
+$("scrub").addEventListener("input", e => { if (!cur) return; playing = false; $("play").textContent = "播放"; $("play").setAttribute("aria-pressed", "false"); t = +e.target.value * cur.getClip().duration; });
+$("reset").addEventListener("click", () => { for (const s of SL) { const i = $("s_" + s[0]); i.value = s[0] === "armSwing" ? 1 : 0; i.dispatchEvent(new Event("input")); } });
+
+function writeOut() {
+  const o = { 角色: "groom", 動作: cur ? cur.getClip().name : "", 說明: "在目前動作上的額外調整（角度單位度、高度單位公分）" };
+  for (const [k] of SL) o[k] = val[k];
+  $("out").value = JSON.stringify(o, null, 2);
+}
+$("copy").addEventListener("click", async () => {
+  const txt = $("out").value;
+  try { await navigator.clipboard.writeText(txt); $("copy").textContent = "已複製"; }
+  catch { $("out").focus(); $("out").select(); $("copy").textContent = "請按 Ctrl+C"; }
+  setTimeout(() => $("copy").textContent = "複製數值", 1800);
+});
+
+const clock = new THREE.Clock();
+function tick() {
+  const dt = Math.min(0.1, clock.getDelta());
+  if (model && cur) {
+    const dur = cur.getClip().duration;
+    if (playing) { t += dt * speed; if (t > dur) t = 0; }
+    cur.sample(Math.min(t, dur));
+    const { fwd } = applyAdjust();
+    readouts(fwd);
+    $("tnow").textContent = t.toFixed(2); $("scrub").value = (t / dur).toFixed(3);
+    if (follow) { const h = wp("J_Bip_C_Hips"); const d = new THREE.Vector3(h.x - controls.target.x, 0, h.z - controls.target.z); controls.target.add(d); camera.position.add(d); }
+  }
+  controls.update(); renderer.render(scene, camera);
+  requestAnimationFrame(tick);
+}
+requestAnimationFrame(tick);
+</script>
