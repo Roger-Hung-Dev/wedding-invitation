@@ -1,0 +1,18 @@
+{
+ "wave_r": {
+  "body_vmax": 23.7,
+  "body_jerk": 14.7,
+  "seam": 6.8,
+  "finger_vmax": 23.7,
+  "foot_vmax": 0.0,
+  "frames": 40
+ },
+ "wave2_mocap": {
+  "body_vmax": 23.5,
+  "body_jerk": 13.3,
+  "seam": 18.5,
+  "finger_vmax": 23.5,
+  "foot_vmax": 0.0,
+  "frames": 40
+ }
+}

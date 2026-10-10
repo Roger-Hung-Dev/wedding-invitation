@@ -1,0 +1,18 @@
+{
+ "heart_head": {
+  "body_vmax": 0.3,
+  "body_jerk": 0.1,
+  "seam": 0.3,
+  "finger_vmax": 0.3,
+  "foot_vmax": 0.0,
+  "frames": 48
+ },
+ "wave2_mocap": {
+  "body_vmax": 23.6,
+  "body_jerk": 13.2,
+  "seam": 18.7,
+  "finger_vmax": 23.6,
+  "foot_vmax": 0.0,
+  "frames": 40
+ }
+}

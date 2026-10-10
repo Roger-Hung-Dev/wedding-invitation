@@ -22,6 +22,6 @@ blender/
     └── previews/                ← 手勢、表情與腳、服裝、30 個動作的預覽圖
 ```
 
-- 影格 png（量很大）一律在系統暫存 `%TEMP%\blender-work\<專案名稱>\`，不放這裡。
+- 影格 png（量很大）一律在 `D:\render-work\blender-work\<專案名稱>\`（`blender_env.py` 的 WORK；環境變數 `BLENDER_WORK_ROOT` 可覆寫），不放這裡。
 - 範例專案：`projects/bride`（新娘怡安），成果頁 https://claude.ai/artifact/12T6gowAFGaBVvSUAawPfa 。
 - 相關子代理：`blender-creator`（建角色 01～03）、`blender-scenario-creator`（情境）、`blender-animation-append`（擴充動作）；一條龍用 `/blender-studio`。

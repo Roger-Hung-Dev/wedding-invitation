@@ -1,0 +1,409 @@
+{
+  "name": "海軍藍兩件式西裝（婚禮賓客）",
+  "source": "使用者描述（虛構角色，沒有照片）",
+  "summary": "婚禮賓客的海軍藍兩件式西裝：敞開的單排兩釦外套（劍領、左胸口袋、兩側有蓋口袋、袖口 4 顆扣），白襯衫不打領帶、第一顆扣子打開（領口敞開成 V 字、領尖往兩側攤開，看得到前襟扣子），炭灰色直筒西裝長褲，黑色綁帶皮鞋配深色襪子；保留 VRoid 的黑框眼鏡。沒有背心、領結、領帶。",
+  "colors": {
+    "suit": [
+      0.028,
+      0.045,
+      0.13
+    ],
+    "suit_shade": [
+      0.011,
+      0.018,
+      0.058
+    ],
+    "lapel": [
+      0.032,
+      0.051,
+      0.142
+    ],
+    "lapel_shade": [
+      0.013,
+      0.021,
+      0.064
+    ],
+    "pants": [
+      0.046,
+      0.048,
+      0.054
+    ],
+    "pants_shade": [
+      0.02,
+      0.021,
+      0.026
+    ],
+    "pocket": [
+      0.022,
+      0.036,
+      0.105
+    ],
+    "pocket_shade": [
+      0.009,
+      0.015,
+      0.048
+    ],
+    "shirt": [
+      0.84,
+      0.85,
+      0.87
+    ],
+    "shirt_shade": [
+      0.62,
+      0.64,
+      0.72
+    ],
+    "button": [
+      0.012,
+      0.014,
+      0.024
+    ],
+    "button_shade": [
+      0.005,
+      0.006,
+      0.011
+    ],
+    "shoe": [
+      0.011,
+      0.011,
+      0.012
+    ],
+    "shoe_shade": [
+      0.004,
+      0.004,
+      0.005
+    ],
+    "shoe_sole": [
+      0.006,
+      0.006,
+      0.006
+    ],
+    "shoe_sole_shade": [
+      0.003,
+      0.003,
+      0.003
+    ],
+    "shoe_lace": [
+      0.035,
+      0.035,
+      0.038
+    ],
+    "shoe_lace_shade": [
+      0.016,
+      0.016,
+      0.018
+    ],
+    "socks": [
+      0.018,
+      0.018,
+      0.02
+    ],
+    "socks_shade": [
+      0.008,
+      0.008,
+      0.009
+    ],
+    "collar": [
+      0.98,
+      0.98,
+      0.98
+    ],
+    "collar_shade": [
+      0.78,
+      0.8,
+      0.86
+    ],
+    "shirt_button": [
+      0.62,
+      0.62,
+      0.6
+    ],
+    "shirt_button_shade": [
+      0.45,
+      0.46,
+      0.5
+    ]
+  },
+  "keep_vroid": [],
+  "needs_body_fill": true,
+  "components": {
+    "bodice": {
+      "enabled": false
+    },
+    "ruffle": {
+      "enabled": false
+    },
+    "sash": {
+      "enabled": false
+    },
+    "rosette": {
+      "enabled": false
+    },
+    "sash_tails": {
+      "enabled": false
+    },
+    "skirt": {
+      "enabled": false
+    },
+    "drape": {
+      "enabled": false
+    },
+    "cascade": {
+      "enabled": false
+    },
+    "hair_bow": {
+      "enabled": false
+    },
+    "earrings": {
+      "enabled": false
+    },
+    "shoes": {
+      "recolor": null
+    }
+  },
+  "suit": {
+    "voxel": 0.004,
+    "crotch": 0.785,
+    "pants_waist": 0.927,
+    "pants_hem_front": 0.078,
+    "pants_hem_back": 0.057,
+    "pants_ease_waist": 0.006,
+    "pants_ease_hip": 0.01,
+    "pants_ease_leg": 0.013,
+    "pants_taper": 0.35,
+    "collar_off": 0.006,
+    "collar_points": [
+      [
+        0.028,
+        1.305
+      ],
+      [
+        0.062,
+        1.292
+      ],
+      [
+        0.05,
+        1.245
+      ],
+      [
+        0.018,
+        1.268
+      ]
+    ],
+    "collar_point_off": 0.0105,
+    "cuff_x0": 0.49,
+    "cuff_x1": 0.52,
+    "cuff_ease": 0.006,
+    "jacket_hem": 0.767,
+    "jacket_ease_side": 0.022,
+    "jacket_ease_front": 0.03,
+    "jacket_ease_back": 0.022,
+    "jacket_chest_min": 0.162,
+    "jacket_waist_min": 0.158,
+    "jacket_ex": 2.8,
+    "jacket_collar_ease": 0.012,
+    "sleeve_ease": 0.01,
+    "sleeve_end": 0.507,
+    "break_z": 1.056,
+    "open_w": [
+      [
+        1.056,
+        0.0284
+      ],
+      [
+        1.212,
+        0.0303
+      ],
+      [
+        1.303,
+        0.044
+      ],
+      [
+        1.6,
+        0.044
+      ]
+    ],
+    "open_w_hem": 0.064,
+    "notch_z": 1.258,
+    "lapel_w": 0.064,
+    "collar_w": 0.03,
+    "lapel_top": 1.3,
+    "chest_pocket": [
+      0.106,
+      1.177
+    ],
+    "chest_pocket_size": [
+      0.062,
+      0.014
+    ],
+    "flap_pocket": [
+      0.115,
+      0.945
+    ],
+    "flap_pocket_size": [
+      0.062,
+      0.022
+    ],
+    "outline": {
+      "width": 0.0007,
+      "color": [
+        0.02,
+        0.03,
+        0.06
+      ],
+      "mix": 0.5
+    },
+    "collar_bottom": [
+      1.302,
+      1.327,
+      1.345
+    ],
+    "collar_top": [
+      1.332,
+      1.363,
+      1.381
+    ],
+    "collar_gap_deg": 30,
+    "shoulder_pad": 0.005,
+    "jacket_up_z": [
+      1.25,
+      1.28,
+      1.31,
+      1.34,
+      1.37,
+      1.42
+    ],
+    "jacket_up_xlim": 0.124,
+    "jacket_collar": [
+      1.348,
+      0.5,
+      0.3
+    ],
+    "shirt_top": [
+      1.3636,
+      0.66,
+      0.41
+    ],
+    "shoulder_grow": [
+      [
+        0.06,
+        1.06,
+        0.0,
+        0.0
+      ],
+      [
+        0.1,
+        1.08,
+        0.002,
+        0.5
+      ],
+      [
+        0.14,
+        1.08,
+        0.004,
+        1.0
+      ]
+    ],
+    "jacket_collar_r": 0.11,
+    "jacket_smooth": 30,
+    "jacket_smooth_after": 6,
+    "jacket_clear": 0.007,
+    "collar_outline": {
+      "width": 0.0012,
+      "color": [
+        0.42,
+        0.44,
+        0.5
+      ],
+      "mix": 0.2
+    },
+    "armpit_smooth": [
+      0.13,
+      0.04,
+      1.19,
+      0.11,
+      30
+    ],
+    "open_y": 0.0,
+    "vest": false,
+    "bowtie": false,
+    "open_collar": {
+      "top_w": 0.04,
+      "top_z": 1.33,
+      "bottom_z": 1.24
+    },
+    "shirt_buttons": [
+      1.17,
+      1.085,
+      1.0
+    ],
+    "shirt_button_r": 0.0042,
+    "jacket_front_buttons": [
+      0.0,
+      0.09
+    ],
+    "collar_clear": 0.003,
+    "jacket_legs_to_hips": 0.0
+  },
+  "extra_scripts": [
+    "costume_extra_suit",
+    "costume_extra_shoes"
+  ],
+  "shoes_leather": {
+    "margin": 0.004,
+    "toe_ext": 0.018,
+    "heel_ext": 0.008,
+    "toe_medial": 0.004,
+    "open_z": 0.1,
+    "collar": [
+      [
+        0.0,
+        0.066
+      ],
+      [
+        0.18,
+        0.058
+      ],
+      [
+        0.3,
+        0.062
+      ],
+      [
+        1.0,
+        0.09
+      ]
+    ],
+    "sole_h": 0.011,
+    "heel_h": 0.026,
+    "heel_len": 0.065,
+    "arch_lift": 0.006,
+    "toe_spring": 0.007,
+    "toe_h": 0.019,
+    "welt": 0.0022,
+    "laces": 4,
+    "lace_span": 0.045,
+    "lace_w": 0.011,
+    "lace_r": 0.0016,
+    "sock_top": 0.26,
+    "sock_off": 0.0015,
+    "gloss": {
+      "color": [
+        0.24,
+        0.24,
+        0.27
+      ],
+      "power": 4.0,
+      "lift": 0.0,
+      "mix": 0.6
+    },
+    "outline": {
+      "width": 0.001,
+      "color": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "mix": 0.5
+    }
+  }
+}

@@ -1,0 +1,71 @@
+{
+ "idle": {
+  "body_vmax": 0.4,
+  "body_jerk": 0.0,
+  "seam": 0.3,
+  "finger_vmax": 0.3,
+  "frames": 48
+ },
+ "walk": {
+  "body_vmax": 5.9,
+  "body_jerk": 0.7,
+  "seam": 3.7,
+  "finger_vmax": 2.3,
+  "frames": 48
+ },
+ "walk_fwd": {
+  "body_vmax": 8.1,
+  "body_jerk": 3.8,
+  "seam": 0.0,
+  "finger_vmax": 8.1,
+  "frames": 72
+ },
+ "turn": {
+  "body_vmax": 11.2,
+  "body_jerk": 1.9,
+  "seam": 0.0,
+  "finger_vmax": 11.0,
+  "frames": 72
+ },
+ "nod": {
+  "body_vmax": 2.4,
+  "body_jerk": 0.6,
+  "seam": 0.3,
+  "finger_vmax": 0.2,
+  "frames": 48
+ },
+ "bow": {
+  "body_vmax": 3.7,
+  "body_jerk": 0.7,
+  "seam": 0.0,
+  "finger_vmax": 0.5,
+  "frames": 72
+ },
+ "walk_in_photo": {
+  "body_vmax": 14.7,
+  "body_jerk": 4.2,
+  "seam": 157.5,
+  "finger_vmax": 15.5,
+  "frames": 31,
+  "oneshot": true,
+  "note": "單次動作：body_vmax／body_jerk 只算相鄰格，不含頭尾相接那格（seam 是結尾到開頭的差，播放時不會出現）"
+ },
+ "oops_bow": {
+  "body_vmax": 14.1,
+  "body_jerk": 5.4,
+  "seam": 115.3,
+  "finger_vmax": 27.1,
+  "frames": 19,
+  "oneshot": true,
+  "note": "單次動作：body_vmax／body_jerk 只算相鄰格，不含頭尾相接那格（seam 是結尾到開頭的差，播放時不會出現）"
+ },
+ "turn_exit": {
+  "body_vmax": 14.8,
+  "body_jerk": 4.3,
+  "seam": 176.1,
+  "finger_vmax": 13.0,
+  "frames": 36,
+  "oneshot": true,
+  "note": "單次動作：body_vmax／body_jerk 只算相鄰格，不含頭尾相接那格（seam 是結尾到開頭的差，播放時不會出現）"
+ }
+}
