@@ -79,7 +79,7 @@ python -u .claude/skills/zepeto-face-rig/scripts/run_face_rig.py --work <這張�
 | --- | --- |
 | `Head` | AI 網格的臉＋脖子＋自建口腔袋，49 個 ARKit 形態鍵（眨眼改用材質，網格的 `eyeBlink*_geo` 停用）；**脖子接口環**：點屬性 `neck_ring`（1＝正前 −Y、俯視逆時針 13＝+X、25＝正後、37＝−X，其他 0）、物件屬性 `neck_ring_ver`（1）、`neck_ring_n`（48）、`neck_ring_z`、`neck_ring_yc`（本地座標＝頭檔座標）、`neck_chin_bottom`（下巴底，身體端放頭用）；後頸被分給頭髮的頭會鋪一片**後頸墊底皮**（從環到耳朵下面，有臉皮的地方墊在下面、缺口直接露出；點屬性 `nape_underlay`、物件屬性 `nape_patch_top`／`nape_patch_ang`） |
 | `Hair` | 頭髮＋臉旁細髮絲（`strand` 屬性），同樣的形態鍵（瀏海、鬢角跟表情動）；長髮已避開身體（`hairfit_done`） |
-| `Ears` | 兩隻耳朵（服裝端找耳垂掛耳環） |
+| `Ears` | 兩隻耳朵（服裝端找耳垂掛耳環）；材質把偏紅的地方調回膚色、點屬性 `ear_fix`＝改歸耳朵的黑色碎塊（畫成膚色）。Head 的點屬性 `ear_zone`＝耳朵附近（耳後也調回膚色） |
 | `upper_teeth`、`bottom_teeth`、`upper_gum`、`bottom_gum`、`Tongue` | 籠子的，每個表情都推到皮後；舌頭跟下顎剛體轉 |
 | 材質 `ZEPETO_Face` | 臉上半部：貼圖＋材質眼珠、眼皮；控制值 `BLINK_*`、`LOOK_*`、`JAW_OPEN` |
 | 材質 `ZEPETO_Skin`、`ZEPETO_Lips`、`ZEPETO_Hair`、`ZEPETO_Ears`、`LipInner` | 嘴巴以下（身體端取膚色）、嘴唇面（身體端量嘴巴位置）、頭髮、耳朵、口腔袋 |

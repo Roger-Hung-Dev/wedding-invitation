@@ -131,6 +131,39 @@ for p in me.polygons:
     h = hair[vs].mean(); e_ = ear[vs].mean()
     face_cls.append(1 if h > 0.5 else 2 if e_ > 0.5 else 0)
 face_cls = np.array(face_cls)
+# 黏在耳朵旁的小塊頭髮（攝影師 v2：耳垂下各一顆 71、82 點的黑色水滴，像耳環）→ 改歸耳朵、材質畫成膚色（點屬性 ear_fix）。
+#   不能切出來再刪：它本來就是頭的表面，刪掉耳垂下面破一個洞
+EAR_ISL_MAX, EAR_NEAR = 200, 0.08
+ear_fix = np.zeros(N, bool); n_ear_isl = 0
+_ei = np.where(ear)[0]
+if len(_ei):
+    from mathutils.kdtree import KDTree as _KDT
+    _kde = _KDT(len(_ei))
+    for j_, i_ in enumerate(_ei):
+        _kde.insert(_V(P[i_]), j_)
+    _kde.balance()
+    _hf = set(np.where(face_cls == 1)[0].tolist())
+    _v2f = {}
+    for f_ in _hf:
+        for v_ in me.polygons[f_].vertices:
+            _v2f.setdefault(v_, []).append(f_)
+    _seen = set()
+    for f0 in _hf:
+        if f0 in _seen:
+            continue
+        comp = [f0]; _seen.add(f0); k_ = 0
+        while k_ < len(comp):
+            for v_ in me.polygons[comp[k_]].vertices:
+                for g_ in _v2f[v_]:
+                    if g_ not in _seen:
+                        _seen.add(g_); comp.append(g_)
+            k_ += 1
+        vs_ = np.unique([v_ for f_ in comp for v_ in me.polygons[f_].vertices])
+        if len(vs_) < EAR_ISL_MAX and _kde.find(_V(P[vs_].mean(0)))[2] < EAR_NEAR:
+            face_cls[comp] = 2; ear_fix[vs_] = True; n_ear_isl += 1
+print("[pack] 黏在耳朵旁的小塊頭髮改歸耳朵：%d 塊、%d 點" % (n_ear_isl, int(ear_fix.sum())))
+_ef = me.attributes.get("ear_fix") or me.attributes.new("ear_fix", 'FLOAT', 'POINT')
+_ef.data.foreach_set("value", ear_fix.astype(np.float32))
 
 # ── 嘴唇的面：唇線上下 0.04 內、嘴寬以內、上下唇兩側的皮膚面 ──
 m = LM["mouth"]; xc = (m["L"][0] + m["R"][0]) / 2; hw = (m["L"][0] - m["R"][0]) / 2; zc = m["center"][2]; zk = (m["L"][2] + m["R"][2]) / 2
@@ -260,6 +293,13 @@ for o in (hair_o, ears_o):
 #   排成一條虛線，長髮避開身體時有的被推進身體（身體端近照：斜穿脖子和肩膀的細黑線）。耳朵以上的（臉旁細髮絲）留著
 ISL_MAX = 40
 ear_low = min((ears_o.matrix_world @ v.co).z for v in ears_o.data.vertices) if ears_o and len(ears_o.data.vertices) else -9
+kd_ear = None
+if ears_o and len(ears_o.data.vertices):
+    from mathutils.kdtree import KDTree as _KD
+    kd_ear = _KD(len(ears_o.data.vertices))
+    for i_, v_ in enumerate(ears_o.data.vertices):
+        kd_ear.insert(ears_o.matrix_world @ v_.co, i_)
+    kd_ear.balance()
 bmh = bmesh.new(); bmh.from_mesh(hair_o.data); bmh.verts.ensure_lookup_table()
 mwh = hair_o.matrix_world
 seen_ = set(); kill = []
@@ -282,6 +322,76 @@ if kill:
     bmh.to_mesh(hair_o.data); hair_o.data.update()
 bmh.free()
 print("[pack] 耳朵以下的細碎髮絲碎片（< %d 點）刪掉 %d 點" % (ISL_MAX, len(kill)))
+
+# ── 耳朵調回膚色（2026-10-14）：AI 可能把耳朵內側、耳後那片皮膚畫成偏紅（攝影師 v2：耳朵紅−綠 0.32、臉頰 0.20），
+#    側面、背面看像耳朵發紅。關掉透光幾乎沒差 → 是貼圖畫的，不是材質。
+#    材質裡做（不改貼圖檔）：比這張臉的膚色明顯偏紅的地方，往膚色混回去最多 EAR_TONE（保留明暗、留一點粉）。
+#    Ears 整個物件都做；Head 只做耳朵附近（點屬性 ear_zone：離耳朵 0.06 內 1、0.18 外 0）→ 嘴唇、腮紅不受影響
+EAR_TONE = 0.7
+EAR_RED_LO, EAR_RED_HI = 0.04, 0.14      # 比膚色多紅（線性色的紅−綠）這麼多開始混、混到最多
+def _skin_ref():
+    tx_ = next(n for n in skin_mat.node_tree.nodes if n.type == 'TEX_IMAGE')
+    W_, H_ = tx_.image.size
+    px_ = np.array(tx_.image.pixels[:], np.float32).reshape(H_, W_, 4)[..., :3]
+    uvd = me.uv_layers.active.data; cols = []
+    for p_ in me.polygons:
+        if p_.material_index != 0 or (ai.matrix_world @ p_.center).y > -0.2:
+            continue
+        for li_ in p_.loop_indices:
+            u_, v_ = uvd[li_].uv
+            cols.append(px_[min(H_ - 1, int(v_ * H_)), min(W_ - 1, int(u_ * W_))])
+    return np.median(np.array(cols), 0) ** 2.2   # 貼圖是 sRGB → 跟材質節點裡一樣用線性色比
+SKIN_LIN = _skin_ref()
+SKIN_LUM = float(SKIN_LIN @ np.array([0.2126, 0.7152, 0.0722]))
+
+
+def add_ear_tone(mat, gate_attr=None, force_attr=None):
+    nt = mat.node_tree
+    bs = next(n for n in nt.nodes if n.type == 'BSDF_PRINCIPLED')
+    src = bs.inputs['Base Color'].links[0].from_socket
+    sep = nt.nodes.new('ShaderNodeSeparateColor'); nt.links.new(src, sep.inputs[0])
+    rg = nt.nodes.new('ShaderNodeMath'); rg.operation = 'SUBTRACT'
+    nt.links.new(sep.outputs[0], rg.inputs[0]); nt.links.new(sep.outputs[1], rg.inputs[1])
+    mr = nt.nodes.new('ShaderNodeMapRange'); mr.interpolation_type = 'SMOOTHSTEP'
+    r0 = float(SKIN_LIN[0] - SKIN_LIN[1])
+    mr.inputs['From Min'].default_value, mr.inputs['From Max'].default_value = r0 + EAR_RED_LO, r0 + EAR_RED_HI
+    mr.inputs['To Max'].default_value = EAR_TONE
+    nt.links.new(rg.outputs[0], mr.inputs['Value'])
+    fac = mr.outputs['Result']
+    if gate_attr:
+        at = nt.nodes.new('ShaderNodeAttribute'); at.attribute_name = gate_attr; at.attribute_type = 'GEOMETRY'
+        mu = nt.nodes.new('ShaderNodeMath'); mu.operation = 'MULTIPLY'
+        nt.links.new(fac, mu.inputs[0]); nt.links.new(at.outputs['Fac'], mu.inputs[1]); fac = mu.outputs[0]
+    if force_attr:   # 改歸耳朵的黑色碎塊：整個畫成膚色（亮度用膚色的，不是黑色的）
+        fa = nt.nodes.new('ShaderNodeAttribute'); fa.attribute_name = force_attr; fa.attribute_type = 'GEOMETRY'
+        mxa = nt.nodes.new('ShaderNodeMath'); mxa.operation = 'MAXIMUM'
+        nt.links.new(fac, mxa.inputs[0]); nt.links.new(fa.outputs['Fac'], mxa.inputs[1]); fac = mxa.outputs[0]
+    bw = nt.nodes.new('ShaderNodeRGBToBW'); nt.links.new(src, bw.inputs['Color'])
+    if force_attr:
+        lmix = nt.nodes.new('ShaderNodeMix'); lmix.data_type = 'FLOAT'
+        nt.links.new(fa.outputs['Fac'], lmix.inputs['Factor']); nt.links.new(bw.outputs[0], lmix.inputs['A'])
+        lmix.inputs['B'].default_value = SKIN_LUM * 0.95
+        lum_out = lmix.outputs['Result']
+    else:
+        lum_out = bw.outputs[0]
+    sc = nt.nodes.new('ShaderNodeVectorMath'); sc.operation = 'SCALE'
+    sc.inputs[0].default_value = tuple(float(c) / SKIN_LUM for c in SKIN_LIN)
+    nt.links.new(lum_out, sc.inputs['Scale'])     # 膚色 × 這一點的亮度：保留耳朵的明暗
+    mx = nt.nodes.new('ShaderNodeMix'); mx.data_type = 'RGBA'
+    nt.links.new(fac, mx.inputs['Factor']); nt.links.new(src, mx.inputs['A']); nt.links.new(sc.outputs[0], mx.inputs['B'])
+    nt.links.new(mx.outputs[2], bs.inputs['Base Color'])
+
+
+if ears_o and len(ears_o.data.vertices) and kd_ear is not None:
+    add_ear_tone(ears_o.material_slots[0].material, force_attr="ear_fix")
+    hz = np.array([kd_ear.find(ai.matrix_world @ v.co)[2] for v in me.vertices])
+    w_ear = 1 - np.clip((hz - 0.06) / 0.12, 0, 1)   # 離耳朵 0.06 內全做、0.18 外不做（0.04～0.12 時耳後下半那片紅沒蓋到）
+    w_ear = w_ear * w_ear * (3 - 2 * w_ear)
+    at_ = me.attributes.get("ear_zone") or me.attributes.new("ear_zone", 'FLOAT', 'POINT')
+    at_.data.foreach_set("value", w_ear.astype(np.float32))
+    for m_ in (skin_mat, plain):
+        add_ear_tone(m_, "ear_zone")
+    print("[pack] 耳朵調回膚色：膚色（線性）%s；Ears 整個、Head 耳朵附近 %d 點（ear_zone）" % (np.round(SKIN_LIN, 3), int((w_ear > 0).sum())))
 
 
 # 頭髮和臉皮（Head、Ears）的交界抹順：頭髮是沿 AI 三角形切出來的，交界一排鋸齒，上色後是一排深色三角
