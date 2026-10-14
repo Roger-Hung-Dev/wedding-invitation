@@ -13,9 +13,9 @@ export const meta = {
 // 【args 形狀】（skill 找到照片、問完名稱後組出來）
 // {
 //   name: 'groom',                                  // 小寫英數與 -，成品資料夾名
-//   photo: 'C:/.../images/1.png',                   // 照片的絕對路徑（Alt+V 貼上的圖由 skill 換成暫存檔路徑）
+//   photo: 'C:/.../images/1.png',                   // 照片的絕對路徑（Alt+V 貼上的圖由 skill 換成暫存檔路徑）；沒有照片時省略、改給 notes
 //   outDir: 'D:/SideProject/wedding-invitation/.claude/docs/data/blender/zepeto/groom',  // 絕對路徑
-//   notes: '…',                                     // 選填：使用者的補充描述（原話）
+//   notes: '…',                                     // 選填：使用者的補充描述（原話）；沒有照片時必填＝文字設定（例：配角攝影師，2026-10-14 起支援）
 //   stages: ['generate', 'craft', 'rig'],           // 選填，預設三段；只重做後處理用 ['craft']、只重做可動臉用 ['rig']
 //   overwrite: false,                               // outDir 已有 OBJ 時，使用者同意覆寫才 true
 //   material: { sssWeight, sssScale, sssRadius, roughness }  // 選填：使用者另外指定的材質值
@@ -107,8 +107,8 @@ if (!a || !a.name || !/^[a-z0-9][a-z0-9-]*$/.test(a.name)) {
 }
 const stages = Array.isArray(a.stages) && a.stages.length ? a.stages : ['generate', 'craft', 'rig']
 const outDir = a.outDir || `.claude/docs/data/blender/zepeto/${a.name}`
-if (stages.includes('generate') && !a.photo) {
-  log('缺 photo（照片的絕對路徑）。')
+if (stages.includes('generate') && !a.photo && !a.notes) {
+  log('缺 photo（照片的絕對路徑）；沒有照片時要給 notes（文字設定，例：配角攝影師）。')
   return { error: 'no-photo' }
 }
 
@@ -119,9 +119,9 @@ if (stages.includes('generate')) {
   const genPrompt = [
     '【worker 模式】你是被 zepeto-character-face-generation workflow 派來的 zepeto-analyze-photo-3d-model。任務已完整指定；你沒有 AskUserQuestion，缺什麼就 blocked 並寫進 needsUser。',
     `名稱：${a.name}`,
-    `照片：${a.photo}`,
+    a.photo ? `照片：${a.photo}` : '照片：無（純文字設定）。跳過複製照片；analysis.md 開頭寫「照片：無，依文字設定做」並抄下設定原文；五官表第二欄改成「文字設定」，沒提到的部位寫「普通」；ZEPETO 那欄照定義的新寫法（V 字臉、杏仁眼、雙眼皮、有鼻樑、唇峰、亮澤、slender neck，不寫 matte clay、soft rounded face、large round、cute tiny nose）；三個角度判準的「跟照片一樣」改成「跟文字設定一樣」。',
     `成品資料夾 OUT：${outDir}`,
-    a.notes ? `使用者的補充描述（原話，優先於照片判讀）：${a.notes}` : '使用者的補充描述：（無）',
+    a.notes ? (a.photo ? `使用者的補充描述（原話，優先於照片判讀）：${a.notes}` : `文字設定（使用者原話，整份描述照它寫）：${a.notes}`) : '使用者的補充描述：（無）',
     a.overwrite ? 'OUT 已有舊的 OBJ：使用者同意覆寫。' : 'OUT 若已有 stylized_face_generated.obj：使用者沒有同意覆寫 → blocked。',
     '',
     '照你定義裡的流程做：環境 → 風格分析（寫 analysis.md）→ 文字生成（只送文字、不給 bbox_condition、最多 3 次）→ 每次都看正面／側面／背面 → export_obj.py（readback_ok 要是 true，且讀回物件的正面截圖看得到臉）→ work_scene.py cleanup。',
@@ -179,7 +179,7 @@ const RIG_SCHEMA = {
   properties: {
     blendPath: { type: 'string', description: 'head_rig.blend 的絕對路徑' },
     checks: {
-      type: 'object', additionalProperties: false, required: ['totalIssues', 'restNonzero', 'rigOk', 'ringOk', 'hairInside', 'eyesSource'],
+      type: 'object', additionalProperties: false, required: ['totalIssues', 'restNonzero', 'rigOk', 'ringOk', 'hairInside', 'eyesSource', 'neckRatio', 'zepetoRatio'],
       properties: {
         totalIssues: { type: 'number', description: 'check/summary.json 的 total_issues（應為 0）' },
         restNonzero: { type: 'number', description: '打開檔案時非 0 的形態鍵（應為 0）' },
@@ -187,6 +187,8 @@ const RIG_SCHEMA = {
         ringOk: { type: 'boolean', description: '脖子接口環做好了：summary.json 的 neck_ring.ring_closed 是 true、ring_marked 是 48（身體端照它接，不是的話接不上）' },
         hairInside: { type: 'number', description: '長髮避開身體後還插進身體的點數（應為 0）；沒跑（body: none）填 -1' },
         eyesSource: { type: 'string', description: 'auto（自動偵測）或 manual（face.json 手動填）' },
+        neckRatio: { type: 'number', description: 'summary.json 的 zepeto_ratio.items.neck.value：脖子寬（接口環左右寬）÷ 頭寬；目標範圍在 items.neck.target；沒有就填 -1' },
+        zepetoRatio: { type: 'string', description: 'ZEPETO 比例（參考、不擋）：zepeto_ratio.items 每一項的「名稱 數值（×倍數）」，偏離 ±20% 以上的標出來' },
       },
     },
     faceJsonChanges: { type: 'string', description: '改了 face.json 的哪些值、為什麼；沒改寫「沒改」' },
@@ -206,6 +208,7 @@ if (stages.includes('rig')) {
     craft ? `後處理端剛交出：${craft.blendPath}` : '這次只重做可動臉：OUT 裡的 stylized_face_zepeto.blend 是之前做好的。',
     '',
     '照你定義裡的流程做：先讀 OUT/analysis.md（髮色、眼睛顏色）→ run_face_rig.py --work OUT/rig（約 5 分鐘，用 run_in_background）→ 讀 check/summary.json → 報告與預覽圖每張都用 Read 看（含耳朵 check/ear.png、後頸 check/nape.png） → 自動偵測不準就改 face.json 重跑（最多 2 輪）。',
+    'summary.json 的 zepeto_ratio（ZEPETO 比例）也要回報：checks.neckRatio＝items.neck.value（目標 0.35～0.40；產線會自動修細脖子到 0.38，face.json 的 neck_slim 不要改）；checks.zepetoRatio＝每一項「名稱 數值（×倍數）」，偏離 ±20% 以上的標出來。',
     '不要改產線程式，程式問題寫進 knownIssues；不要寫狀態紀錄（主控端在使用者看過後寫）。',
   ].join('\n')
   rig = await agent(rigPrompt, { label: `rig:${a.name}`, phase: 'Rig', agentType: 'zepeto-face-rigger', schema: RIG_SCHEMA })
@@ -213,7 +216,7 @@ if (stages.includes('rig')) {
     log('可動臉端沒有回傳（中止或錯誤）。')
     return { name: a.name, outDir, generate: gen, craft, error: 'rigger-died' }
   }
-  log(`可動臉：${rig.status}｜問題 ${rig.checks.totalIssues}｜骨架 ${rig.checks.rigOk ? '通過' : '有問題'}｜接口環 ${rig.checks.ringOk ? '通過' : '有問題'}｜長髮插進身體 ${rig.checks.hairInside}｜${rig.blendPath}`)
+  log(`可動臉：${rig.status}｜問題 ${rig.checks.totalIssues}｜骨架 ${rig.checks.rigOk ? '通過' : '有問題'}｜接口環 ${rig.checks.ringOk ? '通過' : '有問題'}｜長髮插進身體 ${rig.checks.hairInside}｜脖子÷頭寬 ${rig.checks.neckRatio}｜${rig.blendPath}`)
 }
 
 return {

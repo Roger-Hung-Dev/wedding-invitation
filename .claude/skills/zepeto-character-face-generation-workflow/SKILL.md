@@ -18,6 +18,7 @@ argument-hint: "[名稱] [補充描述]（照片用 Alt+V 貼上，或 @照片�
 | Alt+V 貼上（訊息裡出現 `[Image #N]`） | Claude Code 把貼上的圖存在本 session 暫存資料夾的 `images\N.png`，也就是你的 scratchpad 上一層的 `images` 資料夾（見下方指令） |
 | 一般路徑文字 | 直接用 |
 | 都沒有 | 用一般訊息請使用者貼上或給路徑，**不要拿舊照片猜** |
+| 沒有真人照片、只有文字設定（配角、路人，例：開場片的婚禮攝影師） | 不帶 `photo`，把設定原話放進 `notes`（2026-10-14 起支援）。生成端照文字設定寫描述，一樣是 ZEPETO 風（V 字臉、杏仁眼、亮澤） |
 
 貼上的圖找不到時，用 PowerShell 搜（把 `N` 換成 `[Image #N]` 的數字）：
 
@@ -39,6 +40,7 @@ Get-ChildItem "$env:TEMP\claude" -Recurse -Filter "N.png" | Where-Object FullNam
 | `material` | | 使用者有指定材質值才帶（例：「透光權重 0.5」→ `{ sssWeight: 0.5 }`） |
 
 `outDir` 一律是 `${CLAUDE_PROJECT_DIR}\.claude\docs\data\blender\zepeto\<name>` 的絕對路徑。
+例外：這個人已經出廠、使用者要「先做新版候選、不動現役版」時，`outDir` 改放測試資料夾（例：`D:/render-work/blender-work/zepeto-fullrun/<name>-v2`），不改狀態紀錄；使用者看過說要換版，再搬進正式資料夾、照第 6 節出廠。
 
 ## 3. 派工
 
@@ -73,6 +75,7 @@ Workflow({ name: 'zepeto-character-face-generation', args: {
   - 預覽圖在 `<outDir>/rig/preview/`：`mat_front_ai.png` 對 `mat_front_new.png`（像不像 AI 原頭）、`sheet_combos.png`（14 個代表表情）、`sheet_keys.png`（52 個單一表情）、`rig.png`（控制骨頭拉到底）、`body_side.png`（接上身體拉遠看長髮）。自己用 Read 看過再描述，特別是可動臉端回報的「哪裡不一樣」、改了 `face.json` 的哪些值。
   - 耳朵、後頸近照：`<outDir>/rig/check/ear.png`（左右耳附近的髮際線）、`check/nape.png`（接上身體的耳下到後頸）。這兩區總表縮圖看不出來，一定要看。
   - **脖子接口環**：成品的脖子上有一圈 48 點的接口環（後頸被分給頭髮的頭會補一片「墊底皮」），身體端照抄座標接上、看不出接縫。可動臉端回報的 `checks.ringOk` 要是 true；不是的話身體接不上，照實轉告。合約見 skill `zepeto-face-rig` 的 `references/ai-mesh-route.md`「頭身接縫」。
+  - **ZEPETO 比例**（`checks.neckRatio`、`checks.zepetoRatio`；報告「ZEPETO 比例」一節）：脖子 AI 生成時常比 ZEPETO 粗，產線會修細到頭寬的 38%（超過 40% 才修，臉不動；目標和身體端約定）。`neckRatio` 不在 0.35～0.40 就照實轉告。其他項（下巴寬、眼寬、兩眼間距、嘴寬）是參考，用「比 ZEPETO 寬／窄幾成」講給使用者聽，偏離兩成以上的要點出來（那是生成描述的事，可動臉端改不了）。
   - 已知限制：手臂放下的姿勢，上臂會從長髮後面頂出來（頭髮固定在頭上）；使用者 2026-10-14 決定交給動畫端。
   - **授權提醒**：牙齒、舌頭、表情動法來自模板（CC BY 4.0），對外分享成品要標註作者（`.claude/docs/data/blender/zepeto/templates/cartoon-head-lucadrech/ATTRIBUTION.md`）。
   - 最後用的英文描述。

@@ -58,6 +58,8 @@ PYTHONIOENCODING=utf-8 python -u "D:/SideProject/wedding-invitation/.claude/skil
 | `hairfit.inside_after` | 0（新娘 0） | 有點數：長髮還插在身體裡，看 `preview/body_side.png`、`check/nape.png`；要查是點還是面中心、在哪，用 skill 的 `tools/hair_check.py` |
 | `neck_ring.ring_n`、`ring_closed`、`ring_marked` | 48、true、48 | 脖子接口環沒做好：身體端接不上。看 `run.log` 的 `[ring]` 行（截面、補皮、焊接） |
 | `neck_ring.patch_side_fail` | 0 | 後頸補皮有幾格沒接到臉皮的邊（會留縫） |
+| `zepeto_ratio.items.neck.ok` | true（脖子寬 ÷ 頭寬在 `target` 範圍內） | 脖子比 ZEPETO 粗或細：身體脖子照接口環做，會跟著不對。照實回報數字 |
+| `zepeto_ratio.items` 其他項（下巴往上 5%、10% 的臉寬、頭寬、眼寬、兩眼間距、嘴寬） | 參考，不擋；`vs_zepeto` 是這顆頭 ÷ ZEPETO | 每一項的數字和倍數都寫進回報（`check/report.html` 的「ZEPETO 比例」一節有表），偏離 ±20% 以上的特別點出來。這些是 AI 生成時決定的，可動臉端改不了 |
 
 ### 3. 看圖：每張都要用 `Read` 看（不要只看數字）
 
@@ -84,8 +86,11 @@ PYTHONIOENCODING=utf-8 python -u "D:/SideProject/wedding-invitation/.claude/skil
 | --- | --- | --- |
 | 「眼睛自動偵測失敗」或 `eyes_detect.png` 框錯 | `eyes_manual: [左眼x, 右眼x, 高度, 半寬, 半高]`：用 `check/eyes_front.png`（正面正交）＋`eyes_front.json` 的換算量 | `eyes` 起全部 |
 | 一張嘴整片下唇連皮膚像板子掉下來；嘴縫切在上唇 | `mouth_zc`：唇縫中央高度（閉嘴微笑的唇縫是 U 形、中間比嘴角低） | `landmarks` 起全部 |
+| 嘴縫開在鼻子底下、AI 畫的嘴唇不動（嘴巴整個抓錯）；或 `run.log` 停在「下巴推算…差太多」「量到的不像脖子」 | `mouth_manual: [左嘴角x, 左嘴角z, 右嘴角x, 右嘴角z]`：用 `check/eyes_front.png`＋`eyes_front.json` 的換算量兩個嘴角 | `landmarks` 起全部 |
 | 驚訝、難過時眉毛變形太誇張（粗黑眉） | `brow_gain` 降到 1.2 | `transfer` 起全部 |
 | 頭髮顏色不對 | `hair_rgb` | `shade` 起全部 |
+
+`neck_slim`（修細脖子的目標，脖子寬 ÷ 頭寬 0.38）是和身體端約定的，**不要改**；修完還超出範圍就照實回報。
 
 步驟順序：`eyes,landmarks,cage,transfer,shade,check,rig,hairfit,finish`；從某步起就把它和後面的步驟全部列上。最多重跑 2 輪；還不行就 `partial`，寫明卡在哪。
 
@@ -106,6 +111,7 @@ PYTHONIOENCODING=utf-8 python -u "D:/SideProject/wedding-invitation/.claude/skil
 狀態：done / partial / blocked
 成品：<OUT>/rig/head_rig.blend（貼圖已打包）
 檢查：合計問題 N、打開時非 0 的形態鍵 N、骨架 通過／有問題、接口環 通過／有問題、長髮插進身體 N 點、眼睛 auto／manual
+ZEPETO 比例：脖子寬 ÷ 頭寬 N（目標 …）；下巴往上 5%／10% 臉寬 ×N／×N、眼寬 ×N、兩眼間距 ×N、嘴寬 ×N（倍數＝這顆頭 ÷ ZEPETO）
 改了 face.json：…（沒改就寫沒改）
 看過的圖：…（每張看到什麼）
 像不像 AI 原頭：…

@@ -51,7 +51,7 @@ python -u .claude/skills/zepeto-face-rig/scripts/run_face_rig.py --work <這張�
 | `transfer` | 表情轉移＋切嘴縫＋自建口腔袋 | 24 秒 |
 | `shade` | 材質眼睛、眨眼、看方向、黑髮、亮澤 | 7 秒 |
 | `check` | 自動檢查（數字）＋總表、嘴巴與眼睛近照、張嘴序列與切片 → `check/report.html` | 約 50 秒 |
-| `rig` | 舊版 `head_rig.blend`（連同 `preview/`）改名封存 → 貼圖還原成 `shade` 的原版（`diffuse_blackhair_shade.png`）→ 整理成交接格式（`pack_head.py`，見「接身體」）→ 標準脖子接口環（`neck_ring.py`，見「頭身接縫」）→ 控制骨架（`face_rig.py`）→ **`head_rig.blend`**；骨架檢查（`rig_check.py`：每根控制骨頭拉到底，量形態鍵和材質數值、渲 15 格總表 `check/rig.png`，結果併進報告） | 15 秒 |
+| `rig` | 舊版 `head_rig.blend`（連同 `preview/`）改名封存 → 貼圖還原成 `shade` 的原版（`diffuse_blackhair_shade.png`）→ 整理成交接格式（`pack_head.py`，見「接身體」）→ 修細脖子（`neck_slim.py`，見「修細脖子」）→ 標準脖子接口環（`neck_ring.py`，見「頭身接縫」）→ ZEPETO 比例量測（`zepeto_ratio.py`，見「ZEPETO 比例量測」）→ 控制骨架（`face_rig.py`）→ **`head_rig.blend`**；骨架檢查（`rig_check.py`：每根控制骨頭拉到底，量形態鍵和材質數值、渲 15 格總表 `check/rig.png`，結果併進報告） | 15 秒 |
 | `hairfit` | 長髮避開身體（`hair_fit.py`），改寫 `head_rig.blend`。face.json 的 `body`：`auto`（預設）＝用身體端的 `body_build.py` 照這顆頭試接一副身體（`D:/render-work/blender-work/zepeto-rig/<name>/body_try/prefit/`，`QA=none`）；也可給身體檔；`none` 不跑。再渲頭部分色三角度 `check/final_split_*.png`、骨架總表 `check/final.png`。**同一個檔只能跑一次**（會擋），要重跑從 `rig` 開始 | 約 70 秒（試接 45 秒） |
 | `finish` | 貼圖打包進 `head_rig.blend` → 用成品再試接一次身體（`body_try/final/`，順便驗證身體端讀得了這顆頭）、拉遠拍側面 `preview/body_side.png` → `previews.py` 產預覽圖（`mat_front_ai／new`、`mat_34_ai／new` 同鏡頭燈光對照；52 個 ARKit 單一表情 `sheet_keys.png`）→ `sheet_combos.png`、`rig.png` → 耳朵近照 `check/ear.png`（`tools/ear_closeup.py`，左右耳各三張）、接身體的耳下到後頸近照 `check/nape.png`（`tools/nape_closeup.py`）→ `check/summary.json`（子代理讀這個回報）。`sheet_keys.png` 最後才產：身體端的頭清單看到它才算做完 | 約 110 秒 |
 
@@ -60,10 +60,10 @@ python -u .claude/skills/zepeto-face-rig/scripts/run_face_rig.py --work <這張�
 | 改了 face.json 的 | 從哪步重跑 |
 | --- | --- |
 | `eyes_manual` | `eyes` |
-| `mouth_zc`（唇縫中央高度，自動偵測不準時填） | `landmarks` |
+| `mouth_zc`（唇縫中央高度，自動偵測不準時填）、`mouth_manual`（嘴角整個抓錯時填） | `landmarks` |
 | `mouth_cut`、`lip_smooth`、`lip_rz`、`brow_gain`、`tongue_len`、`corner_smooth` | `transfer` |
 | `hair_rgb`、`iris_rgb`、`gloss` | `shade` |
-| `body` | `rig` |
+| `body`、`neck_slim` | `rig` |
 
 為什麼 `rig` 先還原貼圖：`hairfit` 會把耳垂以下改成膚色、存回 `diffuse_blackhair.png`；`pack_head.py` 照貼圖顏色分頭髮，讀到改過的圖，後頸分出來的範圍就變了（新娘重跑：脖子那層 64 點變 67 點，接口環跟著不同）。
 
@@ -173,6 +173,7 @@ Rodin 免費額度當天用完，改用攝影師**舊描述**生成的 AI 頭（
 | 高度 | `neck_ring_z`：照身體端 `measure_head` 的切口規則（下巴底面結束、脖子開始，2 cm 一格），由頭端算好寫進頭檔；兩邊改規則要一起改 |
 | 點 | 48 點，每 7.5°：從脖子中心 `(0, neck_ring_yc)` 往固定角度射線；點屬性 `neck_ring` 1＝正前 −Y、俯視逆時針 13＝+X、25＝正後 +Y、37＝−X |
 | 座標 | Head 本地座標＝頭檔座標；`neck_ring.py` 檢查 Head 的 matrix_world 是單位矩陣 |
+| 下巴底 | `neck_chin_bottom`（2026-10-14 加）：正中線側面輪廓從嘴巴往下、第一次一格往後退 > 0.06 的地方（`zmeasure.measure_cut` 的第三個回傳值）。身體端 `measure_head` 用它放頭（身體端舊規則「比嘴唇退後 0.06」量到的是 V 字下巴的前緣：攝影師 v2 量成 −0.348、實際 −0.51 → 頭放低 3.7 cm、放大 11%、接口環落在肩膀上）。量不到就不寫，身體端照舊規則 |
 | 表情 | 所有形態鍵在環上位移 0（身體照基底座標接）：環往上 0.10 內的表情位移漸變到 0 |
 | 環以下 | 胸像留著、接在環下面，身體端用 Mask（門檻 `neck_ring_z − 1e-5`）藏；環上下 2e-5 內沒有別的點 |
 | 身體端 | 環下 12 mm 切掉身體、接 3～4 圈過渡、最上圈座標＝頭環（算完修改器之後的位置，容許 3 mm）；環上 100% 頭骨；不再吸附頭 |
@@ -206,6 +207,42 @@ Rodin 免費額度當天用完，改用攝影師**舊描述**生成的 AI 頭（
 - 環 48 點整圈連通、高度誤差 1e-9。身體端試接：`ring_gap_max_mm` 0、環上 100% 頭骨；身體端驗收（`ring_check.py`）：靜止、轉頭 35°、低頭、抬頭 25° 的環距離都是 0、法線夾角 0、張嘴時環不動。
 - 用身體端 `neck_probe.py` 前後對照（`integration-test/probe_after2/before_after.png`）：下巴後面、耳朵下方的黑色鋸齒、細黑線都沒了。長髮插進身體 17 → 4 點（接上身體實量 2 點、深 1～2 mm）。
 - 還剩：手臂放下的姿勢，上臂會從長髮後面頂出來一小塊（見上；交給動畫端）。耳朵前面、耳垂下方的鋸齒已經用交界抹順處理（`integration-test/ear3/cmp.png`、`cmpL.png`）。
+
+### ZEPETO 比例量測（2026-10-14）
+
+使用者要「量這顆頭離 ZEPETO 官方多遠」。`zepeto_ratio.py`（`rig` 步驟、接口環之後跑在 `ring.blend` 上）→ `check/zepeto_ratio.json`、報告「ZEPETO 比例」一節、`summary.json` 的 `zepeto_ratio`。**只有脖子有目標範圍**（超出標紅），其他是參考，不擋產線（AI 生成決定的，可動臉端改不了，要改得改生成描述）。
+
+| 項目 | 量法 | ZEPETO（出處 [research-zepeto-face.md](research-zepeto-face.md)） |
+| --- | --- | --- |
+| H | 頭頂（不含頭髮）到下巴。AI 頭頂被頭髮蓋住量不到 → 用眼睛推：ZEPETO 眼睛在下巴往上 40%，H＝(眼睛高度 − 下巴) ÷ 0.40（所以「眼睛高度」不量） | — |
+| 頭寬 | Head（不含 Hair、Ears）下巴往上 0.3H 以上，每 1 cm 一層的左右寬取最大 | 頭寬 ÷ H＝1 ÷ 1.29 |
+| 下巴往上 5%、10% 的臉寬 | 那一層（±0.006）Head 上、在脖子中心前面（y < `neck_ring_yc`）的點的左右寬（只取前半，不量到後面的脖子、後頸墊底皮） | 0.28H、0.39H |
+| 眼寬、兩眼間距 | `eyes.json`（找眼珠時量的眼睛開口）÷ 頭寬 | 29%、56%（成人 PRO 21%、51%） |
+| 嘴寬 | `landmarks.json` 兩個嘴角 ÷ 頭寬 | 36% |
+| 脖子寬 | 接口環的左右寬（＝身體脖子頂端）÷ 頭寬 | 目標 35～40%（和身體端對齊，見 research-zepeto-face.md） |
+
+新娘（新描述生成）實量：下巴往上 5% 臉寬 ×1.24、10% ×1.20（舊描述的頭約 ×2）、頭寬 ÷ H ×0.86、眼寬 ×0.82、兩眼間距 ×1.03、嘴寬 ×1.16、**脖子 52%**（目標 35～40%）→ 修細後 38%。
+
+### 修細脖子（2026-10-14）
+
+AI 頭的脖子比 ZEPETO 粗（新娘 52%，官方 33～34%），描述寫了 `slender neck` Rodin 也不照做；身體脖子照接口環做，會跟著粗（身體端研究：「脖子要細，得從頭端改」）。使用者要修；目標和身體端對齊成 **38%（容許 35～40%）**，理由見 [research-zepeto-face.md](research-zepeto-face.md)「2026-10-14 更正」（我們 4.5 頭身、頭對身體比官方小約 11%，38% 剛好讓脖子對身體的比例等於官方）。
+
+`neck_slim.py`（`rig` 步驟，`pack_head.py` 之後、`neck_ring.py` 之前；`face.json` 的 `neck_slim`，`null` 不修）：
+1. 環的高度、下巴用 `zmeasure.measure_cut`（和 `neck_ring.py` 同一套；兩支都 import `zmeasure.py`，量法只有一份）。環那層**真的切一刀**量截面（`zmeasure.section_xy`）、擬合橢圓。坑：用「高度 ±6 mm 內的點」量，網格三角形大、點太少，新娘量成 0.29（實際 0.40）。
+2. 超過 40% 才修；倍數＝目標寬 ÷ 環那層現在的寬，左右、前後同比例（官方只有正面圖、量不到厚度，身體端建議保持形狀）。
+3. 每一點往脖子中心軸（x＝0、y＝橢圓中心）縮，權重＝「離脖子多遠」×「高度」：
+   - 離脖子：環那層橢圓的 ρ（脖子表面＝1），ρ ≤ 1.12 全縮、≥ 1.6 不動 → 下巴、下顎、臉頰離脖子遠，不動；喉嚨往下巴底面那段漸變。
+   - 高度：環往下 0.03 到下巴全縮（身體在環下 12 mm 切，那段要跟環一樣細）；環往下 0.10 以下不動（胸像身體會藏、長髮下半段不被拉）；下巴往上 0.25 內漸變到 0（後頸接後腦）。
+4. Head、Hair 同一個公式（交界兩邊各一份的點位置一樣，一起動、不會裂）；Head 的口腔袋（`pocket_k`／`pocket_t`）不動；耳朵不動。形態鍵每個鍵加同樣的位移（表情位移量不變）。
+
+攝影師 v2（脖子 63%、後頸長）補的三件事：
+- 後頸也要縮到耳朵最低點（每層用自己的截面當尺，`back_ref`）：只縮到下巴底的話，脖子長的頭環上面一段沒縮到，側面背面看像漏斗、接口處掐一圈。
+- 防呆：量到的寬度比 > 0.70 或環在下巴上面 → 停（不要照縮）：嘴巴、下巴偵測錯時環會落在下顎（攝影師 v2 第一次：0.79 照縮成 0.48 倍、下半臉壓扁）。
+- **脖子長度沒有統一標準**（使用者問「脖子不是應該統一標準嗎」）：粗細統一了（38%），長度沒有。量三顆頭（H＝頭高）：下巴底到環 0.03～0.05H；耳垂最低點到環 0.28～0.30H 都差不多；後髮際到環：新娘 0（長髮蓋住）、攝影師 v1 0.23H、v2 0.22H。所以不是攝影師 v2 特別長，是短髮露出整段後頸、又修細了，看起來像細柱子（攝影師 v1 出廠時沒修細、59%，看起來是正常的粗脖子）。
+  - 試過「縮短後頸」（`neck_short.py`：後面的點往下拉，後髮際線一起往下，環、臉、耳朵不動；後頸剩 6 成）→ **不採用**：只拉後面中間，兩側為了不動耳朵沒拉，後腦被拉出一撮尖尾巴；拉低的頭髮下緣在後頸上變成一道黑色月牙；頭髮插進身體 0 → 5 點。程式已刪。
+  - 前面不能縮（下巴底到環只有 1 cm，再縮下巴壓進胸口）、環要水平（合約）→ 頭端能動的只有後面。要統一長度，下一步是對照 ZEPETO 官方脖子長度（請身體端從官方截圖量），看長在頭端那段還是身體端那段。
+
+新娘測試（`D:/render-work/blender-work/zepeto-rig/ratio-test/bride/rig/`）：縮放 0.734，環那層寬 0.399 → 0.293（52% → 38%），環高度不變（−0.28）；Head 動 481 點、最多 0.074，Hair 309 點；下巴往上 5% 臉寬不變、10% 少 1.7%（下顎角靠近脖子那一點點）；骨架檢查通過。前後對照（`ratio-test/compare/compare_nohair.png`、`compare_hair.png`，工具 `tools/neck_views.py`）：正面臉、耳朵看不出差別，側面喉嚨往後收。環以下的胸像會突然變寬，身體會藏掉。
 
 ## 1. 給圖生成 ZEPETO 風 AI 頭
 
@@ -384,6 +421,8 @@ blender -b <轉移後 .blend> -P eyes_shader.py -- <landmarks.json> <輸出 .ble
 | `ear_closeup.py` | 耳朵附近近照（只有頭）：斜前、正側、斜下往上 | `-- <前綴> R（或 L） [DBG]`；鬢角那排深色三角從斜前最明顯；`DBG` 分色看鋸齒是頭髮還是臉皮；`finish` 步驟自動產 `check/ear.png` |
 | `nape_closeup.py` | 接好身體的耳下到後頸近照：側面、斜後、正後 | 開 `body.blend`；前面串 `dbg_body_parts.py` 就是分色；T 字姿勢。`finish` 自動產 `check/nape.png` |
 | `nohair_view.py` | 藏起頭髮看 Head 哪裡沒皮（墊底皮塗黃） | 近照只看到「深色鋸齒」時，用這張才看得出是整片缺皮 |
+| `../regress/regress.py`（系統 Python） | **回歸測試**：測試組（`regress/heads.json`：新娘、攝影師 v1、v2）全部重跑，跟 `regress/baseline.json` 比五官位置（快速）或整條的檢查數字＋正面圖（`--full`） | 改了任何產線程式都要跑；有差異逐項確認是預期的、看過圖再 `--accept`。用法與加頭規則見 SKILL.md「改了產線程式之後」 |
+| `neck_views.py` | 脖子前後對照的固定機位：正面、斜前、正右側、右後斜（正交） | `-- <輸出前綴> [nohair]`；修細脖子前（`pack.blend`）、後（`slim.blend`）各跑一次並排比 |
 | `neck_section.py` | 脖子截面數字：某高度切開幾段、閉不閉合、擬合橢圓；每層缺口邊界角度；墊底皮每層半徑 | `-- <高度> [<起> <終>]`；角度從脖子中心算（0＝正後）。缺口判斷要看「閉不閉合」，不要用固定角度範圍數開放邊（見 4.3） |
 | `hair_check.py` | 頭髮體檢：碎塊、開口邊（真的破口）、插進身體的點**和面中心** | 開 `head_rig.blend` 或接好身體的 `body.blend`（有 Body 才查插進身體） |
 | `probe_pick.py` | 身體端 `neck_probe.py` 的某一張近照，指定像素打射線：打到哪個物件、哪根骨頭的權重 | `-- ANGLE=180 PIX=x,y;x,y`（640×640 原圖座標）；查「頭髮上的膚色」是哪個部位 |

@@ -48,8 +48,18 @@ skin_rgb = np.median(col_at_verts(np.where((V[:, 1] < -0.3) & (np.abs(V[:, 0]) <
 dh = np.linalg.norm(C - hair_rgb, axis=2)
 ds = np.linalg.norm(C - skin_rgb, axis=2)
 w = np.clip((0.75 * ds - dh) / (0.25 * ds + 1e-6), 0, 1) * np.clip((C[..., 2] - C[..., 0] - 0.0) / 0.04, 0, 1)  # 像頭髮、而且偏藍（眉毛偏咖啡不動）
-# 臉正面（眼睛、眉毛、臉上細髮絲）不碰：眼珠、眉毛也是深色，會被當成頭髮改掉、整張臉發灰
-face_zone = (np.abs(V[:, 0]) < 0.33) & (V[:, 2] > -0.25) & (V[:, 2] < 0.5) & (V[:, 1] < -0.3)
+# 眼睛、眉毛不碰：眼珠、眼線、眉毛也是深色，會被當成頭髮改掉、整張臉發灰。
+#   範圍照五官位置（眼睛橢圓放大、眉毛框加邊）；以前寫死「臉正面 |x|<0.33、高度 −0.25～0.5」整塊不碰 →
+#   側分瀏海垂到額頭上的頭（攝影師 v2）那片瀏海留著 Rodin 的藏青色
+face_zone = np.zeros(len(V), bool)
+for s_ in ("L", "R"):
+    e_ = LM["eyes"][s_]
+    face_zone |= ((V[:, 0] - e_["c"][0]) / (1.6 * e_["ew"])) ** 2 + ((V[:, 2] - e_["c"][2]) / (2.2 * e_["eh"])) ** 2 < 1
+    b_ = LM["brows"][s_]
+    bx0, bx1 = sorted((b_["inner"][0], b_["outer"][0]))
+    # 眉毛框高度最多 0.07：偵測到的眉毛還是可能長進一點垂下來的瀏海（攝影師 v2 右眉 0.137 厚），整框保護的話那片瀏海留藏青色
+    face_zone |= (V[:, 0] > bx0 - 0.04) & (V[:, 0] < bx1 + 0.04) & (V[:, 2] > b_["bottom"] - 0.02) & (V[:, 2] < b_["bottom"] + min(b_["thick"], 0.07) + 0.02)
+face_zone &= V[:, 1] < -0.2
 keep = np.zeros((H, W), bool)
 yy, xx = np.mgrid[0:H, 0:W]
 for poly in me.polygons:

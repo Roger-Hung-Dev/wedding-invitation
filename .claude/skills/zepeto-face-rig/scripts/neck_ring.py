@@ -1,6 +1,6 @@
 # 標準脖子接口環（頭端）：在 Head 的脖子上做出一圈 48 點的「接口環」，身體端照抄同樣的座標接上來（合約見
 #   references/ai-mesh-route.md「頭身接縫」、research-head-body-seam.md 5.4；2026-10-14 使用者選：環照每顆頭量、先不焊成一塊）。
-#   1. 環的高度：照身體端 body_build.py measure_head 的切口規則（下巴底面結束、脖子開始；2 cm 一格），改由頭端算好寫進頭檔
+#   1. 環的高度：zmeasure.measure_cut（從身體端 measure_head 的切口規則改來：先找下巴底，再往下找脖子；2 cm 一格），頭端算好寫進頭檔
 #   2. 環那層水平切一刀（取代 pack_head.py 以前「從下巴往下每 0.02 切」：那組高度跟身體切口差 0.0098，切口落在三角面上）
 #   3. 後頸墊底皮：AI 把後頸畫成頭髮色的頭（新娘），Head 從環到耳朵下面，後面一大片沒有皮（缺口邊是鋸齒）。
 #      從環鋪一片規整的格子皮到「下巴 +0.22」（長髮從下巴 +0.2 以下才往後退）：有臉皮的方向墊在臉皮下面、缺口的方向沿橢圓內插；
@@ -8,7 +8,8 @@
 #   4. 48 點：從脖子中心往固定角度射線（第 0 點正前方 −Y、俯視逆時針：第 12 點 +X、第 24 點正後 +Y、第 36 點 −X），
 #      弧上的交點切開邊長出新點、缺口裡的環點＝墊底皮第 0 層；環那層原本的點焊進角度最近的環點
 #   5. 寫進 Head：點屬性 neck_ring（環上 1～48、其他 0）、nape_underlay（墊底皮 1＝墊在臉皮下、2＝缺口）；
-#      物件屬性 neck_ring_ver 1、neck_ring_n、neck_ring_z、neck_ring_yc（中心 x＝0）、nape_patch_top、nape_patch_ang
+#      物件屬性 neck_ring_ver 1、neck_ring_n、neck_ring_z、neck_ring_yc（中心 x＝0）、neck_chin_bottom（下巴底，身體端放頭用）、
+#      nape_patch_top、nape_patch_ang
 #   6. 環上所有形態鍵位移 0：環往上 FALL 內的表情位移漸變到 0
 # 用法：blender -b pack.blend -P neck_ring.py -- <landmarks.json> <輸出 .blend> [<報告 .json>]
 import bpy, bmesh, sys, json, math, os
@@ -32,48 +33,17 @@ if any(abs(mw[i][j] - (1 if i == j else 0)) > 1e-6 for i in range(4) for j in ra
 rep = {}
 
 
-# ── 1. 環的高度：照身體端 measure_head 的規則（2026-10-14 的 body_build.py；身體端改規則時兩邊要一起改）──
-def measure_cut():
-    lips = next((i for i, m in enumerate(me.materials) if m and m.name.startswith("ZEPETO_Lips")), None)
-    pts = [mw @ me.vertices[v].co for p in me.polygons if p.material_index == lips for v in p.vertices]
-    c = sum(pts, Vector()) / len(pts)
-    mouth = Vector((c.x, min(p.y for p in pts), c.z))
-    BIN = 0.02
-    front = {}
-    for v in me.vertices:
-        w = mw @ v.co
-        if abs(w.x) < 0.05 and w.y < 0:
-            k_ = round(w.z / BIN)
-            front[k_] = min(front.get(k_, 9.0), w.y)
-    mk = round(mouth.z / BIN)
-    f0 = min(front[k_] for k_ in front if mk - 2 <= k_ <= mk + 1)
-    ks = sorted((k_ for k_ in front if k_ < mk), reverse=True)
-    chin = None
-    for a_, b_, c_ in zip(ks, ks[1:], ks[2:]):
-        ra, rb, rc = front[a_] - f0, front[b_] - f0, front[c_] - f0
-        if ra < 0.06 <= rb and rc >= 0.06:
-            chin = (a_ + (b_ - a_) * (0.06 - ra) / (rb - ra)) * BIN; break
-    if chin is None:
-        raise SystemExit("[ring] 量不到下巴（正中線剖面跟預期不同）")
-    top = max((mw @ Vector(cc)).z for cc in hd.bound_box)
-    zmin = min((mw @ Vector(cc)).z for cc in hd.bound_box)
-    below = sorted((k_ for k_ in front if k_ * BIN <= chin - 0.06), reverse=True)
-    cut = None
-    for a_, b_ in zip(below, below[1:]):
-        if front[b_] - front[a_] < 0.035:
-            cut = b_ * BIN; break
-    if cut is None:
-        cut = chin - 0.084 * (top - chin)
-    return chin, max(cut, zmin + 0.01)
+# ── 1. 環的高度：照身體端 measure_head 的規則（量法在 zmeasure.py，neck_slim.py 共用；身體端改規則時兩邊要一起改）──
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from zmeasure import measure_cut, fit_ellipse
 
-
-CHIN, RZ = measure_cut()
+CHIN, RZ, CB = measure_cut(hd)
 # 後頸墊底皮補到這個高度：長髮步驟從下巴 +0.2（hair_fit 的支點）以下才往後退，再多一層；
 #   也至少到耳朵最低點 +0.04（新娘只到下巴 +0.22 時，從下往上看耳垂下面那排鋸齒的縫還透出頭髮的黑色）
 _ears = bpy.data.objects.get("Ears")
 _ear_low = min((_ears.matrix_world @ v.co).z for v in _ears.data.vertices) if _ears and len(_ears.data.vertices) else -9
 ZTOP = max(LM["chin_z"] + float(os.environ.get("NR_TOP", "0.22")), _ear_low + 0.04)
-print("[ring] 下巴 %.4f、環的高度 %.4f（身體端切口規則）、後頸墊底皮到 %.4f" % (CHIN, RZ, ZTOP))
+print("[ring] 下巴 %.4f、下巴底 %s、環的高度 %.4f（zmeasure.measure_cut）、後頸墊底皮到 %.4f" % (CHIN, "%.4f" % CB if CB is not None else "量不到", RZ, ZTOP))
 
 bm = bmesh.new(); bm.from_mesh(me)
 # 標記層一開始就建好：中途新增資料層，之前抓的點參照全部失效
@@ -122,18 +92,6 @@ def ang(x, y, yc):  # 0＝正後（+Y）、+90＝角色左（+X）、±180＝正
 
 def wrap(t):
     return (t + 180) % 360 - 180
-
-
-def fit_ellipse(P):
-    """x 對稱的橢圓 x²/rx² + (y−yc)²/ry² = 1：解 A x² + B y² + C y = 1"""
-    M = np.c_[P[:, 0] ** 2, P[:, 1] ** 2, P[:, 1]]
-    A, B, C = np.linalg.lstsq(M, np.ones(len(P)), rcond=None)[0]
-    if A <= 0 or B <= 0:
-        return None
-    yc = -C / (2 * B); k = 1 + B * yc * yc
-    if k <= 0:
-        return None
-    return yc, math.sqrt(k / A), math.sqrt(k / B)
 
 
 def ell_r(th, rx, ry):
@@ -319,7 +277,7 @@ for i in range(NR):
 closed = all(any(e.other_vert(ring[i]) is ring[(i + 1) % NR] for e in ring[i].link_edges) for i in range(NR))
 gap = max(abs(v.co.z - RZ) for v in ring.values())
 print("[ring] 環 %d 點、%s；併掉 %d 點、補連 %d 條邊；高度誤差 %.2e" % (NR, "整圈連通" if closed else "沒連通", len(old), n_conn, gap))
-rep.update(ring_n=NR, ring_closed=closed, ring_z=RZ, ring_yc=YC, chin=CHIN, ring_z_err=gap)
+rep.update(ring_n=NR, ring_closed=closed, ring_z=RZ, ring_yc=YC, chin=CHIN, chin_bottom=CB, ring_z_err=gap)
 
 # ── 6. 寫回 Head ──
 bm.transform(mwi)
@@ -335,9 +293,16 @@ for n in ("ring_tag",):
     if me.attributes.get(n): me.attributes.remove(me.attributes[n])
 got = sum(1 for x in vals if x)
 hd["neck_ring_ver"] = 1; hd["neck_ring_n"] = NR; hd["neck_ring_z"] = RZ; hd["neck_ring_yc"] = YC
+# 下巴底（2026-10-14 加，身體端 measure_head 用它放頭）：身體端舊的「比嘴唇退後 0.06」量到的是 V 字下巴的前緣
+#   （攝影師 v2 −0.348，真正的下巴底 −0.51）→ 頭被放低 3.7 cm、放大 11%，接口環落在肩膀上
+if CB is not None:
+    hd["neck_chin_bottom"] = CB
+elif "neck_chin_bottom" in hd:
+    del hd["neck_chin_bottom"]
 if has_gap:   # hair_fit 讀：這個範圍裡的頭髮不必固定在臉上（底下有墊底皮），可以整束往後退
     hd["nape_patch_top"] = ROWS[-1]; hd["nape_patch_ang"] = (TH[0], TH[-1])
-print("[ring] 寫入：neck_ring 屬性 %d 點（應為 %d）、neck_ring_z %.4f、neck_ring_yc %.4f" % (got, NR, RZ, YC))
+print("[ring] 寫入：neck_ring 屬性 %d 點（應為 %d）、neck_ring_z %.4f、neck_ring_yc %.4f、neck_chin_bottom %s" % (
+    got, NR, RZ, YC, "%.4f" % CB if CB is not None else "量不到（沒寫）"))
 rep.update(ring_marked=got)
 # 合約：環上的點在所有形態鍵都不動（身體端照基底座標接，表情動到環就會裂開）。
 #   只把環上的點釘回基底不行：新娘 jawOpen 在環上動 0.063（喉嚨跟著下巴往下），旁邊的點照動 → 環那裡折出一道痕。
@@ -392,6 +357,31 @@ if uvl and ulv:
                     for li in p.loop_indices:
                         uvl.data[li].uv = best; n_uv += 1
             print("[ring] 墊底皮的貼圖座標 %d 個角指到脖子側面的中間色 %s（取 %d 個角）" % (n_uv, np.round(med, 3), len(cand)))
+# ── 7. 整塊在環以下的頭髮刪掉：AI 在胸像底部畫的深色衣領被切頭髮時當成頭髮（攝影師 v2：背後兩塊 143、101 點）。
+#   胸像（Head 環以下）身體端會藏，這些卻是 Hair、藏不到 → 從肩膀上露出黑色碎片、插進身體。
+#   長髮一定連著頭（新娘整片頭髮一塊、跨過環），不會整塊在環以下
+_hair = bpy.data.objects.get("Hair")
+if _hair is not None and len(_hair.data.vertices):
+    bh = bmesh.new(); bh.from_mesh(_hair.data); bh.verts.ensure_lookup_table()
+    hw_ = _hair.matrix_world
+    seen_, drop_, nisl = set(), [], 0
+    for v0 in bh.verts:
+        if v0.index in seen_: continue
+        isl_, st_ = [], [v0]; seen_.add(v0.index)
+        while st_:
+            x_ = st_.pop(); isl_.append(x_)
+            for e_ in x_.link_edges:
+                u_ = e_.other_vert(x_)
+                if u_.index not in seen_:
+                    seen_.add(u_.index); st_.append(u_)
+        if max((hw_ @ x_.co).z for x_ in isl_) < RZ - 0.005:
+            drop_ += isl_; nisl += 1
+    if drop_:
+        bmesh.ops.delete(bh, geom=drop_, context='VERTS')
+        bh.to_mesh(_hair.data); _hair.data.update()
+    bh.free()
+    rep["hair_below_ring_dropped"] = [nisl, len(drop_)]
+    print("[ring] 整塊在環以下的頭髮：刪掉 %d 塊、%d 點" % (nisl, len(drop_)))
 if REP:
     json.dump(rep, open(REP, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
 bpy.ops.wm.save_as_mainfile(filepath=OUT)

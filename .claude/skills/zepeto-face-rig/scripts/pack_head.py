@@ -288,7 +288,7 @@ print("[pack] 耳朵以下的細碎髮絲碎片（< %d 點）刪掉 %d 點" % (I
 #   （使用者 2026-10-14 圈出耳朵前面的鬢角、耳垂下方）。交界上的點兩邊各一份（切成不同物件），兩份一起移才不會裂開；
 #   往內 3 圈跟著移一點（不然三角形摺起來）；開口邊上、但不在頭髮交界的點不動（Head 跟 Ears 的交界會裂開）；
 #   形態鍵保留原本的位移（基底和每個形態鍵加同一個位移）。
-#   只抹耳朵頂端到下巴往下 0.12、兩側（|x| > 0.6 個眼距；下巴以下不論左右，脖子細）的交界：額頭瀏海的髮尖不動
+#   只抹耳朵頂端到下巴往下 0.12、兩側（|x| > 0.6 個眼距；下巴以下、後腦不論左右）的交界：額頭瀏海的髮尖不動
 #   （新娘只抹眼睛以下時，鬢角上半段還留幾個三角；只算兩側時，脖子旁邊夾在脖子和長髮之間的那片頭髮被排除，留一條鋸齒毛邊）
 SEAM_IT = 12
 
@@ -312,7 +312,8 @@ def seam_smooth():
         if not v.is_boundary:
             continue
         p = mwo[hair_o.name] @ v.co
-        if p.z > ear_top or p.z < chin_z - 0.12 or (abs(p.x) < 0.6 * U and p.z > chin_z):   # 下巴往下 0.12 以下是胸像（身體端藏掉），抹那裡只會把肩膀上的頭髮拉歪（新娘移 0.12）
+        if p.z > ear_top or p.z < chin_z - 0.12 or (abs(p.x) < 0.6 * U and p.z > chin_z and p.y < -0.1):   # 下巴往下 0.12 以下是胸像（身體端藏掉），抹那裡只會把肩膀上的頭髮拉歪（新娘移 0.12）；
+            # 不抹的只有臉前面中間（額頭瀏海）—— 後腦中間要抹：短髮的後髮際線露在外面（攝影師 v2 後頸一排深色鋸齒）
             continue
         hits = kd_.find_range(p, 1e-5)
         if hits:
@@ -396,7 +397,7 @@ def hair_edge_w():
         fr_ = nx_
     Pw = np.array([hair_o.matrix_world @ v.co for v in mh.vertices])
     ear_top = max((ears_o.matrix_world @ v.co).z for v in ears_o.data.vertices) if ears_o else ez
-    region = (Pw[:, 2] < ear_top + 0.05) & ((np.abs(Pw[:, 0]) > 0.6 * U) | (Pw[:, 2] < chin_z))
+    region = (Pw[:, 2] < ear_top + 0.05) & ((np.abs(Pw[:, 0]) > 0.6 * U) | (Pw[:, 2] < chin_z) | (Pw[:, 1] > -0.1))  # 後腦中間也畫（短髮後髮際線）
     w = np.select([ring_ <= 1, ring_ == 2, ring_ == 3], [1.0, 0.6, 0.3], 0.0) * region
     at = mh.attributes.get("edge_w") or mh.attributes.new("edge_w", 'FLOAT', 'POINT')
     at.data.foreach_set("value", w.astype(np.float32))
