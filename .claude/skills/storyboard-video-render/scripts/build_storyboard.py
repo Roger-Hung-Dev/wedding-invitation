@@ -396,6 +396,12 @@ def validate(sb):
             err(s["id"], "最後一鏡的轉場必須是「黑場」")
         if tr["type"] == "black" and nxt and nxt["chapter"] == s["chapter"]:
             err(s["id"], "黑場只用在章節交界，章內請改用溶接或硬切")
+    # split-fly：右格落定（延遲＋飛入秒數）不可超過本鏡長度的一半，兩人並排才停得夠久（fx-camera-motion）
+    for s in shots:
+        m = s["motion"]
+        if m and m["type"] == "split-fly" and m["delay"] + m["duration"] > (s["end"] - s["start"]) / 2 + 1e-6:
+            err(s["id"], f"分割上下飛入：延遲 {m['delay']}s＋飛入 {m['duration']}s 超過本鏡長度 "
+                         f"{num(s['end'] - s['start'])}s 的一半（本鏡至少要 {num(2 * (m['delay'] + m['duration']))}s）")
     # 檔案存在
     a = sb["assets"]
     for s in shots:

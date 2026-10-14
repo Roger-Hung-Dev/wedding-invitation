@@ -10,6 +10,7 @@ import re
 
 NUM = r"(\d+(?:\.\d+)?)"
 ARROW = r"(→|←)"
+VARROW = r"(↓|↑)"
 
 
 def strip_note(text):
@@ -23,6 +24,10 @@ def _ease(m, group):
 
 def _dir(arrow):
     return "right" if arrow == "→" else "left"
+
+
+def _vdir(arrow):
+    return "down" if arrow == "↓" else "up"
 
 
 # ── 運鏡 ──────────────────────────────────────────────────────────────
@@ -41,6 +46,10 @@ MOTIONS = [
     (rf"^分割右格晚進\s*延遲\s*{NUM}\s*s\s*淡入\s*{NUM}\s*s$",
      lambda m: {"type": "split-late", "delay": float(m[1]), "fade": float(m[2])},
      "分割右格晚進 延遲0.2s 淡入0.3s"),
+    (rf"^分割上下飛入\s*左\s*{VARROW}\s*右\s*{VARROW}\s*{NUM}\s*s\s*延遲\s*{NUM}\s*s\s*微推\s*{NUM}\s*→\s*{NUM}\s*%$",
+     lambda m: {"type": "split-fly", "left": _vdir(m[1]), "right": _vdir(m[2]), "duration": float(m[3]),
+                "delay": float(m[4]), "zoom": [float(m[5]) / 100, float(m[6]) / 100]},
+     "分割上下飛入 左↓ 右↑ 0.7s 延遲0.2s 微推100→103%"),
     (rf"^多格依序進場\s*間隔\s*{NUM}\s*s\s*淡入\s*{NUM}\s*s$",
      lambda m: {"type": "stagger", "interval": float(m[1]), "fade": float(m[2])},
      "多格依序進場 間隔0.3s 淡入0.4s"),
@@ -72,7 +81,7 @@ ENDING_STYLES = {"左照右字": "photo-thanks-monogram"}
 # 版型與運鏡的相容表（不在表內的組合一律報錯）
 MOTION_LAYOUTS = {
     "zoom": {"A", "H", "B"}, "still": {"A", "H", "B", "C"}, "pan": {"A", "H"},
-    "split-counter": {"B"}, "split-late": {"B"}, "stagger": {"C"},
+    "split-counter": {"B"}, "split-late": {"B"}, "split-fly": {"B"}, "stagger": {"C"},
 }
 PHOTO_COUNT = {"A": (1, 1), "H": (1, 1), "B": (2, 2), "C": (2, 6)}
 
