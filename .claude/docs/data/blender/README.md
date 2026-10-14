@@ -22,7 +22,7 @@ blender/
     ├── costumes/                ← 服裝規格預設：pink-ballgown.json（新娘第 3 版）＋它的層次元件 costume_extra_pink_ballgown.py
     ├── textures/                ← 情境用貼圖（報紙）
     ├── previews/                ← 手勢、表情與腳、服裝、30 個動作的預覽圖
-    └── props-zepeto/            ← ZEPETO 黏土風道具素材庫（26 樣＋4 場景示意，程式建模、標成 Blender 資產）；
+    └── props-zepeto/            ← ZEPETO 黏土風道具素材庫（45 樣＋8 場景示意，程式建模、標成 Blender 資產）；
                                     用法見裡面的 README.md（use_props.py 的 place_prop()）
 ```
 

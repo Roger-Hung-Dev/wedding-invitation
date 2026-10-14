@@ -164,11 +164,11 @@ Get-ChildItem "$env:TEMP\claude" -Recurse -Filter "N.png" | Where-Object FullNam
    - 字讀不讀得到、方向對不對。
    - 有參考照片時，把照片和場景示意拼成一張並排看，列出「哪裡不像」。
 3. 有問題就改，再試一輪。最多 3 輪。超過 3 輪還有問題，就照實寫進回報。
-4. 正式重建：先跑 `"$BL" -b --factory-startup -P "$LIB/build_props.py"`，再跑 `python "$LIB/make_page.py"`。
+4. 正式重建：先跑 `"$BL" -b --factory-startup -P "$LIB/build_props.py"`，再跑 `python "$LIB/make_page.py" --inline`。
+   - `--inline` 把圖片轉成 base64 內嵌成單一檔（約 5 MB）：使用者在 Claude app 看不到外部圖檔。
    - 新分類的那一段說明寫進 `page.json` 的 `group_subs`。
-5. 發布展示頁：用 Artifact 發布 `$LIB/index.html` 到同一個網址（`url` 帶上方網址）。
-   - `root` 設成素材庫資料夾。
-   - `files` 用 `python "$LIB/make_page.py" --files` 印出的對照。
+5. 發布展示頁：用 Artifact 發布 `$LIB/index.html` 到同一個網址（`url` 帶上方網址），不用帶 `files`、`root`。
+   - `index.html` 不進版控（`.gitignore` 已排除），每次發布前重新產生。
 
 ## 7. 回報
 

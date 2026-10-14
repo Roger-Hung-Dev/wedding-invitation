@@ -32,7 +32,7 @@
 | 修某一幕的動作 | `/fix-animation <幕＋動作＋問題>` | 只拍那個部位的多角度近照＋客觀檢查數字 → 近照確認頁（Claude Artifact）→ 使用者指出哪裡不對就修、更新同一頁 → 說「可以」才渲整幕 |
 | ZEPETO 挑選器（身體／大頭） | `/zepeto-bodies`、`/zepeto-heads`（都可加 `demo`、`multi`）；代理用工具 `mcp__zepeto-picker__pick_body`（`multi`、`released_only`）、`mcp__zepeto-picker__pick_head`（`multi`、`ready_only`） | 自製面板列出所有身體或大頭（資料來自 `list_bodies.py`、`list_heads.py`），選項不限 4 個、可複選，按 `y` 送出「我選 … 身體／頭：路徑」；服裝工作流選身體、身體工作流選頭時用它。專案外掛，見「專案外掛（mod）」 |
 | ZEPETO 身體（一條龍） | `/zepeto-body-generation-workflow` | 選頭（挑選器面板，可複選）→ 比對頭有沒有更新 → 關閘門 → 依頭自動量尺寸長出照 ZEPETO 官方比例的 4.5 頭身身體（骨架＋前臂扭轉骨、手腳固定模板、頭身接口環、權重清理、膚色、UV、交接尺寸）→ 16 項出廠檢查＋近照自我審查 → 審看網頁 → 照回饋修 → 出廠（RELEASE.json＋產線狀態紀錄；黏土風版本換新版要先問導演）→ 通知衣服、動畫。2026-10-14 起黏土風做法已移除（封存 `D:/render-work/archive/zepeto-body-clay-route-20261014/`）；四肢技術見該 skill 的 `references/limbs.md` |
-| ZEPETO 動畫製作 | `/zepeto-animation-generation-workflow <鏡號>`（或「改 B1：…」、或測試情境描述；導演端發「動畫開工：B2」時也走這條） | 一次做一鏡：讀分鏡展開檔（沒有就問齊自己寫一份）→ 比對上游 → 先上網查真人姿勢 → Mixamo 原樣套上 → 貼地鎖腳 → 道具、一開始就穿衣服 → 手指碰到就停 → 皮膚與衣服逐格量＋自我審查 → 近照確認頁（附短片，同一頁逐版更新）→ 說可以才定案（狀態紀錄、樣張、通知導演端）。共用程式在該 skill 的 `scripts/`（zanim*），每一鏡的程式與定案參數在 `.claude/docs/data/blender/zepeto/anim/<片名>/<鏡>/` |
+| ZEPETO 動畫製作 | `/zepeto-animation-generation-workflow <鏡號>`（或「改 B1：…」、或測試情境描述；導演端發「動畫開工：B2」時也走這條） | 一次做一鏡：讀分鏡展開檔（沒有就問齊自己寫一份）→ 比對上游 → 先上網查真人姿勢 → Mixamo 原樣套上 → 貼地鎖腳 → 道具、一開始就穿衣服 → 手指碰到就停 → 皮膚與衣服逐格量＋自我審查 → 改動作後先自我檢驗（腳／身體數字＋固定機位小片段，過了才交）→ 近照確認頁（附短片，同一頁逐版更新）→ 說可以才定案（狀態紀錄、樣張、通知導演端）。共用程式在該 skill 的 `scripts/`（zanim*），每一鏡的程式與定案參數在 `.claude/docs/data/blender/zepeto/anim/<片名>/<鏡>/` |
 | ZEPETO 穿戴物品 | `/zepeto-clothing-generation-workflow <描述>`（可 Alt+V 貼參考照片或 @圖片檔） | 開身體選單面板勾要穿在誰身上（可複選、只列已出廠的；面板沒載入時退回內建選單，不用自己找檔）→ 分析參考 → 用共用配方寫成 `outfit.py` → 背景 Blender 從身體長出衣服、鞋子、配件並綁骨架 → 近照＋Mixamo 動作穿模檢查 → 審看網頁 → 照回饋修；素材庫在 `library/outfits-zepeto/`。2026-10-14 起照參考照刻細節＋寫實布料（取代黏土風；配方 `garment_detail.py`，會垂的布用布料模擬在站姿垂一次定形）；大蓬裙的手交給動畫端（提裙、手搭裙側），交接資料寫在 `outfit.json` 的 `anim_handoff` |
 | ZEPETO 黏土風場景與道具 | `/zepeto-scenes-generation-workflow <情境描述>`（可 Alt+V 貼參考照片或 @圖片檔） | 拆出要的景與道具 → 先用素材庫現有的，缺的照來源清單 `sources.md` 上網找免費素材（下載前先問）或用 Blender 自建 → 加進素材庫 `library/props-zepeto/`、組場景示意、更新展示頁；新查到的素材網站一律記進 `sources.md` |
 | ZEPETO 大頭（一條龍） | `/zepeto-character-face-generation-workflow`（Alt+V 貼照片或 @照片檔） | 真人大頭照 → ZEPETO 風 3D 頭模型（OBJ；V 字臉、杏仁眼、光滑亮澤）→ 後處理成一打開就能看的 .blend＋四角度驗收圖 → 可動臉（AI 頭本身當成品：ARKit 52 表情＋臉部控制骨架＋長髮避開身體＋自動檢查報告） |
@@ -58,7 +58,7 @@
   - **2026-10-14 起是 AI 網格路線**：AI 頭本身當成品（外型、貼圖原封不動），通用模板頭（LucaDrech，CC BY 4.0，**對外分享要標註**，見 `templates/cartoon-head-lucadrech/ATTRIBUTION.md`）只當「籠子」算出 52 個表情再轉移過去；牙齒、舌頭來自模板。說明與坑在該 skill 的 `references/ai-mesh-route.md`。
   - 舊路線（模板當成品、AI 的樣子轉印上去 → 包子臉、眼線對不上）已刪，程式封存在 `D:/render-work/archive/zepeto-face-rig-old-route-20261014/`。新郎（`stylized_face_rig/head_rig.blend`，產線建好前手動做的，不搬）、新娘 v4、攝影師 v1 是舊路線做的，成品沒動。
   - 驗證過新娘、攝影師兩張臉；第三種臉型第一次跑，自動檢查報告（`rig/check/report.html`）和預覽圖要逐張看。
-- **頭和身體的接縫：標準脖子接口環**（2026-10-14 起）：頭端 `neck_ring.py` 在脖子做出一圈 48 點寫進 Head（點屬性 `neck_ring` 1～48、`neck_ring_z` 等，Head 本地座標），身體端 `body_build.py` 照抄座標接上，兩邊點對點重合、看不出接縫；Head 有 `neck_ring_ver` 才走新路，舊頭照舊。環的高度、點數、順序是兩邊的合約，**改了要通知對方一起改**；合約與坑見 skill `zepeto-face-rig` 的 `references/ai-mesh-route.md`「頭身接縫」。
+- **頭和身體的接縫：標準脖子接口環**（2026-10-14 起）：頭端 `neck_ring.py` 在脖子做出一圈 48 點寫進 Head（點屬性 `neck_ring` 1～48＋Head 物件的自訂屬性 `neck_ring_ver`、`neck_ring_n`、`neck_ring_z`、`neck_ring_yc`，Head 本地座標），身體端 `body_build.py` 照抄座標接上，兩邊點對點重合、看不出接縫；Head 有 `neck_ring_ver` 才走新路，舊頭照舊。環的高度、點數、順序是兩邊的合約，**改了要通知對方一起改**；合約與坑見 skill `zepeto-face-rig` 的 `references/ai-mesh-route.md`「頭身接縫」。
 
 ### 3D 角色產線的分工（三個子代理＋一條 workflow）
 
@@ -72,7 +72,7 @@ blender-animation-append ──▶ 共用動作庫（blender-motion-library 的 
 
 - 資料都在 `.claude/docs/data/blender/`：`projects/<名稱>/` 一個角色一個資料夾；`library/` 是預設資料庫（手勢、表情、腳、30 種動作、粉色蓬裙禮服，來自範例專案 `projects/bride`）。資料夾說明見那裡的 `README.md`。
 - **穿戴物品素材庫**：`library/outfits-zepeto/`（每套服裝一個資料夾：`outfit.py`＋`outfit.json`＋`refs/`＋`previews/`）。配方與產生器在 skill `zepeto-clothing-generation-workflow` 的 `scripts/`（`garment_detail.py`＝照參考照刻細節＋寫實布料，新衣服用；`garment_lib.py`＝基本動作與舊黏土風配方；`outfit_build.py`、`outfit_page.py`）。衣服每次都從身體重新長出來，身體出廠新版本後重跑即可；`.blend` 與檢查圖在 `D:/render-work/zepeto-costume/<服裝>/<身體>/`。身體只用已出廠的（身體出廠閘門 hook `require-body-release.ps1` 會擋），Blender 直接開 body.blend、另存 outfit.blend，絕不存回原檔。
-- **場景與道具素材庫**：`library/props-zepeto/`（ZEPETO 黏土風，45 樣＋8 個場景示意）。情境要道具時先查 `catalog.json`，用 `use_props.py` 的 `place_prop()` 載入；要新增道具或場景走 `/zepeto-scenes-generation-workflow`（自建的寫 `build_props.py` 的 `@item`、下載的寫 `external_items.py` 的 `ext_item`、場景寫 `scenes/<key>.py`）。素材網站清單與查詢紀錄在 `sources.md`、CC BY 標註在 `ATTRIBUTION.md`。`.blend`、下載原檔、參考照片不進版控，clone 後先跑一次 `build_props.py`（約 30 秒）。
+- **場景與道具素材庫**：`library/props-zepeto/`（ZEPETO 黏土風，45 樣＋8 個場景示意）。情境要道具時先查 `catalog.json`，用 `use_props.py` 的 `place_prop()` 載入；要新增道具或場景走 `/zepeto-scenes-generation-workflow`（自建的寫 `build_props.py` 的 `@item`、下載的寫 `external_items.py` 的 `ext_item`、場景寫 `scenes/<key>.py`）。素材網站清單與查詢紀錄在 `sources.md`、CC BY 標註在 `ATTRIBUTION.md`。`.blend`、下載原檔、參考照片不進版控，clone 後先跑一次 `build_props.py`（約 1 分鐘）。
 - **臉部模型只收 `.vroid`，但 VRoid MCP 不能匯出 VRM。** 使用者要先在 VRoid Studio 開 .vroid → 按 F8 → 存成 VRM 1.0（放在 .vroid 旁邊同檔名）。沒有 VRM 時 `blender-creator` 會停下來回報，不會硬做。
 - **Blender 要開著**（MCP for Blender 外掛啟動）。VRM 匯入只能在 GUI Blender；長時間渲染改用背景 Blender（`blender.exe -b … -P bl_cli.py`），可並行、不受 MCP 120 秒限制。
 - **調整動作或情境時走快速迭代**：調整中只交低解析、無物理、只渲改到片段的快速預覽＋多角度檢查圖，一次收齊問題再修；使用者確認後才做完整渲染。規範在 `blender-motion-library` 的 `references/fast-iteration.md`，三個 Blender 子代理的定義都已寫入。
@@ -96,7 +96,7 @@ storyboard-artist ──畫──▶ v2 分鏡稿 .pen ──讀──▶ storyb
 - **格式契約**是 `storyboard-pen-format`：分鏡稿怎麼命名、每個欄位怎麼寫。畫稿與讀稿兩邊都以它為準。
 - 產生器程式在 `.claude/skills/storyboard-video-render/scripts/`。它已用第 2 版成片逐格驗證：1,569 個時間點像素完全相同。2026-10-13 修了「推拉運鏡在轉場重疊時縮到 100% 以下、露出黑邊」的問題，之後只有那些轉場窗的格子和第 2 版不同（第 2 版本身在 2:13 附近有這個黑框）。
 - 子代理不能問使用者問題。需要裁決時（例如 fx-lab 的預覽），子代理會停下來回報；主控端轉問使用者後，再把結果帶回去。
-- 現有的 `wedding-photo-slideshow.pen` 是 **v1 格式**，產生器不能直接讀。v1 缺版型欄與特效參數。要用新產線重產，先請 `storyboard-artist` 以 `upgrade` 模式升級成 v2。
+- `wedding-photo-slideshow.pen` 已升級成 v2，第 3 版成片（I Won't Give Up，4:00）就是用新產線從它產生的。其他 **v1 格式**的分鏡稿產生器不能直接讀（缺版型欄與特效參數），要用新產線重產，先請 `storyboard-artist` 以 `upgrade` 模式升級成 v2。
 - **照片片裡要有 3D 角色互動**（照片與運鏡仍是 2D）：鏡頭卡多畫一列 `列-角色`（寫法見 `storyboard-pen-format` §4.1，動作用動作庫代號）。解析器會檢查並寫進 `storyboard.json` 的 `shots[].characters`；**渲染器還不會合成角色**，之後要補「Blender 渲染透明角色片段 → 疊到照片上」這一段。
 
 ### 設計稿產線的三個前提（不照做會出事）
@@ -186,7 +186,7 @@ D:\SideProject\wedding-invitation\
     │                          #        storyboard-artist、storyboard-video-renderer、fx-lab、
     │                          #        blender-creator、blender-scenario-creator、blender-animation-append、
     │                          #        zepeto-analyze-photo-3d-model、zepeto-avatar-crafter、zepeto-face-rigger
-    ├── skills\                # 35 個（angular-* 6、ui-bootstrap5、common-user-browser、
+    ├── skills\                # 36 個（angular-* 6、ui-bootstrap5、common-user-browser、
     │                          #        git-commit-convention、design-* 與 pen-* 8、
     │                          #        storyboard-* 3、fx-* 5、blender-* 5、
     │                          #        zepeto-character-face-generation-workflow、zepeto-face-rig、
@@ -254,7 +254,7 @@ D:\SideProject\wedding-invitation\
   - `/render-settings [film|render] [demo]`；工具 `mcp__render-settings__pick_film_settings`（整支片設定：畫面方向、fps、前後多渲、背景、換景遮擋、字卡留白，劇本定案後由導演端問一次 → `<片名>-breakdown/film.json`）、`mcp__render-settings__pick_render_settings`（完整渲染設定：解析度最高 4K、取樣、陰影、效果、專家選項、要渲哪幾鏡，所有鏡定案後由動畫端問）。
   - 按 y 時有給 `out` 就寫檔，再送出「渲染參數（…）：<片名>」＋ JSON 的使用者訊息；格式寫在 `register.js` 的 `message()` 上方註解，改了要通知導演端。
   - 「整支片設定」另有一組「字卡與轉場」：選項、說明、縮圖都從**剪接樣式庫** `.claude/docs/data/blender/library/edit-styles-zepeto/` 讀（新增樣式不用改 mod），按 p 用瀏覽器看動態預覽，選好寫進 film.json 旁邊的 `edit.json`（只影響剪接；film.json 是片子規格、影響動畫）。樣式庫的效果程式只有一份 `edit_styles.js`，展示頁、預覽、正式剪接（`render_edit.py` 用本機 Chrome 逐格截圖）共用，所以預覽＝成品。展示頁：https://claude.ai/artifact/VmCmdM4CKkNChZtqij1XQ1 。說明見該資料夾 `README.md`。
-  - 按 t 試渲：背景 Blender 用目前的值渲一格「樣張」顯示在面板裡（約 12 秒）；「試渲鏡頭／試渲畫面」讀樣張總表 `D:/render-work/zepeto-anim/sample/samples.json`。**動畫端每一鏡定案時要存樣張並登記**（做法見 `D:/render-work/zepeto-anim/README.md` §4.5）。各參數的效果比較頁：https://claude.ai/artifact/KaC1ZqHyfqnJgbrULR3dq9
+  - 按 t 試渲：背景 Blender 用目前的值渲一格「樣張」顯示在面板裡（約 12 秒）；「試渲鏡頭／試渲畫面」讀樣張總表 `D:/render-work/zepeto-anim/sample/samples.json`。**動畫端每一鏡定案時要存樣張並登記**（做法見動畫 skill `zepeto-animation-generation-workflow` 的 SKILL.md 定案步驟：`zanim_sample` 的 bake／save／register；`D:/render-work/zepeto-anim/README.md` 是 10-12 搬進 skill 前的封存）。各參數的效果比較頁：https://claude.ai/artifact/KaC1ZqHyfqnJgbrULR3dq9
 - ⚠️ 登記的外掛位置是**完整路徑**（`D:\SideProject\wedding-invitation\.claude\mods`）。專案 clone 到別的位置或別台電腦，要改這一行，或在那邊重跑兩行指令：
   - `claude plugin marketplace add ./.claude/mods --scope project`
   - `claude plugin install zepeto-picker@wedding-invitation-mods --scope project`

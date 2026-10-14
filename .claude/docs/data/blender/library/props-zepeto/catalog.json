@@ -1,5 +1,5 @@
 {
- "built": "2026-10-13",
+ "built": "2026-10-14",
  "blend": "zepeto_props.blend",
  "catalogs": {
   "garden": "花園",
@@ -684,7 +684,7 @@
   },
   {
    "key": "scene_venue_corridor__b3",
-   "label": "B3：兩人停在泊車立牌右前方（新郎 8.615、新娘 9.052；動畫端的鏡頭）",
+   "label": "B3：兩人停在泊車立牌右前方（新郎 8.606、新娘 9.122；動畫端的鏡頭）",
    "scenes": "提案B B0～B3",
    "img": "previews/scenes/venue_corridor__b3.jpg",
    "collection": "",
@@ -752,7 +752,7 @@
   },
   {
    "key": "scene_venue_photo_zone__b4",
-   "label": "B4：攝影區（兩人停下時中點在畫面 60%、新娘在靠鏡頭那側；攝影師 (11.54, -1.8) 在右緣露半身）",
+   "label": "B4：攝影區（兩人停下時中點在畫面 60%、新娘在靠鏡頭那側；攝影師 (11.621, -1.8) 在畫面右邊 93%）",
    "scenes": "提案B B4、B5",
    "img": "previews/scenes/venue_photo_zone__b4.jpg",
    "collection": "",

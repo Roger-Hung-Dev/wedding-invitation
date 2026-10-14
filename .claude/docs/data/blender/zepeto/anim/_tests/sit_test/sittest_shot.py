@@ -3,7 +3,7 @@
 # 動作：Mixamo「Sitting Drinking」原樣的 4.5～14.7 秒（坐好之後；前面那段「往前走直接坐下」會從椅背穿過去，不用）。
 # 用法（MCP）：
 #   # BODY=groom   ← 身體出廠閘門只核對新郎（2026-10-12 起閘門改成只擋點名的身體）
-#   import sys; sys.path.insert(0, r"D:/render-work/zepeto-anim/scripts")
+#   import sys; sys.path.insert(0, r"D:/SideProject/wedding-invitation/.claude/skills/zepeto-animation-generation-workflow/scripts")
 #   import zanim as Z; Z.use_shot("_tests", "sit_test"); import sittest_shot as T; print(T.run())   ← 穿西裝版（第 4 版）一次重建
 import math, json
 import bpy
