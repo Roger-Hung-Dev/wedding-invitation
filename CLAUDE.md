@@ -53,10 +53,10 @@
 - **Alt+V 貼上的圖子代理看不到**：主控端要先換成檔案路徑（Claude Code 存在本 session 暫存資料夾的 `images\N.png`）。
 - 生成用 Hyper3D Rodin 的**免費試用額度**（每跑一次 1～3 次），**只送文字描述、不上傳照片**。生成時不要給 `bbox_condition`、描述不寫否定句（兩次馬尾的教訓）。
 - 材質預設值是亮澤（2026-10-14 起；使用者 2026-10-13 看比較圖選亮澤）：透光權重 0.15、半徑 (1.0, 0.2, 0.1)、縮放 0.05、粗糙度 0.5，不加 Coat（整張臉會泛白）。舊的霧面黏土值（0.3／0.75）已停用。
-- 專案根目錄的 `stylized_face_*` 是第一次手動做的成品（2026-10-11），產線建好前的版本。
-- **要能眨眼張嘴、做 ARKit 52 表情**：AI 生成的頭五官是畫在表面的，推拉網格做不出來（`stylized_face_expressions/` 是那次測試）。走 skill `zepeto-face-rig`（一條龍第三段，`stages` 預設 `['generate','craft','rig']`）。
+- 新郎第一次手動做的頭（2026-10-11，產線建好前的版本，原本放在專案根目錄 `stylized_face_*`）2026-10-14 使用者決定不用了，整包搬到 `D:/render-work/archive/groom-head-legacy-20261014/`（含 `stylized_face_rig/head_rig.blend`，sha `065b90ee7f39…` 沒變）。新郎之後用新流程重做。
+- **要能眨眼張嘴、做 ARKit 52 表情**：AI 生成的頭五官是畫在表面的，推拉網格做不出來（那次測試 `stylized_face_expressions/` 也在上面的封存裡）。走 skill `zepeto-face-rig`（一條龍第三段，`stages` 預設 `['generate','craft','rig']`）。
   - **2026-10-14 起是 AI 網格路線**：AI 頭本身當成品（外型、貼圖原封不動），通用模板頭（LucaDrech，CC BY 4.0，**對外分享要標註**，見 `templates/cartoon-head-lucadrech/ATTRIBUTION.md`）只當「籠子」算出 52 個表情再轉移過去；牙齒、舌頭來自模板。說明與坑在該 skill 的 `references/ai-mesh-route.md`。
-  - 舊路線（模板當成品、AI 的樣子轉印上去 → 包子臉、眼線對不上）已刪，程式封存在 `D:/render-work/archive/zepeto-face-rig-old-route-20261014/`。新郎（`stylized_face_rig/head_rig.blend`，產線建好前手動做的，不搬）、新娘 v4、攝影師 v1 是舊路線做的，成品沒動。
+  - 舊路線（模板當成品、AI 的樣子轉印上去 → 包子臉、眼線對不上）已刪，程式封存在 `D:/render-work/archive/zepeto-face-rig-old-route-20261014/`。新郎（產線建好前手動做的，已封存，見上）、新娘 v4、攝影師 v1 是舊路線做的，成品沒動。
   - 驗證過新娘、攝影師兩張臉；第三種臉型第一次跑，自動檢查報告（`rig/check/report.html`）和預覽圖要逐張看。
 - **頭和身體的接縫：標準脖子接口環**（2026-10-14 起）：頭端 `neck_ring.py` 在脖子做出一圈 48 點寫進 Head（點屬性 `neck_ring` 1～48＋Head 物件的自訂屬性 `neck_ring_ver`、`neck_ring_n`、`neck_ring_z`、`neck_ring_yc`、`neck_chin_bottom`，Head 本地座標；環的高度是先找下巴底、再往下找脖子），身體端 `body_build.py` 用 `neck_chin_bottom` 當下巴放頭（V 字長下巴自己量會量到下巴前緣、頭被放低放大）、照抄環的座標接上，兩邊點對點重合、看不出接縫；Head 有 `neck_ring_ver` 才走新路，舊頭照舊。環的高度、點數、順序是兩邊的合約，**改了要通知對方一起改**；合約與坑見 skill `zepeto-face-rig` 的 `references/ai-mesh-route.md`「頭身接縫」。
 

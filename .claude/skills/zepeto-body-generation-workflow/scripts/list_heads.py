@@ -4,7 +4,10 @@
 #
 # 規則（2026-10-12 使用者定）：每個人只留一個「現役版本」＝ zepeto/<人>/rig/head_rig.blend；重做時舊版改名封存
 #   （例 head_rig_20261012.blend），本腳本只認 head_rig.blend，封存檔、中間檔（aligned／wrapped／head_arkit／head_v1）一律不列。
-# 新郎的頭是產線建好前手動做的，放在專案根目錄 stylized_face_rig/（CLAUDE.md：不搬），這裡登記成 groom。
+# LEGACY：產線建好前手動做的頭（名稱 → 資料夾，裡面直接是 head_rig.blend、preview/）。原本登記新郎（專案根目錄 stylized_face_rig/）；
+#   2026-10-14 使用者決定這顆頭不用了，整包封存到 D:/render-work/archive/groom-head-legacy-20261014/（sha 065b90ee 不變），
+#   新郎等新流程（/zepeto-character-face-generation-workflow）重做，做好會出現在 zepeto/groom/rig/。所以現在是空的；
+#   選單、body_status.py check groom 會回「沒有頭」。已出廠的新郎身體 v8 不受影響（list_bodies.py 照列）。
 # 輸出：{"heads":[{name, zh, blend, version, status, ready, sha256, sha_ok, preview, legacy, note}]}
 import hashlib, json, sys
 from pathlib import Path
@@ -12,7 +15,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[4]                     # 專案根目錄
 ZEP = ROOT / ".claude" / "docs" / "data" / "blender" / "zepeto"
 STATUS = ZEP / "pipeline" / "status" / "head"
-LEGACY = {"groom": ROOT / "stylized_face_rig"}                 # 名稱 → 舊位置的資料夾（裡面直接是 head_rig.blend、preview/）
+LEGACY = {}                                                    # 名稱 → 資料夾；新郎舊頭 2026-10-14 封存不用（見檔頭）
 SKIP = {"templates", "pipeline"}
 ZH = {"groom": "新郎", "bride": "新娘"}
 
