@@ -1,0 +1,15 @@
+{
+  "schema": 1,
+  "kind": "head",
+  "id": "photographer",
+  "version": "v1",
+  "status": "released",
+  "updated_at": "2026-10-12T19:31:29+08:00",
+  "owner": "head",
+  "artifact": {
+    "path": "D:/SideProject/wedding-invitation/.claude/docs/data/blender/zepeto/photographer/rig/head_rig.blend",
+    "sha256": "5ff9f78cb80e324f3e1aa4843a91212f06b080346c2b07930427648471452382"
+  },
+  "upstream": [],
+  "changes": "開場片 B4 配角婚禮攝影師的可動臉第一版：純文字生成的通用路人頭（短黑髮、無配件），ARKit 52＋控制骨架；使用者 2026-10-12 確認"
+}

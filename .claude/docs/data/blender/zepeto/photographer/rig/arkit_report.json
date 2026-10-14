@@ -1,0 +1,190 @@
+{
+ "report": {
+  "eyeBlinkLeft": {
+   "Head": 0.2792,
+   "Lash_L": 0.2806
+  },
+  "eyeLookDownLeft": {
+   "Eye_L": 0.1229,
+   "Head": 0.0475,
+   "Lash_L": 0.0477
+  },
+  "eyeLookInLeft": {
+   "Eye_L": 0.1402
+  },
+  "eyeLookOutLeft": {
+   "Eye_L": 0.1402
+  },
+  "eyeLookUpLeft": {
+   "Eye_L": 0.1229,
+   "Head": 0.047,
+   "Lash_L": 0.0472
+  },
+  "eyeSquintLeft": {
+   "Head": 0.132,
+   "Lash_L": 0.0448
+  },
+  "eyeWideLeft": {
+   "Head": 0.0806,
+   "Lash_L": 0.0809
+  },
+  "eyeBlinkRight": {
+   "Head": 0.2808,
+   "Lash_R": 0.2659
+  },
+  "eyeLookDownRight": {
+   "Eye_R": 0.1137,
+   "Head": 0.0481,
+   "Lash_R": 0.0457
+  },
+  "eyeLookInRight": {
+   "Eye_R": 0.1346
+  },
+  "eyeLookOutRight": {
+   "Eye_R": 0.1346
+  },
+  "eyeLookUpRight": {
+   "Eye_R": 0.1137,
+   "Head": 0.0477,
+   "Lash_R": 0.0454
+  },
+  "eyeSquintRight": {
+   "Head": 0.1238,
+   "Lash_R": 0.0427
+  },
+  "eyeWideRight": {
+   "Head": 0.0814,
+   "Lash_R": 0.0775
+  },
+  "jawForward": {
+   "Head": 0.09,
+   "bottom_teeth": 0.09,
+   "bottom_gum": 0.09,
+   "Tongue": 0.09
+  },
+  "jawLeft": {
+   "Head": 0.16,
+   "bottom_teeth": 0.152,
+   "bottom_gum": 0.1529,
+   "Tongue": 0.1442
+  },
+  "jawRight": {
+   "Head": 0.16,
+   "bottom_teeth": 0.1521,
+   "bottom_gum": 0.153,
+   "Tongue": 0.1442
+  },
+  "jawOpen": {
+   "Head": 0.287,
+   "bottom_teeth": 0.2272,
+   "bottom_gum": 0.2339,
+   "Tongue": 0.1975
+  },
+  "mouthClose": {
+   "Head": 0.2595
+  },
+  "mouthFunnel": {
+   "Head": 0.0747
+  },
+  "mouthPucker": {
+   "Head": 0.1287
+  },
+  "mouthLeft": {
+   "Head": 0.13
+  },
+  "mouthRight": {
+   "Head": 0.13
+  },
+  "mouthSmileLeft": {
+   "Head": 0.1606
+  },
+  "mouthSmileRight": {
+   "Head": 0.1606
+  },
+  "mouthFrownLeft": {
+   "Head": 0.1011
+  },
+  "mouthFrownRight": {
+   "Head": 0.1011
+  },
+  "mouthDimpleLeft": {
+   "Head": 0.164
+  },
+  "mouthDimpleRight": {
+   "Head": 0.164
+  },
+  "mouthStretchLeft": {
+   "Head": 0.1838
+  },
+  "mouthStretchRight": {
+   "Head": 0.1838
+  },
+  "mouthRollLower": {
+   "Head": 0.103
+  },
+  "mouthRollUpper": {
+   "Head": 0.103
+  },
+  "mouthShrugLower": {
+   "Head": 0.117
+  },
+  "mouthShrugUpper": {
+   "Head": 0.0707
+  },
+  "mouthPressLeft": {
+   "Head": 0.1294
+  },
+  "mouthPressRight": {
+   "Head": 0.1295
+  },
+  "mouthLowerDownLeft": {
+   "Head": 0.08
+  },
+  "mouthLowerDownRight": {
+   "Head": 0.08
+  },
+  "mouthUpperUpLeft": {
+   "Head": 0.07
+  },
+  "mouthUpperUpRight": {
+   "Head": 0.07
+  },
+  "browDownLeft": {
+   "Head": 0.0847
+  },
+  "browDownRight": {
+   "Head": 0.085
+  },
+  "browInnerUp": {
+   "Head": 0.2263
+  },
+  "browOuterUpLeft": {
+   "Head": 0.1
+  },
+  "browOuterUpRight": {
+   "Head": 0.1
+  },
+  "cheekPuff": {
+   "Head": 0.1282
+  },
+  "cheekSquintLeft": {
+   "Head": 0.1073
+  },
+  "cheekSquintRight": {
+   "Head": 0.1234
+  },
+  "noseSneerLeft": {
+   "Head": 0.1118
+  },
+  "noseSneerRight": {
+   "Head": 0.1118
+  },
+  "tongueOut": {
+   "Tongue": 0.399
+  },
+  "jawOpen_smile_corr": {
+   "Head": 0.2542
+  }
+ },
+ "empty": []
+}

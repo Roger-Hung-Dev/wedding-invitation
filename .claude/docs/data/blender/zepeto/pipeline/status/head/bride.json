@@ -1,0 +1,15 @@
+{
+  "schema": 1,
+  "kind": "head",
+  "id": "bride",
+  "version": "v4",
+  "status": "released",
+  "updated_at": "2026-10-12T22:58:19+08:00",
+  "owner": "head",
+  "artifact": {
+    "path": "D:/SideProject/wedding-invitation/.claude/docs/data/blender/zepeto/bride/rig/head_rig.blend",
+    "sha256": "4c3c7d394141ceac646325bed7ce376e8c505b7b37bbe8363bf1badc5ebacccb"
+  },
+  "upstream": [],
+  "changes": "耳垂：AI 頭捏在耳垂上的耳環顆粒（身體檔燈光下是橘色方塊）改成膚色小耳垂，服裝端的耳環照掛；下巴後面、耳垂以下的臉皮：原本畫著頭髮黑色（頭髮往後披才露出來的黑色碎塊）改成膚色，改在外部貼圖 rig/head_color.png。長髮避開身體沿用 v3；臉型、表情不變。使用者 2026-10-12 確認"
+}

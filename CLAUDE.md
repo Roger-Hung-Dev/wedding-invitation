@@ -27,6 +27,30 @@
 | 3D 角色情境 | 直呼 `blender-scenario-creator` | 情境描述＋角色專案 → 情境影片／圖片 |
 | 動作庫擴充 | 直呼 `blender-animation-append` | 動作描述 → 寫進共用動作庫、檢查通過才入庫 |
 | 整支片批次審看 | 主控端呼叫 workflow `film-scene-review` | 多幕 3D 情境一起渲出快速預覽 → 彙整成審看網頁 → 使用者一次給逐幕回饋 → 照回饋修 → 確認的幕才做完整品質 |
+| ZEPETO 大頭（一條龍） | `/zepeto-character-face-generation-workflow`（Alt+V 貼照片或 @照片檔） | 真人大頭照 → ZEPETO 風 3D 頭模型（OBJ；V 字臉、杏仁眼、光滑亮澤）→ 後處理成一打開就能看的 .blend＋四角度驗收圖 → 可動臉（AI 頭本身當成品：ARKit 52 表情＋臉部控制骨架＋長髮避開身體＋自動檢查報告） |
+| ZEPETO 大頭生成 | 直呼 `zepeto-analyze-photo-3d-model` | 照片 → 五官分析 → Hyper3D Rodin 文字生成（不上傳照片）→ 三角度檢查 → OBJ＋貼圖 |
+| ZEPETO 大頭後處理 | 直呼 `zepeto-avatar-crafter` | OBJ → 置中、焊接頂點、平滑、亮澤材質、三點燈光 → .blend＋驗收圖 |
+| ZEPETO 可動臉（ARKit 52） | 直呼 `zepeto-face-rigger`（或 skill `zepeto-face-rig` 的 `scripts/run_face_rig.py`） | 上一步的 .blend → AI 網格路線：模板只當籠子算 52 表情再轉移到 AI 頭、照唇線切嘴縫＋自建口腔袋、材質眼睛、控制骨架、整理成身體端的交接格式、照這顆頭試接一副身體來調長髮 → `head_rig.blend`＋自動檢查報告＋預覽圖，約 5 分鐘 |
+
+### ZEPETO 大頭產線的分工（三個子代理＋一條 workflow）
+
+```
+/zepeto-character-face-generation-workflow（主控端找照片路徑、問名稱）──▶ workflow zepeto-character-face-generation
+    ├─ zepeto-analyze-photo-3d-model ─▶ zepeto/<名稱>/stylized_face_generated.obj＋貼圖、analysis.md（在開著的 Blender 另開 ZEPETO_WORK 場景，做完刪掉）
+    ├─ zepeto-avatar-crafter ─────────▶ zepeto/<名稱>/stylized_face_zepeto.blend、qa/（只用背景 Blender）
+    └─ zepeto-face-rigger ────────────▶ zepeto/<名稱>/rig/head_rig.blend、rig/preview/（只用背景 Blender）
+```
+
+- 資料在 `.claude/docs/data/blender/zepeto/<名稱>/`；腳本與交接格式在 skill `zepeto-character-face-generation-workflow` 的 `scripts/`、`references/handoff.md`。
+- **Alt+V 貼上的圖子代理看不到**：主控端要先換成檔案路徑（Claude Code 存在本 session 暫存資料夾的 `images\N.png`）。
+- 生成用 Hyper3D Rodin 的**免費試用額度**（每跑一次 1～3 次），**只送文字描述、不上傳照片**。生成時不要給 `bbox_condition`、描述不寫否定句（兩次馬尾的教訓）。
+- 材質預設值是亮澤（2026-10-14 起；使用者 2026-10-13 看比較圖選亮澤）：透光權重 0.15、半徑 (1.0, 0.2, 0.1)、縮放 0.05、粗糙度 0.5，不加 Coat（整張臉會泛白）。舊的霧面黏土值（0.3／0.75）已停用。
+- 專案根目錄的 `stylized_face_*` 是第一次手動做的成品（2026-10-11），產線建好前的版本。
+- **要能眨眼張嘴、做 ARKit 52 表情**：AI 生成的頭五官是畫在表面的，推拉網格做不出來（`stylized_face_expressions/` 是那次測試）。走 skill `zepeto-face-rig`（一條龍第三段，`stages` 預設 `['generate','craft','rig']`）。
+  - **2026-10-14 起是 AI 網格路線**：AI 頭本身當成品（外型、貼圖原封不動），通用模板頭（LucaDrech，CC BY 4.0，**對外分享要標註**，見 `templates/cartoon-head-lucadrech/ATTRIBUTION.md`）只當「籠子」算出 52 個表情再轉移過去；牙齒、舌頭來自模板。說明與坑在該 skill 的 `references/ai-mesh-route.md`。
+  - 舊路線（模板當成品、AI 的樣子轉印上去 → 包子臉、眼線對不上）已刪，程式封存在 `D:/render-work/archive/zepeto-face-rig-old-route-20261014/`。新郎（`stylized_face_rig/head_rig.blend`，產線建好前手動做的，不搬）、新娘 v4、攝影師 v1 是舊路線做的，成品沒動。
+  - 驗證過新娘、攝影師兩張臉；第三種臉型第一次跑，自動檢查報告（`rig/check/report.html`）和預覽圖要逐張看。
+- **頭和身體的接縫：標準脖子接口環**（2026-10-14 起）：頭端 `neck_ring.py` 在脖子做出一圈 48 點寫進 Head（點屬性 `neck_ring` 1～48、`neck_ring_z` 等，Head 本地座標），身體端 `body_build.py` 照抄座標接上，兩邊點對點重合、看不出接縫；Head 有 `neck_ring_ver` 才走新路，舊頭照舊。環的高度、點數、順序是兩邊的合約，**改了要通知對方一起改**；合約與坑見 skill `zepeto-face-rig` 的 `references/ai-mesh-route.md`「頭身接縫」。
 
 ### 3D 角色產線的分工（三個子代理＋一條 workflow）
 
@@ -91,6 +115,11 @@ storyboard-artist ──畫──▶ v2 分鏡稿 .pen ──讀──▶ storyb
   - 對應 skills：`blender-scenario`、`blender-motion-library`、`blender-report-page`
 - `blender-animation-append`：擴充共用動作庫（檢查通過才入庫）。
   - 對應 skills：`blender-motion-library`
+- `zepeto-analyze-photo-3d-model`：ZEPETO 大頭生成端（風格分析 → Hyper3D 生成 → 存 OBJ）。工具含整個 `mcp__blender`。
+- `zepeto-avatar-crafter`：ZEPETO 大頭後處理端（匯入置中 → 網格修復 → 亮澤材質 → .blend＋驗收圖），只用背景 Blender。
+  - 兩者共用 skill `zepeto-character-face-generation-workflow` 底下的 `scripts/` 與 `references/handoff.md`（不預載，用到時讀）。
+- `zepeto-face-rigger`：ZEPETO 大頭可動臉端（跑 AI 網格路線一鍵產線 `run_face_rig.py` → 看自動檢查報告與預覽圖 → 自動偵測不準時改這張臉的 `face.json` 重跑），只用背景 Blender、不改產線程式。
+  - 對應 skill：`zepeto-face-rig`（產線腳本與坑）；交接格式同上 `handoff.md`。
 
 > **`blender-studio` 也是 skill（slash command `/blender-studio`），不是 agent**：它在主控端問齊參數後呼叫 workflow `blender-character-studio`。
 
