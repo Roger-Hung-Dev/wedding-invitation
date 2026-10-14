@@ -195,6 +195,9 @@ D:\SideProject\wedding-invitation\
     ├── commands\
     │   ├── design-lead.md     # 設計稿產線組長入口 /design-lead
     │   ├── fix-animation.md   # 修 3D 影片某一幕的動作：近照確認頁 → 使用者指出要修哪裡 → 確認才渲整幕
+    │   ├── git-worktree-create.md  # 以當前分支另開 worktree（分支名＋-WT，目錄在 repo 上一層）
+    │   ├── git-worktree-list.md    # 列出所有 worktree 與推導的來源分支
+    │   ├── git-worktree-merge.md   # worktree 合併回來源分支（回 main 時問部署、不部署自動加 [CF-Pages-Skip]）→ 確認後刪 worktree
     │   └── zepeto-scenes-generation-workflow.md  # 黏土風場景與道具：描述／參考照片 → 素材庫重用、找免費素材或自建 → 場景示意＋展示頁
     ├── workflows\
     │   ├── figma-pen-team.js  # 產線編排（read／draw-flow／draw-screen／draw-scenario／annotate）
@@ -276,6 +279,14 @@ D:\SideProject\wedding-invitation\
   - 這則訊息無法同時符合 Conventional Commits 格式，是唯一允許的例外；內文要寫明「依使用者要求不部署」。commit 格式 hook 不檢查 `-F` 讀入的訊息，所以不會被擋。
   - push 後確認沒部署：GitHub 上該 commit 的 check runs 不應出現「Cloudflare Pages」（`https://api.github.com/repos/Roger-Hung-Dev/wedding-invitation/commits/<sha>/check-runs`）。
 - **要部署時**：照一般 Conventional Commits 訊息合併即可，push 後同一個網址確認「Cloudflare Pages」檢查是 success。
+
+### 共用工作目錄與 worktree
+
+- **本專案的主工作目錄由多個 session 共用**（大頭、身體、服裝、動畫、場景、導演…），平常就有幾十筆各端沒 commit 的檔。
+  - **不要在主工作目錄 checkout／switch 分支**：只存在於目前分支的已 commit 檔會從磁碟消失，別的 session 正在用的檔就不見了。
+  - 各端要 commit 到自己的分支時，用暫時 index＋`git commit-tree`（或 `git merge-tree --write-tree`）組 commit、`git update-ref` 移分支，不動共用的 index 和 HEAD；合併回 main 也一樣，`update-ref` 要帶舊值核對。
+  - 要在獨立分支上大改時，改用 worktree：`/git-worktree-create` 另開資料夾、`/git-worktree-list` 查看、`/git-worktree-merge` 合併回來源分支並清掉。新 worktree 只有已 commit 的檔，沒 commit 的檔與 `.gitignore` 排除的檔（`settings.local.json`、`.blend`、參考照片）不會跟過去。
+  - `/git-worktree-merge` 已照上面「合併回 main 與部署」改過：合併回 main 時會問要不要部署、不部署自動加 `[CF-Pages-Skip]`；主工作目錄不在來源分支上就停下來，不會自己切過去。
 
 ## 語言規則
 
