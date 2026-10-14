@@ -35,7 +35,7 @@
 | ZEPETO 動畫製作 | `/zepeto-animation-generation-workflow <鏡號>`（或「改 B1：…」、或測試情境描述；導演端發「動畫開工：B2」時也走這條） | 一次做一鏡：讀分鏡展開檔（沒有就問齊自己寫一份）→ 比對上游 → 先上網查真人姿勢 → Mixamo 原樣套上 → 貼地鎖腳 → 道具、一開始就穿衣服 → 手指碰到就停 → 皮膚與衣服逐格量＋自我審查 → 改動作後先自我檢驗（腳／身體數字＋固定機位小片段，過了才交）→ 近照確認頁（附短片，同一頁逐版更新）→ 說可以才定案（狀態紀錄、樣張、通知導演端）。共用程式在該 skill 的 `scripts/`（zanim*），每一鏡的程式與定案參數在 `.claude/docs/data/blender/zepeto/anim/<片名>/<鏡>/` |
 | ZEPETO 穿戴物品 | `/zepeto-clothing-generation-workflow <描述>`（可 Alt+V 貼參考照片或 @圖片檔） | 開身體選單面板勾要穿在誰身上（可複選、只列已出廠的；面板沒載入時退回內建選單，不用自己找檔）→ 分析參考 → 用共用配方寫成 `outfit.py` → 背景 Blender 從身體長出衣服、鞋子、配件並綁骨架 → 近照＋Mixamo 動作穿模檢查 → 審看網頁 → 照回饋修；素材庫在 `library/outfits-zepeto/`。2026-10-14 起照參考照刻細節＋寫實布料（取代黏土風；配方 `garment_detail.py`，會垂的布用布料模擬在站姿垂一次定形）；大蓬裙的手交給動畫端（提裙、手搭裙側），交接資料寫在 `outfit.json` 的 `anim_handoff` |
 | ZEPETO 黏土風場景與道具 | `/zepeto-scenes-generation-workflow <情境描述>`（可 Alt+V 貼參考照片或 @圖片檔） | 拆出要的景與道具 → 先用素材庫現有的，缺的照來源清單 `sources.md` 上網找免費素材（下載前先問）或用 Blender 自建 → 加進素材庫 `library/props-zepeto/`、組場景示意、更新展示頁；新查到的素材網站一律記進 `sources.md` |
-| ZEPETO 大頭（一條龍） | `/zepeto-character-face-generation-workflow`（Alt+V 貼照片或 @照片檔） | 真人大頭照 → ZEPETO 風 3D 頭模型（OBJ；V 字臉、杏仁眼、光滑亮澤）→ 後處理成一打開就能看的 .blend＋四角度驗收圖 → 可動臉（AI 頭本身當成品：ARKit 52 表情＋臉部控制骨架＋長髮避開身體＋自動檢查報告） |
+| ZEPETO 大頭（一條龍） | `/zepeto-character-face-generation-workflow`（Alt+V 貼照片或 @照片檔；沒有照片的配角可以只給文字設定） | 真人大頭照（或文字設定）→ ZEPETO 風 3D 頭模型（OBJ；V 字臉、杏仁眼、光滑亮澤）→ 後處理成一打開就能看的 .blend＋四角度驗收圖 → 可動臉（AI 頭本身當成品：ARKit 52 表情＋臉部控制骨架＋脖子修細到頭寬 38%＋長髮避開身體＋自動檢查報告，含「ZEPETO 比例」量測）。**改了大頭產線程式要跑回歸測試** `zepeto-face-rig/scripts/regress/regress.py`（快速約 1 分鐘、`--full` 約 15 分鐘；測試組與加頭規則見該 skill 的 SKILL.md） |
 | ZEPETO 大頭生成 | 直呼 `zepeto-analyze-photo-3d-model` | 照片 → 五官分析 → Hyper3D Rodin 文字生成（不上傳照片）→ 三角度檢查 → OBJ＋貼圖 |
 | ZEPETO 大頭後處理 | 直呼 `zepeto-avatar-crafter` | OBJ → 置中、焊接頂點、平滑、亮澤材質、三點燈光 → .blend＋驗收圖 |
 | ZEPETO 可動臉（ARKit 52） | 直呼 `zepeto-face-rigger`（或 skill `zepeto-face-rig` 的 `scripts/run_face_rig.py`） | 上一步的 .blend → AI 網格路線：模板只當籠子算 52 表情再轉移到 AI 頭、照唇線切嘴縫＋自建口腔袋、材質眼睛、控制骨架、整理成身體端的交接格式、照這顆頭試接一副身體來調長髮 → `head_rig.blend`＋自動檢查報告＋預覽圖，約 5 分鐘 |
@@ -58,7 +58,7 @@
   - **2026-10-14 起是 AI 網格路線**：AI 頭本身當成品（外型、貼圖原封不動），通用模板頭（LucaDrech，CC BY 4.0，**對外分享要標註**，見 `templates/cartoon-head-lucadrech/ATTRIBUTION.md`）只當「籠子」算出 52 個表情再轉移過去；牙齒、舌頭來自模板。說明與坑在該 skill 的 `references/ai-mesh-route.md`。
   - 舊路線（模板當成品、AI 的樣子轉印上去 → 包子臉、眼線對不上）已刪，程式封存在 `D:/render-work/archive/zepeto-face-rig-old-route-20261014/`。新郎（`stylized_face_rig/head_rig.blend`，產線建好前手動做的，不搬）、新娘 v4、攝影師 v1 是舊路線做的，成品沒動。
   - 驗證過新娘、攝影師兩張臉；第三種臉型第一次跑，自動檢查報告（`rig/check/report.html`）和預覽圖要逐張看。
-- **頭和身體的接縫：標準脖子接口環**（2026-10-14 起）：頭端 `neck_ring.py` 在脖子做出一圈 48 點寫進 Head（點屬性 `neck_ring` 1～48＋Head 物件的自訂屬性 `neck_ring_ver`、`neck_ring_n`、`neck_ring_z`、`neck_ring_yc`，Head 本地座標），身體端 `body_build.py` 照抄座標接上，兩邊點對點重合、看不出接縫；Head 有 `neck_ring_ver` 才走新路，舊頭照舊。環的高度、點數、順序是兩邊的合約，**改了要通知對方一起改**；合約與坑見 skill `zepeto-face-rig` 的 `references/ai-mesh-route.md`「頭身接縫」。
+- **頭和身體的接縫：標準脖子接口環**（2026-10-14 起）：頭端 `neck_ring.py` 在脖子做出一圈 48 點寫進 Head（點屬性 `neck_ring` 1～48＋Head 物件的自訂屬性 `neck_ring_ver`、`neck_ring_n`、`neck_ring_z`、`neck_ring_yc`、`neck_chin_bottom`，Head 本地座標；環的高度是先找下巴底、再往下找脖子），身體端 `body_build.py` 用 `neck_chin_bottom` 當下巴放頭（V 字長下巴自己量會量到下巴前緣、頭被放低放大）、照抄環的座標接上，兩邊點對點重合、看不出接縫；Head 有 `neck_ring_ver` 才走新路，舊頭照舊。環的高度、點數、順序是兩邊的合約，**改了要通知對方一起改**；合約與坑見 skill `zepeto-face-rig` 的 `references/ai-mesh-route.md`「頭身接縫」。
 
 ### 3D 角色產線的分工（三個子代理＋一條 workflow）
 
