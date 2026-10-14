@@ -72,7 +72,14 @@ pose_frame(ARM, ACT["wave"][1](0.25))
 
 數字沒過不准說「通過」。手指交握、手搭在衣服上會量到幾毫米接觸 —— 要用 `contact_shots` 拍近照目視，確認後在 actions_catalog 的 `contact_note` 寫原因。細節見 [references/qa-checks.md](references/qa-checks.md)。調整階段怎麼縮短每一輪（快速預覽、多角度檢查圖、一次收齊問題、瀏覽器即時預覽）見 [references/fast-iteration.md](references/fast-iteration.md)。
 
-**2026-10-10 起動作一律用 Mixamo 現成動畫原樣套上**（不再用 CMU）：`scripts/mixamo_retarget.py`（FBX → VRoid 骨架、接段、0.3 秒漸變），多幕影片先審骨骼（樣板 `assets/skeleton_review/viewer.html`）、再審低畫質預覽，兩關網頁都要有回覆框＋Ctrl+V 貼圖。規則見 fast-iteration.md §0、§0.5。
+**2026-10-10 起動作一律用 Mixamo 現成動畫原樣套上**（不再用 CMU）：`scripts/mixamo_retarget.py`（FBX → VRoid 骨架、接段、0.3 秒漸變），多幕影片三關審看：
+1. 骨骼動作：Mixamo 原樣。
+2. 正式版骨骼動作：加上劇情要求的微調，工具有 `arm_ik`、`aim_hand`、`lift_shoulder`、`look_at`、`gesture`、`breathe`，以及 `Seg` 的 `mod`、`add`（轉身這類過場只取轉向和腳步，身體沿用前後段；2026-10-11）、`splice_clip`（剪掉原片的一段、其餘接成循環）；手勢多了 `thumbs_up`（比讚）。
+3. 低畫質預覽。
+
+⚠️ **2026-10-11 修正 `retarget` 的方向對齊**（`R = D @ A @ rest`，之前誤寫成 `A⁻¹`）：舊算法會把兩副骨架的 rest 方向差多加一次 —— VRoid 角色拇指每格多轉約 26°、肩胛 13°、手腕 6.6°，其他手指與腿 0～3°。修正後手指角度和 Mixamo 原樣一致。**在這之前產出的骨架審看頁、預覽影格都是舊算法**，重跑後拇指、肩膀會不同；幕裡為了補舊算法而手調的拇指、肩膀（例：比讚的 `THUMB_UP_T`、`lift_shoulder` 的角度）要重新確認還需不需要。
+
+骨架關的樣板是 `assets/skeleton_review/viewer.html`，用 `STAGE` 設定第 1 或第 2 關。三關網頁都要有回覆框＋Ctrl+V 貼圖。規則見 fast-iteration.md §0、§0.5。
 
 ## 5. 預設資料庫
 

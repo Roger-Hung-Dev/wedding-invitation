@@ -1,0 +1,36 @@
+{
+ "schema": 1,
+ "kind": "anim",
+ "id": "b5",
+ "version": "v0",
+ "artifact": {
+  "path": "",
+  "sha256": ""
+ },
+ "upstream": [],
+ "changes": "（走位版，未定案）",
+ "owner": "anim",
+ "status": "in_progress",
+ "updated_at": "2026-10-12T22:20:41+08:00",
+ "notes": {
+  "in_progress": "走位版 v4（第 2 輪：以動作流暢為主）",
+  "shot": "B5",
+  "film": "opening-proposal-b",
+  "mode": "走位版",
+  "blocking_clip": "D:/render-work/zepeto-anim/opening-proposal-b/b5/blocking_v4.mp4",
+  "standins": "場景＝素材庫走廊＋攝影區＋門廳（場景座標）；新娘＝膠囊＋裙擺；手機＝phone_zp（右手 IK 舉到右上方）",
+  "duration_s_blocking": 9.38,
+  "handles_s": 1.0,
+  "stop_xy": [
+   9.14,
+   -0.75
+  ],
+  "line_y_from_b4": -0.6,
+  "feedback_round": 2,
+  "pacing_note": "第 2 輪：停在背板前 x 9.87、舉手機 2.68、快門 4.48、放下 5.08、5.68 轉回、6.78 起步",
+  "still_to_go_s": [
+   1.63,
+   5.68
+  ]
+ }
+}

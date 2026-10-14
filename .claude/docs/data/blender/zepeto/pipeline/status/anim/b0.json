@@ -1,0 +1,27 @@
+{
+ "schema": 1,
+ "kind": "anim",
+ "id": "b0",
+ "version": "v0",
+ "artifact": {
+  "path": "",
+  "sha256": ""
+ },
+ "upstream": [],
+ "changes": "（走位版，未定案）",
+ "owner": "anim",
+ "status": "in_progress",
+ "updated_at": "2026-10-12T22:20:41+08:00",
+ "notes": {
+  "in_progress": "走位版 v4（第 3 輪：以動作流暢為主）",
+  "shot": "B0",
+  "film": "opening-proposal-b",
+  "mode": "走位版",
+  "blocking_clip": "D:/render-work/zepeto-anim/opening-proposal-b/b0/blocking_v4.mp4",
+  "standins": "場景＝素材庫走廊（門片 ZA_DoorLeaf 會開）；新娘＝膠囊＋裙擺（同新郎高）",
+  "duration_s_blocking": 7.5,
+  "handles_s": 1.0,
+  "feedback_round": 3,
+  "pacing_note": "第 3 輪（以動作流暢為主）：走出門減速停下→轉身→從靜止起步；走廊固定在 venue (−0.654, 0)，B0 結尾改在 (1.207, 0.098)（B1→B2 重做時從這裡接）"
+ }
+}

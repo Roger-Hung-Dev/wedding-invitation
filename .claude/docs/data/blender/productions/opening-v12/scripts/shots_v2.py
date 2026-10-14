@@ -1116,8 +1116,9 @@ V2_07 = dict(tc=(1.85, -1.25), cam=(1.98, -3.95, 1.36), aim=(1.99, -1.05, 0.97),
              plate=(0.03, -0.38), fork_at=(0.17, -0.30), glass_at=(0.0, -0.24), clink=(0.0, 0.31, 0.89),
              easel=(0.82, -0.02), skirt_mode="hide")
 T07 = dict(feed=(0.0, 4.5), pick=(4.5, 6.3), toast=(6.3, 8.5), sip=(8.5, 12.0), clink=7.2, fork_pick=0.05)
-SKIRT_LOW = ("bride_Cos_Tulle1", "bride_Cos_Tulle2", "bride_Cos_Frill1", "bride_Cos_Frill2", "bride_Cos_Lining", "bride_Cos_Cascade",
-             "bride_Cos_Petal", "bride_Cos_Ruffle")
+# 2026-10-11 第 3 關第 4 輪回饋 ⑦a「角色建模異常，你看肩膀」：原本清單裡還有 bride_Cos_Petal（胸前花瓣，高 0.98～1.18）、
+#   bride_Cos_Ruffle（領口荷葉邊，1.21～1.31），都是上半身的零件 → 藏起來後胸口上緣、上臂露出原本蓋在荷葉邊下的皮膚（紅線、凹痕）。拿掉
+SKIRT_LOW = ("bride_Cos_Tulle1", "bride_Cos_Tulle2", "bride_Cos_Frill1", "bride_Cos_Frill2", "bride_Cos_Lining", "bride_Cos_Cascade")
 # 桌上的東西（桌心座標）：主餐大盤在兩人中間（他叉的那一口在盤子上）、點心小盤×3、水果盤（左前）、紅酒瓶（左前）、餐巾。
 # 兩人沒事做的那隻手平放在桌上的位置（動作庫 _table_hand）要空出來：新郎右手約 (−0.27, 0.09)、新娘左手約 (0.29, 0.13)、新娘右手約 (0.13, 0.29)
 # （2026-10-07 新版 fed 右手整段放在桌上；主餐盤從 (−0.02, 0.10) 挪到 (−0.04, 0.09)：新娘右手移去拿杯子時會擦到盤緣）

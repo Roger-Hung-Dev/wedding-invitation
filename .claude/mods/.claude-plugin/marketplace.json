@@ -1,0 +1,18 @@
+{
+  "name": "wedding-invitation-mods",
+  "owner": {
+    "name": "Roger-Hung-Dev"
+  },
+  "plugins": [
+    {
+      "name": "zepeto-picker",
+      "source": "./zepeto-picker",
+      "description": "ZEPETO 挑選器：身體與大頭選單（可複選）"
+    },
+    {
+      "name": "render-settings",
+      "source": "./render-settings",
+      "description": "渲染參數面板：整支片設定與完整渲染設定"
+    }
+  ]
+}

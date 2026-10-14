@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "film": "opening-proposal-b",
+  "version": 2,
+  "caption_style": "card",
+  "font": "round",
+  "palette": "rose",
+  "layout": "col",
+  "transition": "push",
+  "transition_s": 0.6,
+  "caption_speed": 0.75,
+  "title_size": 4.4,
+  "decided_at": "2026-10-12T14:21:31.914Z"
+}

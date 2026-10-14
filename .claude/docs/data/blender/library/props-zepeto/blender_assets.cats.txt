@@ -1,0 +1,12 @@
+# Blender 資產分類（build_props.py 產生，別手改）
+VERSION 1
+
+ea455751-75da-5d5e-97d0-53d1c1db386c:ZEPETO_Props/Garden:花園
+f89626c5-8cc7-55a2-a96d-8b3b0826cbe6:ZEPETO_Props/Carpet:紅毯
+985d74de-ccde-5d1a-8f02-01020fdea8d0:ZEPETO_Props/Dinner:晚餐桌
+f428b291-6b6a-5513-9260-5d9f03fa05ad:ZEPETO_Props/Street:夜晚街景
+9df02ead-2e6d-5136-bc0f-1be884c32079:ZEPETO_Props/Scenes:場景示意
+87144017-507e-5086-9819-3d1ba5c82b35:ZEPETO_Props/Daily:日常小物
+56c30746-51c1-5d01-9589-fea0d2537716:ZEPETO_Props/Studio:攝影棚
+932ce1eb-6bb9-5b54-abb5-fa6ed7f166d2:ZEPETO_Props/Venue:婚宴會館
+e38ff1d8-9bae-5a68-9039-fb505faa2b8d:ZEPETO_Props/Misc:其他

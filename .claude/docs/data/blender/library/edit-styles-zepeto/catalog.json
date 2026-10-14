@@ -1,0 +1,47 @@
+{
+ "schema": 1,
+ "note": "開場影片剪接樣式庫（ZEPETO 3D 開場片用）。每一筆的效果實作在 edit_styles.js（同一份程式給展示頁、mod 預覽、正式剪接逐格截圖用）。新增樣式：先在實驗頁給使用者看、說可以才加進來；id 要和 edit_styles.js 裡的實作同名。",
+ "captions": [
+  {"id": "stamp", "name": "蓋章彈入", "desc": "標題像蓋章一樣放大彈進來、微微歪一點，內容接著往上淡入。", "when": "活潑、俏皮的段落（劇本提案的做法）", "added": "2026-10-12"},
+  {"id": "type", "name": "逐字打出", "desc": "標題、內容一個字一個字打出來，後面有游標。", "when": "像傳訊息、想讓人一字一字讀的提醒", "added": "2026-10-12"},
+  {"id": "card", "name": "卡片滑入", "desc": "字放在一張小卡片上，從左邊滑進來、滑出去。", "when": "要乾淨好讀、字比較多時", "added": "2026-10-12"},
+  {"id": "soft", "name": "柔焦淡入", "desc": "字從模糊、字距寬慢慢變清楚。", "when": "溫柔、典雅的段落", "added": "2026-10-12"}
+ ],
+ "transitions": [
+  {"id": "scroll", "name": "側面捲動（不切）", "overlap": true, "desc": "鏡頭跟著人走、場景連續捲過去。正式版在 3D 裡做（連續跟拍），2D 預覽用等速推移模擬。", "when": "同一段場景裡的鏡與鏡之間（劇本的主要做法）", "added": "2026-10-12"},
+  {"id": "cut", "name": "硬切", "overlap": false, "desc": "直接換畫面。", "when": "節奏快、或要乾脆換場時", "added": "2026-10-12"},
+  {"id": "dissolve", "name": "溶接", "overlap": true, "desc": "前後兩段疊在一起慢慢換過去。", "when": "時間或地點跳開、要柔和帶過時", "added": "2026-10-12"},
+  {"id": "push", "name": "推移", "overlap": true, "desc": "新畫面從右邊把舊畫面推出去。", "when": "有「往前走」的方向感時", "added": "2026-10-12"},
+  {"id": "pillar", "name": "柱子擦過", "overlap": true, "desc": "一根柱子從鏡頭前掃過，柱子後面就換成新地點。正式版在 3D 裡做，2D 預覽用色塊模擬。", "when": "換景接縫（劇本 B3→B4）", "added": "2026-10-12"},
+  {"id": "flash", "name": "閃白", "overlap": false, "desc": "畫面閃一下白再換。", "when": "高潮、結尾接倒數（劇本 B6）", "added": "2026-10-12"},
+  {"id": "black", "name": "黑場", "overlap": false, "desc": "先淡出到黑、再從黑淡入。", "when": "段落之間、最沉穩", "added": "2026-10-12"}
+ ],
+ "palettes": [
+  {"id": "rose", "name": "奶油玫瑰", "bg": "#FFF7F1", "title": "#B84E66", "text": "#5B4A48", "card": "#FFFFFF", "desc": "和黏土風角色最搭，喜帖常見的暖粉色。", "added": "2026-10-12"},
+  {"id": "sage", "name": "鼠尾草綠", "bg": "#F1F5EF", "title": "#4C7760", "text": "#3B4842", "card": "#FFFFFF", "desc": "清爽、偏戶外花園婚禮。", "added": "2026-10-12"},
+  {"id": "navy", "name": "夜藍金", "bg": "#1E2840", "title": "#E6C477", "text": "#F1ECE3", "card": "#2A3554", "desc": "深底金字，正式、有晚宴感。", "added": "2026-10-12"}
+ ],
+ "fonts": [
+  {"id": "sans", "name": "黑體", "google": "Noto Sans TC", "stack": "\"Noto Sans TC\", \"Microsoft JhengHei\", sans-serif", "desc": "最好讀、最中性。", "license": "SIL OFL", "added": "2026-10-12"},
+  {"id": "round", "name": "圓體", "google": "Chiron GoRound TC", "stack": "\"Chiron GoRound TC\", \"Noto Sans TC\", sans-serif", "desc": "圓潤可愛，和黏土風最搭。", "license": "SIL OFL", "added": "2026-10-12"},
+  {"id": "kai", "name": "文楷（手寫感）", "google": "LXGW WenKai TC", "stack": "\"LXGW WenKai TC\", \"KaiTi\", serif", "desc": "像手寫的卡片，有溫度。", "license": "SIL OFL", "added": "2026-10-12"},
+  {"id": "serif", "name": "明體", "google": "Noto Serif TC", "stack": "\"Noto Serif TC\", \"PMingLiU\", serif", "desc": "正式、典雅。", "license": "SIL OFL", "added": "2026-10-12"}
+ ],
+ "layouts": [
+  {"id": "col", "name": "左欄", "desc": "左邊 40% 是字卡底色，3D 往右移（劇本的做法）。"},
+  {"id": "over", "name": "疊在畫面上", "desc": "字直接壓在 3D 上，加陰影。"}
+ ],
+ "numbers": {
+  "transition_s": {"name": "轉場長度", "opts": [0.6, 0.3, 1.0, 1.5], "unit": "秒", "desc": "轉場從開始到結束幾秒。"},
+  "caption_speed": {"name": "字卡速度", "opts": [1.0, 0.75, 1.5], "unit": "×", "desc": "字卡進場、打字、退場的速度倍率。"},
+  "title_size": {"name": "標題大小", "opts": [4.4, 3.6, 5.2], "unit": "", "show": {"4.4": "中", "3.6": "小", "5.2": "大"}, "desc": "標題字高（畫面寬的百分比）；內容是標題的一半。"}
+ },
+ "defaults": {"caption_style": "stamp", "font": "round", "palette": "rose", "layout": "col", "transition": "push", "transition_s": 0.6, "caption_speed": 1.0, "title_size": 4.4},
+ "demo": {
+  "note": "展示用的節目：B1 定案動作 → B2 位置（B2 還沒做，暫用坐餐桌喝紅酒測試動畫）。影片是樣張的低畫質預覽，在 D:/render-work（不進版控），build_showcase.py 會複製到展示頁。",
+  "shots": [
+   {"id": "b1", "label": "B1 手機（定案動作）", "src": "D:/render-work/zepeto-anim/sample/edit_clips/b1_b2.mp4", "dur": 11.2, "cap": ["手機請靜音", "或調成震動"], "cue": [3.2, 8.4]},
+   {"id": "b2", "label": "B2 位置（暫用測試動畫）", "src": "D:/render-work/zepeto-anim/sample/edit_clips/sit.mp4", "dur": 7.0, "cap": ["盡情享用美食", "吃到飽、喝到醉"], "cue": [0.8, null]}
+  ]
+ }
+}

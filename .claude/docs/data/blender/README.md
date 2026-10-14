@@ -14,14 +14,19 @@ blender/
 │   ├── videos/                  ← 影片成品：turn_*.mp4、costume_moves.mp4、actions/、scenes/
 │   ├── report.html              ← 成果網頁（gen_page.py 產生，本機可直接開）
 │   └── report_files.json        ← 發布 Artifact 用的檔案清單
+├── zepeto/<名稱>/               ← ZEPETO 黏土風 3D 大頭（AI 生成，與 VRoid 角色是兩回事）；格式見
+│                                   zepeto-character-face-generation-workflow skill 的 references/handoff.md
 └── library/                     ← 預設資料庫（來自新娘專案）
     ├── actions_catalog.json     ← 動作目錄（30 個預設＋擴充的）
     ├── tune_default.json        ← 碰觸類動作的預設參數
     ├── costumes/                ← 服裝規格預設：pink-ballgown.json（新娘第 3 版）＋它的層次元件 costume_extra_pink_ballgown.py
     ├── textures/                ← 情境用貼圖（報紙）
-    └── previews/                ← 手勢、表情與腳、服裝、30 個動作的預覽圖
+    ├── previews/                ← 手勢、表情與腳、服裝、30 個動作的預覽圖
+    └── props-zepeto/            ← ZEPETO 黏土風道具素材庫（26 樣＋4 場景示意，程式建模、標成 Blender 資產）；
+                                    用法見裡面的 README.md（use_props.py 的 place_prop()）
 ```
 
 - 影格 png（量很大）一律在 `D:\render-work\blender-work\<專案名稱>\`（`blender_env.py` 的 WORK；環境變數 `BLENDER_WORK_ROOT` 可覆寫），不放這裡。
 - 範例專案：`projects/bride`（新娘怡安），成果頁 https://claude.ai/artifact/12T6gowAFGaBVvSUAawPfa 。
 - 相關子代理：`blender-creator`（建角色 01～03）、`blender-scenario-creator`（情境）、`blender-animation-append`（擴充動作）；一條龍用 `/blender-studio`。
+- ZEPETO 大頭：`zepeto-analyze-photo-3d-model`（生成）、`zepeto-avatar-crafter`（後處理）、`zepeto-face-rigger`（可動臉：ARKit 52＋臉部骨架，成品在 `zepeto/<名稱>/rig/`）；一條龍用 `/zepeto-character-face-generation-workflow`。

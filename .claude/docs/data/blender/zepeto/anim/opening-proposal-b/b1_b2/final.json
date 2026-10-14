@@ -1,0 +1,36 @@
+{
+  "what": "B1→B2 經過 第 4 版定案參數（使用者 2026-10-12 確認）。b12_mcp.run_r3() 全部從這裡讀；狀態紀錄 anim/b1_b2 的 artifact 指向本檔。改任何一個值＝這段動畫的定案內容換了，要更新狀態紀錄",
+  "version": "v4",
+  "clips": ["male_standard_walk", "male_stop_walk", "texting_standing", "male_start_walk"],
+  "base_r3": {
+    "keep": 0.4,
+    "kmax": 10.0
+  },
+  "build_r3": {
+    "t_press": 6.2,
+    "tilt": 25.0,
+    "up": 0.08,
+    "fwd_d": 0.02,
+    "phone_on_z": 0.80,
+    "hover": 0.008,
+    "ref_t": 6.2,
+    "smooth": 4,
+    "lock": {"v_on": 0.3, "ramp": 9, "gap_max": 12, "step_h": 0.012}
+  },
+  "grip": {
+    "L": {"c": [-0.034, 0.010, -0.004], "tilt": 10.0, "dy": 1.0, "dz": 0.6},
+    "R": {"c": [0.031, -0.050, -0.004], "tilt": 20.0, "dy": 1.0, "dz": 0.6, "dx": 0.0}
+  },
+  "phone": {"before": "phone_zp", "after": "phone_mute_zp"},
+  "pop": {
+    "phone_scale": [0.30, 0.75, 1.15, 1.0],
+    "star_scale": [0.5, 0.9, 1.1, 1.2, 1.2, 1.15],
+    "star_alpha": [1.0, 1.0, 1.0, 0.7, 0.4, 0.15],
+    "stars": [
+      {"name": "B12_Star0", "shape": "star", "radius_m": 0.014, "color": "#F6D77A", "dir_m": [-0.060, 0.055, 0.045]},
+      {"name": "B12_Star1", "shape": "star", "radius_m": 0.011, "color": "#F6D77A", "dir_m": [0.065, 0.040, 0.045]},
+      {"name": "B12_Star2", "shape": "dot", "radius_m": 0.006, "color": "#FFFCF7", "dir_m": [0.005, 0.095, 0.040]}
+    ]
+  },
+  "fixed_in_code": "手指手勢（fist→碰到就停、懸空改 hold、沒拿手機用 relaxed）、拇指碰開關目標 touch_gap=-0.0007 寫在 b12_r3.py／b12_mcp.build_r3；低頭 pitch0=10°、脖子頭分 0.4/0.6 寫在 b12_r2.lift_head；貼地 win=8 smooth=6 skin=1.5mm 寫在 b12_fix.ground"
+}
