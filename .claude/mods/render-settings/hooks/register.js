@@ -18,10 +18,10 @@ let EDIT = []                 // 開面板時從 catalog.json 產生
 let editCat = null
 // 試渲：用背景 Blender 渲樣張場景（坐餐桌喝紅酒、穿西裝）的一格，顯示在右邊（2026-10-12 使用者：參數要先看到效果）
 const BLENDER = 'C:/Program Files/Blender Foundation/Blender 5.2/blender.exe'
-const MANIFEST = 'D:/render-work/zepeto-anim/sample/samples.json'   // 樣張總表：每鏡定案時由 t_sample.register() 登記（樣張檔＋可試渲的畫面）
+const MANIFEST = 'D:/render-work/zepeto-anim/sample/samples.json'   // 樣張總表：每鏡定案時由 zanim_sample.register() 登記（樣張檔＋可試渲的畫面）
 const FALLBACK = [{ id: 'sit_test', label: '坐餐桌喝紅酒（測試）', kind: 'test', blend: 'D:/render-work/zepeto-anim/sample/sit_sample.blend',
   frames: [{ t: 2.6, label: '拿起杯子' }, { t: 5.1, label: '喝（臉、杯子）' }, { t: 7.7, label: '手快速收回（看動態模糊）' }, { t: 9.5, label: '手擱大腿（靜態）' }] }]
-const SAMPLE_PY = 'D:/render-work/zepeto-anim/scripts/sample_render.py'
+const SAMPLE_PY = 'D:/SideProject/wedding-invitation/.claude/skills/zepeto-animation-generation-workflow/scripts/sample_render.py'   // 2026-10-14 改指動畫 skill（render-work/zepeto-anim/scripts 是搬家前的封存）
 const TRIAL_DIR = 'D:/render-work/zepeto-anim/sample/trial'
 const CMP_PAGE = 'https://claude.ai/artifact/KaC1ZqHyfqnJgbrULR3dq9'
 
