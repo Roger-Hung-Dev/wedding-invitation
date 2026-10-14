@@ -1,0 +1,32 @@
+{
+ "schema": 1,
+ "kind": "anim",
+ "id": "b3",
+ "version": "v0",
+ "artifact": {
+  "path": "",
+  "sha256": ""
+ },
+ "upstream": [],
+ "changes": "（走位版，未定案）",
+ "owner": "anim",
+ "status": "in_progress",
+ "updated_at": "2026-10-12T22:20:41+08:00",
+ "notes": {
+  "in_progress": "走位版 v5（第 3 輪：以動作流暢為主）",
+  "shot": "B3",
+  "film": "opening-proposal-b",
+  "mode": "走位版",
+  "blocking_clip": "D:/render-work/zepeto-anim/opening-proposal-b/b3/blocking_v5.mp4",
+  "standins": "場景＝素材庫走廊（立牌、牆）；換景柱子改放鏡頭前 1.3 m（場景原位太近）；車鑰匙＝方塊；新娘＝膠囊＋裙擺",
+  "duration_s_blocking": 6.67,
+  "handles_s": 1.0,
+  "swap_s": 3.3,
+  "feedback_round": 3,
+  "pacing_note": "第 3 輪：停下播到停穩、掏鑰匙／被搶／搖手指拉開；結尾＝柱子蓋住兩人中點那一格",
+  "still_to_go_s": [
+   1.1,
+   5.13
+  ]
+ }
+}

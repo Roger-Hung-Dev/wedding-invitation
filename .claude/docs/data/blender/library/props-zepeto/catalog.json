@@ -1,0 +1,784 @@
+{
+ "built": "2026-10-13",
+ "blend": "zepeto_props.blend",
+ "catalogs": {
+  "garden": "花園",
+  "carpet": "紅毯",
+  "dinner": "晚餐桌",
+  "street": "夜晚街景",
+  "scenes": "場景示意",
+  "daily": "日常小物",
+  "studio": "攝影棚",
+  "venue": "婚宴會館",
+  "misc": "其他"
+ },
+ "items": [
+  {
+   "key": "arch",
+   "label": "白色花拱門（玫瑰＋尤加利垂枝）",
+   "scenes": "②③⑤⑧",
+   "size": [
+    2.336,
+    0.686,
+    3.179
+   ],
+   "img": "previews/items/arch.jpg",
+   "collection": "ZP_arch",
+   "catalog": "garden"
+  },
+  {
+   "key": "hedge",
+   "label": "樹籬牆（圓角方塊＋小花點）",
+   "scenes": "②③⑤⑦a⑧",
+   "size": [
+    3.06,
+    0.67,
+    1.45
+   ],
+   "img": "previews/items/hedge.jpg",
+   "collection": "ZP_hedge",
+   "catalog": "garden"
+  },
+  {
+   "key": "tree",
+   "label": "背景樹（綠樹、粉花樹）",
+   "scenes": "②③⑤⑧",
+   "size": [
+    3.56,
+    1.4,
+    2.636
+   ],
+   "img": "previews/items/tree.jpg",
+   "collection": "ZP_tree",
+   "catalog": "garden"
+  },
+  {
+   "key": "ground",
+   "label": "草地＋沙色小徑＋踏腳石",
+   "scenes": "②③⑤⑧",
+   "size": [
+    4.4,
+    4.4,
+    0.162
+   ],
+   "img": "previews/items/ground.jpg",
+   "collection": "ZP_ground",
+   "catalog": "garden"
+  },
+  {
+   "key": "flowerbed",
+   "label": "花圃（矮灌木、雛菊、薰衣草）",
+   "scenes": "②③⑤⑧",
+   "size": [
+    1.88,
+    0.5,
+    0.645
+   ],
+   "img": "previews/items/flowerbed.jpg",
+   "collection": "ZP_flowerbed",
+   "catalog": "garden"
+  },
+  {
+   "key": "petals",
+   "label": "飄落花瓣",
+   "scenes": "②③⑤⑧",
+   "size": [
+    0.717,
+    0.376,
+    0.477
+   ],
+   "img": "previews/items/petals.jpg",
+   "collection": "ZP_petals",
+   "catalog": "garden"
+  },
+  {
+   "key": "carpet",
+   "label": "紅毯（鋪開、四個平貼字）",
+   "scenes": "③",
+   "size": [
+    1.6,
+    4.0,
+    0.04
+   ],
+   "img": "previews/items/carpet.jpg",
+   "collection": "ZP_carpet",
+   "catalog": "carpet"
+  },
+  {
+   "key": "roll",
+   "label": "紅毯卷（推動用）",
+   "scenes": "③",
+   "size": [
+    1.646,
+    1.29,
+    1.04
+   ],
+   "img": "previews/items/roll.jpg",
+   "collection": "ZP_roll",
+   "catalog": "carpet"
+  },
+  {
+   "key": "oldcam",
+   "label": "木製老相機＋三腳架（紅燈）",
+   "scenes": "⑤",
+   "size": [
+    0.815,
+    1.025,
+    1.565
+   ],
+   "img": "previews/items/oldcam.jpg",
+   "collection": "ZP_oldcam",
+   "catalog": "garden"
+  },
+  {
+   "key": "bouquet",
+   "label": "捧花（19 朵玫瑰＋緞帶蝴蝶結）",
+   "scenes": "⑤",
+   "size": [
+    0.373,
+    0.357,
+    0.472
+   ],
+   "img": "previews/items/bouquet.jpg",
+   "collection": "ZP_bouquet",
+   "catalog": "garden"
+  },
+  {
+   "key": "phone",
+   "label": "手機（路人甲拍照用）",
+   "scenes": "⑤",
+   "size": [
+    0.078,
+    0.021,
+    0.155
+   ],
+   "img": "previews/items/phone.jpg",
+   "collection": "ZP_phone",
+   "catalog": "garden"
+  },
+  {
+   "key": "phone_zp",
+   "label": "手機・ZEPETO 角色用（縮小版、素色螢幕）",
+   "scenes": "提案B B1",
+   "size": [
+    0.063,
+    0.017,
+    0.125
+   ],
+   "img": "previews/items/phone_zp.jpg",
+   "collection": "ZP_phone_zp",
+   "catalog": "daily"
+  },
+  {
+   "key": "phone_mute",
+   "label": "手機・靜音畫面（鈴鐺打叉＋靜音開關）",
+   "scenes": "提案B B1",
+   "size": [
+    0.082,
+    0.027,
+    0.155
+   ],
+   "img": "previews/items/phone_mute.jpg",
+   "collection": "ZP_phone_mute",
+   "catalog": "daily"
+  },
+  {
+   "key": "phone_mute_zp",
+   "label": "手機・靜音畫面・ZEPETO 角色用（縮小版）",
+   "scenes": "提案B B1",
+   "size": [
+    0.066,
+    0.022,
+    0.125
+   ],
+   "img": "previews/items/phone_mute_zp.jpg",
+   "collection": "ZP_phone_mute_zp",
+   "catalog": "daily"
+  },
+  {
+   "key": "table",
+   "label": "圓桌＋落地桌巾（薰衣草緞帶）",
+   "scenes": "⑦a",
+   "size": [
+    1.04,
+    1.04,
+    0.75
+   ],
+   "img": "previews/items/table.jpg",
+   "collection": "ZP_table",
+   "catalog": "dinner"
+  },
+  {
+   "key": "chair",
+   "label": "白色花園椅（腮紅粉坐墊）",
+   "scenes": "⑦a",
+   "size": [
+    0.46,
+    0.44,
+    1.03
+   ],
+   "img": "previews/items/chair.jpg",
+   "collection": "ZP_chair",
+   "catalog": "dinner"
+  },
+  {
+   "key": "chair_zp",
+   "label": "白色花園椅・ZEPETO 角色用（矮胖版、腮紅粉坐墊）",
+   "scenes": "坐餐桌喝紅酒測試",
+   "size": [
+    0.31,
+    0.265,
+    0.528
+   ],
+   "img": "previews/items/chair_zp.jpg",
+   "collection": "ZP_chair_zp",
+   "catalog": "misc"
+  },
+  {
+   "key": "chicken",
+   "label": "烤雞（雞腿紙花、配菜）",
+   "scenes": "⑦a",
+   "size": [
+    0.42,
+    0.42,
+    0.175
+   ],
+   "img": "previews/items/chicken.jpg",
+   "collection": "ZP_chicken",
+   "catalog": "dinner"
+  },
+  {
+   "key": "soup",
+   "label": "濃湯（奶油螺旋＋麵包丁）",
+   "scenes": "⑦a",
+   "size": [
+    0.24,
+    0.24,
+    0.072
+   ],
+   "img": "previews/items/soup.jpg",
+   "collection": "ZP_soup",
+   "catalog": "dinner"
+  },
+  {
+   "key": "salad",
+   "label": "沙拉（生菜、番茄、小黃瓜、玉米）",
+   "scenes": "⑦a",
+   "size": [
+    0.24,
+    0.24,
+    0.112
+   ],
+   "img": "previews/items/salad.jpg",
+   "collection": "ZP_salad",
+   "catalog": "dinner"
+  },
+  {
+   "key": "bottle",
+   "label": "紅酒瓶",
+   "scenes": "⑦a",
+   "size": [
+    0.099,
+    0.113,
+    0.335
+   ],
+   "img": "previews/items/bottle.jpg",
+   "collection": "ZP_bottle",
+   "catalog": "dinner"
+  },
+  {
+   "key": "wineglass",
+   "label": "紅酒杯（半透明＋紅酒）",
+   "scenes": "⑦a",
+   "size": [
+    0.09,
+    0.09,
+    0.19
+   ],
+   "img": "previews/items/wineglass.jpg",
+   "collection": "ZP_wineglass",
+   "catalog": "dinner"
+  },
+  {
+   "key": "fork",
+   "label": "叉子",
+   "scenes": "⑦a",
+   "size": [
+    0.032,
+    0.196,
+    0.01
+   ],
+   "img": "previews/items/fork.jpg",
+   "collection": "ZP_fork",
+   "catalog": "dinner"
+  },
+  {
+   "key": "dessert",
+   "label": "甜點盤（小蛋糕、馬卡龍、莓果塔）",
+   "scenes": "⑦a",
+   "size": [
+    0.3,
+    0.3,
+    0.088
+   ],
+   "img": "previews/items/dessert.jpg",
+   "collection": "ZP_dessert",
+   "catalog": "dinner"
+  },
+  {
+   "key": "fruit",
+   "label": "水果盤（葡萄、柳橙、草莓）",
+   "scenes": "⑦a",
+   "size": [
+    0.28,
+    0.28,
+    0.113
+   ],
+   "img": "previews/items/fruit.jpg",
+   "collection": "ZP_fruit",
+   "catalog": "dinner"
+  },
+  {
+   "key": "taxi",
+   "label": "卡通計程車（玩具比例、TAXI 頂燈）",
+   "scenes": "⑦b",
+   "size": [
+    2.14,
+    1.16,
+    1.265
+   ],
+   "img": "previews/items/taxi.jpg",
+   "collection": "ZP_taxi",
+   "catalog": "street"
+  },
+  {
+   "key": "facade",
+   "label": "餐廳門面（雨棚、暖光窗、招牌）",
+   "scenes": "⑦b",
+   "size": [
+    3.24,
+    0.74,
+    2.9
+   ],
+   "img": "previews/items/facade.jpg",
+   "collection": "ZP_facade",
+   "catalog": "street"
+  },
+  {
+   "key": "lamp",
+   "label": "路燈",
+   "scenes": "⑦b",
+   "size": [
+    0.8,
+    0.32,
+    3.145
+   ],
+   "img": "previews/items/lamp.jpg",
+   "collection": "ZP_lamp",
+   "catalog": "street"
+  },
+  {
+   "key": "planter",
+   "label": "盆栽（圓灌木、高灌木）",
+   "scenes": "⑦b",
+   "size": [
+    1.21,
+    0.48,
+    1.16
+   ],
+   "img": "previews/items/planter.jpg",
+   "collection": "ZP_planter",
+   "catalog": "street"
+  },
+  {
+   "key": "street",
+   "label": "人行道＋馬路（方磚、車道線）",
+   "scenes": "⑦b",
+   "size": [
+    3.0,
+    3.66,
+    0.14
+   ],
+   "img": "previews/items/street.jpg",
+   "collection": "ZP_street",
+   "catalog": "street"
+  },
+  {
+   "key": "c_stand",
+   "label": "C 型燈架（空架）",
+   "scenes": "（未用）",
+   "size": [
+    1.04,
+    0.915,
+    2.05
+   ],
+   "img": "previews/items/c_stand.jpg",
+   "collection": "ZP_c_stand",
+   "catalog": "studio"
+  },
+  {
+   "key": "softbox_light",
+   "label": "八角深口柔光罩燈（含燈架）",
+   "scenes": "（未用）",
+   "size": [
+    1.164,
+    1.267,
+    2.554
+   ],
+   "img": "previews/items/softbox_light.jpg",
+   "collection": "ZP_softbox_light",
+   "catalog": "studio"
+  },
+  {
+   "key": "beauty_dish_light",
+   "label": "雷達罩燈（白色柔光布套、含燈架）",
+   "scenes": "（未用）",
+   "size": [
+    1.04,
+    0.915,
+    2.331
+   ],
+   "img": "previews/items/beauty_dish_light.jpg",
+   "collection": "ZP_beauty_dish_light",
+   "catalog": "studio"
+  },
+  {
+   "key": "video_camera",
+   "label": "攝影機（三腳架、油壓雲台搖桿、頂上監看螢幕）",
+   "scenes": "（未用）",
+   "size": [
+    0.865,
+    1.062,
+    1.734
+   ],
+   "img": "previews/items/video_camera.jpg",
+   "collection": "ZP_video_camera",
+   "catalog": "studio"
+  },
+  {
+   "key": "studio_backdrop",
+   "label": "白色背景紙卷（無縫彎弧＋捲軸、掛鉤）",
+   "scenes": "（未用）",
+   "size": [
+    3.24,
+    2.55,
+    3.304
+   ],
+   "img": "previews/items/studio_backdrop.jpg",
+   "collection": "ZP_studio_backdrop",
+   "catalog": "studio"
+  },
+  {
+   "key": "lounge_door",
+   "label": "休息室門（單扇、往外推開、含門框與門把）",
+   "scenes": "提案B B0",
+   "size": [
+    1.05,
+    0.27,
+    1.885
+   ],
+   "img": "previews/items/lounge_door.jpg",
+   "collection": "ZP_lounge_door",
+   "catalog": "venue"
+  },
+  {
+   "key": "ballroom_doors",
+   "label": "宴會廳雙開大門（往內自動開、門後暖白強光）",
+   "scenes": "提案B B6",
+   "size": [
+    2.22,
+    1.969,
+    2.85
+   ],
+   "img": "previews/items/ballroom_doors.jpg",
+   "collection": "ZP_ballroom_doors",
+   "catalog": "venue"
+  },
+  {
+   "key": "pillar",
+   "label": "圓柱（米白＋金色線板；前景遮擋用）",
+   "scenes": "提案B B3→B4",
+   "size": [
+    0.66,
+    0.66,
+    3.0
+   ],
+   "img": "previews/items/pillar.jpg",
+   "collection": "ZP_pillar",
+   "catalog": "venue"
+  },
+  {
+   "key": "door_frame",
+   "label": "門框（獨立的門洞框；前景遮擋用）",
+   "scenes": "提案B B5→B6",
+   "size": [
+    2.54,
+    0.44,
+    2.54
+   ],
+   "img": "previews/items/door_frame.jpg",
+   "collection": "ZP_door_frame",
+   "catalog": "venue"
+  },
+  {
+   "key": "buffet_table",
+   "label": "自助餐長檯（落地桌巾、薰衣草垂幔）",
+   "scenes": "提案B B2",
+   "size": [
+    1.869,
+    0.454,
+    0.6
+   ],
+   "img": "previews/items/buffet_table.jpg",
+   "collection": "ZP_buffet_table",
+   "catalog": "venue"
+  },
+  {
+   "key": "mini_cake",
+   "label": "單塊小蛋糕（杯子蛋糕・ZEPETO 手拿大小）",
+   "scenes": "提案B B2",
+   "size": [
+    0.045,
+    0.045,
+    0.065
+   ],
+   "img": "previews/items/mini_cake.jpg",
+   "collection": "ZP_mini_cake",
+   "catalog": "dinner"
+  },
+  {
+   "key": "valet_sign",
+   "label": "代客泊車 A 字立牌（P 圖示、車子圖示）",
+   "scenes": "提案B B3",
+   "size": [
+    0.52,
+    0.373,
+    0.908
+   ],
+   "img": "previews/items/valet_sign.jpg",
+   "collection": "ZP_valet_sign",
+   "catalog": "venue"
+  },
+  {
+   "key": "car_key",
+   "label": "車鑰匙（圓鑰匙圈＋一支遙控鑰匙；縮小版）",
+   "scenes": "提案B B3",
+   "size": [
+    0.022,
+    0.011,
+    0.073
+   ],
+   "img": "previews/items/car_key.jpg",
+   "collection": "ZP_car_key",
+   "catalog": "daily"
+  },
+  {
+   "key": "dslr",
+   "label": "手持單眼相機（攝影師用；ZEPETO 手的大小）",
+   "scenes": "提案B B4",
+   "size": [
+    0.111,
+    0.131,
+    0.09
+   ],
+   "img": "previews/items/dslr.jpg",
+   "collection": "ZP_dslr",
+   "catalog": "studio"
+  },
+  {
+   "key": "photo_backdrop",
+   "label": "婚禮拍照背板（花牆＋新人名字 Roger & Amy）",
+   "scenes": "提案B B5",
+   "size": [
+    2.52,
+    0.606,
+    2.36
+   ],
+   "img": "previews/items/photo_backdrop.jpg",
+   "collection": "ZP_photo_backdrop",
+   "catalog": "venue"
+  },
+  {
+   "key": "scene_garden",
+   "label": "場景示意：花園拱門（②⑤⑧）",
+   "scenes": "②⑤⑧",
+   "img": "previews/scenes/garden.jpg",
+   "collection": "ZP_Scene_Garden",
+   "catalog": "scenes",
+   "group": "garden"
+  },
+  {
+   "key": "scene_carpet",
+   "label": "場景示意：③ 推紅毯",
+   "scenes": "③",
+   "img": "previews/scenes/carpet.jpg",
+   "collection": "ZP_Scene_Carpet",
+   "catalog": "scenes",
+   "group": "carpet"
+  },
+  {
+   "key": "scene_dinner",
+   "label": "場景示意：⑦a 晚餐桌",
+   "scenes": "⑦a",
+   "img": "previews/scenes/dinner.jpg",
+   "collection": "ZP_Scene_Dinner",
+   "catalog": "scenes",
+   "group": "dinner"
+  },
+  {
+   "key": "scene_street",
+   "label": "場景示意：⑦b 夜晚餐廳門口",
+   "scenes": "⑦b",
+   "img": "previews/scenes/street.jpg",
+   "collection": "ZP_Scene_Street",
+   "catalog": "scenes",
+   "group": "street"
+  },
+  {
+   "key": "scene_photo_studio",
+   "label": "場景示意：攝影棚（參考照片，拿掉椅子與梯子；加兩台攝影機）",
+   "scenes": "（未用）",
+   "img": "previews/scenes/photo_studio.jpg",
+   "collection": "ZP_Scene_PhotoStudio",
+   "catalog": "scenes",
+   "group": "studio"
+  },
+  {
+   "key": "scene_venue_corridor",
+   "label": "場景示意：婚宴會館①休息室 → 走廊 → 甜點區（提案 B：B0～B3；灰色人形＝ZEPETO 角色比例，不屬於場景）",
+   "scenes": "提案B B0～B3",
+   "img": "previews/scenes/venue_corridor.jpg",
+   "collection": "ZP_Scene_VenueCorridor",
+   "catalog": "scenes",
+   "group": "venue"
+  },
+  {
+   "key": "scene_venue_corridor__b0",
+   "label": "B0：休息室門正前方 3.5 m（門開 70° 的樣子）",
+   "scenes": "提案B B0～B3",
+   "img": "previews/scenes/venue_corridor__b0.jpg",
+   "collection": "",
+   "catalog": "scenes",
+   "group": "venue",
+   "view_of": "scene_venue_corridor"
+  },
+  {
+   "key": "scene_venue_corridor__b1b2",
+   "label": "B1→B2：走廊側面跟拍（角色在 x 2.4）",
+   "scenes": "提案B B0～B3",
+   "img": "previews/scenes/venue_corridor__b1b2.jpg",
+   "collection": "",
+   "catalog": "scenes",
+   "group": "venue",
+   "view_of": "scene_venue_corridor"
+  },
+  {
+   "key": "scene_venue_corridor__b2",
+   "label": "B2：甜點長檯（新郎跨到 y 0.45 拿蛋糕、新娘在他左後方；兩人中點在畫面 70%）",
+   "scenes": "提案B B0～B3",
+   "img": "previews/scenes/venue_corridor__b2.jpg",
+   "collection": "",
+   "catalog": "scenes",
+   "group": "venue",
+   "view_of": "scene_venue_corridor"
+  },
+  {
+   "key": "scene_venue_corridor__b3",
+   "label": "B3：兩人停在泊車立牌右前方（新郎 8.615、新娘 9.052；動畫端的鏡頭）",
+   "scenes": "提案B B0～B3",
+   "img": "previews/scenes/venue_corridor__b3.jpg",
+   "collection": "",
+   "catalog": "scenes",
+   "group": "venue",
+   "view_of": "scene_venue_corridor"
+  },
+  {
+   "key": "scene_venue_corridor__b3_end",
+   "label": "B3 最後一格：柱子從右邊滑進來、擋住兩人中點",
+   "scenes": "提案B B0～B3",
+   "img": "previews/scenes/venue_corridor__b3_end.jpg",
+   "collection": "",
+   "catalog": "scenes",
+   "group": "venue",
+   "view_of": "scene_venue_corridor"
+  },
+  {
+   "key": "scene_venue_foyer",
+   "label": "場景示意：婚宴會館③宴會廳大門前的門廳（提案 B：B6；灰色人形＝ZEPETO 角色比例）",
+   "scenes": "提案B B6",
+   "img": "previews/scenes/venue_foyer.jpg",
+   "collection": "ZP_Scene_VenueFoyer",
+   "catalog": "scenes",
+   "group": "venue"
+  },
+  {
+   "key": "scene_venue_foyer__b6_wipe",
+   "label": "B6 開頭：門框從鏡頭前掃過",
+   "scenes": "提案B B6",
+   "img": "previews/scenes/venue_foyer__b6_wipe.jpg",
+   "collection": "",
+   "catalog": "scenes",
+   "group": "venue",
+   "view_of": "scene_venue_foyer"
+  },
+  {
+   "key": "scene_venue_foyer__b6",
+   "label": "B6：兩人停在大門前（側面跟拍 3 m、35 mm：門的上半部出畫）",
+   "scenes": "提案B B6",
+   "img": "previews/scenes/venue_foyer__b6.jpg",
+   "collection": "",
+   "catalog": "scenes",
+   "group": "venue",
+   "view_of": "scene_venue_foyer"
+  },
+  {
+   "key": "scene_venue_foyer__b6_back",
+   "label": "B6 2.9 秒後：繞到兩人背後，大門往內打開、門後強光",
+   "scenes": "提案B B6",
+   "img": "previews/scenes/venue_foyer__b6_back.jpg",
+   "collection": "",
+   "catalog": "scenes",
+   "group": "venue",
+   "view_of": "scene_venue_foyer"
+  },
+  {
+   "key": "scene_venue_photo_zone",
+   "label": "場景示意：婚宴會館②宴會廳前攝影區（提案 B：B4、B5；灰色人形＝ZEPETO 角色比例）",
+   "scenes": "提案B B4、B5",
+   "img": "previews/scenes/venue_photo_zone.jpg",
+   "collection": "ZP_Scene_VenuePhotoZone",
+   "catalog": "scenes",
+   "group": "venue"
+  },
+  {
+   "key": "scene_venue_photo_zone__b4",
+   "label": "B4：攝影區（兩人停下時中點在畫面 60%、新娘在靠鏡頭那側；攝影師 (11.54, -1.8) 在右緣露半身）",
+   "scenes": "提案B B4、B5",
+   "img": "previews/scenes/venue_photo_zone__b4.jpg",
+   "collection": "",
+   "catalog": "scenes",
+   "group": "venue",
+   "view_of": "scene_venue_photo_zone"
+  },
+  {
+   "key": "scene_venue_photo_zone__b5_side",
+   "label": "B5 開頭：拍照背板從右邊捲進來",
+   "scenes": "提案B B4、B5",
+   "img": "previews/scenes/venue_photo_zone__b5_side.jpg",
+   "collection": "",
+   "catalog": "scenes",
+   "group": "venue",
+   "view_of": "scene_venue_photo_zone"
+  },
+  {
+   "key": "scene_venue_photo_zone__b5",
+   "label": "B5：兩人轉身自拍、背板在身後（中景、胸口高）",
+   "scenes": "提案B B4、B5",
+   "img": "previews/scenes/venue_photo_zone__b5.jpg",
+   "collection": "",
+   "catalog": "scenes",
+   "group": "venue",
+   "view_of": "scene_venue_photo_zone"
+  }
+ ]
+}

@@ -72,6 +72,19 @@ Thumbs.db
 # source/ 是從 Sketchfab 下載的原始壓縮檔與解開的檔案，可用 API 重新下載
 .claude/docs/data/blender/zepeto/templates/*/source/
 
+# === ZEPETO 黏土風道具素材庫（.claude/docs/data/blender/library/props-zepeto/）===
+# zepeto_props.blend 約 8MB，build_props.py 背景 Blender 約 20 秒重建；程式、catalog.json、資產分類檔、預覽圖進版控
+.claude/docs/data/blender/library/props-zepeto/*.blend
+.claude/docs/data/blender/library/props-zepeto/*.blend1
+# 展示頁 index.html 圖片 base64 內嵌（約 5MB，和 previews/ 重複），發布前用 make_page.py --inline 產生（2026-10-14 使用者決定）
+.claude/docs/data/blender/library/props-zepeto/index.html
+# 下載的外部模型原檔（來源網址記在 external_items.py／catalog.json，可重新下載）、使用者給的參考照片（refs/<key>/analysis.md 進版控）
+.claude/docs/data/blender/library/props-zepeto/external/*/source/
+.claude/docs/data/blender/library/props-zepeto/refs/*/*.jpg
+.claude/docs/data/blender/library/props-zepeto/refs/*/*.jpeg
+.claude/docs/data/blender/library/props-zepeto/refs/*/*.png
+.claude/docs/data/blender/library/props-zepeto/refs/*/*.webp
+
 # === ZEPETO 穿戴物品素材庫（.claude/docs/data/blender/library/outfits-zepeto/）===
 # outfit.py、outfit.json、catalog.json、refs/analysis.md、previews/（寬 360 小圖）進版控；
 # .blend 與檢查圖在 D:/render-work/zepeto-costume，本來就不在 repo。使用者給的參考照片不進版控（含 _drafts/ 底下的試做）
@@ -94,3 +107,7 @@ Thumbs.db
 
 # Python 執行時自動產生的快取
 __pycache__/
+
+# === 開場影片剪接樣式庫（.claude/docs/data/blender/library/edit-styles-zepeto/）===
+# 展示頁的影片素材是樣張的低畫質預覽，build_showcase.py 從 D:/render-work 複製過來
+.claude/docs/data/blender/library/edit-styles-zepeto/showcase/vid/

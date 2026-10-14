@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "film": "opening-proposal-b",
+  "version": 1,
+  "aspect": "16:9",
+  "fps": 30,
+  "handles_s": 1,
+  "background": "scene",
+  "occluders": "3d",
+  "caption_safe": {
+    "side": "left",
+    "ratio": 0.4
+  },
+  "decided_at": "2026-10-12T10:13:25.665Z",
+  "notes": ""
+}

@@ -1,0 +1,32 @@
+{
+ "schema": 1,
+ "kind": "anim",
+ "id": "b2",
+ "version": "v0",
+ "artifact": {
+  "path": "",
+  "sha256": ""
+ },
+ "upstream": [],
+ "changes": "（走位版，未定案）",
+ "owner": "anim",
+ "status": "in_progress",
+ "updated_at": "2026-10-12T22:20:41+08:00",
+ "notes": {
+  "in_progress": "走位版 v6（第 4 輪：以動作流暢為主）",
+  "shot": "B2",
+  "film": "opening-proposal-b",
+  "mode": "走位版",
+  "blocking_clip": "D:/render-work/zepeto-anim/opening-proposal-b/b2/blocking_v6.mp4",
+  "standins": "場景＝素材庫走廊（蛋糕＝桌上最近的 mini_cake）；新娘＝膠囊＋裙擺（同新郎高）",
+  "duration_s_blocking": 7.95,
+  "handles_s": 1.0,
+  "blocking_note": "v2：修正結尾新郎往鏡頭斜走（改成和牆平行）",
+  "feedback_round": 4,
+  "pacing_note": "第 4 輪：停下播到停穩、停穩後 0.4 秒才轉向餐檯、吃完停 0.7 秒才被拉、起步從靜止開始",
+  "still_to_go_s": [
+   1.33,
+   5.35
+  ]
+ }
+}

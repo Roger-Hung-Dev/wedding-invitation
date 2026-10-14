@@ -1,0 +1,45 @@
+{
+  "schema": 1,
+  "kind": "anim",
+  "id": "b1_b2",
+  "version": "v4",
+  "status": "released",
+  "updated_at": "2026-10-12T12:00:00+08:00",
+  "owner": "anim",
+  "artifact": {
+    "path": "D:/SideProject/wedding-invitation/.claude/docs/data/blender/zepeto/anim/opening-proposal-b/b1_b2/final.json",
+    "sha256": "0eda119cfdc7ad95298ca5d837320c039401a3867eaa60ad4ce1cf33d7ecf481"
+  },
+  "upstream": [
+    {
+      "kind": "body",
+      "id": "groom",
+      "version": "v8",
+      "sha256": "052080afd1fa8a11a18faea2373476bbf684e329c4c478d71e9eae7c53d05034"
+    },
+    {
+      "kind": "prop",
+      "id": "phone_zp",
+      "sha256": "fcdc42b2d25a412a49adac7a322c0cdb27297a6f411ae995c29aff6266a7c25f"
+    },
+    {
+      "kind": "prop",
+      "id": "phone_mute_zp",
+      "sha256": "fcdc42b2d25a412a49adac7a322c0cdb27297a6f411ae995c29aff6266a7c25f"
+    }
+  ],
+  "changes": "B1→B2 經過：新郎走路→停下→雙手拿手機、右手拇指 6.2 秒點靜音開關→起步走掉，11.2 秒；手機 4.9 秒「啵」一下冒出來。使用者 2026-10-12 定案第 4 版（還沒穿衣服）",
+  "page": "https://claude.ai/artifact/4Ro3HVm4LAWzDjMjRSL6m8",
+  "notes": {
+    "artifact_is": "動畫沒有存成 .blend：artifact 是定案參數檔 final.json（b12_mcp.run_r3() 全部從這裡讀）；改了任何一個值＝定案內容換了",
+    "scripts": "2026-10-12 搬進動畫工作流：共用程式 .claude/skills/zepeto-animation-generation-workflow/scripts/（zanim*）；這一鏡的程式 .claude/docs/data/blender/zepeto/anim/opening-proposal-b/b1_b2/（b1b2_shot／b1b2_r2／b1b2_r3）。搬家後重建與舊程式逐格比對一致；final.json 內容沒變（sha 相同）",
+    "props_note": "兩支手機在同一個 zepeto_props.blend，sha 是整個檔",
+    "outfit": "還沒穿衣服；之後穿西裝時 upstream 要加 outfit/groom_beige_3piece@groom",
+    "shot": "B1→B2",
+    "film": "opening-proposal-b",
+    "duration_s": 11.2,
+    "film_json": "整支片設定 film.json v1 已建立（status/film/opening-proposal-b.json，2026-10-12）；下次重做時 upstream 補 film",
+    "sample": "已登記 D:/render-work/zepeto-anim/sample/samples.json（b1_b2）",
+    "todo_next": "下次重做（正式渲染前）：穿 groom-beige-3piece 重新檢查；照 film.json handles_s=1 頭尾各多做 1 秒（前後都是走路，Mixamo 走路循環可以延伸）；upstream 加 film/opening-proposal-b、outfit/groom_beige_3piece@groom"
+  }
+}

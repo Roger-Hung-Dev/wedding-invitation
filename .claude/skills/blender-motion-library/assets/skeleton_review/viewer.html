@@ -7,17 +7,17 @@
   --bg:#f6f4f7; --surface:#ffffff; --ink:#2b2530; --muted:#6d6474; --line:#e2dbe6;
   --accent:#9b5c7e; --accent-soft:#f3e6ee; --ok:#2f7d5b; --warn:#a6651c; --warn-soft:#f8ecdc; --bad:#b23b45;
   --stage:#eceff1; --grid:#c9ced3;
-  --groom:#3f6fc4; --bride:#d0567f;
+  --groom:#3f6fc4; --bride:#d0567f; --passerby:#b06f12;
   --f-display:"Noto Serif TC","PMingLiU",serif; --f-body:"Noto Sans TC","Microsoft JhengHei",system-ui,sans-serif; --f-mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
   --bg:#1b171e; --surface:#251f29; --ink:#eee7f1; --muted:#a79cad; --line:#3a3140;
   --accent:#e0a3c4; --accent-soft:#3a2734; --ok:#7fd1a8; --warn:#f0b56b; --warn-soft:#3d2e1a; --bad:#f08b93;
-  --stage:#20262b; --grid:#3a434b; --groom:#7fa6ee; --bride:#f08fb0; color-scheme:dark}}
+  --stage:#20262b; --grid:#3a434b; --groom:#7fa6ee; --bride:#f08fb0; --passerby:#e7a551; color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#1b171e; --surface:#251f29; --ink:#eee7f1; --muted:#a79cad; --line:#3a3140;
   --accent:#e0a3c4; --accent-soft:#3a2734; --ok:#7fd1a8; --warn:#f0b56b; --warn-soft:#3d2e1a; --bad:#f08b93;
-  --stage:#20262b; --grid:#3a434b; --groom:#7fa6ee; --bride:#f08fb0; color-scheme:dark}
+  --stage:#20262b; --grid:#3a434b; --groom:#7fa6ee; --bride:#f08fb0; --passerby:#e7a551; color-scheme:dark}
 body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.6}
 .wrap{max-width:1320px;margin:0 auto;padding-inline:16px;padding-block:24px 56px;display:grid;gap:20px}
 h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0}
@@ -38,7 +38,7 @@ nav.tabs button:disabled{opacity:.5;cursor:default}
 #draw{cursor:crosshair;touch-action:none}
 .hud{position:absolute;left:10px;top:8px;font-family:var(--f-mono);font-size:12px;color:var(--ink);background:color-mix(in srgb,var(--surface) 78%,transparent);padding:4px 8px;border-radius:6px;pointer-events:none;display:grid;gap:2px}
 .hud b{font-weight:600}
-.hud .g{color:var(--groom)} .hud .b{color:var(--bride)}
+.hud .groom{color:var(--groom)} .hud .bride{color:var(--bride)} .hud .passerby{color:var(--passerby)}
 .drawbar{position:absolute;right:10px;top:8px;display:flex;gap:6px}
 .ctrl{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
 .ctrl button,.views button,.tog label{font:inherit;font-size:13px;padding:5px 11px;border-radius:7px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}
@@ -76,6 +76,8 @@ textarea:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
 .status{font-size:12.5px;color:var(--muted)}
 .status.err{color:var(--bad)}
 .note{font-size:13px;color:var(--muted)}
+.dec{margin:0;padding-left:1.2em;display:grid;gap:6px;font-size:14px}
+.dec li::marker{color:var(--warn)}
 .btn{font:inherit;font-weight:700;font-size:14px;padding:7px 14px;border-radius:8px;border:0;background:var(--accent);color:var(--surface);cursor:pointer;justify-self:start}
 .btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}
 button:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
@@ -87,8 +89,8 @@ dialog::backdrop{background:rgba(0,0,0,.6)}
 <div class="wrap">
 <header>
   <h1>V12 開場影片　骨骼動作審看</h1>
-  <p class="lede">這一關只看<b>動作本身</b>：Mixamo 現成動畫原樣綁到新郎、新娘的骨架上，我只決定用哪一段、從第幾秒開始、站在哪裡。藍色是新郎、粉紅是新娘，半透明的圓錐是新娘蓬裙的範圍（腿或手跑出圓錐就是會穿出裙子）。</p>
-  <div class="steps"><span class="on">第 1 關：骨骼動作</span><span>第 2 關：低畫質預覽</span><span>完整渲染</span></div>
+  <p class="lede">這一關只看<b>動作本身</b>：Mixamo 現成動畫原樣綁到角色的骨架上，我只決定用哪一段、從第幾秒開始、站在哪裡。藍色是新郎、粉紅是新娘、橘色是路人甲，半透明的圓錐是新娘蓬裙的範圍（腿或手跑出圓錐就是會穿出裙子）。</p>
+  <div class="steps" id="steps"><span data-st="skeleton">第 1 關：骨骼動作</span><span data-st="final">第 2 關：正式版骨骼</span><span data-st="preview">第 3 關：低畫質預覽</span><span data-st="full">完整渲染</span></div>
 </header>
 
 <nav class="tabs" id="tabs" aria-label="選幕"></nav>
@@ -130,6 +132,7 @@ dialog::backdrop{background:rgba(0,0,0,.6)}
       <label><input type="checkbox" id="tSkirt" checked> 蓬裙範圍</label>
       <label><input type="checkbox" id="tProps" checked> 場景道具</label>
       <label><input type="checkbox" id="tTrail"> 腳步軌跡</label>
+      <label id="tGhostL" hidden><input type="checkbox" id="tGhost" checked> Mixamo 原樣（灰線）</label>
       <button class="btn ghost" id="drawBtn" type="button">在畫面上圈（暫停後圈出問題）</button>
     </div>
     <p class="note">拖曳畫面可以轉視角、滾輪縮放；選「影片鏡頭」回到正式影片的構圖。</p>
@@ -140,6 +143,10 @@ dialog::backdrop{background:rgba(0,0,0,.6)}
       <h3 id="segTitle">這幕用了哪些 Mixamo 動畫</h3>
       <div class="tbl"><table id="segTable"></table></div>
       <p class="note" id="sceneNote"></p>
+    </div>
+    <div class="card" id="decCard" hidden>
+      <h3>需要你決定／我看到的問題</h3>
+      <ul class="dec" id="decList"></ul>
     </div>
     <div class="card" id="fbCard">
       <h3 id="fbTitle">回饋</h3>
@@ -159,6 +166,8 @@ dialog::backdrop{background:rgba(0,0,0,.6)}
 (() => {
 // 樣板（fast-iteration.md §0.5 第 1 關）：每支片改 <title>、ROUND、SCENES；每幕的骨架放 s<幕>/skeleton.json（mx_skeleton.py 產生）
 const ROUND = 1;   // 第幾輪骨骼審看（寫進回饋 doc，主控端分辨新舊回饋）
+const STAGE = "skeleton";   // "skeleton"＝第 1 關骨骼動作（Mixamo 原樣）、"final"＝第 2 關正式版骨骼（加上微調；fast-iteration.md §0.5）
+const DOC = STAGE === "final" ? "fin" : "skel";   // 回饋 doc：review/skel-<幕>、review/fin-<幕>
 const SCENES = [
   {id: "02", label: "② 跳舞", ready: true},
   {id: "03", label: "③ 地毯", ready: false},
@@ -168,6 +177,8 @@ const SCENES = [
 ];
 const $ = s => document.querySelector(s);
 const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const WHO = {groom: "新郎", bride: "新娘", passerby: "路人甲"};   // 角色代號 → 顯示名稱；顏色 token 是 --<代號>
+const whoName = w => WHO[w] || w;
 const B2T = p => new THREE.Vector3(p[0], p[2], -p[1]);          // Blender（Z 朝上）→ three（Y 朝上）
 
 // ── 3D ──
@@ -185,6 +196,7 @@ const world = new THREE.Group(); scene3.add(world);
 
 let S = null;           // 目前這一幕的資料
 let chars = {};         // who → {lines, joints, head, skirt, facing, trail}
+let dynProps = [];      // 會動或晚一點才出現的道具
 let tNow = 0, playing = false, speed = 1, view = "cam", lastTs = 0;
 
 function themeColors() {
@@ -194,7 +206,7 @@ function themeColors() {
   grid.material.opacity = 0.6; grid.material.transparent = true;
   world.add(grid);
   for (const [who, c] of Object.entries(chars)) {
-    const col = new THREE.Color(css(who === "groom" ? "--groom" : "--bride"));
+    const col = new THREE.Color(css("--" + who) || "#888888");
     c.lines.material.color = col; c.joints.material.color = col; c.head.material.color = col; c.facing.material.color = col;
     if (c.trail) c.trail.material.color = col;
   }
@@ -219,13 +231,34 @@ function buildScene(data) {
   clearScene();
   S = data;
   const propGroup = new THREE.Group(); propGroup.name = "props"; world.add(propGroup);
+  dynProps = [];
   for (const p of data.props) {
-    const mn = p.min, mx = p.max;
-    const g = new THREE.BoxGeometry(mx[0] - mn[0], Math.max(0.004, mx[2] - mn[2]), mx[1] - mn[1]);
+    // 道具：box（min／max）、cyl（c＝底面中心 [x,y]、r、z0～z1；axis "x"＝橫躺沿 X，c 改成 [x,y,z] 軸中心、len 長度）、
+    // text（平貼字：c＝[x,y,z]、size 字高、rot 繞 Z 度數）。path＝[[秒, x, y, z], …] 會動的道具中心；on＝幾秒才出現
     const m = new THREE.MeshLambertMaterial({color: p.color, transparent: true, opacity: p.opacity != null ? p.opacity : 0.45, depthWrite: false});
-    const b = new THREE.Mesh(g, m);
-    b.position.copy(B2T([(mn[0] + mx[0]) / 2, (mn[1] + mx[1]) / 2, (mn[2] + mx[2]) / 2]));
+    let b;
+    if (p.kind === "cyl" && p.axis === "x") {
+      b = new THREE.Mesh(new THREE.CylinderGeometry(p.r, p.r, p.len, 28), m);
+      b.rotation.z = Math.PI / 2; b.position.copy(B2T(p.c));
+    } else if (p.kind === "cyl") {
+      b = new THREE.Mesh(new THREE.CylinderGeometry(p.r, p.r, Math.max(0.004, p.z1 - p.z0), 32), m);
+      b.position.copy(B2T([p.c[0], p.c[1], (p.z0 + p.z1) / 2]));
+    } else if (p.kind === "text") {
+      const cv = document.createElement("canvas"); cv.width = 512; cv.height = 256;
+      const cx = cv.getContext("2d"); cx.fillStyle = p.color; cx.font = "bold 200px 'Noto Serif TC', serif";
+      cx.textAlign = "center"; cx.textBaseline = "middle"; cx.fillText(p.text, 256, 132);
+      const tex = new THREE.CanvasTexture(cv);
+      const w = p.size * Math.max(1, p.text.length) * 1.05;
+      b = new THREE.Mesh(new THREE.PlaneGeometry(w, w / 2), new THREE.MeshBasicMaterial({map: tex, transparent: true, depthWrite: false}));
+      b.rotation.order = "YXZ"; b.rotation.y = (p.rot || 0) * Math.PI / 180; b.rotation.x = -Math.PI / 2;
+      b.position.copy(B2T(p.c));
+    } else {
+      const mn = p.min, mx = p.max;
+      b = new THREE.Mesh(new THREE.BoxGeometry(mx[0] - mn[0], Math.max(0.004, mx[2] - mn[2]), mx[1] - mn[1]), m);
+      b.position.copy(B2T([(mn[0] + mx[0]) / 2, (mn[1] + mx[1]) / 2, (mn[2] + mx[2]) / 2]));
+    }
     propGroup.add(b);
+    if (p.path || p.on != null) dynProps.push({p, b});
   }
   for (const [who, c] of Object.entries(data.chars)) {
     const idx = Object.fromEntries(c.bones.map((n, i) => [n, i]));
@@ -246,7 +279,13 @@ function buildScene(data) {
         new THREE.MeshBasicMaterial({color: new THREE.Color(css("--bride")), transparent: true, opacity: 0.16, side: THREE.DoubleSide, depthWrite: false}));
       world.add(skirt);
     }
-    chars[who] = {data: c, lines, joints, head, facing, skirt, trail: null};
+    let ghost = null;
+    if (c.ghost) {                                  // 第 2 關：不套微調的 Mixamo 原樣，畫成灰色細線對照
+      const gg = new THREE.BufferGeometry(); gg.setAttribute("position", new THREE.BufferAttribute(new Float32Array((c.bones.length - 1) * 6), 3));
+      ghost = new THREE.LineSegments(gg, new THREE.LineBasicMaterial({color: 0x8a8a8a, transparent: true, opacity: 0.55, depthWrite: false}));
+      world.add(ghost); $("#tGhostL").hidden = false;
+    }
+    chars[who] = {data: c, lines, joints, head, facing, skirt, ghost, trail: null};
   }
   themeColors();
   $("#scrub").max = Math.round(data.dur * 1000);
@@ -276,6 +315,13 @@ function update() {
     c.tidx.forEach((bi, j) => { arr.set([P[bi].x, P[bi].y, P[bi].z, T[j].x, T[j].y, T[j].z], k); k += 6; });
     ch.lines.geometry.attributes.position.needsUpdate = true;
     ch.lines.geometry.computeBoundingSphere();
+    if (ch.ghost) {
+      const gf = Math.max(0, Math.min(c.ghost.length - 1, Math.round(tNow * S.fps)));
+      const G = c.ghost[gf].map(B2T), ga = ch.ghost.geometry.attributes.position.array; let gk = 0;
+      for (let i = 0; i < G.length; i++) { const pi = c.pidx[i]; if (pi < 0) continue; ga.set([G[pi].x, G[pi].y, G[pi].z, G[i].x, G[i].y, G[i].z], gk); gk += 6; }
+      ch.ghost.geometry.attributes.position.needsUpdate = true; ch.ghost.geometry.computeBoundingSphere();
+      ch.ghost.visible = $("#tGhost").checked;
+    }
     P.forEach((v, i) => {
       const n = c.bones[i], r = /Thumb|Index|Middle|Ring|Little/.test(n) ? 0.007 : 0.018;
       tmpM.makeScale(r, r, r); tmpM.setPosition(v); ch.joints.setMatrixAt(i, tmpM);
@@ -290,9 +336,18 @@ function update() {
     ch.facing.position.set(hip.x + fwd.x * 0.32, 0.02, hip.z + fwd.z * 0.32);
     ch.facing.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), fwd);
     if (ch.skirt) { const h = S.skirt.h_waist; ch.skirt.position.set(hip.x, h / 2, hip.z); ch.skirt.visible = $("#tSkirt").checked; }
-    hud.push(`<span class="${who === "groom" ? "g" : "b"}">${who === "groom" ? "新郎" : "新娘"}：${F.label}</span>`);
+    hud.push(`<span class="${who}">${whoName(who)}：${F.label}</span>`);
   }
   const pg = world.getObjectByName("props"); if (pg) pg.visible = $("#tProps").checked;
+  for (const {p, b} of dynProps) {
+    if (p.on != null) b.visible = tNow >= p.on;
+    if (p.path) {
+      const P = p.path; let k = 0;
+      while (k < P.length - 2 && P[k + 1][0] <= tNow) k++;
+      const a = P[k], z = P[Math.min(k + 1, P.length - 1)], u = z[0] > a[0] ? Math.max(0, Math.min(1, (tNow - a[0]) / (z[0] - a[0]))) : 0;
+      b.position.copy(B2T([a[1] + (z[1] - a[1]) * u, a[2] + (z[2] - a[2]) * u, a[3] + (z[3] - a[3]) * u]));
+    }
+  }
   $("#hud").innerHTML = hud.join("");
   $("#time").textContent = `${tNow.toFixed(2)} / ${S.dur.toFixed(2)} 秒`;
   $("#scrub").value = Math.round(tNow * 1000);
@@ -353,7 +408,7 @@ function buildLanes() {
   const el = $("#lanes"); el.innerHTML = "";
   for (const [who, ch] of Object.entries(chars)) {
     const row = document.createElement("div"); row.className = "lane";
-    row.innerHTML = `<span class="who" style="color:var(--${who})">${who === "groom" ? "新郎" : "新娘"}</span><div class="bar"></div>`;
+    row.innerHTML = `<span class="who" style="color:var(--${who})">${whoName(who)}</span><div class="bar"></div>`;
     const bar = row.querySelector(".bar");
     ch.data.segs.forEach((s, i) => {
       const next = ch.data.segs[i + 1], end = next ? next.start : s.start + s.dur;
@@ -374,14 +429,17 @@ function buildSegTable() {
     ch.data.segs.forEach((s, i) => {
       const next = ch.data.segs[i + 1], end = Math.min(S.dur, next ? next.start : s.start + s.dur);
       const tr = document.createElement("tr");
-      tr.innerHTML = `<td><span class="dot" style="background:var(--${who})"></span>${who === "groom" ? "新郎" : "新娘"}</td><td class="t">${s.start.toFixed(1)}–${end.toFixed(1)}</td><td></td><td><button type="button">看</button></td>`;
+      tr.innerHTML = `<td><span class="dot" style="background:var(--${who})"></span>${whoName(who)}</td><td class="t">${s.start.toFixed(1)}–${end.toFixed(1)}</td><td></td><td><button type="button">看</button></td>`;
       tr.children[2].textContent = s.name;
       tr.querySelector("button").addEventListener("click", () => { playing = false; $("#play").textContent = "播放"; setTime(s.start + 0.05); });
       tb.appendChild(tr);
     });
   }
   $("#segTitle").textContent = `這幕用了哪些 Mixamo 動畫（${S.title}）`;
-  $("#sceneNote").textContent = "段與段之間有 0.3 秒漸變；跳舞與鞠躬固定面向鏡頭。動作本身沒有改。";
+  $("#sceneNote").textContent = S.note || "段與段之間有 0.3 秒漸變。動作本身沒有改。";
+  const dl = $("#decList"); dl.innerHTML = "";
+  (S.decide || []).forEach(x => { const li = document.createElement("li"); li.textContent = x; dl.appendChild(li); });
+  $("#decCard").hidden = !(S.decide && S.decide.length);
 }
 
 // ── 控制 ──
@@ -396,6 +454,7 @@ document.querySelectorAll("[data-speed]").forEach(b => b.addEventListener("click
 document.querySelectorAll("#views button").forEach(b => b.addEventListener("click", () => setView(b.dataset.view)));
 ["#tSkirt", "#tProps"].forEach(s => $(s).addEventListener("change", update));
 $("#tTrail").addEventListener("change", buildTrails);
+$("#tGhost").addEventListener("change", update);
 controls.addEventListener("start", () => { if (view !== "free") { view = "free"; document.querySelectorAll("#views button").forEach(b => b.setAttribute("aria-pressed", "false")); } });
 document.addEventListener("keydown", e => {
   if (e.target.closest("textarea,input")) return;
@@ -426,7 +485,7 @@ async function openScene(id) {
 // ── 回饋（db＋assets；沒有時退回本機草稿） ──
 let db = null, assets = null, fb = {text: "", images: []}, saveTimer = null, unsub = null;
 const status = (msg, err) => { const s = $("#status"); s.textContent = msg; s.classList.toggle("err", !!err); };
-const lsKey = id => "v12skel_draft_" + id;
+const lsKey = id => "v12skel_draft_" + DOC + "_" + id;
 function renderThumbs() {
   const el = $("#thumbs"); el.innerHTML = "";
   fb.images.forEach((im, i) => {
@@ -443,10 +502,10 @@ function renderThumbs() {
 $("#zoom").addEventListener("click", () => $("#zoom").close());
 function queueSave() { clearTimeout(saveTimer); status("尚未儲存…"); saveTimer = setTimeout(save, 900); }
 async function save() {
-  const id = current, body = {scene: id, stage: "skeleton", round: ROUND, text: fb.text, images: fb.images.filter(x => x.id).map(({id, t, kind}) => ({id, t, kind})), updatedAt: new Date().toISOString()};
+  const id = current, body = {scene: id, stage: STAGE, round: ROUND, text: fb.text, images: fb.images.filter(x => x.id).map(({id, t, kind}) => ({id, t, kind})), updatedAt: new Date().toISOString()};
   try { localStorage.setItem(lsKey(id), JSON.stringify({text: fb.text})); } catch (e) {}
   if (!db) { status("這個檢視無法同步，只存在你這台電腦的瀏覽器。文字可以複製貼回對話。"); return; }
-  try { await db.doc(`review/skel-${id}`).set(body); status("已儲存（Claude 讀得到）"); }
+  try { await db.doc(`review/${DOC}-${id}`).set(body); status("已儲存（Claude 讀得到）"); }
   catch (e) { status(e && e.code === "invalid_argument" ? "你沒有寫入權限，只能看。" : "儲存失敗，稍後會再試。", true); if (e && e.code === "unavailable") setTimeout(save, 1500); }
 }
 function loadFeedback(id) {
@@ -457,7 +516,7 @@ function loadFeedback(id) {
   if (unsub) { unsub(); unsub = null; }
   if (!db) { status(assets === null ? "在 claude.ai 開這頁才能同步回饋與貼圖。" : "載入中…"); return; }
   let first = true;
-  unsub = db.doc(`review/skel-${id}`).onSnapshot(snap => {
+  unsub = db.doc(`review/${DOC}-${id}`).onSnapshot(snap => {
     if (snap.metadata.hasPendingWrites) return;
     const d = snap.exists ? snap.data() : null;
     if (first || document.activeElement !== $("#fbText")) {
@@ -517,6 +576,9 @@ $("#drawAdd").addEventListener("click", () => {
 
 // ── 啟動 ──
 (async () => {
+  document.querySelectorAll("#steps span").forEach(el => el.classList.toggle("on", el.dataset.st === STAGE));
+  if (STAGE === "final") document.querySelector(".lede").innerHTML = "這一關看<b>正式版骨骼</b>：第 1 關確認的 Mixamo 骨架，加上為了劇情要求做的微調（手勢、接觸點、頭跟著看人…），每一項都列在右邊。"
+    + "<b>灰色細線</b>是 Mixamo 原樣，可以對照哪裡是我改的。藍色是新郎、粉紅是新娘、橘色是路人甲，半透明圓錐是蓬裙範圍。";
   buildTabs();
   const want = (location.hash || "").replace("#s", "");
   openScene(SCENES.some(s => s.id === want && s.ready) ? want : (SCENES.find(s => s.ready) || SCENES[0]).id);

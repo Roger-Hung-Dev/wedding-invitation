@@ -1,0 +1,393 @@
+<title>V12 低畫質預覽審看</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@600;700&family=Noto+Sans+TC:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* 版面：上方說明＋幕別分頁；主區左邊預覽影片（16:9）＋時間軸，右邊時間軸表、要看的地方＋回饋（文字、Ctrl+V 貼圖、在畫面上圈） */
+:root{
+  --bg:#f6f4f7; --surface:#ffffff; --ink:#2b2530; --muted:#6d6474; --line:#e2dbe6;
+  --accent:#9b5c7e; --accent-soft:#f3e6ee; --ok:#2f7d5b; --warn:#a6651c; --warn-soft:#f8ecdc; --bad:#b23b45;
+  --stage:#eceff1; --grid:#c9ced3;
+  --groom:#3f6fc4; --bride:#d0567f; --passerby:#b06f12;
+  --f-display:"Noto Serif TC","PMingLiU",serif; --f-body:"Noto Sans TC","Microsoft JhengHei",system-ui,sans-serif; --f-mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#1b171e; --surface:#251f29; --ink:#eee7f1; --muted:#a79cad; --line:#3a3140;
+  --accent:#e0a3c4; --accent-soft:#3a2734; --ok:#7fd1a8; --warn:#f0b56b; --warn-soft:#3d2e1a; --bad:#f08b93;
+  --stage:#20262b; --grid:#3a434b; --groom:#7fa6ee; --bride:#f08fb0; --passerby:#e7a551; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#1b171e; --surface:#251f29; --ink:#eee7f1; --muted:#a79cad; --line:#3a3140;
+  --accent:#e0a3c4; --accent-soft:#3a2734; --ok:#7fd1a8; --warn:#f0b56b; --warn-soft:#3d2e1a; --bad:#f08b93;
+  --stage:#20262b; --grid:#3a434b; --groom:#7fa6ee; --bride:#f08fb0; --passerby:#e7a551; color-scheme:dark}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.6}
+.wrap{max-width:1320px;margin:0 auto;padding-inline:16px;padding-block:24px 56px;display:grid;gap:20px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0}
+h1{font-size:clamp(24px,3.6vw,32px)}
+.lede{color:var(--muted);max-width:72ch;margin:6px 0 0}
+.steps{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.steps span{font-size:13px;padding:4px 12px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--muted)}
+.steps span.on{border-color:var(--accent);color:var(--accent);font-weight:700}
+nav.tabs{display:flex;flex-wrap:wrap;gap:8px}
+nav.tabs button{font:inherit;font-size:14px;padding:6px 14px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}
+nav.tabs button[aria-selected="true"]{background:var(--accent);border-color:var(--accent);color:var(--surface);font-weight:700}
+nav.tabs button:disabled{opacity:.5;cursor:default}
+.main{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:20px;align-items:start}
+@media (max-width:980px){.main{grid-template-columns:minmax(0,1fr)}}
+.player{display:grid;gap:10px;min-width:0}
+.stage{position:relative;width:100%;max-width:100%;aspect-ratio:16/9;background:var(--stage);border-radius:10px;overflow:hidden;border:1px solid var(--line)}
+.stage canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+#draw{cursor:crosshair;touch-action:none}
+.hud{position:absolute;left:10px;top:8px;font-family:var(--f-mono);font-size:12px;color:var(--ink);background:color-mix(in srgb,var(--surface) 78%,transparent);padding:4px 8px;border-radius:6px;pointer-events:none;display:grid;gap:2px}
+.hud b{font-weight:600}
+.hud .groom{color:var(--groom)} .hud .bride{color:var(--bride)} .hud .passerby{color:var(--passerby)}
+.drawbar{position:absolute;right:10px;top:8px;display:flex;gap:6px}
+.ctrl{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.ctrl button,.views button,.tog label{font:inherit;font-size:13px;padding:5px 11px;border-radius:7px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}
+.ctrl button.primary{background:var(--accent);border-color:var(--accent);color:var(--surface);font-weight:700;min-width:64px}
+.ctrl button[aria-pressed="true"],.views button[aria-pressed="true"]{border-color:var(--accent);color:var(--accent);font-weight:700}
+.time{font-family:var(--f-mono);font-size:13px;font-variant-numeric:tabular-nums;color:var(--muted);min-width:9.5em}
+input[type=range]{flex:1 1 220px;accent-color:var(--accent)}
+.lanes{display:grid;gap:4px;font-size:12px}
+.lane{display:grid;grid-template-columns:3.2em 1fr;gap:6px;align-items:center}
+.lane .who{font-weight:700}
+.bar{position:relative;height:22px;background:var(--surface);border:1px solid var(--line);border-radius:5px;overflow:hidden}
+.bar i{position:absolute;top:0;bottom:0;border-right:1px solid var(--surface);font-style:normal;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:0 4px;line-height:20px;font-size:11px;color:var(--surface)}
+.bar .cur{position:absolute;top:-2px;bottom:-2px;width:2px;background:var(--ink)}
+.views,.tog{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.tog label{display:inline-flex;gap:6px;align-items:center}
+.side{display:grid;gap:16px;min-width:0}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:grid;gap:10px;min-width:0}
+.card h3{font-family:var(--f-body);font-size:13px;letter-spacing:.08em;color:var(--muted);font-weight:700}
+.tbl{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:13px}
+th,td{text-align:left;padding:5px 6px;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--muted);font-weight:500;font-size:12px}
+td.t{font-family:var(--f-mono);white-space:nowrap;font-variant-numeric:tabular-nums;color:var(--muted)}
+td button{font:inherit;font-size:12px;padding:1px 8px;border-radius:5px;border:1px solid var(--line);background:transparent;color:var(--accent);cursor:pointer}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:5px;vertical-align:baseline}
+textarea{width:100%;box-sizing:border-box;min-height:120px;font:inherit;font-size:15px;padding:10px 12px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink);resize:vertical}
+textarea:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.paste{border:1.5px dashed var(--line);border-radius:8px;padding:12px;font-size:13px;color:var(--muted);text-align:center;outline:none}
+.paste:focus,.paste.hot{border-color:var(--accent);color:var(--accent);background:var(--accent-soft)}
+.thumbs{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px}
+.thumbs figure{margin:0;display:grid;gap:3px;position:relative}
+.thumbs img{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:6px;border:1px solid var(--line);background:var(--stage);cursor:zoom-in}
+.thumbs figcaption{font-size:11px;color:var(--muted);font-family:var(--f-mono)}
+.thumbs button{position:absolute;right:4px;top:4px;font:inherit;font-size:11px;padding:0 6px;border-radius:5px;border:0;background:color-mix(in srgb,var(--surface) 85%,transparent);color:var(--bad);cursor:pointer}
+.status{font-size:12.5px;color:var(--muted)}
+.prevfb{border:1px dashed var(--line);border-radius:8px;padding:8px 10px;font-size:13px;color:var(--muted);display:grid;gap:6px}
+.prevfb b{color:var(--ink)}
+.prevfb p{margin:0;white-space:pre-wrap}
+.prevfb .pimgs{display:flex;flex-wrap:wrap;gap:6px}
+.prevfb .pimgs img{width:96px;height:54px;object-fit:cover;border-radius:4px;cursor:zoom-in;border:1px solid var(--line)}
+.status.err{color:var(--bad)}
+.note{font-size:13px;color:var(--muted)}
+.dec{margin:0;padding-left:1.2em;display:grid;gap:6px;font-size:14px}
+.dec li::marker{color:var(--warn)}
+.btn{font:inherit;font-weight:700;font-size:14px;padding:7px 14px;border-radius:8px;border:0;background:var(--accent);color:var(--surface);cursor:pointer;justify-self:start}
+.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+button:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+dialog{border:0;border-radius:10px;padding:0;max-width:min(96vw,1400px);background:var(--surface)}
+dialog img{display:block;max-width:100%;max-height:88vh}
+dialog::backdrop{background:rgba(0,0,0,.6)}
+.stage video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#000}
+</style>
+
+<div class="wrap">
+<header>
+  <h1>V12 開場影片　低畫質預覽審看</h1>
+  <p class="lede">這一關看<b>套上服裝之後</b>的樣子：第 2 關確認的正式版骨骼，套到穿好西裝、蓬裙的新郎、新娘、路人甲身上，放進實際的場景和鏡頭。畫質是低的（960×540、每秒 15 格、頭髮和裙擺不跑物理），只看動作、穿模、手碰東西的位置、臉有沒有被擋。</p>
+  <div class="steps" id="steps"><span data-st="skeleton">第 1 關：骨骼動作</span><span data-st="final">第 2 關：正式版骨骼</span><span data-st="preview">第 3 關：低畫質預覽</span><span data-st="full">完整渲染</span></div>
+</header>
+
+<nav class="tabs" id="tabs" aria-label="選幕"></nav>
+
+<section class="main">
+  <div class="player">
+    <div class="stage" id="stage">
+      <video id="vid" muted playsinline loop preload="auto"></video>
+      <canvas id="draw" hidden></canvas>
+      <div class="hud" id="hud"></div>
+      <div class="drawbar" id="drawbar" hidden>
+        <button class="btn" id="drawAdd" type="button">加到回饋</button>
+        <button class="btn ghost" id="drawClear" type="button">清掉</button>
+        <button class="btn ghost" id="drawExit" type="button">取消</button>
+      </div>
+    </div>
+    <div class="ctrl">
+      <button class="primary" id="play" type="button">播放</button>
+      <button id="prev" type="button" title="上一格">◀ 1 格</button>
+      <button id="next" type="button" title="下一格">1 格 ▶</button>
+      <input type="range" id="scrub" min="0" max="1000" value="0" aria-label="時間">
+      <span class="time" id="time">0.00 / 0.00 秒</span>
+    </div>
+    <div class="ctrl" aria-label="播放速度">
+      <span class="note">速度</span>
+      <button data-speed="0.25" type="button">0.25×</button>
+      <button data-speed="0.5" type="button">0.5×</button>
+      <button data-speed="1" type="button" aria-pressed="true">1×</button>
+      <button class="btn ghost" id="drawBtn" type="button" style="margin-left:8px">在畫面上圈（暫停後圈出問題）</button>
+    </div>
+    <div class="lanes" id="lanes"></div>
+    <p class="note">空白鍵播放／暫停，左右鍵一格一格看。時間軸上的色塊點一下會跳到那一段。</p>
+  </div>
+
+  <div class="side">
+    <div class="card">
+      <h3 id="segTitle">這幕的時間軸</h3>
+      <div class="tbl"><table id="segTable"></table></div>
+      <p class="note" id="sceneNote"></p>
+    </div>
+    <div class="card" id="decCard" hidden>
+      <h3>這一關要看的地方／我看到的問題</h3>
+      <ul class="dec" id="decList"></ul>
+    </div>
+    <div class="card" id="fbCard">
+      <h3 id="fbTitle">回饋</h3>
+      <textarea id="fbText" placeholder="例：3.2 秒新娘的手穿進新郎的外套／7 秒酒杯沒拿在手上／可以"></textarea>
+      <div class="paste" id="paste" tabindex="0">在這裡按 <b>Ctrl+V</b> 貼上截圖（可先在截圖上圈出問題），或把圖片拖進來</div>
+      <div class="thumbs" id="thumbs"></div>
+      <div class="status" id="status">載入中…</div>
+      <div class="prevfb" id="prevFb" hidden></div>
+    </div>
+  </div>
+</section>
+<dialog id="zoom"><img alt="放大的回饋圖"></dialog>
+</div>
+
+<script>
+(() => {
+// 樣板（fast-iteration.md §0.5 第 3 關）：每支片改 <title>、ROUND、SCENES；每幕放 s<幕>/preview.mp4、s<幕>/info.json（mx_preview.py＋整理程式產生）
+const ROUND = 1;
+const STAGE = "preview";
+const DOC = "prev";            // 回饋 doc：review/prev-<幕>
+const SCENES = [
+  {id: "02", label: "② 跳舞", ready: true},
+];
+const WHO = {groom: "新郎", bride: "新娘", passerby: "路人甲"};
+const $ = s => document.querySelector(s);
+const vid = $("#vid");
+let S = null, current = null, speed = 1;
+
+// ── 分頁、場景 ──
+function buildTabs() {
+  const nav = $("#tabs"); nav.innerHTML = "";
+  SCENES.forEach(s => {
+    const b = document.createElement("button"); b.type = "button"; b.textContent = s.ready ? s.label : s.label + "（製作中）";
+    b.disabled = !s.ready; b.setAttribute("aria-selected", String(s.id === current));
+    b.addEventListener("click", () => openScene(s.id));
+    nav.appendChild(b);
+  });
+}
+async function openScene(id) {
+  current = id; buildTabs();
+  try { location.hash = "s" + id; } catch (e) {}
+  const r = await fetch(`s${id}/info.json`);
+  S = await r.json();
+  // 整支影片先讀進記憶體再播（blob 網址）：主機不支援分段讀取時，拖時間軸、逐格也能跳到中間
+  try {
+    const vb = await (await fetch(`s${id}/preview.mp4`)).blob();
+    if (vid.dataset.blob) URL.revokeObjectURL(vid.dataset.blob);
+    vid.dataset.blob = URL.createObjectURL(vb); vid.src = vid.dataset.blob;
+  } catch (e) { vid.src = `s${id}/preview.mp4`; }
+  vid.playbackRate = speed;
+  buildLanes(); buildSegTable();
+  loadFeedback(id);
+}
+const PAL = ["#6b8fb8", "#8e7cb5", "#5f9b88", "#c4895c", "#b86b86", "#7c8a99", "#9aa35f"];
+function buildLanes() {
+  const el = $("#lanes"); el.innerHTML = "";
+  for (const [who, segs] of Object.entries(S.segs)) {
+    const row = document.createElement("div"); row.className = "lane";
+    row.innerHTML = `<span class="who" style="color:var(--${who})">${WHO[who] || who}</span><div class="bar"></div>`;
+    const bar = row.querySelector(".bar");
+    segs.forEach((s, i) => {
+      const next = segs[i + 1], end = next ? next.start : s.start + s.dur;
+      const it = document.createElement("i");
+      it.style.left = (s.start / S.dur * 100) + "%"; it.style.width = (Math.max(0, Math.min(S.dur, end) - s.start) / S.dur * 100) + "%";
+      it.style.background = PAL[i % PAL.length]; it.textContent = s.name.replace(/（.*$/, ""); it.title = s.name;
+      bar.appendChild(it);
+    });
+    const cur = document.createElement("span"); cur.className = "cur"; bar.appendChild(cur);
+    bar.addEventListener("click", e => { const r = bar.getBoundingClientRect(); seek((e.clientX - r.left) / r.width * S.dur); });
+    el.appendChild(row);
+  }
+}
+function buildSegTable() {
+  const tb = $("#segTable");
+  tb.innerHTML = "<tr><th>角色</th><th>秒數</th><th>動作</th><th></th></tr>";
+  for (const [who, segs] of Object.entries(S.segs)) {
+    segs.forEach((s, i) => {
+      const next = segs[i + 1], end = Math.min(S.dur, next ? next.start : s.start + s.dur);
+      const tr = document.createElement("tr");
+      tr.innerHTML = `<td><span class="dot" style="background:var(--${who})"></span>${WHO[who] || who}</td><td class="t">${s.start.toFixed(1)}–${end.toFixed(1)}</td><td></td><td><button type="button">看</button></td>`;
+      tr.children[2].textContent = s.name;
+      tr.querySelector("button").addEventListener("click", () => { pause(); seek(s.start + 0.05); });
+      tb.appendChild(tr);
+    });
+  }
+  $("#segTitle").textContent = `這幕的時間軸（${S.title}）`;
+  $("#sceneNote").textContent = S.note || "";
+  const dl = $("#decList"); dl.innerHTML = "";
+  (S.decide || []).forEach(x => { const li = document.createElement("li"); li.textContent = x; dl.appendChild(li); });
+  $("#decCard").hidden = !(S.decide && S.decide.length);
+}
+
+// ── 播放控制 ──
+function seek(t) { vid.currentTime = Math.max(0, Math.min((S && S.dur) || vid.duration || 0, t)); }
+function pause() { vid.pause(); $("#play").textContent = "播放"; }
+function tick() {
+  const d = (S && S.dur) || vid.duration || 1, t = vid.currentTime || 0;
+  $("#time").textContent = `${t.toFixed(2)} / ${d.toFixed(2)} 秒`;
+  if (document.activeElement !== $("#scrub")) $("#scrub").value = Math.round(t / d * 1000);
+  document.querySelectorAll(".bar .cur").forEach(el => el.style.left = (t / d * 100) + "%");
+  if (S) {
+    const hud = [`<b>${t.toFixed(2)} 秒</b>`];
+    for (const [who, segs] of Object.entries(S.segs)) {
+      let cur = segs[0]; segs.forEach(s => { if (t >= s.start) cur = s; });
+      hud.push(`<span class="${who}">${WHO[who] || who}：${cur.name}</span>`);
+    }
+    $("#hud").innerHTML = hud.join("");
+  }
+  requestAnimationFrame(tick);
+}
+requestAnimationFrame(tick);
+$("#play").addEventListener("click", () => { if (vid.paused) { vid.play(); $("#play").textContent = "暫停"; } else pause(); });
+const fstep = () => 1 / ((S && S.fps) || 15);
+$("#prev").addEventListener("click", () => { pause(); seek(vid.currentTime - fstep()); });
+$("#next").addEventListener("click", () => { pause(); seek(vid.currentTime + fstep()); });
+$("#scrub").addEventListener("input", e => { pause(); seek(e.target.value / 1000 * ((S && S.dur) || vid.duration || 0)); });
+document.querySelectorAll("[data-speed]").forEach(b => b.addEventListener("click", () => {
+  speed = parseFloat(b.dataset.speed); vid.playbackRate = speed;
+  document.querySelectorAll("[data-speed]").forEach(x => x.setAttribute("aria-pressed", String(x === b)));
+}));
+document.addEventListener("keydown", e => {
+  if (e.target.closest("textarea,input")) return;
+  if (e.code === "Space") { e.preventDefault(); $("#play").click(); }
+  if (e.key === "ArrowLeft") $("#prev").click();
+  if (e.key === "ArrowRight") $("#next").click();
+});
+
+// ── 回饋（db＋assets；沒有時退回本機草稿） ──
+let db = null, assets = null, fb = {text: "", images: []}, saveTimer = null, unsub = null;
+const status = (msg, err) => { const s = $("#status"); s.textContent = msg; s.classList.toggle("err", !!err); };
+const lsKey = id => "v12prev_draft_" + id + "_r" + ROUND;
+// 上一輪的回饋（2026-10-11）：doc 的 round 不是這一輪時，舊回饋移到 history、顯示在回覆框下方（已處理），回覆框清空給這一輪
+let hist = [];
+function showPrev() {
+  const el = $("#prevFb"); const last = hist.length ? hist[hist.length - 1] : null;
+  if (!last || !(last.text || (last.images || []).length)) { el.hidden = true; el.innerHTML = ""; return; }
+  el.hidden = false;
+  el.innerHTML = `<b>第 ${last.round || 1} 輪的回饋（已照這些修過，這一輪的新回饋請寫在上面）</b><p></p><div class="pimgs"></div>`;
+  el.querySelector("p").textContent = last.text || "（只有圖）";
+  const box = el.querySelector(".pimgs");
+  (last.images || []).forEach(im => { const i = document.createElement("img"); i.src = "/_blob/" + im.id; i.alt = "上一輪的回饋圖";
+    i.addEventListener("click", () => { const d = $("#zoom"); d.querySelector("img").src = i.src; d.showModal(); }); box.appendChild(i); });
+}
+function renderThumbs() {
+  const el = $("#thumbs"); el.innerHTML = "";
+  fb.images.forEach((im, i) => {
+    const f = document.createElement("figure");
+    const src = im.local || ("/_blob/" + im.id);
+    f.innerHTML = `<img alt="回饋圖 ${i + 1}"><figcaption></figcaption><button type="button" title="拿掉這張">✕</button>`;
+    f.querySelector("img").src = src;
+    f.querySelector("figcaption").textContent = `#${i + 1}｜${im.t != null ? im.t.toFixed(2) + " 秒" : ""}${im.kind === "draw" ? "｜畫面圈選" : "｜貼上"}`;
+    f.querySelector("img").addEventListener("click", () => { const d = $("#zoom"); d.querySelector("img").src = src; d.showModal(); });
+    f.querySelector("button").addEventListener("click", () => { fb.images.splice(i, 1); renderThumbs(); queueSave(); });
+    el.appendChild(f);
+  });
+}
+$("#zoom").addEventListener("click", () => $("#zoom").close());
+function queueSave() { clearTimeout(saveTimer); status("尚未儲存…"); saveTimer = setTimeout(save, 900); }
+async function save() {
+  const id = current, body = {scene: id, stage: STAGE, round: ROUND, text: fb.text, images: fb.images.filter(x => x.id).map(({id, t, kind}) => ({id, t, kind})), history: hist, updatedAt: new Date().toISOString()};
+  try { localStorage.setItem(lsKey(id), JSON.stringify({text: fb.text})); } catch (e) {}
+  if (!db) { status("這個檢視無法同步，只存在你這台電腦的瀏覽器。文字可以複製貼回對話。"); return; }
+  try { await db.doc(`review/${DOC}-${id}`).set(body); status("已儲存（Claude 讀得到）"); }
+  catch (e) { status(e && e.code === "invalid_argument" ? "你沒有寫入權限，只能看。" : "儲存失敗，稍後會再試。", true); if (e && e.code === "unavailable") setTimeout(save, 1500); }
+}
+function loadFeedback(id) {
+  fb = {text: "", images: []}; hist = []; showPrev();
+  try { const d = JSON.parse(localStorage.getItem(lsKey(id)) || "null"); if (d) fb.text = d.text || ""; } catch (e) {}
+  $("#fbText").value = fb.text; renderThumbs();
+  $("#fbTitle").textContent = `${(SCENES.find(x => x.id === id) || {label: "第 " + id + " 幕"}).label} 的回饋`;   // 幕號可以有字母（例 07a、07b），不用 parseInt
+  if (unsub) { unsub(); unsub = null; }
+  if (!db) { status(assets === null ? "在 claude.ai 開這頁才能同步回饋與貼圖。" : "載入中…"); return; }
+  let first = true;
+  unsub = db.doc(`review/${DOC}-${id}`).onSnapshot(snap => {
+    if (snap.metadata.hasPendingWrites) return;
+    let d = snap.exists ? snap.data() : null;
+    if (d && (d.round || 1) !== ROUND) {                       // 上一輪的 doc：移到 history，這一輪從空白開始
+      hist = [...(d.history || []), {round: d.round || 1, text: d.text || "", images: d.images || [], updatedAt: d.updatedAt}];
+      showPrev(); d = null;
+    } else if (d) { hist = d.history || []; showPrev(); }
+    if (first || document.activeElement !== $("#fbText")) {
+      if (d) { fb.text = d.text || ""; $("#fbText").value = fb.text; }
+    }
+    if (d) { fb.images = (d.images || []).map(x => ({...x})); renderThumbs(); }
+    status(d ? `已儲存（${new Date(d.updatedAt).toLocaleString("zh-TW")}）` : "還沒有回饋");
+    first = false;
+  }, e => status("同步中斷，重新整理頁面即可。", true));
+}
+$("#fbText").addEventListener("input", e => { fb.text = e.target.value; queueSave(); });
+async function addImage(blob, kind) {
+  const t = vid.currentTime || 0;
+  if (!assets) { status("這個檢視不能存圖片（要在 claude.ai 用你的帳號開）。", true); return; }
+  const local = URL.createObjectURL(blob);
+  const item = {local, t, kind}; fb.images.push(item); renderThumbs(); status("上傳圖片中…");
+  try {
+    const type = /^image\/(png|jpeg|gif|webp)$/.test(blob.type) ? blob.type : "image/png";
+    const r = await assets.upload(blob, {type});
+    item.id = r.id; delete item.local; renderThumbs(); await save();
+  } catch (e) {
+    fb.images = fb.images.filter(x => x !== item); renderThumbs();
+    status(e && e.code === "too_large" ? "圖片太大（上限 20 MB）。" : e && e.code === "rate_limited" ? "貼太快了，等幾秒再貼。" : "圖片上傳失敗。", true);
+  }
+}
+const pz = $("#paste");
+document.addEventListener("paste", e => {
+  const items = [...(e.clipboardData ? e.clipboardData.items : [])].filter(i => i.type.startsWith("image/"));
+  if (!items.length) return;
+  e.preventDefault(); items.forEach(i => addImage(i.getAsFile(), "paste"));
+});
+pz.addEventListener("dragover", e => { e.preventDefault(); pz.classList.add("hot"); });
+pz.addEventListener("dragleave", () => pz.classList.remove("hot"));
+pz.addEventListener("drop", e => { e.preventDefault(); pz.classList.remove("hot"); [...e.dataTransfer.files].filter(f => f.type.startsWith("image/")).forEach(f => addImage(f, "paste")); });
+
+// ── 在畫面上圈（暫停的影片畫面＋紅線） ──
+const dc = $("#draw"), dctx = dc.getContext("2d"), stage = $("#stage"); let drawing = false;
+function sizeDraw() { const r = stage.getBoundingClientRect(), k = Math.min(2, devicePixelRatio || 1); dc.width = r.width * k; dc.height = r.height * k; }
+function drawMode(on) {
+  dc.hidden = !on; $("#drawbar").hidden = !on;
+  if (on) { pause(); sizeDraw(); dctx.clearRect(0, 0, dc.width, dc.height); }
+}
+$("#drawBtn").addEventListener("click", () => drawMode(true));
+$("#drawExit").addEventListener("click", () => drawMode(false));
+$("#drawClear").addEventListener("click", () => dctx.clearRect(0, 0, dc.width, dc.height));
+const dpos = e => { const r = dc.getBoundingClientRect(); return [(e.clientX - r.left) / r.width * dc.width, (e.clientY - r.top) / r.height * dc.height]; };
+dc.addEventListener("pointerdown", e => { drawing = true; dc.setPointerCapture(e.pointerId); const [x, y] = dpos(e); dctx.beginPath(); dctx.moveTo(x, y); dctx.strokeStyle = "#e0242f"; dctx.lineWidth = 4 * Math.min(2, devicePixelRatio || 1); dctx.lineCap = "round"; dctx.lineJoin = "round"; });
+dc.addEventListener("pointermove", e => { if (!drawing) return; const [x, y] = dpos(e); dctx.lineTo(x, y); dctx.stroke(); });
+dc.addEventListener("pointerup", () => { drawing = false; });
+$("#drawAdd").addEventListener("click", () => {
+  const out = document.createElement("canvas"); out.width = vid.videoWidth || 960; out.height = vid.videoHeight || 540;
+  const o = out.getContext("2d");
+  try { o.drawImage(vid, 0, 0, out.width, out.height); } catch (e) {}
+  o.drawImage(dc, 0, 0, out.width, out.height);
+  o.font = "16px monospace"; o.fillStyle = "#e0242f"; o.fillText(`${S.title}  ${(vid.currentTime || 0).toFixed(2)} 秒`, 12, out.height - 12);
+  out.toBlob(b => { if (b) addImage(b, "draw"); drawMode(false); }, "image/png");
+});
+
+// ── 啟動 ──
+(async () => {
+  document.querySelectorAll("#steps span").forEach(el => el.classList.toggle("on", el.dataset.st === STAGE));
+  buildTabs();
+  const want = (location.hash || "").replace("#s", "");
+  openScene(SCENES.some(s => s.id === want && s.ready) ? want : (SCENES.find(s => s.ready) || SCENES[0]).id);
+  if (window.claude && claude.use) {
+    try { db = await claude.use("db"); } catch (e) { db = null; }
+    try { assets = await claude.use("assets"); } catch (e) { assets = null; }
+  }
+  if (!assets) { pz.textContent = "這個檢視不能貼圖（要在 claude.ai 用你的帳號開）"; }
+  if (current) loadFeedback(current);
+})();
+})();
+</script>

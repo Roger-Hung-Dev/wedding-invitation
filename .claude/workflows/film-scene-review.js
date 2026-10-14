@@ -1,7 +1,7 @@
 export const meta = {
   name: 'film-scene-review',
-  description: '多幕 3D 影片的批次審看（兩關）：第 1 關每一幕出 Mixamo 骨骼動作（skeleton.json）、第 2 關出快速預覽或完整渲染，每一幕交給 blender-scenario-creator → 彙整成一個有回覆框＋Ctrl+V 貼圖的審看網頁（Claude Artifact）讓使用者一次看完、一次給回饋',
-  whenToUse: '開場影片這類「一支片有好幾幕 3D 角色情境」的調整期：使用者要「把每一幕都先做出來給我看，我一次告訴你要修哪裡」、或帶著逐幕回饋要求一起修時使用。先跑 stage=skeleton（第 1 關），每一幕骨骼都確認後才跑 stage=preview（第 2 關）。主控端先問齊要哪幾幕、每幕的模式與回饋，args 帶 production、stage 與 scenes。只改單一幕、或只加一個動作，直接呼叫子代理即可，不必走這條。',
+  description: '多幕 3D 影片的批次審看（三關）：第 1 關每一幕出 Mixamo 骨骼動作（skeleton.json）、第 2 關出正式版骨骼（加上劇情要求的微調）、第 3 關出快速預覽或完整渲染，每一幕交給 blender-scenario-creator → 彙整成一個有回覆框＋Ctrl+V 貼圖的審看網頁（Claude Artifact）讓使用者一次看完、一次給回饋',
+  whenToUse: '開場影片這類「一支片有好幾幕 3D 角色情境」的調整期：使用者要「把每一幕都先做出來給我看，我一次告訴你要修哪裡」、或帶著逐幕回饋要求一起修時使用。先跑 stage=skeleton（第 1 關），每一幕骨骼都確認後跑 stage=final（第 2 關正式版骨骼），都確認後才跑 stage=preview（第 3 關）。主控端先問齊要哪幾幕、每幕的模式與回饋，args 帶 production、stage 與 scenes。只改單一幕、或只加一個動作，直接呼叫子代理即可，不必走這條。',
   phases: [
     { title: 'Scenes', detail: 'blender-scenario-creator：每一幕一個，不同 group 並行、同 group 依序' },
     { title: 'Review page', detail: '彙整成審看網頁（回覆框＋貼圖）並發布／更新 Claude Artifact' },
@@ -12,9 +12,10 @@ export const meta = {
 // 【args 形狀】
 // {
 //   production: 'opening-v12',          // .claude/docs/data/blender/productions/<production>/
-//   stage: 'skeleton' | 'preview',      // 第幾關（fast-iteration.md §0.5）。預設 'preview'
-//        // skeleton＝第 1 關：每一幕寫 scripts/mx_scene_<幕>.py、跑 mx_skeleton.py 出 skeleton.json，不渲染
-//        // preview＝第 2 關：快速預覽（或 mode=full 的完整渲染）。每一幕骨骼都確認後才走這關
+//   stage: 'skeleton' | 'final' | 'preview', // 第幾關（fast-iteration.md §0.5）。預設 'preview'
+//        // skeleton＝第 1 關：每一幕寫 scripts/mx_scene_<幕>.py、跑 mx_skeleton.py 出 skeleton.json，不渲染（Mixamo 原樣）
+//        // final＝第 2 關正式版骨骼：在第 1 關確認的骨架上加劇情要求的微調（段的 mod），跑 mx_skeleton.py FINAL=1，不渲染
+//        // preview＝第 3 關：快速預覽（或 mode=full 的完整渲染）。每一幕正式版骨骼都確認後才走這關
 //   round: 1,                           // 第幾輪審看（網頁標題、檔名後綴、回饋 doc 的 round 用）
 //   scenes: [{
 //     id: '03',                         // 幕代號（檔名 sNN_*、檢查圖 v2_NN_check 用）
@@ -86,7 +87,8 @@ if (!a || !a.production || !Array.isArray(a.scenes) || !a.scenes.length) {
 }
 const PROD = `.claude/docs/data/blender/productions/${a.production}`
 const round = a.round || 1
-const stage = a.stage === 'skeleton' ? 'skeleton' : 'preview'
+const stage = ['skeleton', 'final'].includes(a.stage) ? a.stage : 'preview'
+const DOC = { skeleton: 'skel', final: 'fin', preview: 'prev' }[stage]
 
 const MODE_TEXT = {
   preview: {
@@ -94,6 +96,10 @@ const MODE_TEXT = {
     rerender: '已有成品：用「現行動作庫」重渲快速預覽，不改動作設計；回報和舊版相比哪些動作因動作庫更新而改變。若某段明顯僵硬，提出建議但不要大改。',
     fix: '照下面使用者的回饋逐條修正，重渲快速預覽；changed 逐條對應回饋說明怎麼改的，做不到的寫進 knownIssues。',
     full: '使用者已確認這一幕：做完整品質渲染（照製作規格的解析度、取樣、頭髮裙擺物理），舊成品改名加 _old 保留，完整數字檢查後抽格看畫面。',
+  },
+  final: {
+    new: '這一幕的第 1 關骨骼已確認：照 brief 列的劇情要求，在 scripts/mx_scene_<幕>.py 的段上加微調（mod），出正式版 skeleton.json（FINAL=1）。',
+    fix: '照下面使用者的回饋逐條改微調（mod 的目標點、角度、時間），重出正式版 skeleton.json（FINAL=1）；changed 逐條對應回饋，做不到的寫進 knownIssues。',
   },
   skeleton: {
     new: '這一幕還沒有骨骼動作：照 brief 從 Mixamo 動畫挑段落、排時間與站位，寫成 scripts/mx_scene_<幕>.py，出 skeleton.json。',
@@ -103,15 +109,21 @@ const MODE_TEXT = {
 
 const STAGE_TEXT = {
   preview: [
-    '這是第 2 關「低畫質預覽」：這一幕的骨骼動作使用者已在第 1 關確認過，動作段落、秒數、站位照 scripts/mx_scene_<幕>.py（② 在 mx_skeleton.py 的 scene_02），不要另外改；只處理套上服裝後才看得到的問題（穿模、接觸點、裙擺、臉被擋）。',
-    '規範：blender-motion-library 的 references/fast-iteration.md（§0 Mixamo 原樣套用、可微調但不破壞動作結構；§0.5 兩關審看；§1 快速預覽 ≤ 960×540、不跑頭髮裙擺物理；§2 多角度檢查圖；§3 一次收齊常見問題）。§5 是這條批次審看的交付格式。',
+    '這是第 3 關「低畫質預覽」：這一幕的骨骼動作、正式版微調使用者已在第 1、2 關確認過，動作段落、秒數、站位照 scripts/mx_scene_<幕>.py（② 在 mx_skeleton.py 的 scene_02），不要另外改；只處理套上服裝後才看得到的問題（穿模、接觸點、裙擺、臉被擋）。',
+    '規範：blender-motion-library 的 references/fast-iteration.md（§0 Mixamo 原樣套用、可微調但不破壞動作結構；§0.5 三關審看；§1 快速預覽 ≤ 960×540、不跑頭髮裙擺物理；§2 多角度檢查圖；§3 一次收齊常見問題）。§5 是這條批次審看的交付格式。',
   ],
   skeleton: [
     '這是第 1 關「骨骼動作」：只出 skeleton.json 給 3D 骨架播放器，不渲染、不做服裝或網格檢查。',
-    '規範：blender-motion-library 的 references/fast-iteration.md §0（Mixamo 現成動畫原樣套用：只決定用哪一支、取哪幾秒、何時開始、站位與面向，0.3 秒漸變；劇情不改，沒有吻合的挑最接近的）與 §0.5（兩關審看）。',
+    '規範：blender-motion-library 的 references/fast-iteration.md §0（Mixamo 現成動畫原樣套用：只決定用哪一支、取哪幾秒、何時開始、站位與面向，0.3 秒漸變；劇情不改，沒有吻合的挑最接近的）與 §0.5（三關審看）。第 1 關不做微調（手勢、接觸點留到第 2 關），除非 brief 或使用者回饋明確要。',
     `Mixamo 檔案在 D:\\render-work\\mixamo\\raw\\（manifest.json 有每個檔的名稱與用在哪幾幕）。需要還沒下載的動畫：不要找別的來源，寫進 needsUser（下載要主控端問使用者）。`,
     `程式：${PROD}/scripts/mx_skeleton.py（檔頭有用法；scene_02 是寫法範例）。這一幕的組成寫在你自己的 ${PROD}/scripts/mx_scene_<幕>.py，定義 scene()，回傳和 scene_02 同形狀的 dict（chars 的 segs／anchor、props、cam、skirt、dur）；不要改 mx_skeleton.py 與 mixamo_retarget.py。`,
     '寫完自己檢查：每一段的骨架有沒有面向對、兩人有沒有重疊、新娘的腿有沒有踢出蓬裙範圍、道具位置對不對（可以讀 skeleton.json 算距離）。看得出的問題寫進 knownIssues。',
+  ],
+  final: [
+    '這是第 2 關「正式版骨骼動作」：第 1 關確認的骨架（用哪支動畫、秒數、站位、面向）不改，只加為了劇情要求的微調，出正式版 skeleton.json 給 3D 骨架播放器（不渲染）。',
+    '規範：blender-motion-library 的 references/fast-iteration.md §0（套用後可以微調，但不准破壞動作結構：不重新設計動作、不改節奏）與 §0.5（三關審看，第 2 關）。',
+    `微調寫在 ${PROD}/scripts/mx_scene_<幕>.py 段的 mod＝fn(段內秒數, R, hips) → R；工具在 mixamo_retarget.py：arm_ik（手腕到目標點）、aim_hand（手掌方向、掌心朝向）、lift_shoulder（手舉高時肩胛跟著抬）、rotate_subtree（轉一根骨頭連同底下整串）。範例：mx_scene_08.py 的 heart_mod（頭頂愛心）。微調要漸入漸出（smoothstep），不要一格跳到位。`,
+    '量接觸：D:\\render-work\\mixamo\\tools\\contact_fit.py（手掌到對方背面）、skel_check.py（位置、面向、最近距離、蓬裙）。每一項微調寫進 tweaks 與這幕 scene 的 decide（哪一段、哪根骨頭或目標點、改多少、為什麼），使用者要能分辨哪些是 Mixamo 原樣、哪些是改的。',
   ],
 }
 
@@ -129,7 +141,9 @@ function scenePrompt(s) {
     '',
     stage === 'skeleton'
       ? `交付：D:\\render-work\\mixamo\\review\\s${s.id}\\skeleton.json（mx_skeleton.py 的預設輸出）；回報 skeleton（絕對路徑）、segments、motionSources、substitutes。`
-      : `交付：影片 videos/preview-v2/s${s.id}_*_${s.mode === 'full' ? 'full' : 'quick'}.mp4、檢查圖 pictures/preview-v2/v2_${s.id}_check.jpg（路徑相對製作資料夾）。數字檢查每輪都跑。微調寫進 tweaks。`,
+      : stage === 'final'
+    ? `交付：D:\\render-work\\mixamo\\review\\s${s.id}\\skeleton.json（mx_skeleton.py -- ${s.id} FINAL=1）；回報 skeleton（絕對路徑）、tweaks（每一項：哪一段、哪根骨頭或目標點、改多少、為什麼）。每一項微調也寫進這幕 scene 的 decide，網頁側欄要列出來。`
+    : `交付：影片 videos/preview-v2/s${s.id}_*_${s.mode === 'full' ? 'full' : 'quick'}.mp4、檢查圖 pictures/preview-v2/v2_${s.id}_check.jpg（路徑相對製作資料夾）。數字檢查每輪都跑。微調寫進 tweaks。`,
     s.group ? `同一個 group「${s.group}」的其他幕會在你之後依序跑，可以改共用程式，但不要動別幕的設定。` : '你和其他幕並行：不要修改會被別幕共用的程式（例 set_v2.py、shots_v2.py、mx_skeleton.py）；非改不可就把這一幕的邏輯放到自己的新檔，或停下來寫進 needsUser。影格放 D:\\render-work 底下這一幕自己的資料夾。',
   ].filter(Boolean).join('\n').replace(/<幕>/g, s.id)
 }
@@ -165,15 +179,15 @@ if (a.publish === false) return { round, stage, scenes: ordered }
 phase('Review page')
 const ML_ASSETS = '.claude/skills/blender-motion-library/assets'
 const FEEDBACK_RULES = [
-  '回饋功能（使用者規定，兩關都要有；細節 blender-motion-library 的 references/fast-iteration.md §0.5）：',
+  '回饋功能（使用者規定，三關都要有；細節 blender-motion-library 的 references/fast-iteration.md §0.5）：',
   '- 寫網頁前先載入 artifact-capabilities skill（讀 db.d.ts、assets.d.ts）。發布帶 capabilities: {db: {}, assets: {}}；更新既有網頁時同樣帶上。',
-  `- 每一幕一個回覆框：打字自動存到 db 的 doc review/${stage === 'skeleton' ? 'skel' : 'prev'}-<幕>，形狀 {scene, stage: "${stage}", round: ${round}, text, images: [{id, t, kind}], updatedAt}。`,
+  `- 每一幕一個回覆框：打字自動存到 db 的 doc review/${DOC}-<幕>，形狀 {scene, stage: "${stage}", round: ${round}, text, images: [{id, t, kind}], updatedAt}。`,
   '- Ctrl+V 貼圖、拖曳圖片：用 assets.upload 上傳，db 只存 id；縮圖用 "/_blob/"+id 顯示，可放大、可拿掉。claude.use 回傳 null 時退回瀏覽器本機草稿並提示「在 claude.ai 開這頁才能同步」。',
   '- 頁面要寫明：「寫完就好，Claude 讀得到，不用貼回對話」。',
 ]
-const pagePrompt = stage === 'skeleton' ? [
-  `【worker 模式】你是 film-scene-review workflow 的最後一步：把各幕的骨骼動作做成一個「骨骼審看」網頁並發布成 Claude Artifact。禁止呼叫 AskUserQuestion。`,
-  `樣板：${ML_ASSETS}/skeleton_review/viewer.html（3D 骨架播放器＋回覆框＋Ctrl+V 貼圖＋在畫面上圈，回饋功能已做好）。複製到你系統提示列出的 scratchpad 目錄底下的 skel-review/index.html（沒有 scratchpad 才放 ${PROD}/videos/review-skeleton/），只改 <title>、ROUND（= ${round}）、SCENES（每一幕的 id、label、ready；status 不是 done 的幕 ready=false）。`,
+const pagePrompt = stage !== 'preview' ? [
+  `【worker 模式】你是 film-scene-review workflow 的最後一步：把各幕的${stage === 'final' ? '正式版骨骼（第 2 關）' : '骨骼動作（第 1 關）'}做成一個審看網頁並發布成 Claude Artifact。禁止呼叫 AskUserQuestion。`,
+  `樣板：${ML_ASSETS}/skeleton_review/viewer.html（3D 骨架播放器＋回覆框＋Ctrl+V 貼圖＋在畫面上圈，回饋功能已做好）。複製到你系統提示列出的 scratchpad 目錄底下的 skel-review/index.html（沒有 scratchpad 才放 ${PROD}/videos/review-skeleton/），只改 <title>、ROUND（= ${round}）、STAGE（= "${stage}"）、SCENES（每一幕的 id、label、ready；status 不是 done 的幕 ready=false）。${stage === 'final' ? '第 2 關另開一個網址（第 1 關的頁留著），skeleton.json 裡有 ghost（灰色對照）就會自動顯示開關。' : ''}`,
   '每一幕的 skeleton.json 複製到同資料夾的 s<幕>/skeleton.json，用 Artifact 的 files 一起發布（發布路徑 s<幕>/skeleton.json）。',
   a.reviewPageUrl ? `更新既有網頁（publish 帶 url）：${a.reviewPageUrl}。先用 Artifact read 讀現有版本再改；之前已發布的幕若這輪沒重做，files 不要傳 null，留著。` : '第一次發布：帶 icon（motion）、一句 description、capabilities: {db: {}, assets: {}}。',
   '發布前先用本機 http 伺服器開來看一次（播放、切幕、時間軸），確認骨架有畫出來。',
@@ -204,6 +218,6 @@ return {
   scenes: ordered,
   page,
   // 主控端讀回饋：ArtifactData list（url＝page.artifactUrl、collection「review」）；圖片用 Artifact read（path＝圖片 id）存成本機檔
-  feedbackDocs: ordered.map((r) => `review/${stage === 'skeleton' ? 'skel' : 'prev'}-${r.sceneId}`),
+  feedbackDocs: ordered.map((r) => `review/${DOC}-${r.sceneId}`),
   needsUser: ordered.flatMap((r) => (r.needsUser || []).map((n) => `第 ${r.sceneId} 幕：${n}`)),
 }

@@ -1,0 +1,6 @@
+{
+  "name": "render-settings",
+  "version": "0.1.0",
+  "description": "渲染參數面板：整支片設定（畫面方向、fps、前後多渲、背景、遮擋、字卡留白）與完整渲染設定（解析度、畫質、專家選項、要渲哪幾鏡）",
+  "author": { "name": "zepeto-anim" }
+}

@@ -1,0 +1,100 @@
+<title>開場影片剪接樣式</title>
+<!--FONTS-->
+<style>
+/* 版面：上面 16:9 舞台（edit_styles.js 畫），下面時間軸＋各組樣式選項（從 catalog.json 產生）；render 模式只留舞台、填滿視窗 */
+:root {
+  --bg: #f4f2ef; --panel: #ffffff; --ink: #2a2624; --muted: #6f6762; --line: #e1dcd6; --accent: #8a4b5c; --accent-soft: #f3e6e9;
+  --ui: "Noto Sans TC", "Microsoft JhengHei", "PingFang TC", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #1b1918; --panel: #252220; --ink: #ece7e2; --muted: #a59d97; --line: #3a3532; --accent: #e3a6b6; --accent-soft: #3a2a2f; color-scheme: dark } }
+:root[data-theme="dark"] { --bg: #1b1918; --panel: #252220; --ink: #ece7e2; --muted: #a59d97; --line: #3a3532; --accent: #e3a6b6; --accent-soft: #3a2a2f; color-scheme: dark }
+body { background: var(--bg); color: var(--ink); font-family: var(--ui); font-size: 15px; line-height: 1.6 }
+.wrap { max-width: 1040px; margin: 0 auto; padding-inline: 18px; padding-block: 22px 48px; display: grid; gap: 18px }
+h1 { font-size: 1.5rem; margin: 0; text-wrap: balance }
+.lede { margin: .3rem 0 0; color: var(--muted); max-width: 70ch }
+#stagebox { border-radius: 10px; overflow: hidden }
+.bar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center }
+.bar button, .chip { font: inherit; border: 1px solid var(--line); background: var(--panel); color: var(--ink); border-radius: 8px; padding: 5px 12px; cursor: pointer }
+.bar .time { font-variant-numeric: tabular-nums; color: var(--muted); min-width: 7.5em }
+.track { flex: 1 1 260px; min-width: 0 } .track input { width: 100% }
+.groups { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px }
+fieldset { border: 1px solid var(--line); border-radius: 10px; background: var(--panel); margin: 0; padding: 12px 14px; display: grid; gap: 8px; min-width: 0 }
+legend { font-weight: 700; padding: 0 6px }
+.chips { display: flex; flex-wrap: wrap; gap: 6px }
+.chip[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-soft) }
+.hint { color: var(--muted); font-size: .85rem; margin: 0 }
+pre { margin: 0; padding: 10px 12px; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; overflow-x: auto; font-size: .82rem; white-space: pre-wrap }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px }
+body.render { background: #000 } body.render .wrap { display: none }
+body.render #stagebox { position: fixed; inset: 0; border-radius: 0 }
+</style>
+
+<div id="stagebox"></div>
+<div class="wrap" id="ui">
+  <header>
+    <h1>開場影片剪接樣式</h1>
+    <p class="lede" id="lede">剪接樣式庫的展示頁：字卡、轉場、配色、字型都從樣式庫來，效果和正式剪接用的是同一份程式。示範內容是 B1「手機請靜音」接到 B2「盡情享用美食」（B2 還沒做，暫用坐餐桌喝紅酒的測試動畫）；人停下來字卡進場、起步就退場。素材是低畫質預覽。</p>
+  </header>
+  <div class="bar">
+    <button id="play">▶ 播放</button>
+    <button id="jump">從轉場前 2 秒播</button>
+    <span class="time" id="time"></span>
+    <div class="track"><input type="range" id="scrub" min="0" max="1000" value="0" aria-label="時間軸"></div>
+  </div>
+  <div class="groups" id="groups"></div>
+  <fieldset><legend>選好的設定</legend><p class="hint" id="codehint">按「複製設定」貼回對話；或在 render-settings 面板（整支片設定）直接選。</p><pre id="code"></pre><button class="chip" id="copy">複製設定</button></fieldset>
+</div>
+
+<script>/*EDIT_STYLES_JS*/</script>
+<script>
+const CATALOG = /*CATALOG*/null;
+const PROGRAM = /*PROGRAM*/null;
+const PRESET = /*SETTINGS*/null;
+const MODE = /*MODE*/"view";
+const S = { ...CATALOG.defaults, ...(PRESET || {}) };
+const P = EditStyles.player(document.getElementById("stagebox"), CATALOG, PROGRAM, S);
+window.__player = P;                       // render_edit.py 逐格截圖用
+const $ = (s) => document.querySelector(s);
+
+if (MODE === "render") {
+  document.body.classList.add("render");
+} else {
+  if (MODE === "preview") { $("#lede").textContent = "render-settings 面板開的預覽：照面板目前選的樣式播放。這裡也可以改著看；要定下來請回面板選。"; }
+  const G = [
+    ["caption_style", "字卡樣式", CATALOG.captions],
+    ["font", "字型", CATALOG.fonts],
+    ["palette", "字卡配色", CATALOG.palettes],
+    ["layout", "版面", CATALOG.layouts],
+    ["transition", "轉場", CATALOG.transitions],
+  ];
+  const N = Object.entries(CATALOG.numbers);
+  function groups() {
+    $("#groups").innerHTML = G.map(([k, title, list]) => {
+      const cur = list.find((x) => x.id === S[k]) || list[0];
+      return `<fieldset><legend>${title}</legend><div class="chips">${list.map((x) =>
+        `<button class="chip" data-k="${k}" data-v="${x.id}" aria-pressed="${x.id === S[k]}">${x.name}</button>`).join("")}</div>
+        <p class="hint">${cur.desc || ""}${cur.when ? "　適合：" + cur.when : ""}</p></fieldset>`;
+    }).join("") + `<fieldset><legend>數值</legend>${N.map(([k, n]) => `<div><span class="hint">${n.name}　</span>${n.opts.map((o) =>
+        `<button class="chip" data-k="${k}" data-v="${o}" data-num="1" aria-pressed="${+S[k] === o}">${(n.show && n.show[String(o)]) || o + n.unit}</button>`).join(" ")}</div>`).join("")}</fieldset>`;
+    document.querySelectorAll("#groups .chip").forEach((b) => b.onclick = () => {
+      S[b.dataset.k] = b.dataset.num ? +b.dataset.v : b.dataset.v; P.update(S); groups(); P.renderAt(t); code();
+    });
+  }
+  function code() { $("#code").textContent = JSON.stringify(S); }
+  let t = PROGRAM.shots[0].cue[0] + 1.2, last = performance.now();
+  function frame() { P.renderAt(t); $("#time").textContent = t.toFixed(1) + " / " + P.duration.toFixed(1) + " 秒"; $("#scrub").value = Math.round(t / P.duration * 1000); }
+  function setPlay(on) { on ? P.play() : P.pause(); $("#play").textContent = on ? "❚❚ 暫停" : "▶ 播放"; frame(); }
+  function tick(now) { if (P.playing) { t += (now - last) / 1000; if (t >= P.duration) { t = P.duration; setPlay(false); } frame(); } last = now; requestAnimationFrame(tick); }
+  $("#play").onclick = () => { if (t >= P.duration) t = 0; setPlay(!P.playing); };
+  $("#jump").onclick = () => { t = Math.max(0, (P.joints[0] || 0) - 2); setPlay(true); };
+  $("#scrub").oninput = (e) => { t = e.target.value / 1000 * P.duration; setPlay(false); P.seek(t); };
+  $("#copy").onclick = async () => {
+    const txt = "剪接樣式選定：" + $("#code").textContent;
+    try { await navigator.clipboard.writeText(txt); $("#copy").textContent = "已複製"; }
+    catch { const r = document.createRange(); r.selectNodeContents($("#code")); const s = getSelection(); s.removeAllRanges(); s.addRange(r); $("#copy").textContent = "已選取，請按 Ctrl+C"; }
+    setTimeout(() => ($("#copy").textContent = "複製設定"), 2000);
+  };
+  groups(); code(); P.seek(t).then(frame); requestAnimationFrame(tick);
+}
+</script>

@@ -1,0 +1,37 @@
+{
+ "schema": 1,
+ "kind": "anim",
+ "id": "b6",
+ "version": "v0",
+ "artifact": {
+  "path": "",
+  "sha256": ""
+ },
+ "upstream": [],
+ "changes": "（走位版，未定案）",
+ "owner": "anim",
+ "status": "in_progress",
+ "updated_at": "2026-10-12T22:20:41+08:00",
+ "notes": {
+  "in_progress": "走位版 v3（第 3 輪：以動作流暢為主）",
+  "shot": "B6",
+  "film": "opening-proposal-b",
+  "mode": "走位版",
+  "blocking_clip": "D:/render-work/zepeto-anim/opening-proposal-b/b6/blocking_v3.mp4",
+  "standins": "場景＝素材庫攝影區＋門廳（場景座標）；大門用場景裡可轉的門片（2.9 秒開）；新娘＝膠囊＋裙擺",
+  "duration_s_blocking": 7.93,
+  "handles_s": 1.0,
+  "stop_xy": [
+   13.45,
+   0.0
+  ],
+  "pair_gap": 0.7,
+  "feedback_round": 3,
+  "wipe_pillar": "(12.09,-1.94) 0.9 秒滑到 (11.69,-1.94) 後隱藏",
+  "pacing_note": "第 3 輪：停下播到停穩、整段左轉；牽手 4.63、開門 5.23、鏡頭繞 5.73～6.73、推 6.73～7.53",
+  "still_to_go_s": [
+   2.07,
+   7.93
+  ]
+ }
+}

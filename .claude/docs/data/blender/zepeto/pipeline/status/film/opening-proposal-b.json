@@ -1,0 +1,20 @@
+{
+  "schema": 1,
+  "kind": "film",
+  "id": "opening-proposal-b",
+  "version": "v1",
+  "status": "released",
+  "updated_at": "2026-10-12T18:13:29+08:00",
+  "owner": "director",
+  "artifact": {
+    "path": "D:/SideProject/wedding-invitation/.claude/docs/storyboard/opening-proposal-b-breakdown/film.json",
+    "sha256": "407d61d12758cc55ff75511df33a6ba24d0d3a2322cef6e6deead44194d4d079"
+  },
+  "upstream": [],
+  "changes": "整支片規格（render-settings 面板；影響動畫）",
+  "page": null,
+  "notes": {
+    "film": "opening-proposal-b",
+    "fields": "aspect、fps、handles_s、background、occluders、caption_safe"
+  }
+}
