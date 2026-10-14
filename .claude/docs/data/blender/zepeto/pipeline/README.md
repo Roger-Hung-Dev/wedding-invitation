@@ -107,5 +107,5 @@ python "D:/SideProject/wedding-invitation/.claude/docs/data/blender/zepeto/pipel
 
 - **身體出廠閘門 hook（`require-body-release.ps1`）照舊讀 `RELEASE.json`**，這次不改。之後身體端把出廠標記拆成每個身體各自一個狀態時，再和 hook 的維護者（zepeto-animation）一起改成讀 `status/body/*.json`。
 - **道具素材庫不寫狀態紀錄**：道具很少改、尺寸會寫進 `catalog.json`。動畫用到的道具在自己的 `upstream` 記 `{"kind": "prop", "id": "phone_mute_zp", "sha256": "<.blend 的 sha>"}` 即可；工具找不到 `status/prop/` 時只顯示「不追蹤」，不擋。
-- 新郎的頭是產線建好前手動做的 `stylized_face_rig/head_rig.blend`。身體紀錄已用 sha `065b90ee7f39…`、version `legacy` 指向它。大頭端補 `status/head/groom.json` 時**一定要用同一個 sha**，不然新郎身體會被誤判成「上游已更新」。補上之前，`body/groom` 會一直顯示「上游 head/groom：找不到紀錄」，這是預期的。
+- 新郎的頭是產線建好前手動做的 `stylized_face_rig/head_rig.blend`，2026-10-14 從專案根目錄搬到封存 `D:/render-work/archive/groom-head-legacy-20261014/stylized_face_rig/head_rig.blend`（檔案沒變、sha 一樣），新郎之後用新流程重做。身體紀錄已用 sha `065b90ee7f39…`、version `legacy` 指向它。大頭端補 `status/head/groom.json` 時**一定要用同一個 sha**，不然新郎身體會被誤判成「上游已更新」。補上之前，`body/groom` 會一直顯示「上游 head/groom：找不到紀錄」，這是預期的。
 - 大頭：使用者已定「每個人只留一個現役版本，舊版自動封存」。舊版那筆紀錄改 `retired` 或直接被新版覆蓋都可以，但新版的 `sha256` 一定要變。

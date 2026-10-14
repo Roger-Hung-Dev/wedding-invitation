@@ -52,8 +52,8 @@ BUILD="D:/render-work/zepeto-body/build"
 3. 收到的使用者訊息格式固定：
    ```
    我選 2 個頭：
-   - 新郎 groom（legacy）：D:/SideProject/wedding-invitation/stylized_face_rig/head_rig.blend
-   - 新娘 bride（v1）：D:/SideProject/.../zepeto/bride/rig/head_rig.blend
+   - 新娘 bride（v4）：D:/SideProject/.../zepeto/bride/rig/head_rig.blend
+   - 攝影師 photographer（v1）：D:/SideProject/.../zepeto/photographer/rig/head_rig.blend
    ```
    每行最後一個全形「：」後面是頭檔路徑；全形「（」前面最後一個詞是名稱＝身體名稱。拿名稱回 `list_heads.py --ready` 對一次（`ready` 是 true、`blend` 一樣）。
 4. 使用者按 Esc、或沒按 y 就打字 → 照打的字處理；看不出選了誰就走 1b。
@@ -69,10 +69,11 @@ python -I "$SK/list_heads.py" --ready
 用 AskUserQuestion 複選（`multiSelect: true`），標籤用中文名＋英文名，說明寫版本。超過 4 個就先列出全部、請使用者用文字回。
 
 ### 選頭的規則
-- 每個人只有一個**現役版本**的頭（`zepeto/<人>/rig/head_rig.blend`；新郎的頭在專案根目錄 `stylized_face_rig/`，不搬）。封存檔、中間檔不會出現在清單上。
+- 每個人只有一個**現役版本**的頭（`zepeto/<人>/rig/head_rig.blend`）。封存檔、中間檔不會出現在清單上。
+- **新郎目前沒有頭**：第一次手動做的那顆（原本在專案根目錄 `stylized_face_rig/`）2026-10-14 使用者決定不用，整包封存到 `D:/render-work/archive/groom-head-legacy-20261014/`。新郎要等大頭端用新流程重做，清單上不會有新郎、`body_status.py check groom` 會回「沒有頭」。已出廠的新郎身體 v8 不受影響。
 - 頭沒做完（`ready` 是 false）不能拿來做身體，照實告訴使用者要等大頭端（分工表 `head`）。
 - 身體名稱＝頭的名稱（新郎的頭 → `groom`）。
-- **頭身接口環**：大頭端 2026-10-14 起的 AI 網格路線會在脖子做一圈 48 點的接口環（Head 有 `neck_ring_ver`），身體照抄接上，看不出接縫。舊路線的頭（新郎 legacy、新娘 v4、攝影師 v1）沒有環，產生器自動走舊接法（脖子粗細貼合頭的脖子＋把頭縫到身體上，`NECKFIT`、`HEADWELD`）。第 5 步 log 的 `RING` 會寫用了哪種，**沒有環的要寫進回報**。
+- **頭身接口環**：大頭端 2026-10-14 起的 AI 網格路線會在脖子做一圈 48 點的接口環（Head 有 `neck_ring_ver`），身體照抄接上，看不出接縫。舊路線的頭（新娘 v4、攝影師 v1；新郎封存的那顆也是）沒有環，產生器自動走舊接法（脖子粗細貼合頭的脖子＋把頭縫到身體上，`NECKFIT`、`HEADWELD`）。第 5 步 log 的 `RING` 會寫用了哪種，**沒有環的要寫進回報**。
 
 ## 2. 比對上游
 

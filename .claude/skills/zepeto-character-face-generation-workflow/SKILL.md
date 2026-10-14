@@ -107,4 +107,4 @@ Workflow({ name: 'zepeto-character-face-generation', args: {
 - 下游比對的是 **sha256**，不是版號。只要 `head_rig.blend` 重存過（就算只是打開存檔），sha 就會變、下游會被判成要重跑 —— 沒有要出新版就不要存回正式檔。
 - 每個人只留一個現役版本：新版直接覆寫同一份紀錄。成品檔也一樣，身體端只認 `rig/head_rig.blend`；舊版由 `run_face_rig.py` 的 `rig` 步驟自動改名封存成 `head_rig_<日期>.blend`（它的預覽圖一起改名成 `preview_<日期>/`），手動改檔時也照這個命名。
 - 2026-10-14 起成品的貼圖打包在 `head_rig.blend` 裡（`finish` 步驟）。之前用舊路線做的頭（新娘 v4、攝影師 v1）讀的是外部 `rig/head_color.png`，更早出廠的身體也直接讀它：**新路線重做這兩個人時，不要刪也不要改 `head_color.png`**，等身體端用新頭重新出廠、舊身體不用了再清。
-- 新郎是產線建好前手動做的 `stylized_face_rig/head_rig.blend`，紀錄的 `version` 是 `legacy`。
+- 新郎現役的頭是產線建好前手動做的（紀錄的 `version` 是 `legacy`）。2026-10-14 使用者決定不用了，原本在專案根目錄的 `stylized_face_*`（含 `stylized_face_rig/`、`stylized_face_expressions/`）整包封存到 `D:/render-work/archive/groom-head-legacy-20261014/`，紀錄的 `artifact.path` 已改指那裡（sha 不變，已出廠的新郎身體 v8 照舊）。新郎之後用這條一條龍重做。

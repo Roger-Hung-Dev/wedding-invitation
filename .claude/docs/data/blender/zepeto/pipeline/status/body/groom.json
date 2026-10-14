@@ -23,6 +23,6 @@
   "notes": {
     "release_version": "body-v8-fingers-20261012",
     "checks": "8 項全過（含 crease ≤ 手指半徑×0.8）；完整數字在 D:/render-work/zepeto-body/build/RELEASE.json",
-    "head_path": "D:/SideProject/wedding-invitation/stylized_face_rig/head_rig.blend（產線建好前手動做的新郎頭，不搬；sha 為 2026-10-12 補記時量的，檔案修改時間 2026-10-11 19:22，早於身體 v8 產生）"
+    "head_path": "D:/render-work/archive/groom-head-legacy-20261014/stylized_face_rig/head_rig.blend（產線建好前手動做的新郎頭；原本在專案根目錄 stylized_face_rig/，2026-10-14 使用者決定不用、整包封存到這裡，檔案沒改、sha 不變。sha 為 2026-10-12 補記時量的，檔案修改時間 2026-10-11 19:22，早於身體 v8 產生。新郎之後用新流程重做頭，再重做身體）"
   }
 }
