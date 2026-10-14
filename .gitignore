@@ -55,6 +55,23 @@ Thumbs.db
 .claude/docs/data/blender/projects/*/*.blend1
 .claude/docs/data/blender/projects/*/source/
 
+# === ZEPETO 風 3D 大頭（.claude/docs/data/blender/zepeto/）===
+# source/ 是使用者真人照片的副本；.blend 可由 OBJ＋postprocess.py 重建。
+# 進版控的是 analysis.md、OBJ／MTL／貼圖、qa/ 驗收圖。
+.claude/docs/data/blender/zepeto/*/source/
+.claude/docs/data/blender/zepeto/*/*.blend
+.claude/docs/data/blender/zepeto/*/*.blend1
+# 可動臉（rig/）：.blend（成品 head_rig.blend、封存的舊版、中間檔，可由 AI 頭＋run_face_rig.py 重建）、
+# 籠子中間檔 cage/、自動檢查的影格與報告 check/（單張臉約 40MB）不進版控；
+# 進版控的是 face.json、landmarks.json、eyes.json、preview/ 的預覽圖
+.claude/docs/data/blender/zepeto/*/rig/**/*.blend
+.claude/docs/data/blender/zepeto/*/rig/**/*.blend1
+.claude/docs/data/blender/zepeto/*/rig/cage/
+.claude/docs/data/blender/zepeto/*/rig/check/
+# 模板頭（templates/）：template_clean.blend、template_landmarks.json、ATTRIBUTION.md 進版控；
+# source/ 是從 Sketchfab 下載的原始壓縮檔與解開的檔案，可用 API 重新下載
+.claude/docs/data/blender/zepeto/templates/*/source/
+
 # === Blender 製作（.claude/docs/data/blender/productions/）===
 # 同框檔、整景檔（blend/couple.blend 等）可由 scripts/ 重建，單檔 30MB 上下；影格在 D:\render-work，本來就不在 repo
 .claude/docs/data/blender/productions/*/**/*.blend

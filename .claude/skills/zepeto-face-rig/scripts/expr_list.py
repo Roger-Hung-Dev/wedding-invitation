@@ -1,0 +1,16 @@
+EXPR = [
+    ("basis", {}),
+    ("jawOpen", {"jawOpen": 0.7}),
+    ("smile", {"mouthSmileLeft": 1, "mouthSmileRight": 1, "cheekSquintLeft": .7, "cheekSquintRight": .7, "eyeSquintLeft": .4, "eyeSquintRight": .4}),
+    ("blink", {"eyeBlinkLeft": 1, "eyeBlinkRight": 1}),
+    ("surprise", {"eyeWideLeft": 1, "eyeWideRight": 1, "browInnerUp": 1, "browOuterUpLeft": 1, "browOuterUpRight": 1, "jawOpen": .8, "mouthFunnel": .4}),
+    ("lookSide", {"LOOK_L_X": 1, "LOOK_R_X": 1}),
+    ("lookUp", {"LOOK_L_Z": 1, "LOOK_R_Z": 1}),
+    ("angry", {"browDownLeft": 1, "browDownRight": 1, "mouthFrownLeft": .7, "mouthFrownRight": .7, "noseSneerLeft": .4, "noseSneerRight": .4}),
+    ("sad", {"browInnerUp": 1, "mouthFrownLeft": 1, "mouthFrownRight": 1, "mouthLowerDownLeft": .3, "mouthLowerDownRight": .3}),
+    ("pucker", {"mouthPucker": 1}),
+    ("cheekPuff", {"cheekPuff": 1}),
+    ("tongue", {"jawOpen": .45, "tongueOut": 1}),
+    ("wink", {"eyeBlinkLeft": 1, "mouthSmileLeft": .6, "cheekSquintLeft": .5}),
+    ("laugh", {"mouthSmileLeft": 1, "mouthSmileRight": 1, "jawOpen": .55, "cheekSquintLeft": .8, "cheekSquintRight": .8, "eyeSquintLeft": .5, "eyeSquintRight": .5}),
+]
