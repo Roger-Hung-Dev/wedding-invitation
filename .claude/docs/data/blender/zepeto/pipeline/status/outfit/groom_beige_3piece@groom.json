@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "kind": "outfit",
+  "id": "groom_beige_3piece@groom",
+  "version": "v2",
+  "status": "released",
+  "updated_at": "2026-10-12T12:00:00+08:00",
+  "owner": "outfit",
+  "artifact": {
+    "path": "D:/render-work/zepeto-costume/groom-beige-3piece/groom/outfit.blend",
+    "sha256": "6956175661594039175d14d623aaae657009d8d06868152e660bb0d319e78703"
+  },
+  "upstream": [
+    {
+      "kind": "body",
+      "id": "groom",
+      "version": "v8",
+      "sha256": "052080afd1fa8a11a18faea2373476bbf684e329c4c478d71e9eae7c53d05034"
+    }
+  ],
+  "changes": "新郎米色三件式（敞開外套＋背心＋海軍藍領結＋焦糖棕皮鞋）；使用者 2026-10-12 定案",
+  "page": "https://claude.ai/artifact/82TmvDa2vCH1JiaKB3igjo",
+  "notes": {
+    "outfit_key": "groom-beige-3piece",
+    "design": ".claude/docs/data/blender/library/outfits-zepeto/groom-beige-3piece/outfit.py",
+    "body_release_version": "body-v8-fingers-20261012"
+  }
+}

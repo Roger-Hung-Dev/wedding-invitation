@@ -72,6 +72,14 @@ Thumbs.db
 # source/ 是從 Sketchfab 下載的原始壓縮檔與解開的檔案，可用 API 重新下載
 .claude/docs/data/blender/zepeto/templates/*/source/
 
+# === ZEPETO 穿戴物品素材庫（.claude/docs/data/blender/library/outfits-zepeto/）===
+# outfit.py、outfit.json、catalog.json、refs/analysis.md、previews/（寬 360 小圖）進版控；
+# .blend 與檢查圖在 D:/render-work/zepeto-costume，本來就不在 repo。使用者給的參考照片不進版控（含 _drafts/ 底下的試做）
+.claude/docs/data/blender/library/outfits-zepeto/**/refs/*.jpg
+.claude/docs/data/blender/library/outfits-zepeto/**/refs/*.jpeg
+.claude/docs/data/blender/library/outfits-zepeto/**/refs/*.png
+.claude/docs/data/blender/library/outfits-zepeto/**/refs/*.webp
+
 # === Blender 製作（.claude/docs/data/blender/productions/）===
 # 同框檔、整景檔（blend/couple.blend 等）可由 scripts/ 重建，單檔 30MB 上下；影格在 D:\render-work，本來就不在 repo
 .claude/docs/data/blender/productions/*/**/*.blend

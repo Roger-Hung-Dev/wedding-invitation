@@ -28,6 +28,7 @@
 | 動作庫擴充 | 直呼 `blender-animation-append` | 動作描述 → 寫進共用動作庫、檢查通過才入庫 |
 | 整支片批次審看 | 主控端呼叫 workflow `film-scene-review` | 多幕 3D 情境一起渲出快速預覽 → 彙整成審看網頁 → 使用者一次給逐幕回饋 → 照回饋修 → 確認的幕才做完整品質 |
 | ZEPETO 身體（一條龍） | `/zepeto-body-generation-workflow` | 選頭（挑選器面板，可複選）→ 比對頭有沒有更新 → 關閘門 → 依頭自動量尺寸長出照 ZEPETO 官方比例的 4.5 頭身身體（骨架＋前臂扭轉骨、手腳固定模板、頭身接口環、權重清理、膚色、UV、交接尺寸）→ 16 項出廠檢查＋近照自我審查 → 審看網頁 → 照回饋修 → 出廠（RELEASE.json＋產線狀態紀錄；黏土風版本換新版要先問導演）→ 通知衣服、動畫。2026-10-14 起黏土風做法已移除（封存 `D:/render-work/archive/zepeto-body-clay-route-20261014/`）；四肢技術見該 skill 的 `references/limbs.md` |
+| ZEPETO 穿戴物品 | `/zepeto-clothing-generation-workflow <描述>`（可 Alt+V 貼參考照片或 @圖片檔） | 開身體選單面板勾要穿在誰身上（可複選、只列已出廠的；面板沒載入時退回內建選單，不用自己找檔）→ 分析參考 → 用共用配方寫成 `outfit.py` → 背景 Blender 從身體長出衣服、鞋子、配件並綁骨架 → 近照＋Mixamo 動作穿模檢查 → 審看網頁 → 照回饋修；素材庫在 `library/outfits-zepeto/`。2026-10-14 起照參考照刻細節＋寫實布料（取代黏土風；配方 `garment_detail.py`，會垂的布用布料模擬在站姿垂一次定形）；大蓬裙的手交給動畫端（提裙、手搭裙側），交接資料寫在 `outfit.json` 的 `anim_handoff` |
 | ZEPETO 大頭（一條龍） | `/zepeto-character-face-generation-workflow`（Alt+V 貼照片或 @照片檔） | 真人大頭照 → ZEPETO 風 3D 頭模型（OBJ；V 字臉、杏仁眼、光滑亮澤）→ 後處理成一打開就能看的 .blend＋四角度驗收圖 → 可動臉（AI 頭本身當成品：ARKit 52 表情＋臉部控制骨架＋長髮避開身體＋自動檢查報告） |
 | ZEPETO 大頭生成 | 直呼 `zepeto-analyze-photo-3d-model` | 照片 → 五官分析 → Hyper3D Rodin 文字生成（不上傳照片）→ 三角度檢查 → OBJ＋貼圖 |
 | ZEPETO 大頭後處理 | 直呼 `zepeto-avatar-crafter` | OBJ → 置中、焊接頂點、平滑、亮澤材質、三點燈光 → .blend＋驗收圖 |
@@ -64,6 +65,7 @@ blender-animation-append ──▶ 共用動作庫（blender-motion-library 的 
 ```
 
 - 資料都在 `.claude/docs/data/blender/`：`projects/<名稱>/` 一個角色一個資料夾；`library/` 是預設資料庫（手勢、表情、腳、30 種動作、粉色蓬裙禮服，來自範例專案 `projects/bride`）。資料夾說明見那裡的 `README.md`。
+- **穿戴物品素材庫**：`library/outfits-zepeto/`（每套服裝一個資料夾：`outfit.py`＋`outfit.json`＋`refs/`＋`previews/`）。配方與產生器在 skill `zepeto-clothing-generation-workflow` 的 `scripts/`（`garment_detail.py`＝照參考照刻細節＋寫實布料，新衣服用；`garment_lib.py`＝基本動作與舊黏土風配方；`outfit_build.py`、`outfit_page.py`）。衣服每次都從身體重新長出來，身體出廠新版本後重跑即可；`.blend` 與檢查圖在 `D:/render-work/zepeto-costume/<服裝>/<身體>/`。身體只用已出廠的（身體出廠閘門 hook `require-body-release.ps1` 會擋），Blender 直接開 body.blend、另存 outfit.blend，絕不存回原檔。
 - **臉部模型只收 `.vroid`，但 VRoid MCP 不能匯出 VRM。** 使用者要先在 VRoid Studio 開 .vroid → 按 F8 → 存成 VRM 1.0（放在 .vroid 旁邊同檔名）。沒有 VRM 時 `blender-creator` 會停下來回報，不會硬做。
 - **Blender 要開著**（MCP for Blender 外掛啟動）。VRM 匯入只能在 GUI Blender；長時間渲染改用背景 Blender（`blender.exe -b … -P bl_cli.py`），可並行、不受 MCP 120 秒限制。
 - **調整動作或情境時走快速迭代**：調整中只交低解析、無物理、只渲改到片段的快速預覽＋多角度檢查圖，一次收齊問題再修；使用者確認後才做完整渲染。規範在 `blender-motion-library` 的 `references/fast-iteration.md`，三個 Blender 子代理的定義都已寫入。

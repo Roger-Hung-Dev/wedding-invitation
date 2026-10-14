@@ -1,0 +1,101 @@
+{
+ "key": "groom-beige-3piece",
+ "title": "新郎米色三件式",
+ "status": "approved",
+ "approved_at": "2026-10-12",
+ "for_bodies": [
+  "groom"
+ ],
+ "lead": "照使用者給的參考照做的米色三件式：敞開的米色外套、V 領背心、米色西裝褲、白襯衫尖角翻領、海軍藍領結、焦糖棕綁帶皮鞋。",
+ "items": [
+  {
+   "object": "Suit_Shirt",
+   "name": "白襯衫",
+   "cat": "top",
+   "desc": "立領蓋住脖子接縫；只做領口、V 領裡、袖口這些會露出來的地方"
+  },
+  {
+   "object": "Suit_CollarTips",
+   "name": "尖角翻領",
+   "cat": "top",
+   "desc": "領結兩側往外下方的兩個小尖角"
+  },
+  {
+   "object": "Suit_Vest",
+   "name": "米色背心",
+   "cat": "top",
+   "desc": "只做前片，V 領"
+  },
+  {
+   "object": "Suit_Buttons",
+   "name": "背心扣子",
+   "cat": "accessory",
+   "desc": "4 顆深咖啡色"
+  },
+  {
+   "object": "Suit_Jacket",
+   "name": "米色外套",
+   "cat": "outer",
+   "desc": "敞開不扣，同色領片亮一階"
+  },
+  {
+   "object": "Suit_Pockets",
+   "name": "口袋",
+   "cat": "outer",
+   "desc": "左胸胸袋、兩側腰下袋蓋"
+  },
+  {
+   "object": "Suit_Pants",
+   "name": "米色西裝褲",
+   "cat": "bottom",
+   "desc": "直筒"
+  },
+  {
+   "object": "Suit_Shoes",
+   "name": "焦糖棕皮鞋",
+   "cat": "shoes",
+   "desc": "腳整個包住、鞋頭圓胖"
+  },
+  {
+   "object": "Suit_ShoeLaces",
+   "name": "鞋帶",
+   "cat": "shoes",
+   "desc": "腳背 3 條深棕"
+  },
+  {
+   "object": "Suit_BowTie",
+   "name": "海軍藍領結",
+   "cat": "accessory",
+   "desc": ""
+  }
+ ],
+ "refs": [
+  {
+   "file": "refs/ref_suit.png",
+   "caption": "西裝（使用者 2026-10-12 貼上）"
+  },
+  {
+   "file": "refs/ref_shoe1.png",
+   "caption": "鞋子"
+  },
+  {
+   "file": "refs/ref_shoe2.png",
+   "caption": "鞋子"
+  }
+ ],
+ "issues": [
+  "外套前襟邊緣近看有一點毛邊（從身體形狀切出來的切口）。",
+  "雙手舉高時外套肩膀碰到頭：身體比例本來的問題（頭比肩膀寬），不在衣服這邊解。",
+  "沒有布紋：身體沒有 UV，衣服都是純色。"
+ ],
+ "asks": [],
+ "review_url": "https://claude.ai/artifact/82TmvDa2vCH1JiaKB3igjo",
+ "history": [
+  "2026-10-11 第一版是深藍灰（另存成 groom-navy-tux）",
+  "2026-10-12 使用者給參考照改成米色三件式，確認「這樣可以」"
+ ],
+ "body_labels": {
+  "groom": "新郎",
+  "bride": "新娘"
+ }
+}

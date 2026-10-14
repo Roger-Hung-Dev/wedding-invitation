@@ -1,0 +1,245 @@
+{
+ "key": "bride-blush-ballgown-v2",
+ "title": "新娘淡粉禮服・細節版（試做）",
+ "status": "approved_pending_body",
+ "for_bodies": [
+  "bride"
+ ],
+ "lead": "照參考照刻出細節的版本，質感用使用者選的 C（寫實布料：歐根紗有光澤、薄紗半透明），裙子照照片的蓬度。2026-10-14 試過把裙子縮成 A 字，使用者說質感變差，退回這版；手會陷進裙子的問題改由動畫端處理（走路提裙、停下來手放在裙子兩側）。先穿在新娘身體 v3 上試做，新身形身體出廠後再重新長上去。",
+ "items": [
+  {
+   "object": "Gown_Bodice",
+   "name": "平口上身",
+   "cat": "top",
+   "desc": "從腰間布花往右肩散開的斜摺；舉手時上緣跟著胸口走"
+  },
+  {
+   "object": "Gown_Neckline",
+   "name": "捲邊上緣",
+   "cat": "top",
+   "desc": "往上立起、再往外翻下來的摺紗，高低不平，兩側後方翹得比較高"
+  },
+  {
+   "object": "Gown_Wrap",
+   "name": "前胸斜包摺",
+   "cat": "top",
+   "desc": "從右側上緣斜斜包過胸口到腰間布花"
+  },
+  {
+   "object": "Gown_Sash",
+   "name": "腰帶",
+   "cat": "accessory",
+   "desc": "略深一階的粉"
+  },
+  {
+   "object": "Gown_Rose",
+   "name": "緞帶玫瑰",
+   "cat": "accessory",
+   "desc": "一條緞帶捲成，外圈花瓣往外翻；在新娘左腰"
+  },
+  {
+   "object": "Gown_RoseTails",
+   "name": "玫瑰垂帶",
+   "cat": "accessory",
+   "desc": "兩條會扭轉的垂帶，末端剪成燕尾，貼著外層紗"
+  },
+  {
+   "object": "Gown_Peplum",
+   "name": "腰下外層紗",
+   "cat": "bottom",
+   "desc": "大軟摺、正前方斜開口露出裡面的紗，後面比較長；布料模擬垂一次定形"
+  },
+  {
+   "object": "Gown_Cascade1",
+   "name": "瀑布荷葉邊（4 層）",
+   "cat": "bottom",
+   "desc": "背後一層層往下疊（Gown_Cascade1～4）；布料模擬垂一次定形，動畫時跟著裙子動"
+  },
+  {
+   "object": "Gown_Tulle2",
+   "name": "蓬紗裙（3 層）",
+   "cat": "bottom",
+   "desc": "不透的襯裙（Gown_Lining）＋兩層半透明紗（Gown_Tulle1、2），不規則直摺、腰上細抽皺；落地，照照片的蓬度，下襬半徑約 57 cm"
+  },
+  {
+   "object": "Gown_BackBow",
+   "name": "背後大蝴蝶結",
+   "cat": "accessory",
+   "desc": "兩個中空的緞帶圈＋中間結；兩條長垂帶（Gown_BowTails）沿荷葉邊往下"
+  },
+  {
+   "object": "Gown_Shoes",
+   "name": "淡粉白綁帶球鞋",
+   "cat": "shoes",
+   "desc": "照片裙底露出的球鞋，有鞋帶（Gown_Laces）"
+  },
+  {
+   "object": "Gown_Earrings",
+   "name": "銀色花形耳環",
+   "cat": "accessory",
+   "desc": "掛在耳垂下，只跟著頭動"
+  }
+ ],
+ "refs": [
+  {
+   "file": "refs/ref_front.jpg",
+   "caption": "使用者給的參考照：正面"
+  },
+  {
+   "file": "refs/ref_side.jpg",
+   "caption": "使用者給的參考照：側面（背後的瀑布荷葉邊）"
+  }
+ ],
+ "issues": [
+  "手垂下、走路時手臂會陷進裙子（裙子在手腕高度離身體中線約 31～33 cm，待機時手腕只在 21 cm）。改由動畫端處理：走路提裙、停下來手放在裙子兩側，正在問動畫端",
+  "目前穿在新娘身體 v3 上試做。新身形身體出廠後要重新長一次（各部位的高度都從身體量，會自動跟著變）",
+  "挽手臂、並肩走時裙子會碰到新郎的腿，動畫端要讓兩人站開一點",
+  "布料模擬時有一部分點被彈飛，已用旁邊的點補平；近看背後的荷葉邊有少數小凹凸，上身近看也有一點凹凸",
+  "薄紗表面有細細的顆粒感，是半透明的渲染雜訊。正式渲染時提高畫質設定會比較細",
+  "坐、蹲、跪時裙子會穿進地板下或大腿。片中新娘沒有這些動作"
+ ],
+ "asks": [
+  "這版就是比較頁的 C，確認一下沒問題；手的姿勢等動畫端回覆再一起看"
+ ],
+ "body_labels": {
+  "bride": "新娘身體 v3（試做用，之後換新身形）"
+ },
+ "extra_closeups": {
+  "bow": "背後蝴蝶結",
+  "cascade": "背後荷葉邊",
+  "knot": "腰間玫瑰與垂帶",
+  "earring": "耳環"
+ },
+ "anim_handoff": {
+  "note": "給動畫端（2026-10-14）。數字是新娘身體 v3、靜止姿勢量的；換新身形身體重長後會重算（outfit.blend 場景屬性 gown_handoff、輸出資料夾 skirt_handoff.json）。",
+  "skirt_radius": {
+   "desc": "高度 z（m，每 5 cm）→ 衣服最外層離骨盆骨頭 xy 的距離：[z, 正面, 側面（左右平均）, 背面]。含襯裙、兩層紗、外層紗、荷葉邊、垂帶",
+   "center": [
+    0.0,
+    0.0
+   ],
+   "rows": [
+    [
+     0.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.05,
+     0.591,
+     0.591,
+     0.592
+    ],
+    [
+     0.1,
+     0.588,
+     0.588,
+     0.587
+    ],
+    [
+     0.15,
+     0.58,
+     0.581,
+     0.584
+    ],
+    [
+     0.2,
+     0.569,
+     0.571,
+     0.576
+    ],
+    [
+     0.25,
+     0.553,
+     0.557,
+     0.558
+    ],
+    [
+     0.3,
+     0.533,
+     0.538,
+     0.546
+    ],
+    [
+     0.35,
+     0.508,
+     0.515,
+     0.54
+    ],
+    [
+     0.4,
+     0.478,
+     0.487,
+     0.488
+    ],
+    [
+     0.45,
+     0.443,
+     0.454,
+     0.468
+    ],
+    [
+     0.5,
+     0.409,
+     0.43,
+     0.433
+    ],
+    [
+     0.55,
+     0.357,
+     0.379,
+     0.372
+    ],
+    [
+     0.6,
+     0.306,
+     0.331,
+     0.326
+    ],
+    [
+     0.65,
+     0.249,
+     0.285,
+     0.276
+    ],
+    [
+     0.7,
+     0.187,
+     0.217,
+     0.208
+    ],
+    [
+     0.75,
+     0.119,
+     0.153,
+     0.135
+    ]
+   ]
+  },
+  "grips": {
+   "desc": "提裙掛點：外層紗（Gown_Peplum）與荷葉邊（Gown_Cascade1～4）各有 Hook 修改器 Grip_L／Grip_R（排在 Armature 後面），頂點群組 grip_L／grip_R。每格：SkirtGrip_X.location = grip_rest + 骨架物件 matrix_world.to_3x3() 的反矩陣 @ (手指捏住的世界座標 − SkirtGripAnchor_X 的世界座標)。不提裙時 location = grip_rest。實測往外 3 cm、往上 4 cm：抓點誤差 < 0.3 mm、外層紗不穿進內層、沒有尖角",
+   "L": {
+    "grip_rest": [
+     0.3104,
+     -0.0931,
+     0.6
+    ],
+    "empty": "SkirtGrip_L",
+    "anchor": "SkirtGripAnchor_L",
+    "anchor_bone": "J_Bip_C_Hips"
+   },
+   "R": {
+    "grip_rest": [
+     -0.3089,
+     -0.0926,
+     0.6
+    ],
+    "empty": "SkirtGrip_R",
+    "anchor": "SkirtGripAnchor_R",
+    "anchor_bone": "J_Bip_C_Hips"
+   }
+  },
+  "body_blend": "D:\\render-work\\zepeto-body\\build\\bride\\body.blend"
+ }
+}

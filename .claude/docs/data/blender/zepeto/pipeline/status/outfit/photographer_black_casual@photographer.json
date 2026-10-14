@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "kind": "outfit",
+  "id": "photographer_black_casual@photographer",
+  "version": "v1",
+  "status": "released",
+  "updated_at": "2026-10-12T22:53:01+08:00",
+  "owner": "outfit",
+  "artifact": {
+    "path": "D:/render-work/zepeto-costume/photographer-black-casual/photographer/outfit.blend",
+    "sha256": "4b5c642a5cdd05d440162d05c326cde62f068606bfaacbacb3f81762fbc76ce5"
+  },
+  "upstream": [
+    {
+      "kind": "body",
+      "id": "photographer",
+      "version": "v1",
+      "sha256": "8c7e873741204a29e86cf42efd82c4c3d63a61da48360157244f61020dcefc41"
+    }
+  ],
+  "changes": "第一版：黑色貼身高領長袖（紮進褲子、領子蓋住脖子接口細線）＋深灰黑長褲＋深灰休閒鞋；Mixamo crouch_idle、kneeling_idle 蹲姿檢查無穿模",
+  "page": "https://claude.ai/artifact/TBFXQZcdvPAh6jnMgNS3t7",
+  "notes": {
+    "outfit_key": "photographer-black-casual",
+    "design": ".claude/docs/data/blender/library/outfits-zepeto/photographer-black-casual/outfit.py"
+  }
+}
