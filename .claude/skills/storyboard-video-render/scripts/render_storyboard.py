@@ -7,7 +7,7 @@
 共通選項：--work DIR（快取與抽格的工作目錄，預設為 SB.json 旁的 render-work/）、--jobs N（平行數）
 
 特效實作的對照表（新增特效時要同步改的地方）：
-  版型  → render_shot() 的 LAYOUT 分支        運鏡 → motion()、kmax()
+  版型  → render_shot() 的 LAYOUT 分支        運鏡 → motion()、kmax()（split-fly 另有 split_fly()）
   轉場  → overlap_window()／overlap_render()／overlay_tail()／overlay_head()
   片頭  → OPENINGS 註冊表                     片尾 → ENDINGS 註冊表
   調色  → GRADE_OPS
@@ -263,20 +263,57 @@ def kmax(m):
         return m["scale"]
     if t == "split-counter":
         return max(m["left"] + m["right"])
+    if t == "split-fly":
+        return max(m["zoom"])
     if t in ("still", "split-late", "stagger"):
         return 1.0
     raise ValueError(f"未知運鏡 {t}")
+
+
+def fill_floor(k, a, b):
+    """倍率下限：不低於 100%（剛好填滿版型的顯示高）；起訖本來就低於 100% 時以較小的端點為下限。
+    交疊型轉場期間 p 會超出 0～1、倍率跟著外插，慢拉到 100% 的鏡過了切點會縮到 100% 以下，
+    H 版型四周露黑邊、A／B 版型照片上下露出模糊底。p 在 0～1 內時倍率本來就不低於下限，不受影響。"""
+    return max(k, min(a, b, 1.0))
 
 
 def motion(m, p):
     """回傳（縮放倍率, 水平位移 px）；p 為本鏡進度 0→1（轉場交疊時可略超出）。"""
     q = ease(p) if m.get("ease") else p
     if m["type"] == "zoom":
-        return lerp(m["from"], m["to"], q), 0
+        return fill_floor(lerp(m["from"], m["to"], q), m["from"], m["to"]), 0
     if m["type"] == "pan":
         d = 1 if m["dir"] == "right" else -1
         return m["scale"], d * lerp(-m["distance"] / 2, m["distance"] / 2, q)
     return 1.0, 0
+
+
+def ease_out_cubic(u):
+    u = min(1.0, max(0.0, u))
+    return 1 - (1 - u) ** 3
+
+
+def split_fly(sh, t, p, km):
+    """B 版型 split-fly（分割上下飛入）：每格「模糊底＋直式原圖」先合成好，整格垂直飛入自己那一欄。
+    飛入時鐘從切點 s 起算（交疊窗裡 u<0 → 整格在畫面外、露底色）；推拉全鏡線性、飛入途中也在推。
+    飛入途中用小數座標（place_sub），只有落定且倍率起訖相同時才對齊整數像素。"""
+    s, photos, g, m = sh["start"], sh["photos"], sh["grade"], sh["motion"]
+    z0, z1 = m["zoom"]
+    k = fill_floor(lerp(z0, z1, p), z0, z1)
+    c = Image.new("RGB", (W, H), BACKDROP)
+    for j, (x0, x1) in enumerate(split_geometry()):
+        cw = x1 - x0
+        cell = asset("bg", photos[j], g, str(cw)).copy()
+        place_center(cell, asset("pt", photos[j], g, round(H * km)), cw / 2, H / 2, k / km, clip=(0, 0, cw, H),
+                     snap=z0 == z1)
+        u = (t - s - (m["delay"] if j else 0.0)) / m["duration"]
+        dy = (1 - ease_out_cubic(u)) * H * (-1 if m["left" if j == 0 else "right"] == "down" else 1)
+        if dy == 0:
+            c.paste(cell, (x0, 0))
+        else:
+            place_sub(c, cell, x0, dy, 1.0, clip=(x0, 0, x1, H))
+            _padded.pop(id(cell), None)  # 每格都是新圖，不佔用照片的邊緣快取
+    return c
 
 
 def render_shot(i, t):
@@ -293,11 +330,13 @@ def render_shot(i, t):
         c = Image.new("RGB", (W, H))
         k, dx = motion(m, p)
         place_center(c, asset("ld", photos[0], g, round(km * 100)), W / 2 + dx, H / 2, k / km, snap=still)
+    elif lay == "B" and m["type"] == "split-fly":
+        c = split_fly(sh, t, p, km)
     elif lay == "B":
         c = Image.new("RGB", (W, H), BACKDROP)
         q = ease(p) if m.get("ease") else p
         if m["type"] == "split-counter":
-            ks = [lerp(*m["left"], q), lerp(*m["right"], q)]
+            ks = [fill_floor(lerp(*m[side], q), *m[side]) for side in ("left", "right")]
         else:
             ks = [motion(m, p)[0]] * 2
         late = m["type"] == "split-late"

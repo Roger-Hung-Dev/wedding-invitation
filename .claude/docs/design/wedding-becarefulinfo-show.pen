@@ -1,5 +1,5 @@
 {
-  "version": "2.17",
+  "version": "2.21",
   "children": [
     {
       "type": "frame",
@@ -3327,8 +3327,7 @@
                         "type": "shadow",
                         "shadowType": "outer",
                         "color": "#E53935AA",
-                        "blur": 28,
-                        "spread": 2
+                        "blur": 28
                       },
                       "gap": 10,
                       "justifyContent": "center",
@@ -5396,7 +5395,7 @@
                                     "type": "image",
                                     "enabled": true,
                                     "url": "animation-photo/新郎-大頭照.jpg",
-                                    "mode": "fill"
+                                    "mode": "cover"
                                   },
                                   "width": 56,
                                   "height": 56,
@@ -5496,7 +5495,7 @@
                                     "type": "image",
                                     "enabled": true,
                                     "url": "animation-photo/新娘-大頭照.jpg",
-                                    "mode": "fill"
+                                    "mode": "cover"
                                   },
                                   "width": 56,
                                   "height": 56,
@@ -6741,7 +6740,7 @@
                                 "type": "image",
                                 "enabled": true,
                                 "url": "animation-photo/新郎-大頭照.jpg",
-                                "mode": "fill"
+                                "mode": "cover"
                               },
                               "width": "fill_container",
                               "height": 96
@@ -6754,7 +6753,7 @@
                                 "type": "image",
                                 "enabled": true,
                                 "url": "animation-photo/新娘-大頭照.jpg",
-                                "mode": "fill"
+                                "mode": "cover"
                               },
                               "width": "fill_container",
                               "height": 96
@@ -9223,8 +9222,7 @@
                         "type": "shadow",
                         "shadowType": "outer",
                         "color": "#7FB7E6CC",
-                        "blur": 16,
-                        "spread": 2
+                        "blur": 16
                       },
                       "gap": 4,
                       "justifyContent": "center",
@@ -11425,7 +11423,7 @@
                                 "type": "image",
                                 "enabled": true,
                                 "url": "animation-photo/新郎-大頭照.jpg",
-                                "mode": "fill"
+                                "mode": "cover"
                               },
                               "width": 52,
                               "height": 52,
@@ -11586,7 +11584,7 @@
                                 "type": "image",
                                 "enabled": true,
                                 "url": "animation-photo/新娘-大頭照.jpg",
-                                "mode": "fill"
+                                "mode": "cover"
                               },
                               "width": 52,
                               "height": 52,
@@ -13007,7 +13005,7 @@
                                     "type": "image",
                                     "enabled": true,
                                     "url": "animation-photo/新郎-大頭照.jpg",
-                                    "mode": "fill"
+                                    "mode": "cover"
                                   },
                                   "width": "fill_container",
                                   "height": "fill_container"
@@ -13020,7 +13018,7 @@
                                     "type": "image",
                                     "enabled": true,
                                     "url": "animation-photo/新娘-大頭照.jpg",
-                                    "mode": "fill"
+                                    "mode": "cover"
                                   },
                                   "width": "fill_container",
                                   "height": "fill_container"
@@ -13637,8 +13635,7 @@
                         "type": "shadow",
                         "shadowType": "outer",
                         "color": "#7FB7E6AA",
-                        "blur": 14,
-                        "spread": 1
+                        "blur": 14
                       },
                       "justifyContent": "center",
                       "alignItems": "center",
@@ -13670,8 +13667,7 @@
                         "type": "shadow",
                         "shadowType": "outer",
                         "color": "#7FB7E6AA",
-                        "blur": 14,
-                        "spread": 1
+                        "blur": 14
                       },
                       "justifyContent": "center",
                       "alignItems": "center",
@@ -17432,7 +17428,7 @@
                                 "type": "image",
                                 "enabled": true,
                                 "url": "animation-photo/新郎-大頭照.jpg",
-                                "mode": "fill"
+                                "mode": "cover"
                               },
                               "width": 56,
                               "height": 56,
@@ -17541,7 +17537,7 @@
                                 "type": "image",
                                 "enabled": true,
                                 "url": "animation-photo/新娘-大頭照.jpg",
-                                "mode": "fill"
+                                "mode": "cover"
                               },
                               "width": 56,
                               "height": 56,
@@ -24864,7 +24860,7 @@
                                 "type": "image",
                                 "enabled": true,
                                 "url": "animation-photo/新郎-大頭照.jpg",
-                                "mode": "fill"
+                                "mode": "cover"
                               },
                               "width": 56,
                               "height": 56,
@@ -25128,7 +25124,7 @@
                                 "type": "image",
                                 "enabled": true,
                                 "url": "animation-photo/新娘-大頭照.jpg",
-                                "mode": "fill"
+                                "mode": "cover"
                               },
                               "width": 56,
                               "height": 56,
@@ -31168,7 +31164,7 @@
                             "type": "image",
                             "enabled": true,
                             "url": "animation-photo/新郎-大頭照.jpg",
-                            "mode": "fill"
+                            "mode": "cover"
                           },
                           "width": 64,
                           "height": 64,
@@ -31239,7 +31235,7 @@
                             "type": "image",
                             "enabled": true,
                             "url": "animation-photo/新娘-大頭照.jpg",
-                            "mode": "fill"
+                            "mode": "cover"
                           },
                           "width": 64,
                           "height": 64,
@@ -38499,7 +38495,7 @@
                                 "type": "image",
                                 "enabled": true,
                                 "url": "animation-photo/新郎-大頭照.jpg",
-                                "mode": "fill"
+                                "mode": "cover"
                               },
                               "width": 54,
                               "height": 54
@@ -38601,7 +38597,7 @@
                                 "type": "image",
                                 "enabled": true,
                                 "url": "animation-photo/新娘-大頭照.jpg",
-                                "mode": "fill"
+                                "mode": "cover"
                               },
                               "width": 54,
                               "height": 54
@@ -49773,7 +49769,7 @@
                         "type": "image",
                         "enabled": true,
                         "url": "animation-photo/新郎-大頭照.jpg",
-                        "mode": "fill"
+                        "mode": "cover"
                       },
                       "width": 72,
                       "height": 72,
@@ -50098,7 +50094,7 @@
                         "type": "image",
                         "enabled": true,
                         "url": "animation-photo/新娘-大頭照.jpg",
-                        "mode": "fill"
+                        "mode": "cover"
                       },
                       "width": 72,
                       "height": 72,
@@ -62079,7 +62075,7 @@
                         "type": "image",
                         "enabled": true,
                         "url": "animation-photo/新郎-大頭照.jpg",
-                        "mode": "fill"
+                        "mode": "cover"
                       },
                       "width": 64,
                       "height": 64
@@ -62172,7 +62168,7 @@
                         "type": "image",
                         "enabled": true,
                         "url": "animation-photo/新娘-大頭照.jpg",
-                        "mode": "fill"
+                        "mode": "cover"
                       },
                       "width": 64,
                       "height": 64
@@ -68200,7 +68196,7 @@
                         "type": "image",
                         "enabled": true,
                         "url": "animation-photo/新郎-大頭照.jpg",
-                        "mode": "fill"
+                        "mode": "cover"
                       },
                       "width": 62,
                       "height": 74
@@ -68286,7 +68282,7 @@
                         "type": "image",
                         "enabled": true,
                         "url": "animation-photo/新娘-大頭照.jpg",
-                        "mode": "fill"
+                        "mode": "cover"
                       },
                       "width": 62,
                       "height": 74
@@ -77417,7 +77413,7 @@
                         "type": "image",
                         "enabled": true,
                         "url": "animation-photo/新郎-大頭照.jpg",
-                        "mode": "fill"
+                        "mode": "cover"
                       },
                       "width": 60,
                       "height": 60,
@@ -77536,7 +77532,7 @@
                         "type": "image",
                         "enabled": true,
                         "url": "animation-photo/新娘-大頭照.jpg",
-                        "mode": "fill"
+                        "mode": "cover"
                       },
                       "width": 60,
                       "height": 60,
@@ -97321,8 +97317,6 @@
                       "y": 12,
                       "name": "大標-倒數",
                       "fill": "#E8C27A",
-                      "stroke": "#3A2418",
-                      "strokeWidth": 3,
                       "effect": [
                         {
                           "type": "shadow",
@@ -97941,7 +97935,8 @@
               "fill": "#4A3B35",
               "content": "V12",
               "fontFamily": "Pinyon Script",
-              "fontSize": 44
+              "fontSize": 44,
+              "fontWeight": "normal"
             },
             {
               "type": "text",
@@ -98422,6 +98417,40 @@
             },
             {
               "type": "frame",
+              "id": "Zt2ho",
+              "name": "資訊-表情",
+              "width": "fill_container",
+              "gap": 10,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "mz2Oq",
+                  "name": "標籤",
+                  "fill": "#4A3B35CC",
+                  "textGrowth": "fixed-width",
+                  "width": 58,
+                  "content": "表情",
+                  "fontFamily": "Noto Sans TC",
+                  "fontSize": 14,
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "f4ioa2",
+                  "name": "值",
+                  "fill": "#4A3B35",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "凡是笑：眼睛正常張開、嘴巴微笑，不要瞇眼笑；新郎的眼睛整體開大一點",
+                  "lineHeight": 1.5,
+                  "fontFamily": "Noto Sans TC",
+                  "fontSize": 15,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
               "id": "rCbYP",
               "name": "資訊-畫面構成",
               "width": "fill_container",
@@ -98446,7 +98475,7 @@
                   "fill": "#4A3B35",
                   "textGrowth": "fixed-width",
                   "width": "fill_container",
-                  "content": "3D 場景 ③⑤⑦（共用「花園拱門」）／混合 ②⑧（2D 信紙與 3D 花園互相轉換）／2D 圖文 ①④⑥；角色：從拱門柱後走出來（②）、新郎拉愛情里程碑走向新娘（③）、拱門下擺姿勢（⑤）、坐在圓桌旁（⑦）、拱門下置中（⑧）",
+                  "content": "3D 場景 ③⑤⑦（共用「花園拱門」）／混合 ②⑧（2D 信紙與 3D 花園互相轉換）／2D 圖文 ①④⑥；角色：從拱門柱後走出來（②）、新郎推紅毯卷、新娘從後面一起推（③）、拱門下擺姿勢（⑤）、坐在圓桌旁（⑦）、拱門下置中（⑧）",
                   "lineHeight": 1.5,
                   "fontFamily": "Noto Sans TC",
                   "fontSize": 15,
@@ -99906,7 +99935,7 @@
                       "fill": "#33292C",
                       "textGrowth": "fixed-width",
                       "width": "fill_container",
-                      "content": "新郎｜walk_fwd（往前走：從拱門左柱後走到拱門下）｜左下→中下｜高 75%｜0.8～4.0s｜朝向：右｜進場：直接｜出場：直接\n新郎｜sneak_hand（偷牽手：轉頭偷看新娘、左手悄悄伸向她，5.3s 起停住等著）｜中下｜高 75%｜4.0～6.0s｜進場：直接｜出場：直接\n新郎｜bonked（被敲抱頭：縮脖子、雙手抱頭，再揉頭傻笑）｜中下｜高 75%｜6.0～7.3s｜進場：直接｜出場：直接\n新郎｜bow（鞠躬，快速版 1.4s，鞠完站好）｜中下｜高 75%｜7.3～9.0s｜進場：直接｜出場：直接\n新娘｜walk_fwd（往前走：從拱門右柱後走到拱門下）｜右下→中下｜高 75%｜0.8～4.0s｜朝向：左｜進場：直接｜出場：直接\n新娘｜idle（站好，瞄到新郎伸來的手）｜中下｜高 75%｜4.0～4.3s｜進場：直接｜出場：直接\n新娘｜mallet_draw（從背後抽槌扛上右肩）｜中下｜高 75%｜4.3～5.0s｜進場：直接｜出場：直接\n新娘｜mallet_jump_bonk（跳起來從斜上方往下敲，6.0s 敲中，落地扛槌）｜中下｜高 75%｜5.0～7.3s｜進場：直接｜出場：直接\n新娘｜bow（鞠躬，快速版 1.4s，扛著槌）｜中下｜高 75%｜7.3～9.0s｜進場：直接｜出場：直接",
+                      "content": "新郎｜walk_fwd（往前走：從拱門左柱後走到拱門下）｜左下→中下｜高 75%｜0.8～4.0s｜朝向：右｜進場：直接｜出場：直接\n新郎｜sneak_hand（偷牽手：轉頭偷看新娘、左手悄悄伸向她，5.3s 起停住等著）｜中下｜高 75%｜4.0～6.0s｜進場：直接｜出場：直接\n新郎｜bonked（被敲抱頭：縮脖子、雙手抱頭，再揉頭微笑）｜中下｜高 75%｜6.0～7.3s｜進場：直接｜出場：直接｜表情：眼睛正常張開（開大一點）、嘴巴微笑\n新郎｜bow（鞠躬，快速版 1.4s，鞠完站好）｜中下｜高 75%｜7.3～9.0s｜進場：直接｜出場：直接\n新娘｜walk_fwd（往前走：從拱門右柱後走到拱門下）｜右下→中下｜高 75%｜0.8～4.0s｜朝向：左｜進場：直接｜出場：直接\n新娘｜idle（站好，瞄到新郎伸來的手）｜中下｜高 75%｜4.0～4.3s｜進場：直接｜出場：直接\n新娘｜mallet_draw（從背後抽槌扛上右肩）｜中下｜高 75%｜4.3～5.0s｜進場：直接｜出場：直接\n新娘｜mallet_jump_bonk（跳起來從斜上方往下敲，6.0s 敲中，落地扛槌）｜中下｜高 75%｜5.0～7.3s｜進場：直接｜出場：直接\n新娘｜bow（鞠躬，快速版 1.4s，扛著槌）｜中下｜高 75%｜7.3～9.0s｜進場：直接｜出場：直接",
                       "lineHeight": 1.5,
                       "fontFamily": "Noto Sans TC",
                       "fontSize": 13,
@@ -100181,8 +100210,8 @@
                     {
                       "type": "ellipse",
                       "id": "ArTUM",
-                      "x": 300,
-                      "y": 138,
+                      "x": 402,
+                      "y": 111,
                       "name": "玫瑰",
                       "fill": "#D9777F",
                       "width": 10,
@@ -100191,8 +100220,8 @@
                     {
                       "type": "ellipse",
                       "id": "v1UaC",
-                      "x": 466,
-                      "y": 142,
+                      "x": 452,
+                      "y": 111,
                       "name": "玫瑰",
                       "fill": "#D9777F",
                       "width": 10,
@@ -100211,193 +100240,150 @@
                     {
                       "type": "rectangle",
                       "id": "LgjvL",
-                      "x": 69,
-                      "y": 191,
-                      "name": "愛情里程碑-白色立柱（左）",
+                      "x": 398,
+                      "y": 122,
+                      "name": "花園拱門-左柱",
                       "fill": "#FFFFFF",
-                      "width": 2.5,
-                      "height": 55
+                      "width": 6,
+                      "height": 104
                     },
                     {
                       "type": "rectangle",
                       "id": "EG7GO",
-                      "x": 330,
-                      "y": 191,
-                      "name": "愛情里程碑-白色立柱（右）",
+                      "x": 462,
+                      "y": 122,
+                      "name": "花園拱門-右柱",
                       "fill": "#FFFFFF",
-                      "width": 2.5,
-                      "height": 55
+                      "width": 6,
+                      "height": 104
                     },
                     {
                       "type": "rectangle",
-                      "cornerRadius": 3,
+                      "cornerRadius": 2,
                       "id": "wFA4H",
-                      "x": 46,
-                      "y": 185,
-                      "name": "愛情里程碑-軌道（棉紙米白）",
-                      "fill": "#FFFBF4",
-                      "width": 340,
-                      "height": 6
+                      "x": 18,
+                      "y": 204,
+                      "name": "紅毯（已沿小徑鋪開，相遇→求婚）",
+                      "fill": "#B83A44",
+                      "width": 282,
+                      "height": 20
                     },
                     {
                       "type": "rectangle",
-                      "cornerRadius": 3,
+                      "cornerRadius": 2,
                       "id": "P0rsD",
-                      "x": 46,
-                      "y": 185,
-                      "name": "愛情里程碑-進度填色（99%，薰衣草紫→乾燥玫瑰）",
-                      "fill": {
-                        "type": "gradient",
-                        "gradientType": "linear",
-                        "enabled": true,
-                        "rotation": 270,
-                        "size": {
-                          "height": 1
-                        },
-                        "colors": [
-                          {
-                            "color": "#B8A1C9",
-                            "position": 0
-                          },
-                          {
-                            "color": "#D9777F",
-                            "position": 1
-                          }
-                        ]
-                      },
-                      "width": 320,
-                      "height": 6
+                      "x": 352,
+                      "y": 204,
+                      "name": "紅毯最後一段（虛位；100% 時紅毯卷滾到拱門下才鋪出）",
+                      "fill": "#B83A4440",
+                      "width": 118,
+                      "height": 20
                     },
                     {
                       "type": "rectangle",
                       "id": "EQmkP",
-                      "x": 366,
-                      "y": 186.5,
-                      "name": "緞帶（綁在把手上，往右上連到新郎肩上）",
-                      "rotation": 30.46554491945988,
-                      "fill": "#D9777F",
-                      "width": 39.44616584663204,
-                      "height": 3
+                      "x": 398,
+                      "y": 116,
+                      "name": "花園拱門-拱頂",
+                      "fill": "#FFFFFF",
+                      "width": 70,
+                      "height": 8
                     },
                     {
                       "type": "ellipse",
                       "id": "Hr6zW",
-                      "x": 39,
-                      "y": 181,
-                      "name": "節點-相遇（已亮，乾燥玫瑰）",
-                      "fill": "#D9777F",
-                      "width": 14,
+                      "x": 330,
+                      "y": 213,
+                      "name": "石頭（卡住紅毯卷）",
+                      "fill": "#8C8378",
+                      "width": 22,
                       "height": 14,
-                      "stroke": "#FFFBF4",
-                      "strokeWidth": 2
+                      "stroke": "#6B635A",
+                      "strokeWidth": 1
                     },
                     {
                       "type": "ellipse",
                       "id": "vFTKk",
-                      "x": 355.5,
-                      "y": 177.5,
-                      "name": "把手顫動記號",
+                      "x": 290,
+                      "y": 184,
+                      "name": "紅毯卷卡住顫動記號",
                       "innerRadius": 0.8571428571428572,
                       "startAngle": 65,
                       "sweepAngle": 50,
                       "fill": "#4A3B35",
-                      "width": 21,
-                      "height": 21
+                      "width": 46,
+                      "height": 46
                     },
                     {
                       "type": "ellipse",
                       "id": "Xp6T9",
-                      "x": 352.5,
-                      "y": 174.5,
-                      "name": "把手顫動記號",
+                      "x": 285,
+                      "y": 179,
+                      "name": "紅毯卷卡住顫動記號",
                       "innerRadius": 0.8888888888888888,
                       "startAngle": 65,
                       "sweepAngle": 50,
                       "fill": "#4A3B35",
-                      "width": 27,
-                      "height": 27
-                    },
-                    {
-                      "type": "ellipse",
-                      "id": "NqlaL",
-                      "x": 152.33333333333331,
-                      "y": 181,
-                      "name": "節點-交往（已亮，乾燥玫瑰）",
-                      "fill": "#D9777F",
-                      "width": 14,
-                      "height": 14,
-                      "stroke": "#FFFBF4",
-                      "strokeWidth": 2
+                      "width": 56,
+                      "height": 56
                     },
                     {
                       "type": "ellipse",
                       "id": "yRgxk",
-                      "x": 355.5,
-                      "y": 177.5,
-                      "name": "把手顫動記號",
+                      "x": 290,
+                      "y": 184,
+                      "name": "紅毯卷卡住顫動記號",
                       "innerRadius": 0.8571428571428572,
                       "startAngle": 245,
                       "sweepAngle": 50,
                       "fill": "#4A3B35",
-                      "width": 21,
-                      "height": 21
+                      "width": 46,
+                      "height": 46
                     },
                     {
                       "type": "ellipse",
                       "id": "JzcCi",
-                      "x": 352.5,
-                      "y": 174.5,
-                      "name": "把手顫動記號",
+                      "x": 285,
+                      "y": 179,
+                      "name": "紅毯卷卡住顫動記號",
                       "innerRadius": 0.8888888888888888,
                       "startAngle": 245,
                       "sweepAngle": 50,
                       "fill": "#4A3B35",
-                      "width": 27,
-                      "height": 27
+                      "width": 56,
+                      "height": 56
                     },
                     {
                       "type": "ellipse",
                       "id": "rJlMc",
-                      "x": 359,
-                      "y": 181,
-                      "name": "把手（99%，停在婚禮節點前）",
-                      "fill": "#FFFFFF",
-                      "width": 14,
-                      "height": 14,
-                      "stroke": "#D9777F",
-                      "strokeWidth": 2.5
-                    },
-                    {
-                      "type": "ellipse",
-                      "id": "juCcT",
-                      "x": 265.66666666666663,
-                      "y": 181,
-                      "name": "節點-求婚（已亮，乾燥玫瑰）",
-                      "fill": "#D9777F",
-                      "width": 14,
-                      "height": 14,
-                      "stroke": "#FFFBF4",
-                      "strokeWidth": 2
+                      "x": 308,
+                      "y": 202,
+                      "name": "紅毯卷捲心",
+                      "fill": "#F6EFE6",
+                      "width": 10,
+                      "height": 10,
+                      "stroke": "#7A2029",
+                      "strokeWidth": 1
                     },
                     {
                       "type": "ellipse",
                       "id": "aLuEC",
-                      "x": 375,
-                      "y": 177,
-                      "name": "節點-婚禮（較大；99% 時仍是米白，100% 時亮起）",
-                      "fill": "#FFFBF4",
-                      "width": 22,
-                      "height": 22,
-                      "stroke": "#B8A1C9",
+                      "x": 294,
+                      "y": 188,
+                      "name": "紅毯卷（越鋪越小；99% 卡在石頭前）",
+                      "fill": "#A8323C",
+                      "width": 38,
+                      "height": 38,
+                      "stroke": "#7A2029",
                       "strokeWidth": 2
                     },
                     {
                       "type": "text",
                       "id": "c5wcY",
-                      "x": 26,
-                      "y": 198,
-                      "name": "節點名稱-相遇（2D 後製疊字）",
-                      "fill": "#4A3B35",
+                      "x": 30,
+                      "y": 207,
+                      "name": "毯面字-相遇（3D 平貼字或 2D 後製）",
+                      "fill": "#FFF3E6",
                       "textGrowth": "fixed-width",
                       "width": 40,
                       "content": "相遇",
@@ -100410,10 +100396,10 @@
                     {
                       "type": "text",
                       "id": "dFYlf",
-                      "x": 139.33333333333331,
-                      "y": 198,
-                      "name": "節點名稱-交往（2D 後製疊字）",
-                      "fill": "#4A3B35",
+                      "x": 100,
+                      "y": 207,
+                      "name": "毯面字-交往（3D 平貼字或 2D 後製）",
+                      "fill": "#FFF3E6",
                       "textGrowth": "fixed-width",
                       "width": 40,
                       "content": "交往",
@@ -100426,10 +100412,10 @@
                     {
                       "type": "text",
                       "id": "nXZkA",
-                      "x": 252.66666666666663,
-                      "y": 198,
-                      "name": "節點名稱-求婚（2D 後製疊字）",
-                      "fill": "#4A3B35",
+                      "x": 162,
+                      "y": 207,
+                      "name": "毯面字-求婚（3D 平貼字或 2D 後製）",
+                      "fill": "#FFF3E6",
                       "textGrowth": "fixed-width",
                       "width": 40,
                       "content": "求婚",
@@ -100442,10 +100428,11 @@
                     {
                       "type": "text",
                       "id": "fnULY",
-                      "x": 366,
-                      "y": 202,
-                      "name": "節點名稱-婚禮（2D 後製疊字）",
-                      "fill": "#4A3B35",
+                      "x": 411,
+                      "y": 207,
+                      "name": "毯面字-婚禮（100% 露出、亮起、擴散光環）",
+                      "opacity": 0.55,
+                      "fill": "#FFF3E6",
                       "textGrowth": "fixed-width",
                       "width": 40,
                       "content": "婚禮",
@@ -100458,9 +100445,9 @@
                     {
                       "type": "text",
                       "id": "YNHTQ",
-                      "x": 338,
-                      "y": 149,
-                      "name": "日期 2026.12.12（2D 後製疊字，100% 時在婚禮節點上方浮出）",
+                      "x": 395,
+                      "y": 186,
+                      "name": "日期 2026.12.12（2D 後製疊字，100% 時在「婚禮」上方浮出）",
                       "fill": "#4A3B35",
                       "textGrowth": "fixed-width",
                       "width": 72,
@@ -100506,7 +100493,7 @@
                     {
                       "type": "frame",
                       "id": "VKaD5",
-                      "x": 92,
+                      "x": 250,
                       "y": 148.5,
                       "name": "角色-新郎",
                       "width": 42.53,
@@ -100526,7 +100513,7 @@
                           "fill": "#33292C",
                           "textGrowth": "fixed-width",
                           "width": "fill_container",
-                          "content": "新郎 新動作：拉著東西往前走→右下",
+                          "content": "新郎\n新動作：推紅毯卷（卡住）",
                           "lineHeight": 1.15,
                           "textAlign": "center",
                           "fontFamily": "Noto Sans TC",
@@ -100538,7 +100525,7 @@
                     {
                       "type": "frame",
                       "id": "O3qaTg",
-                      "x": 414,
+                      "x": 205,
                       "y": 148.5,
                       "name": "角色-新娘",
                       "width": 42.53,
@@ -100558,7 +100545,7 @@
                           "fill": "#33292C",
                           "textGrowth": "fixed-width",
                           "width": "fill_container",
-                          "content": "新娘 cheer",
+                          "content": "新娘\n新動作：跑來推背",
                           "lineHeight": 1.15,
                           "textAlign": "center",
                           "fontFamily": "Noto Sans TC",
@@ -100726,7 +100713,7 @@
                   "fill": "#33292C",
                   "textGrowth": "fixed-width",
                   "width": "fill_container",
-                  "content": "［3D 場景］花園拱門場景（同 ②）的草地側面：畫面中間橫著愛情里程碑進度條，像飄在樹籬前的時間線：兩根細白立柱撐起棉紙米白細軌道，填色由薰衣草紫漸層到乾燥玫瑰；軌道上 4 個圓形節點「相遇、交往、求婚、婚禮」，名字在節點下方，「婚禮」最大；最前端是白色小圓把手、乾燥玫瑰粗外框；新郎從左端出發，扛著綁在把手上的緞帶往右拖；新娘在最右端（終點）為他加油；兩人全身、站在進度條旁；鏡頭：進度條正側面、眼睛高度平視；百分比大標疊在進度條上方，字幕在畫面上半部",
+                  "content": "［3D 場景］花園拱門場景（同 ②）的草地小徑側面：小徑從畫面左邊通到右側的花園拱門下；新郎從左邊彎腰推著一大卷紅毯往前走，紅毯在他身後沿小徑鋪開，毯面上依序露出「相遇、交往、求婚」，紅毯卷越鋪越小；拱門前的小徑上有一顆石頭；新娘起初在畫面左側為他加油；兩人全身入鏡；鏡頭：小徑正側面、比眼睛略高（看得到毯面上的字）、固定；百分比大標與字幕在畫面上半部（不疊在紅毯上），日期 2026.12.12 在拱門下「婚禮」字的上方（由來：使用者覺得進度條飄在空中太生硬，改用 2D 提案頁 P1＋A8）",
                   "lineHeight": 1.5,
                   "fontFamily": "Noto Sans TC",
                   "fontSize": 14,
@@ -100798,7 +100785,7 @@
                       "fill": "#33292C",
                       "textGrowth": "fixed-width",
                       "width": "fill_container",
-                      "content": "新郎｜pull_walk（拉著東西往前走：面向新娘，把緞帶扛在肩上往後拖、身體前傾，緞帶從肩上往後連到把手，停在新娘左側；99% 卡住時停步、更往前傾、用力一扯）｜左下→右下｜高 45%｜0～2.8s｜朝向：右｜進場：直接｜出場：直接\n新郎｜wave2（雙手揮手，和新娘並肩對鏡頭）｜右下｜高 45%｜2.8～8.0s｜進場：直接｜出場：直接\n新娘｜cheer（歡呼，在終點為新郎加油）｜右下｜高 45%｜0～2.8s｜朝向：左｜進場：直接｜出場：直接\n新娘｜clap（拍手，新郎走到身邊、「婚禮」節點亮起）｜右下｜高 45%｜2.8～4.8s｜進場：直接｜出場：直接\n新娘｜cheer（歡呼，和新郎並肩對鏡頭）｜右下｜高 45%｜4.8～8.0s｜進場：直接｜出場：直接",
+                      "content": "新郎｜新動作：推紅毯卷往前走（彎腰前傾，雙手在腰到膝的高度推；2.0s 卡到石頭時更前傾、用力推不動，2.6s 和新娘一起用力一頂）｜左下→中下｜高 45%｜0～2.8s｜朝向：右｜進場：直接｜出場：直接\n新郎｜wave（揮手：和新娘並肩、正面對鏡頭，大臂要跟著擺）｜中下｜高 45%｜2.8～8.0s｜朝向：正面｜進場：直接｜出場：直接\n新娘｜cheer（歡呼，在起點旁為新郎加油、等待）｜左下｜高 45%｜0～1.6s｜朝向：右｜進場：直接｜出場：直接\n新娘｜新動作：從後面跑來，雙手推新郎的背（2.2s 雙手頂到新郎背上，2.6s 兩人一起用力一頂）｜左下→中下｜高 45%｜1.6～2.8s｜朝向：右｜進場：直接｜出場：直接\n新娘｜cheer（歡呼，和新郎並肩、正面對鏡頭）｜中下｜高 45%｜2.8～8.0s｜朝向：正面｜進場：直接｜出場：直接",
                       "lineHeight": 1.5,
                       "fontFamily": "Noto Sans TC",
                       "fontSize": 13,
@@ -100840,7 +100827,7 @@
                       "fill": "#33292C",
                       "textGrowth": "fixed-width",
                       "width": "fill_container",
-                      "content": "鏡頭固定；新郎扛著緞帶往前快走，把手跟著他往右推進（0→99% 用 2.0s），節點依序由米白變乾燥玫瑰色（相遇 0.2s 起步時就亮，接著交往、求婚）；99% 時把手卡在「婚禮」前輕輕顫動 0.4s，新郎停步、更往前傾；2.6s 用力一扯，2.64s 到 100%：「婚禮」節點亮起、擴散兩圈白色光環，上方浮出 2026.12.12，接著花瓣雨落在草地上，新郎走到新娘身邊；歡迎字以鋼筆筆跡寫出，名字用乾燥玫瑰色",
+                      "content": "鏡頭固定；新郎推著紅毯卷往右走，紅毯在身後沿小徑鋪開、紅毯卷越鋪越小（0→99% 用 2.0s），毯面字依序露出（相遇 0.2s 起步時就露出，接著交往、求婚）；2.0s 紅毯卷卡到石頭、輕輕顫動 0.4s，新郎更往前傾、用力推不動；1.6s 起新娘從畫面左邊跑來，2.2s 雙手頂在新郎背上；2.6s 兩人一起用力一頂，2.64s 到 100%：紅毯卷越過石頭、滾到花園拱門下停住（約 0.4s），最後一段露出「婚禮」；「婚禮」字亮起、擴散兩圈白色光環，上方浮出 2026.12.12，接著花瓣雨落在草地上；2.8s 起兩人並肩、轉正面對鏡頭歡呼揮手；歡迎字以鋼筆筆跡寫出，名字用乾燥玫瑰色",
                       "lineHeight": 1.5,
                       "fontFamily": "Noto Sans TC",
                       "fontSize": 13,
@@ -100924,7 +100911,7 @@
                       "fill": "#33292C",
                       "textGrowth": "fixed-width",
                       "width": "fill_container",
-                      "content": "經過節點時「叮」輕聲逐音；100% 時豎琴滑音",
+                      "content": "紅毯卷滾動的悶響；露出每個字時「叮」輕聲逐音；卡到石頭「咚」；100% 時豎琴滑音",
                       "lineHeight": 1.5,
                       "fontFamily": "Noto Sans TC",
                       "fontSize": 13,
@@ -100956,7 +100943,7 @@
                       "fill": "$accent-gold",
                       "textGrowth": "fixed-width",
                       "width": "fill_container",
-                      "content": "3D：花園拱門（同 ②）的草地、愛情里程碑進度條（細軌道＋4 個節點＋把手，兩根細白立柱撐起）、花瓣粒子；2D：節點名稱（相遇、交往、求婚、婚禮）、日期 2026.12.12、鋼筆字百分比",
+                      "content": "3D：花園拱門（同 ②）的草地小徑、紅毯卷（越鋪越小）與鋪開的紅毯、石頭、花瓣粒子；毯面字（相遇、交往、求婚、婚禮）：3D 平貼字或 2D 後製；2D：日期 2026.12.12、鋼筆字百分比、白色光環",
                       "lineHeight": 1.5,
                       "fontFamily": "Noto Sans TC",
                       "fontSize": 13,
@@ -101084,7 +101071,7 @@
                             "type": "image",
                             "enabled": true,
                             "url": "animation-photo/1800px/新郎簡介照.jpg",
-                            "mode": "fill"
+                            "mode": "cover"
                           },
                           "width": 152,
                           "height": 228
@@ -101176,7 +101163,7 @@
                             "type": "image",
                             "enabled": true,
                             "url": "animation-photo/1800px/新娘簡介照.jpg",
-                            "mode": "fill"
+                            "mode": "cover"
                           },
                           "width": 152,
                           "height": 228
@@ -102415,7 +102402,7 @@
                       "fill": "#33292C",
                       "textGrowth": "fixed-width",
                       "width": "fill_container",
-                      "content": "新郎｜peace（比YA，對老相機擺姿勢）｜右下｜高 75%｜0～3.6s｜進場：直接｜出場：直接\n新郎｜lookout（手遮眉遠眺，示範留意身後）｜右下｜高 75%｜3.6～6.6s｜朝向：左｜進場：直接｜出場：直接\n新郎｜nod（點頭）｜右下｜高 75%｜6.6～9.0s｜進場：直接｜出場：直接\n新娘｜bouquet（捧花，擺姿勢）｜右下｜高 75%｜0～3.6s｜進場：直接｜出場：直接\n新娘｜tilt（歪頭）｜右下｜高 75%｜3.6～6.3s｜進場：直接｜出場：直接\n新娘｜shake（搖頭，示意別擋鏡頭）｜右下｜高 75%｜6.3～9.0s｜進場：直接｜出場：直接\n路人甲｜walk_in_photo（走進來舉手機拍照）｜右下→中下｜高 76%｜3.8～6.7s｜取景：半身｜朝向：左｜進場：直接｜出場：直接\n路人甲｜oops_bow（回頭看到 ✕，尷尬抓頭鞠躬）｜中下｜高 76%｜6.7～7.5s｜取景：半身｜朝向：左｜進場：直接｜出場：直接\n路人甲｜turn_exit（轉身縮肩往右走）｜中下→右下｜高 76%｜7.5～9.0s｜取景：半身｜朝向：右｜進場：直接｜出場：直接",
+                      "content": "新郎｜peace（比YA，對老相機擺姿勢；新郎全程站直，不要一直彎膝又打直）｜右下｜高 75%｜0～3.6s｜進場：直接｜出場：直接\n新郎｜lookout（手遮眉遠眺，示範留意身後；站直）｜右下｜高 75%｜3.6～6.6s｜朝向：左｜進場：直接｜出場：直接\n新郎｜nod（點頭；站直）｜右下｜高 75%｜6.6～9.0s｜進場：直接｜出場：直接\n新娘｜bouquet（捧花，擺姿勢）｜右下｜高 75%｜0～3.6s｜進場：直接｜出場：直接\n新娘｜tilt（歪頭）｜右下｜高 75%｜3.6～6.3s｜進場：直接｜出場：直接\n新娘｜shake（搖頭，示意別擋鏡頭）｜右下｜高 75%｜6.3～9.0s｜進場：直接｜出場：直接\n路人甲｜walk_in_photo（走進來舉手機拍照）｜右下→中下｜高 76%｜3.8～6.7s｜取景：半身｜朝向：左｜進場：直接｜出場：直接\n路人甲｜oops_bow（回頭看到 ✕，尷尬抓頭鞠躬）｜中下｜高 76%｜6.7～7.5s｜取景：半身｜朝向：左｜進場：直接｜出場：直接\n路人甲｜turn_exit（轉身縮肩往右走）｜中下→右下｜高 76%｜7.5～9.0s｜取景：半身｜朝向：右｜進場：直接｜出場：直接",
                       "lineHeight": 1.5,
                       "fontFamily": "Noto Sans TC",
                       "fontSize": 13,
@@ -104164,7 +104151,7 @@
                       "fill": "#33292C",
                       "textGrowth": "fixed-width",
                       "width": "fill_container",
-                      "content": "新郎｜feed（餵食：左手叉一口送到新娘嘴邊）｜中｜高 37%｜0～4.5s｜取景：半身｜朝向：右｜進場：直接｜出場：直接\n新郎｜glass_pick（相視一笑拿酒杯：先放下叉子）｜中｜高 37%｜4.5～6.3s｜取景：半身｜朝向：右｜進場：直接｜出場：直接\n新郎｜toast_sit（坐姿乾杯：紅酒杯，先碰杯再敬鏡頭）｜中｜高 37%｜6.3～8.5s｜取景：半身｜進場：直接｜出場：直接\n新郎｜sip（喝一口：輕啜後拿著杯子微笑看鏡頭）｜中｜高 37%｜8.5～12.0s｜取景：半身｜進場：直接｜出場：直接\n新娘｜fed（被餵：身體微傾吃下，坐回來雙手輕放桌上、閉眼笑著嚼，肩膀開心地輕晃兩下）｜中｜高 37%｜0～4.5s｜取景：半身｜朝向：左｜進場：直接｜出場：直接\n新娘｜glass_pick（相視一笑拿酒杯）｜中｜高 37%｜4.5～6.3s｜取景：半身｜朝向：左｜進場：直接｜出場：直接\n新娘｜toast_sit（坐姿乾杯：紅酒杯，先碰杯再敬鏡頭）｜中｜高 37%｜6.3～8.5s｜取景：半身｜進場：直接｜出場：直接\n新娘｜sip（喝一口：輕啜後拿著杯子微笑看鏡頭）｜中｜高 37%｜8.5～12.0s｜取景：半身｜進場：直接｜出場：直接",
+                      "content": "新郎｜feed（餵食：左手叉一口送到新娘嘴邊）｜中｜高 37%｜0～4.5s｜取景：半身｜朝向：右｜進場：直接｜出場：直接\n新郎｜glass_pick（相視微笑拿酒杯：先放下叉子）｜中｜高 37%｜4.5～6.3s｜取景：半身｜朝向：右｜進場：直接｜出場：直接｜表情：眼睛正常張開（開大一點）、嘴巴微笑\n新郎｜toast_sit（坐姿乾杯：紅酒杯，先碰杯再敬鏡頭；敬鏡頭時張眼微笑，不要大笑）｜中｜高 37%｜6.3～8.5s｜取景：半身｜進場：直接｜出場：直接｜表情：眼睛正常張開（開大一點）、嘴巴微笑\n新郎｜sip（喝一口：輕啜後拿著杯子微笑看鏡頭）｜中｜高 37%｜8.5～12.0s｜取景：半身｜進場：直接｜出場：直接｜表情：眼睛正常張開（開大一點）、嘴巴微笑\n新娘｜fed（被餵：身體微傾吃下，坐回來雙手輕放桌上、眼睛張開、嘴巴有咀嚼的動作，肩膀開心地輕晃兩下）｜中｜高 37%｜0～4.5s｜取景：半身｜朝向：左｜進場：直接｜出場：直接｜表情：眼睛張開、嘴巴咀嚼\n新娘｜glass_pick（相視微笑拿酒杯）｜中｜高 37%｜4.5～6.3s｜取景：半身｜朝向：左｜進場：直接｜出場：直接｜表情：眼睛正常張開、嘴巴微笑\n新娘｜toast_sit（坐姿乾杯：紅酒杯，先碰杯再敬鏡頭；敬鏡頭時張眼微笑，不要大笑）｜中｜高 37%｜6.3～8.5s｜取景：半身｜進場：直接｜出場：直接｜表情：眼睛正常張開、嘴巴微笑\n新娘｜sip（喝一口：輕啜後拿著杯子微笑看鏡頭）｜中｜高 37%｜8.5～12.0s｜取景：半身｜進場：直接｜出場：直接｜表情：眼睛正常張開、嘴巴微笑",
                       "lineHeight": 1.5,
                       "fontFamily": "Noto Sans TC",
                       "fontSize": 13,
@@ -104703,7 +104690,7 @@
                   "fill": "#33292C",
                   "textGrowth": "fixed-width",
                   "width": "fill_container",
-                  "content": "［混合］前段 2D：回到俯拍信紙，押花拼成倒數數字；6.2s 信紙上的拱門小畫被風吹起，鏡頭穿過它回到 3D 花園拱門，新郎新娘在拱門下置中，兩人全身入鏡（頭到腳都在畫面裡）、約佔畫面高度 3/4；構圖同 ②：鏡頭拉近到拱門下（攝影機往前推或改長焦），拱門露出左右兩根柱子與拱頂兩側；3D 段字幕在畫面最上緣、兩人頭頂上方（新娘 heart 雙手會舉過頭，字幕條不要壓到手）；最後信封自己闔上",
+                  "content": "［混合］前段 2D：回到俯拍信紙，押花拼成倒數數字；6.2s 信紙上的拱門小畫被風吹起，鏡頭穿過它回到 3D 花園拱門，新郎新娘在拱門下置中，兩人全身入鏡（頭到腳都在畫面裡）、約佔畫面高度 66%（保留上緣兩行字幕的位置）；構圖同 ②：鏡頭拉近到拱門下（攝影機往前推或改長焦），拱門露出左右兩根柱子與拱頂兩側；3D 段字幕在畫面最上緣、兩人頭頂上方（新娘 heart 雙手會舉過頭，字幕條不要壓到手）；最後信封自己闔上",
                   "lineHeight": 1.5,
                   "fontFamily": "Noto Sans TC",
                   "fontSize": 14,
@@ -104775,7 +104762,7 @@
                       "fill": "#33292C",
                       "textGrowth": "fixed-width",
                       "width": "fill_container",
-                      "content": "新郎｜wave2（雙手揮手）｜中下｜高 75%｜6.4～9.0s｜進場：淡入 0.5s\n新娘｜heart（頭上比愛心）｜中下｜高 75%｜6.4～9.0s｜進場：淡入 0.5s",
+                      "content": "新郎｜wave（單手揮手：只用新郎自己的右手揮，左手放下打直；大臂要跟著擺，不是只有前臂甩）｜中下｜高 66%｜6.4～9.0s｜進場：淡入 0.5s\n新娘｜heart（頭上比愛心：雙手在頭頂彎成心形、指尖相碰）｜中下｜高 66%｜6.4～9.0s｜進場：淡入 0.5s",
                       "lineHeight": 1.5,
                       "fontFamily": "Noto Sans TC",
                       "fontSize": 13,
@@ -104978,7 +104965,8 @@
               "fill": "#0B1430",
               "content": "V13",
               "fontFamily": "Cinzel",
-              "fontSize": 44
+              "fontSize": 44,
+              "fontWeight": "normal"
             },
             {
               "type": "text",
@@ -107864,7 +107852,7 @@
                         "type": "image",
                         "enabled": true,
                         "url": "animation-photo/新郎-大頭照.jpg",
-                        "mode": "fill"
+                        "mode": "cover"
                       },
                       "width": 100,
                       "height": 100
@@ -107976,7 +107964,7 @@
                         "type": "image",
                         "enabled": true,
                         "url": "animation-photo/新娘-大頭照.jpg",
-                        "mode": "fill"
+                        "mode": "cover"
                       },
                       "width": 100,
                       "height": 100
@@ -111557,7 +111545,8 @@
               "fill": "#111111",
               "content": "V14",
               "fontFamily": "Special Elite",
-              "fontSize": 44
+              "fontSize": 44,
+              "fontWeight": "normal"
             },
             {
               "type": "text",
@@ -114469,7 +114458,7 @@
                           "type": "image",
                           "enabled": true,
                           "url": "animation-photo/新郎-大頭照.jpg",
-                          "mode": "fill"
+                          "mode": "cover"
                         },
                         {
                           "type": "color",
@@ -114572,7 +114561,7 @@
                           "type": "image",
                           "enabled": true,
                           "url": "animation-photo/新娘-大頭照.jpg",
-                          "mode": "fill"
+                          "mode": "cover"
                         },
                         {
                           "type": "color",
@@ -118152,7 +118141,8 @@
               "fill": "#FFFFFF",
               "content": "V15",
               "fontFamily": "Berkshire Swash",
-              "fontSize": 44
+              "fontSize": 44,
+              "fontWeight": "normal"
             },
             {
               "type": "text",
@@ -123566,8 +123556,6 @@
                       "y": 226,
                       "name": "字幕",
                       "fill": "#FFFFFF",
-                      "stroke": "#2F2A4A",
-                      "strokeWidth": 1,
                       "textGrowth": "fixed-width",
                       "width": 480,
                       "content": "安全第一，開心盡興！",

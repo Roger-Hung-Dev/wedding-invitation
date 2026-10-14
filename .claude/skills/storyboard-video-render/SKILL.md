@@ -4,7 +4,7 @@ description: 讀取 v2 分鏡稿 .pen、輸出指定規格影片的產線 ——
 compatibility: Python 3.10+（Pillow、numpy）、ffmpeg（含 libx264、aac）、Pencil Desktop 與 pencil-server MCP
 metadata:
   version: "1.0"
-  verified: 2026-10-02 以範例 storyboard.json 與第 2 版 render.py 逐格比對 1,569 個時間點，像素差 0
+  verified: 2026-10-02 以範例 storyboard.json 與第 2 版 render.py 逐格比對 1,569 個時間點，像素差 0；2026-10-13 加推拉倍率下限 fill_floor() 後，範例 2,818 格只有交疊外插低於 100% 的 508 格改變，其餘像素差 0
 ---
 
 # 分鏡稿 → 影片
@@ -128,3 +128,4 @@ ffprobe -v error -show_entries stream=codec_name,width,height,r_frame_rate,durat
 - **shell 指令裡出現 `.pen` 路徑**會被 `block-pen-file-ops` hook 檢查；只要不是建檔、開檔、寫檔、刪檔的指令就會放行。`--pen` 參數不需要也可以省略。
 - **配樂長度**要等於總長；產生器不剪音樂，只用 `-t` 截在總長。
 - 多工：`--jobs` 預設 CPU 數−2。記憶體不足時降低。
+- **溶接／推移期間運鏡會外插**（進度 p 超出 0～1）。推拉倍率有下限 `fill_floor()`（不低於 100%），所以「慢拉到 100% 後接溶接」不會露邊；2026-10-13 以前沒有這個下限，H 版型過了切點四周會露出約 3px 黑邊（第 3 版 1:16.30 實測邊緣暗 15%），A／B 版型照片上下會露出細細一條模糊底。平移沒有下限，H 版型平移的距離要留外插餘裕（見 [[fx-camera-motion]] 的 `pan`）。
