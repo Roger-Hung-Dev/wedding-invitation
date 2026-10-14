@@ -1,0 +1,6 @@
+{
+  "name": "zepeto-picker",
+  "version": "1.0.0",
+  "description": "ZEPETO 挑選器：身體（/zepeto-bodies、pick_body）與大頭（/zepeto-heads、pick_head）選單，選項不限 4 個、可複選",
+  "author": { "name": "zepeto-body" }
+}

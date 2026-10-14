@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "kind": "body",
+  "id": "groom",
+  "version": "v8",
+  "status": "released",
+  "updated_at": "2026-10-12T00:55:12+08:00",
+  "owner": "body",
+  "artifact": {
+    "path": "D:/render-work/zepeto-body/build/groom/body.blend",
+    "sha256": "052080afd1fa8a11a18faea2373476bbf684e329c4c478d71e9eae7c53d05034"
+  },
+  "upstream": [
+    {
+      "kind": "head",
+      "id": "groom",
+      "version": "legacy",
+      "sha256": "065b90ee7f3906b47c0e629dcf2beb028b1f20fb440158bce42abfeb446e834a"
+    }
+  ],
+  "changes": "手指修正：靜止時四指併攏、和 Mixamo 一致；指節有造型；手指彎曲時保留體積，不會塌。身高、軀幹、肩、腿、脖子接口高度都沒變。",
+  "page": "https://claude.ai/artifact/7V84yu2AyZckJ2Y6YUPGGJ",
+  "notes": {
+    "release_version": "body-v8-fingers-20261012",
+    "checks": "8 項全過（含 crease ≤ 手指半徑×0.8）；完整數字在 D:/render-work/zepeto-body/build/RELEASE.json",
+    "head_path": "D:/SideProject/wedding-invitation/stylized_face_rig/head_rig.blend（產線建好前手動做的新郎頭，不搬；sha 為 2026-10-12 補記時量的，檔案修改時間 2026-10-11 19:22，早於身體 v8 產生）"
+  }
+}

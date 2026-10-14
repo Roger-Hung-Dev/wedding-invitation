@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "kind": "body",
+  "id": "photographer",
+  "version": "v1",
+  "status": "released",
+  "updated_at": "2026-10-12T21:52:09+08:00",
+  "owner": "body",
+  "artifact": {
+    "path": "D:/render-work/zepeto-body/build/photographer/body.blend",
+    "sha256": "8c7e873741204a29e86cf42efd82c4c3d63a61da48360157244f61020dcefc41"
+  },
+  "upstream": [
+    {
+      "kind": "head",
+      "id": "photographer",
+      "version": "v1",
+      "sha256": "5ff9f78cb80e324f3e1aa4843a91212f06b080346c2b07930427648471452382"
+    }
+  ],
+  "changes": "攝影師第一副身體：和新郎同一套骨架、手指、權重，有 UV；脖子跟著攝影師頭加粗 18%；身高 150 cm；脖子接口有細線，靠衣領蓋住",
+  "page": "https://claude.ai/artifact/Eq3K4eid339KAaVWdcQqTm",
+  "notes": {
+    "release_version": "body-v1-photographer-20261012",
+    "checks": "9 項全過；完整數字在 D:\\render-work\\zepeto-body\\build\\RELEASE.json",
+    "head_path": "D:/SideProject/wedding-invitation/.claude/docs/data/blender/zepeto/photographer/rig/head_rig.blend"
+  }
+}

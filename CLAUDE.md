@@ -27,6 +27,7 @@
 | 3D 角色情境 | 直呼 `blender-scenario-creator` | 情境描述＋角色專案 → 情境影片／圖片 |
 | 動作庫擴充 | 直呼 `blender-animation-append` | 動作描述 → 寫進共用動作庫、檢查通過才入庫 |
 | 整支片批次審看 | 主控端呼叫 workflow `film-scene-review` | 多幕 3D 情境一起渲出快速預覽 → 彙整成審看網頁 → 使用者一次給逐幕回饋 → 照回饋修 → 確認的幕才做完整品質 |
+| ZEPETO 身體（一條龍） | `/zepeto-body-generation-workflow` | 選頭（挑選器面板，可複選）→ 比對頭有沒有更新 → 關閘門 → 依頭自動量尺寸長出照 ZEPETO 官方比例的 4.5 頭身身體（骨架＋前臂扭轉骨、手腳固定模板、頭身接口環、權重清理、膚色、UV、交接尺寸）→ 16 項出廠檢查＋近照自我審查 → 審看網頁 → 照回饋修 → 出廠（RELEASE.json＋產線狀態紀錄；黏土風版本換新版要先問導演）→ 通知衣服、動畫。2026-10-14 起黏土風做法已移除（封存 `D:/render-work/archive/zepeto-body-clay-route-20261014/`）；四肢技術見該 skill 的 `references/limbs.md` |
 
 ### 3D 角色產線的分工（三個子代理＋一條 workflow）
 

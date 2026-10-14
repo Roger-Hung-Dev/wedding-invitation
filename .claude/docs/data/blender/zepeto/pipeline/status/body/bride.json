@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "kind": "body",
+  "id": "bride",
+  "version": "v3",
+  "status": "released",
+  "updated_at": "2026-10-13T01:15:44+08:00",
+  "owner": "body",
+  "artifact": {
+    "path": "D:/render-work/zepeto-body/build/bride/body.blend",
+    "sha256": "666dffc2d4d0e86e95cecade07000755c212323b4cbfb1cc967f4f961dab079d"
+  },
+  "upstream": [
+    {
+      "kind": "head",
+      "id": "bride",
+      "version": "v4",
+      "sha256": "4c3c7d394141ceac646325bed7ce376e8c505b7b37bbe8363bf1badc5ebacccb"
+    }
+  ],
+  "changes": "脖子接口重做：頭直接縫到身體上（接口的點貼合、光影一致），正面、轉頭、低頭、張嘴都看不到線；脖子粗細和頭一樣、顏色漸層。頭換 v4（耳垂、下巴後面修好）。手掌指根那排加寬（手心那面的 L 形消失）。頭的貼圖打包進身體檔。形狀、骨架、UV 版面有變，衣服要用 v3 重長",
+  "page": "https://claude.ai/artifact/2gRNhvWV8fLWiEaLQA3Hjb",
+  "notes": {
+    "release_version": "body-v3-bride-neck-20261013",
+    "checks": "9 項全過；完整數字在 D:\\render-work\\zepeto-body\\build\\RELEASE.json",
+    "head_path": "D:/SideProject/wedding-invitation/.claude/docs/data/blender/zepeto/bride/rig/head_rig.blend"
+  }
+}
