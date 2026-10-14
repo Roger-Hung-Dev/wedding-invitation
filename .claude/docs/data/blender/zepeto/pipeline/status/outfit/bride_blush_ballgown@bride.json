@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "kind": "outfit",
+  "id": "bride_blush_ballgown@bride",
+  "version": "v1",
+  "status": "released",
+  "updated_at": "2026-10-13T08:53:24+08:00",
+  "owner": "outfit",
+  "artifact": {
+    "path": "D:/render-work/zepeto-costume/bride-blush-ballgown/bride/outfit.blend",
+    "sha256": "1b04b1ec321ce8590cb0353e0f566a97c7394f1e85522d5fd5d72bd45210adec"
+  },
+  "upstream": [
+    {
+      "kind": "body",
+      "id": "bride",
+      "version": "v3",
+      "sha256": "666dffc2d4d0e86e95cecade07000755c212323b4cbfb1cc967f4f961dab079d"
+    }
+  ],
+  "changes": "淡粉平口蓬裙禮服（外層紗垂片、腰帶玫瑰花、背後大蝴蝶結、銀色花形耳環）長在新娘身體 v3；裙寬維持 0.32 m 方便挽手臂",
+  "page": "https://claude.ai/artifact/Cc1NWUfXt7XgjDhjTofpnY",
+  "notes": {
+    "outfit_key": "bride-blush-ballgown",
+    "design": ".claude/docs/data/blender/library/outfits-zepeto/bride-blush-ballgown/outfit.py"
+  }
+}

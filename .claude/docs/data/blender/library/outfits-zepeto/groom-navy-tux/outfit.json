@@ -1,0 +1,58 @@
+{
+ "key": "groom-navy-tux",
+ "title": "新郎深藍灰西裝",
+ "status": "draft",
+ "for_bodies": [
+  "groom"
+ ],
+ "lead": "新郎的第一版西裝（2026-10-11）：白色立領襯衫、深藍灰外套配深色緞面 V 領片、兩顆黑扣子、黑領結、黑皮鞋。使用者後來改選米色三件式，這套留著當另一款。",
+ "items": [
+  {
+   "object": "Suit_Shirt",
+   "name": "白襯衫",
+   "cat": "top",
+   "desc": "立領；只做領口、V 領裡、袖口"
+  },
+  {
+   "object": "Suit_Jacket",
+   "name": "深藍灰外套",
+   "cat": "outer",
+   "desc": "V 領，兩側緞面領片"
+  },
+  {
+   "object": "Suit_Buttons",
+   "name": "扣子",
+   "cat": "accessory",
+   "desc": "兩顆黑扣子"
+  },
+  {
+   "object": "Suit_Pants",
+   "name": "深藍灰西裝褲",
+   "cat": "bottom",
+   "desc": ""
+  },
+  {
+   "object": "Suit_Shoes",
+   "name": "黑皮鞋",
+   "cat": "shoes",
+   "desc": ""
+  },
+  {
+   "object": "Suit_BowTie",
+   "name": "黑領結",
+   "cat": "accessory",
+   "desc": ""
+  }
+ ],
+ "refs": [],
+ "issues": [],
+ "asks": [],
+ "review_url": null,
+ "history": [
+  "2026-10-11 第一版；2026-10-12 使用者改選米色三件式"
+ ],
+ "body_labels": {
+  "groom": "新郎",
+  "bride": "新娘"
+ }
+}

@@ -1,0 +1,42 @@
+{
+ "key": "photographer-black-casual",
+ "title": "攝影師黑色便服",
+ "status": "approved",
+ "for_bodies": [
+  "photographer"
+ ],
+ "lead": "開場片 opening-proposal-b B4 的攝影師：黑色高領貼身長袖上衣（紮進褲子，領子蓋住脖子接口的細線）、深灰黑長褲、深灰休閒鞋。穿在攝影師身體 v1 上。",
+ "items": [
+  {
+   "object": "Photog_Top",
+   "name": "黑色高領長袖上衣",
+   "cat": "top",
+   "desc": "貼身、紮進褲子；高領在頭切口上 2.8 cm，蓋住脖子接口的細線"
+  },
+  {
+   "object": "Photog_Pants",
+   "name": "深灰黑長褲",
+   "cat": "bottom",
+   "desc": "比上衣淺一階，上下分得開"
+  },
+  {
+   "object": "Photog_Shoes",
+   "name": "深灰休閒鞋",
+   "cat": "shoes",
+   "desc": "包鞋配方，鞋頭短一點"
+  }
+ ],
+ "refs": [],
+ "issues": [
+  "一開始用寬鬆上衣（外套配方），手臂放下時肩膀上方會擠出一條摺；改成貼身款後沒有了",
+  "蹲姿用導演端下載的 Mixamo Low Crouching Idle（骨盆 0.29 m）與 Kneeling Idle（單膝跪，0.23 m）原樣套上檢查：膝蓋、褲襠、屁股、腰後都沒看到穿模。單膝跪時鞋子對腳的穿模數字約 4%，是腳趾彎曲時腳尖碰到鞋內側，鞋外看不出來",
+  "雙手高舉時高領會碰到下巴（片中沒有舉手）"
+ ],
+ "asks": [],
+ "extra_closeups": {},
+ "body_labels": {
+  "photographer": "攝影師身體 v1"
+ },
+ "approved_at": "2026-10-12",
+ "review_url": "https://claude.ai/artifact/TBFXQZcdvPAh6jnMgNS3t7"
+}

@@ -1,0 +1,66 @@
+{
+ "note": "ZEPETO 黏土風穿戴物品素材庫的總目錄。每套服裝一個資料夾（outfit.py＋outfit.json＋refs/＋previews/）。新增或改狀態時同步更新這裡。",
+ "outfits": [
+  {
+   "key": "groom-beige-3piece",
+   "title": "新郎米色三件式",
+   "status": "approved",
+   "for_bodies": [
+    "groom"
+   ],
+   "cats": [
+    "top",
+    "outer",
+    "bottom",
+    "shoes",
+    "accessory"
+   ],
+   "review_url": "https://claude.ai/artifact/82TmvDa2vCH1JiaKB3igjo"
+  },
+  {
+   "key": "groom-navy-tux",
+   "title": "新郎深藍灰西裝",
+   "status": "draft",
+   "for_bodies": [
+    "groom"
+   ],
+   "cats": [
+    "top",
+    "outer",
+    "bottom",
+    "shoes",
+    "accessory"
+   ],
+   "review_url": null
+  },
+  {
+   "key": "photographer-black-casual",
+   "title": "攝影師黑色便服",
+   "status": "approved",
+   "for_bodies": [
+    "photographer"
+   ],
+   "cats": [
+    "top",
+    "bottom",
+    "shoes"
+   ],
+   "review_url": "https://claude.ai/artifact/TBFXQZcdvPAh6jnMgNS3t7"
+  },
+  {
+   "key": "bride-blush-ballgown",
+   "title": "新娘淡粉平口蓬裙禮服",
+   "status": "approved",
+   "for_bodies": [
+    "bride"
+   ],
+   "cats": [
+    "top",
+    "bottom",
+    "shoes",
+    "accessory"
+   ],
+   "review_url": "https://claude.ai/artifact/Cc1NWUfXt7XgjDhjTofpnY"
+  }
+ ]
+}

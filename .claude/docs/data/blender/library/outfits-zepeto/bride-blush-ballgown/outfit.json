@@ -1,0 +1,92 @@
+{
+ "key": "bride-blush-ballgown",
+ "title": "新娘淡粉平口蓬裙禮服",
+ "status": "approved",
+ "for_bodies": [
+  "bride"
+ ],
+ "lead": "照使用者給的兩張參考照做的淡粉平口禮服：花瓣摺紗上緣、腰帶加布花、背後大蝴蝶結、兩側下垂的外層紗、落地蓬蓬紗裙、淡粉休閒鞋、銀色花形耳環。穿在新娘身體 v2（膚色調白版）上。",
+ "items": [
+  {
+   "object": "Gown_Bodice",
+   "name": "平口上身",
+   "cat": "top",
+   "desc": "上緣在腋下；舉手時上緣跟著胸口走、不被手臂拉走"
+  },
+  {
+   "object": "Gown_Neckline",
+   "name": "花瓣摺紗上緣",
+   "cat": "top",
+   "desc": "5 片往外上翻的花瓣"
+  },
+  {
+   "object": "Gown_Sash",
+   "name": "腰帶",
+   "cat": "accessory",
+   "desc": "略深一階的粉"
+  },
+  {
+   "object": "Gown_Rose",
+   "name": "布花",
+   "cat": "accessory",
+   "desc": "腰帶上偏新娘左邊"
+  },
+  {
+   "object": "Gown_Overskirt",
+   "name": "外層紗",
+   "cat": "bottom",
+   "desc": "3 片大垂片，到膝上"
+  },
+  {
+   "object": "Gown_Skirt",
+   "name": "蓬蓬紗裙",
+   "cat": "bottom",
+   "desc": "落地，下襬小波浪；不從腿複製，走路不會分成兩條褲管"
+  },
+  {
+   "object": "Gown_Shoes",
+   "name": "淡粉休閒鞋",
+   "cat": "shoes",
+   "desc": "照片裙底露出的球鞋"
+  },
+  {
+   "object": "Gown_BackBow",
+   "name": "背後大蝴蝶結",
+   "cat": "accessory",
+   "desc": "同上身布料：兩個大圈＋中間結；兩條尾巴（Gown_BackBowTails）沿外層紗背面往下貼、跟著裙子動"
+  },
+  {
+   "object": "Gown_Earrings",
+   "name": "銀色花形耳環",
+   "cat": "accessory",
+   "desc": "耳垂下一朵 5 瓣銀花＋中心珠，放大才看得到；只跟著頭動"
+  }
+ ],
+ "refs": [
+  {
+   "file": "refs/ref_front.jpg",
+   "caption": "使用者給的參考照：正面"
+  },
+  {
+   "file": "refs/ref_side.jpg",
+   "caption": "參考照：側面（看外層紗的垂片）"
+  }
+ ],
+ "issues": [
+  "裙子比照片收窄（半徑 0.32 m），因為挽手臂、並肩走時太蓬會穿進新郎腿裡",
+  "手垂下時手掌會沒入裙子兩側（裙子比手臂寬）；動畫端要把手稍微往外擺",
+  "坐下時裙子會往上翻開（片中沒有坐的鏡頭，先不處理）",
+  "上身、蝴蝶結對身體的穿模數字偏高（約 10%；蝴蝶結只有走路時，是尾巴碰到裙子裡的腿），量到的是藏在衣服裡面的身體；近照和走路、舉手的圖都沒看到皮膚穿出來",
+  "跪下時裙子會往前翻起（片中新娘沒有蹲跪）"
+ ],
+ "asks": [],
+ "body_labels": {
+  "bride": "新娘身體 v3"
+ },
+ "extra_closeups": {
+  "bow": "背後蝴蝶結",
+  "earring": "耳環"
+ },
+ "review_url": "https://claude.ai/artifact/Cc1NWUfXt7XgjDhjTofpnY",
+ "approved_at": "2026-10-13"
+}
