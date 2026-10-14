@@ -1,0 +1,15 @@
+{
+  "schema": 1,
+  "kind": "head",
+  "id": "groom",
+  "version": "legacy",
+  "status": "released",
+  "updated_at": "2026-10-12T12:00:00+08:00",
+  "owner": "head",
+  "artifact": {
+    "path": "D:/SideProject/wedding-invitation/stylized_face_rig/head_rig.blend",
+    "sha256": "065b90ee7f3906b47c0e629dcf2beb028b1f20fb440158bce42abfeb446e834a"
+  },
+  "upstream": [],
+  "changes": "產線建好前手動做的新郎可動臉（ARKit 52＋控制骨架）"
+}
