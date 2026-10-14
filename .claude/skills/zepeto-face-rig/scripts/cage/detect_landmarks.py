@@ -151,6 +151,9 @@ for side, name in ((1, "L"), (-1, "R")):
     if len(seeds) < 3:
         raise SystemExit(f"[landmarks] 找不到{name}眉毛")
     allowed_b = near & (LUM < max(0.3, np.median(LUM[seeds]) + 0.12))
+    # 眉毛不會比 0.12 厚（新娘 0.03～0.04、攝影師 v1 0.10）：深色側分瀏海垂到眉毛上、顏色又跟眉毛接近時，
+    #   會從眉毛一路長進瀏海（攝影師 v2 右眉量成 0.25 厚，表情一動瀏海跟著被扯）
+    allowed_b &= Z < Z[seeds].min() + 0.12
     # 眉毛顏色和髮色明顯不同（新娘：咖啡色眉、黑髮）→ 像頭髮的不算，否則會從眉尾長進髮際；同色（新郎）就不分
     bc = np.median(COL[seeds], 0)
     print("[landmarks] %s眉色 %s、髮色 %s、相差 %.3f" % (name, np.round(bc, 3), np.round(HAIR_C, 3), np.linalg.norm(bc - HAIR_C)))
@@ -169,7 +172,9 @@ for side, name in ((1, "L"), (-1, "R")):
                        bottom=float(bz.min()), top=float(bz.max()), color_srgb=[float(v) for v in bc])
 
 red_thr = np.percentile(RG[SKIN], 90)
-m = FRONT & (RG > red_thr) & (np.abs(X) < 0.8 * U) & (Z < ez - 1.2 * eh_avg) & (Z > ez - 6.0 * eh_avg)
+# 找嘴巴的範圍用兩眼間距 U 當量尺：嘴巴在眼睛往下 0.66U（新娘）～0.73U（攝影師），很穩；
+#   以前用眼睛半高（往下 1.2～6.0 個）：新娘嘴在 5.4、攝影師 v2（鼻子長）在 6.2 → 出界，鼻孔＋腮紅被當成嘴巴、下巴跟著錯
+m = FRONT & (RG > red_thr) & (np.abs(X) < 0.8 * U) & (Z < ez - 0.25 * U) & (Z > ez - 1.15 * U)
 idx = np.where(m)[0][np.argsort(Z[m])]
 if len(idx) < 6:
     raise SystemExit("[landmarks] 找不到嘴巴（比皮膚紅的橫帶）")
@@ -181,9 +186,21 @@ for a, b in zip(idx[:-1], idx[1:]):
     cur.append(b)
 groups.append(cur)
 groups = [np.array(g) for g in groups if len(g) >= 6]
+
+
+def n_mid(g):
+    return int((np.abs(X[g]) < 0.05 * U).sum())
+
+
 for g in groups:
-    print("[landmarks] 紅色群 z=%.3f 寬 %.3f（%.2fU） 點數 %d 中線點 %d" % (Z[g].mean(), X[g].max() - X[g].min(), (X[g].max() - X[g].min()) / U, len(g), int((np.abs(X[g]) < 0.05 * U).sum())))
-mouth_g = next(g for g in groups if X[g].max() - X[g].min() > 0.35 * U)
+    print("[landmarks] 紅色群 z=%.3f（眼下 %.2fU） 寬 %.3f（%.2fU） 點數 %d 中線點 %d" % (
+        Z[g].mean(), (ez - Z[g].mean()) / U, X[g].max() - X[g].min(), (X[g].max() - X[g].min()) / U, len(g), n_mid(g)))
+wide = [g for g in groups if X[g].max() - X[g].min() > 0.35 * U]
+if not wide:
+    raise SystemExit("[landmarks] 找不到嘴巴（沒有夠寬的紅色群）；量好後填 face.json 的 mouth_manual")
+# 嘴唇一定跨過臉中線（鼻孔、腮紅不會）；有好幾群時挑最接近「眼睛往下 0.7U」的
+mid = [g for g in wide if n_mid(g) >= 3] or wide
+mouth_g = min(mid, key=lambda g: abs((ez - np.median(Z[g])) / U - 0.7))
 # 腮紅明顯時（ZEPETO 風描述），兩頰的粉紅和嘴連成一群 → 嘴角被抓到臉頰外側。
 #   用正中線上的紅點定嘴巴高度，只留同高度附近、臉中段的點
 cen = mouth_g[np.abs(X[mouth_g]) < 0.1 * U]
@@ -197,10 +214,43 @@ kl_i = mouth_g[np.argmax(X[mouth_g])]
 kr_i = mouth_g[np.argmin(X[mouth_g])]
 mouth = dict(center=[float(X[mouth_g].mean()), surface_y(float(X[mouth_g].mean()), mz), mz],
              L=[float(v) for v in P[kl_i]], R=[float(v) for v in P[kr_i]], half_w=float((X[kl_i] - X[kr_i]) / 2))
+if os.environ.get("ZEPETO_MOUTH"):  # 手動指定嘴角（face.json 的 mouth_manual）："左嘴角x,左嘴角z,右嘴角x,右嘴角z"
+    lx, lz, rx, rz = [float(v) for v in os.environ["ZEPETO_MOUTH"].split(",")]
+    mz = (lz + rz) / 2
+    mouth = dict(center=[(lx + rx) / 2, surface_y((lx + rx) / 2, mz), mz], L=[lx, surface_y(lx, lz), lz],
+                 R=[rx, surface_y(rx, rz), rz], half_w=(lx - rx) / 2)
+    upper = [g for g in groups if Z[g].mean() > mz + 0.03]
+    print("[landmarks] 嘴角用手動值（face.json 的 mouth_manual）")
 nose_z = float(Z[upper[0]].mean()) if upper else (ez + mz) / 2
+
+
+def chin_bottom():
+    """下巴底：正中線側面輪廓（每 0.02 一格最前面的 y）從嘴巴往下，第一次「一格就往後退 > 0.06」的地方
+    （下巴底面轉進脖子：新娘 −0.23、攝影師 v1 −0.59、攝影師 v2 −0.51；其他地方一格最多退 0.02）"""
+    BIN = 0.02
+    front = {}
+    sel = (np.abs(X) < 0.05) & (Y < 0)
+    for z_, y_ in zip(Z[sel], Y[sel]):
+        k_ = round(z_ / BIN)
+        front[k_] = min(front.get(k_, 9.0), y_)
+    ks = sorted((k_ for k_ in front if k_ * BIN < mz), reverse=True)
+    for a_, b_ in zip(ks, ks[1:]):
+        if b_ == a_ - 1 and front[b_] - front[a_] > 0.06:
+            return (a_ + b_) / 2 * BIN
+    return None
+
+
+# 下巴：照比例推（嘴 − 0.6×(眼 − 嘴)）—— 籠子對位等後段是照這個值調的（新娘、攝影師 v1 驗收過），不改。
+#   推出來一律在下巴底上方 3～9 cm；差到 13 cm 以上＝嘴巴多半抓錯（攝影師 v2 抓到鼻孔時差 19 cm）→ 停下來
+chin = mz - 0.6 * (ez - mz)
+cb = chin_bottom()
+print("[landmarks] 下巴：比例推 %.3f、側面輪廓的下巴底 %s" % (chin, "%.3f" % cb if cb is not None else "量不到"))
+if cb is not None and not (-0.02 < chin - cb < 0.13):
+    raise SystemExit("[landmarks] 下巴推算 %.3f 和側面輪廓的下巴底 %.3f 差太多：嘴巴多半抓錯（看上面的紅色群），"
+                     "量好嘴角後填 face.json 的 mouth_manual 從 landmarks 重跑" % (chin, cb))
 LM = dict(U=float(U), eyes=eyes, brows=brows, mouth=mouth, nose=[0.0, surface_y(0.0, nose_z), nose_z],
-          chin_z=float(mz - 0.6 * (ez - mz)), source=bpy.data.filepath,
-          note="座標是 AI 頭的世界座標（臉朝 −Y、角色的左＝+X）")
+          chin_z=float(chin), chin_bottom=None if cb is None else float(cb),
+          source=bpy.data.filepath, note="座標是 AI 頭的世界座標（臉朝 −Y、角色的左＝+X）")
 os.makedirs(os.path.dirname(os.path.abspath(out_path)), exist_ok=True)
 with open(out_path, "w", encoding="utf-8") as f:
     json.dump(LM, f, ensure_ascii=False, indent=1)

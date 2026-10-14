@@ -1,0 +1,34 @@
+{
+ "_說明": "回歸測試用的 AI 頭（regress.py 讀這份）。每顆代表一種會讓產線出錯的臉型；改了產線程式就全部重跑、跟 baseline.json 比。head 檔放 root/heads/<名稱>/（不進版控），--init 從 source 複製一次，之後不再跟著 source 變。新增一顆：加一筆、跑 --init、跑一次、看過圖沒問題再 --accept。",
+ "root": "D:/render-work/zepeto-face-regress",
+ "heads": {
+  "bride": {
+   "label": "新娘：新描述（V 字臉、杏仁眼）、長髮、腮紅明顯、後頸畫成髮色",
+   "source": "D:/render-work/blender-work/zepeto-sculpt-trial/bride/ai",
+   "face": {
+    "body": "auto"
+   },
+   "covers": "腮紅和嘴連成一群、後頸缺皮（墊底皮）、長髮避開身體、修細脖子（52%→38%）"
+  },
+  "ph1": {
+   "label": "攝影師 v1：舊描述（圓臉、圓眼、無腮紅）、短黑髮、粗黑眉",
+   "source": "D:/SideProject/wedding-invitation/.claude/docs/data/blender/zepeto/photographer",
+   "face": {
+    "body": "none",
+    "hair_rgb": null,
+    "corner_smooth": 0,
+    "brow_gain": 1.2
+   },
+   "covers": "整顆深色瞳孔（眼白只剩細邊）、眉色和髮色一樣、下巴推算在下巴底上方 7 cm"
+  },
+  "ph2": {
+   "label": "攝影師 v2：新描述、文字設定（沒照片）、鼻子長、側分瀏海垂到額頭、藏青髮",
+   "source": "D:/render-work/blender-work/zepeto-fullrun/photographer-v2",
+   "face": {
+    "body": "none",
+    "brow_gain": 1.2
+   },
+   "covers": "嘴在眼睛往下 6.2 個眼睛半高（舊範圍找不到）、眉毛亮紋拉高眼睛、瀏海長進眉毛、瀏海換髮色、V 字臉的下巴前緣比下巴底高很多（接口環高度）"
+  }
+ }
+}

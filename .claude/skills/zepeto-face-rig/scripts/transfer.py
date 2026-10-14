@@ -558,6 +558,7 @@ for on_, marg in MARG.items():
             continue
         if kbo is None:
             kbo = o_.shape_key_add(name=kname, from_mix=False)
+            kbo.value = 0.0  # 新增的鍵預設值可能不是 0 → 檢查報「打開時非 0 的形態鍵」（攝影師 v2：上排牙齒 mouthRollLower）
         CK[:, 1] += dlt
         kbo.data.foreach_set("co", CK.ravel())
         np_tot += int((dlt > 0).sum()); pmax = max(pmax, dlt.max())

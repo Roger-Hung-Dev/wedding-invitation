@@ -103,13 +103,28 @@ def find(png, meta, dbg=None):
         xl, xr = np.median(L), np.median(R)
         eyes.append(dict(cx=(xl + xr) / 2, cy=e["cy"], hw=(xr - xl) / 2, r=e["r"]))
     # 高度：眼白上下範圍的中點（眼珠連著上眼線，重心偏高約 0.015 → 閉眼時下面露出一片眼白）
+    #   只取「跟眼珠那一列連在一起」的眼白列（中間最多斷 2 列）：攝影師 v2 眉毛貼圖上一道灰白亮紋也落在上下 2 倍半寬的框裡，
+    #   整框取最上到最下，眼睛高度被拉高 0.036
     for e in eyes:
         x0, x1 = int(e["cx"] - 0.9 * e["hw"]), int(e["cx"] + 0.9 * e["hw"])
         y0, y1 = int(e["cy"] - 2 * e["hw"]), int(e["cy"] + 2 * e["hw"])
         wm = (sat[y0:y1, x0:x1] < 0.15) & (lum[y0:y1, x0:x1] > 0.55)
-        ys = np.nonzero(wm.any(1))[0]
+        rows = wm.any(1)
+        ys = np.nonzero(rows)[0]
         if len(ys) > 3:
-            e["cy"] = y0 + (ys.min() + ys.max()) / 2
+            c = int(round(e["cy"] - y0))
+            start = ys[np.argmin(np.abs(ys - c))]  # 離眼珠中心最近的眼白列
+            lo = hi = start
+            while True:
+                nxt = [y for y in range(lo - 3, lo) if 0 <= y and rows[y]]
+                if not nxt: break
+                lo = min(nxt)
+            while True:
+                nxt = [y for y in range(hi + 1, hi + 4) if y < len(rows) and rows[y]]
+                if not nxt: break
+                hi = max(nxt)
+            if hi - lo >= 3:
+                e["cy"] = y0 + (lo + hi) / 2
     (xa, za), (xb, zb) = to_w(eyes[0]["cx"], eyes[0]["cy"]), to_w(eyes[1]["cx"], eyes[1]["cy"])
     ew = 0.9 * (eyes[0]["hw"] + eyes[1]["hw"]) / 2 / px_per  # ×0.9：往左右走時連眼尾、眼頭的眼線一起算進去了（不扣的話程式眼白蓋過眼線、蓋到臉旁髮絲）
     # 畫面左＝角色右（-x）、畫面右＝角色左（+x）

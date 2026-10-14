@@ -10,7 +10,8 @@
 #   shade      材質眼睛、眨眼、看方向、黑髮、亮澤（eyes_shader.py＋gloss.py）
 #   check      自動檢查（check.py 數字）＋總表、五官近照、張嘴序列與切片 → check/report.html
 #   rig        舊版 head_rig.blend 封存 → 整理成交接格式（pack_head.py：Head／Hair／Ears／ZEPETO_Lips）
-#              → 標準脖子接口環（neck_ring.py：48 點、後頸缺皮就補；身體端照抄座標接上，合約見 references/research-head-body-seam.md 5.4）→ 控制骨架（face_rig.py）
+#              → 標準脖子接口環（neck_ring.py：48 點、後頸缺皮就補；身體端照抄座標接上，合約見 references/research-head-body-seam.md 5.4）
+#              → ZEPETO 比例量測（zepeto_ratio.py → check/zepeto_ratio.json、報告一節；參考用，不擋）→ 控制骨架（face_rig.py）
 #              → head_rig.blend；骨架檢查（rig_check.py：每根控制骨頭拉到底，量形態鍵／材質數值＋總表）
 #   hairfit    長髮避開身體（hair_fit.py：厚頭髮壓縮到背後、細髮絲往前），改寫 head_rig.blend。
 #              face.json 的 body：auto（預設）＝用身體端的 body_build.py 照這顆頭試接一副身體來調；也可給身體檔路徑；none＝不跑
@@ -35,6 +36,7 @@ FACE_DEFAULTS = {
     "ai_blend": "../stylized_face_zepeto.blend",    # 後處理後的 AI 頭（一條龍：<OUT>/rig 的上一層）
     "obj": None,                                    # 有給才跑 post：Rodin 匯出的 OBJ
     "eyes_manual": None,                            # [左眼x, 右眼x, 高度, 半寬, 半高]；自動偵測不準時填
+    "mouth_manual": None,                           # [左嘴角x, 左嘴角z, 右嘴角x, 右嘴角z]；嘴巴自動偵測抓錯（例：抓到鼻孔）時填
     "mouth_zc": None,                               # 唇縫中央高度；自動偵測（唇縫細線）不準時填
     "hair_rgb": [0.075, 0.068, 0.072],              # 「像頭髮又偏藍灰」的貼圖點換成這個顏色（sRGB）：Rodin 常把黑髮生成藍灰；照片不是黑髮時填照片髮色
     "iris_rgb": [0.26, 0.15, 0.10],                 # 程式眼珠的虹膜顏色（sRGB）
@@ -45,6 +47,7 @@ FACE_DEFAULTS = {
     "corner_smooth": 6,                             # 嘴角周圍抹平幾次（新娘 AI 頭嘴角有小凹痕要抹；攝影師 0）
     "tongue_len": 0.75,                             # 吐舌頭伸出長度（1＝模板原樣）
     "body": "auto",                                 # 長髮避開身體用的身體：auto／none／身體檔路徑
+    "neck_slim": 0.38,                              # 修細脖子的目標（脖子寬 ÷ 頭寬；超過 0.40 才修，見 neck_slim.py）；null＝不修
 }
 
 ap = argparse.ArgumentParser()
@@ -147,6 +150,8 @@ def step_eyes():
 def step_landmarks():
     ev = json.load(open(W("eyes.json")))
     env = dict(ENV, ZEPETO_EYES=",".join(str(v) for v in ev["eyes"]))
+    if cfg.get("mouth_manual"):
+        env["ZEPETO_MOUTH"] = ",".join(str(v) for v in cfg["mouth_manual"])
     blender([AI, "--python", os.path.join(CAGE, "detect_landmarks.py"), "--", LMJ], env=env, tag="landmarks")
     # 嘴巴中心高度改用唇縫細線（偵測到的「紅色帶中間」在閉嘴微笑時偏高；見 eyes_find.find_seam）
     sys.path.insert(0, HERE)
@@ -250,6 +255,25 @@ def archive_old():
     print("    舊版封存：head_rig_%s.blend（預覽圖 preview_%s/）" % (sfx, sfx))
 
 
+def zepeto_ratio():
+    """ZEPETO 比例量測（zepeto_ratio.py）→ check/zepeto_ratio.json＋報告一節；只是參考，不擋產線（脖子超出目標標紅）"""
+    C = W("check")
+    blender([W("ring.blend"), "-P", os.path.join(HERE, "zepeto_ratio.py"), "--", LMJ, W("eyes.json"), os.path.join(C, "zepeto_ratio.json")],
+            env=dict(ENV, NECK_TARGET=str(cfg.get("neck_slim") or 0.38)), tag="zepeto_ratio")
+    Z = json.load(open(os.path.join(C, "zepeto_ratio.json"), encoding="utf-8"))
+    rows = ""
+    for k, it in Z["items"].items():
+        if k == "neck":
+            rows += "<tr><td>%s</td><td class='%s'>%s</td><td>目標 %.2f～%.2f</td><td></td></tr>" % (
+                it["label"], "ok" if it["ok"] else "ng", it["value"], it["target"][0], it["target"][1])
+        else:
+            ref = "%.2f" % it["zepeto"] + ("（成人 %.2f）" % it["zepeto_adult"] if it["zepeto_adult"] else "")
+            rows += "<tr><td>%s</td><td>%.3f</td><td>%s</td><td>×%.2f</td></tr>" % (it["label"], it["value"], ref, it["vs_zepeto"])
+    report_section("zepeto", "ZEPETO 比例（參考，不擋產線）</h2><p>H＝頭頂（不含頭髮）到下巴，用眼睛高度推算（ZEPETO 眼睛在下巴往上 40%%）：%.3f；"
+                   "頭寬（不含頭髮、耳朵）%.3f；量法見 zepeto_ratio.py</p><table><tr><th>項目</th><th>這顆頭</th><th>ZEPETO</th><th>倍數</th></tr>%s</table>" % (
+                       Z["H"], Z["head_w"], rows))
+
+
 def step_rig():
     C = W("check")
     archive_old()
@@ -261,7 +285,15 @@ def step_rig():
         print("    ⚠️ 沒有 diffuse_blackhair_shade.png（舊資料夾）：貼圖可能被上次 hairfit 改過，要結果穩定請從 shade 重跑")
     # 先整理成交接格式（Head／Hair／Ears／ZEPETO_Lips，見 pack_head.py），再接骨架（驅動器要建在切開後的每個物件上）
     blender([W("face.blend"), "-P", os.path.join(HERE, "pack_head.py"), "--", LMJ, W("pack.blend")], tag="pack_head")
-    blender([W("pack.blend"), "-P", os.path.join(HERE, "neck_ring.py"), "--", LMJ, W("ring.blend"), os.path.join(C, "ring.json")], tag="neck_ring")
+    ring_in = W("pack.blend")
+    if cfg.get("neck_slim"):  # 修細脖子：脖子比 ZEPETO 粗時往中心軸縮（臉不動），接口環、身體脖子跟著變細
+        blender([W("pack.blend"), "-P", os.path.join(HERE, "neck_slim.py"), "--", LMJ, W("eyes.json"), W("slim.blend"), os.path.join(C, "neck_slim.json")],
+                env=dict(ENV, NECK_TARGET=str(cfg["neck_slim"])), tag="neck_slim")
+        ring_in = W("slim.blend")
+    elif os.path.exists(os.path.join(C, "neck_slim.json")):
+        os.remove(os.path.join(C, "neck_slim.json"))
+    blender([ring_in, "-P", os.path.join(HERE, "neck_ring.py"), "--", LMJ, W("ring.blend"), os.path.join(C, "ring.json")], tag="neck_ring")
+    zepeto_ratio()
     blender([W("ring.blend"), "-P", os.path.join(HERE, "face_rig.py"), "--", W("head_rig.blend"), LMJ], tag="face_rig")
     shutil.rmtree(os.path.join(C, "rig"), ignore_errors=True)
     blender([W("head_rig.blend"), "-P", os.path.join(HERE, "rig_check.py"), "--", LMJ, os.path.join(C, "rig")], tag="rig_check")
@@ -364,7 +396,9 @@ def step_finish():
     rig_ok = json.load(open(RM, encoding="utf-8"))["ok"] if os.path.exists(RM) else None
     hf = json.load(open(os.path.join(C, "hairfit.json"), encoding="utf-8")) if os.path.exists(os.path.join(C, "hairfit.json")) else {}
     ring = json.load(open(os.path.join(C, "ring.json"), encoding="utf-8")) if os.path.exists(os.path.join(C, "ring.json")) else {}
+    zr = json.load(open(os.path.join(C, "zepeto_ratio.json"), encoding="utf-8")) if os.path.exists(os.path.join(C, "zepeto_ratio.json")) else None
     summary = dict(name=NAME, head_rig=W("head_rig.blend"), ai_blend=AI, total_issues=M.get("total_issues"), rest_nonzero=M.get("rest_nonzero"), neck_ring=ring,
+                   zepeto_ratio=zr,
                    lip_back_bind=M.get("lip_back_bind"), rig_ok=rig_ok, eyes=json.load(open(W("eyes.json"))) if os.path.exists(W("eyes.json")) else None,
                    hairfit=hf, body_side=os.path.join(C, "body_side.png") if side else None, ear=ear_png, nape=nape_png, report=os.path.join(C, "report.html"),
                    previews=sorted(glob.glob(os.path.join(PV, "*.png"))) + [os.path.join(PV, "sheet_keys.png")])

@@ -75,6 +75,9 @@ O = bpy.data.objects
 H = 0.30
 
 
+CHIN_SRC = [None]     # 這次的下巴從哪來（寫進 build.json 的 head.chin_source）
+
+
 def measure_head():
     """從開著的 head_rig.blend 量出接身體要用的五個數（頭檔座標）。
     v9 前寫死成新郎頭的值；新娘頭（產線做的）脖子轉軸高 24 cm、胸像是另一個物件 Bust，寫死就會接歪。
@@ -97,16 +100,24 @@ def measure_head():
             front[k_] = min(front.get(k_, 9.0), w.y)
     mk = round(mouth.z / BIN)
     f0 = min(front[k_] for k_ in front if mk - 2 <= k_ <= mk + 1)
-    # 下巴：嘴巴以下，正中線最前緣往後退 6 cm（頭檔單位）的高度（線性內插；要連兩格都退才算，避開單點雜訊）
-    ks = sorted((k_ for k_ in front if k_ < mk), reverse=True)
     chin = None
-    for a, b, c2 in zip(ks, ks[1:], ks[2:]):
-        ra, rb, rc = front[a] - f0, front[b] - f0, front[c2] - f0
-        if ra < 0.06 <= rb and rc >= 0.06:
-            chin = (a + (b - a) * (0.06 - ra) / (rb - ra)) * BIN; break
-    if chin is None:
-        raise SystemExit("量不到下巴：頭模型的正中線剖面和預期不同，請人工檢查（可用 NECKCUT／CHIN 參數覆寫）")
-    chin = float(ARGS.get("CHIN", chin))
+    if hd.get("neck_chin_bottom") is not None:
+        # 2026-10-14 起（使用者：「修，用頭檔的下巴底」）：頭端把下巴底寫進 Head 屬性 neck_chin_bottom（頭檔座標，和 neck_ring_z 同一套）＝
+        #   正中線前緣從下巴「跳回喉嚨」的地方（zmeasure.measure_cut 的第三個回傳值）。放頭的高度、頭的縮放都照它算。
+        #   舊規則（下面）碰到又長又直的 V 字下巴會量太高：攝影師 v2 量到 −0.348、下巴底其實 −0.51 → 頭低 3.7 cm、大 11%、接口環落在肩膀上
+        chin = float(hd["neck_chin_bottom"]); CHIN_SRC[0] = "head neck_chin_bottom"
+    else:
+        # 舊頭：嘴巴以下，正中線最前緣往後退 6 cm（頭檔單位）的高度（線性內插；要連兩格都退才算，避開單點雜訊）。量到的是下巴前緣，比下巴底高
+        ks = sorted((k_ for k_ in front if k_ < mk), reverse=True)
+        for a, b, c2 in zip(ks, ks[1:], ks[2:]):
+            ra, rb, rc = front[a] - f0, front[b] - f0, front[c2] - f0
+            if ra < 0.06 <= rb and rc >= 0.06:
+                chin = (a + (b - a) * (0.06 - ra) / (rb - ra)) * BIN; break
+        if chin is None:
+            raise SystemExit("量不到下巴：頭模型的正中線剖面和預期不同，請人工檢查（可用 NECKCUT／CHIN 參數覆寫）")
+        CHIN_SRC[0] = "rule（前緣往後退 6 cm）"
+    if "CHIN" in ARGS:
+        chin = float(ARGS["CHIN"]); CHIN_SRC[0] = "CHIN 參數"
     # 切口：下巴底下（下巴往下 6 cm 起算），正中線最前緣不再往後退（相鄰兩格差 < 3.5 cm）的第一格＝下巴底面結束、脖子開始。
     # 太靠近下巴，Mask 切線會切過下巴底面、露出鋸齒（新娘頭測試時發生：原本用「頭高 ×0.084」，新娘頭的下巴底比較長）。
     # 新郎頭量出來 −0.70（和 v8 寫死的值一樣）。不低於頭網格底 +1 cm。
@@ -179,7 +190,7 @@ PIVOT_FILE = HM["pivot"]
 CHIN_FILE = HM["chin"]
 MOUTH_FILE = HM["mouth"]
 RING = "ring_local" in HM
-print("HEAD", {k_: (tuple(round(x, 4) for x in v) if hasattr(v, "x") else round(v, 4)) for k_, v in HM.items() if k_ not in ("ring_local", "ring_file", "ring_src")}, "RING", HM.get("ring_src"))
+print("HEAD", {k_: (tuple(round(x, 4) for x in v) if hasattr(v, "x") else round(v, 4)) for k_, v in HM.items() if k_ not in ("ring_local", "ring_file", "ring_src")}, "RING", HM.get("ring_src"), "CHIN", CHIN_SRC[0])
 if "MEASURE_ONLY" in ARGS:
     sys.exit(0)
 
@@ -197,6 +208,11 @@ P["foot_len"] = FOOTL * T
 P["ankle"] = ANKH * P["foot_len"]
 P["heel_y"] = LEGC + 0.165 * P["foot_len"]          # 官方小腿中心在離腳跟 16.5% 腳長的地方
 P["sh_z"] = CHIN - float(ARGS.get("SHDROP", "0.085")) * B   # 肩關節高度（v3 前 0.05B：肩膀跟脖子根一樣高，使用者說「聳肩」→ 降 4 cm）
+# 下巴改用頭檔的下巴底（neck_chin_bottom）時，肩膀跟著往上補 SHUP×H：舊規則量到的是下巴前緣、比下巴底高，
+#   新娘頭差 0.0306 頭檔單位＝身體 8 mm（0.0267H）。不補的話下巴底放到同一個高度後，接口環→肩線那段脖子會長 8 mm；
+#   使用者 2026-10-14 選「身體那段脖子先不動，維持 0.14H」，所以補回去，新娘的脖子長度和改之前一樣
+SHUP = float(ARGS.get("SHUP", "0.0267" if str(CHIN_SRC[0]).startswith("head") else "0"))
+P["sh_z"] += SHUP * H
 P["sh_x"] = 0.40 * H * (1 + 0.08 * k)
 P["ua"] = 0.205 * B
 P["fa"] = 0.195 * B
@@ -1288,7 +1304,8 @@ NECK_SEC = dict(body_rx=round(max(abs(c.x) for c in _sec), 4), body_ry=round((ma
 print("NECKSEC", NECK_SEC)
 import hashlib
 info = dict(head=dict(path=bpy.data.filepath.replace("\\", "/"), sha256=hashlib.sha256(open(bpy.data.filepath, "rb").read()).hexdigest(),
-                      measured={k_: (list(round(x, 4) for x in v) if hasattr(v, "x") else round(v, 4)) for k_, v in HM.items() if k_ not in ("ring_local", "ring_file", "ring_src")}, cut_used=round(NECK_CUT_FILE, 4), neck_factor=round(NF, 3)),
+                      measured={k_: (list(round(x, 4) for x in v) if hasattr(v, "x") else round(v, 4)) for k_, v in HM.items() if k_ not in ("ring_local", "ring_file", "ring_src")}, cut_used=round(NECK_CUT_FILE, 4), neck_factor=round(NF, 3),
+                      chin_source=CHIN_SRC[0], shoulder_up=round(SHUP, 4)),
             uv_layers=[u.name for u in body.data.uv_layers], skin_source=SKINSRC, neck_fit=NECKFIT, neck_blend=NECK_BLENDED, seam_normals=SEAM_FIXED, head_weld=WELD, neck_ring=dict(fit=RINGFIT, check=RINGREP) if RING else None, neck_section=NECK_SEC,
             N=N, H=H, T=T, voxel=VOXEL, BW=BW, BD=BD, LW=LW, crotch_z=round(cz, 3) if cz else None, faces_after_remesh=n_raw, faces=len(body.data.polygons), verts=len(body.data.vertices),
             vertex_groups=n_groups, unweighted_verts=n_unweighted, skin_srgb=[round(c, 3) for c in skin_srgb], limb_templates=LIMBFIT, smooth_normals=SMOOTHED, weight_clean=WCLEAN,

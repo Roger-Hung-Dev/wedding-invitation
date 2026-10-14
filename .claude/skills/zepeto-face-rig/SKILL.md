@@ -40,7 +40,7 @@ python -u .claude/skills/zepeto-face-rig/scripts/run_face_rig.py --work <這張�
 | transfer | `transfer.py` | 表情轉移到 AI 網格、切嘴縫、自建口腔袋、牙齒舌頭推到皮後 → `xfer.blend` |
 | shade | `eyes_shader.py`、`gloss.py` | 材質眼睛（`BLINK_*`、`LOOK_*`）、黑髮貼圖 `diffuse_blackhair.png`、亮澤 → `face.blend` |
 | check | `check.py`、`render_set.py`、`closeup.py`、`open_series.py`、`slice_colors.py` | 自動檢查數字＋總表、五官近照、張嘴序列與切片 → `check/report.html` |
-| rig | `pack_head.py`、`neck_ring.py`、`face_rig.py`、`rig_check.py` | 封存舊版 → 貼圖還原成 shade 的原版 → 整理成交接格式（刪耳朵旁邊以下的頭髮碎片、頭髮和臉皮交界抹順、頭髮邊緣畫成髮色）→ **標準脖子接口環**（48 點；後頸缺皮就鋪墊底皮；環附近表情位移淡到 0）→ 控制骨架 → **`head_rig.blend`**；骨架檢查（每根控制骨頭拉到底） |
+| rig | `pack_head.py`、`neck_slim.py`、`neck_ring.py`、`zepeto_ratio.py`、`face_rig.py`、`rig_check.py`（量法共用 `zmeasure.py`） | 封存舊版 → 貼圖還原成 shade 的原版 → 整理成交接格式（刪耳朵旁邊以下的頭髮碎片、頭髮和臉皮交界抹順、頭髮邊緣畫成髮色）→ **修細脖子**（脖子寬 ÷ 頭寬超過 40% 時往中心軸縮到 38%，臉不動；Head、Hair 一起縮）→ **標準脖子接口環**（48 點；後頸缺皮就鋪墊底皮；環附近表情位移淡到 0）→ **ZEPETO 比例量測**（下巴往上 5%／10% 臉寬、頭寬、眼寬、兩眼間距、嘴寬、脖子寬 ÷ 頭寬 → `check/zepeto_ratio.json`；只有脖子有目標範圍，其他參考）→ 控制骨架 → **`head_rig.blend`**；骨架檢查（每根控制骨頭拉到底） |
 | hairfit | `hair_fit.py`（＋身體端 `body_build.py`） | 長髮避開身體：`body: auto` 照這顆頭試接一副身體來調；後頸墊底皮範圍裡的頭髮不固定在臉上；收尾把還插在身體裡的點、被頂穿的面推出去；改寫 `head_rig.blend`（同一檔只能跑一次，會擋）。只對 T 字姿勢：手臂放下時上臂會從長髮後面頂出來，交給動畫端 |
 | finish | `previews.py`、`tools/shot_body_side.py` | 貼圖打包進 `head_rig.blend` → 用成品再試接一次身體、拉遠拍側面 → `preview/` 預覽圖 → `check/summary.json` |
 
@@ -51,6 +51,7 @@ python -u .claude/skills/zepeto-face-rig/scripts/run_face_rig.py --work <這張�
 | 欄位 | 預設 | 什麼時候改 | 從哪步重跑 |
 | --- | --- | --- | --- |
 | `eyes_manual` | 自動 | 眼睛偵測失敗或框錯：`[左眼x, 右眼x, 高度, 半寬, 半高]`，用 `check/eyes_front.png`＋`eyes_front.json` 量 | `eyes` |
+| `mouth_manual` | 自動 | 嘴巴整個抓錯（例：抓到鼻孔，嘴縫開在鼻子底下）：`[左嘴角x, 左嘴角z, 右嘴角x, 右嘴角z]`，用 `check/eyes_front.png` 量 | `landmarks` |
 | `mouth_zc` | 自動 | 嘴縫切錯位置（一張嘴整片下唇連皮膚掉下來）：唇縫中央高度 | `landmarks` |
 | `mouth_cut`、`lip_smooth`、`lip_rz`、`corner_smooth`、`tongue_len` | 0.8、40、0.18、6、0.75 | 嘴巴形狀（見 ai-mesh-route.md 2.3） | `transfer` |
 | `brow_gain` | 1.6 | 粗黑眉動作太誇張 → 1.2（攝影師） | `transfer` |
@@ -58,11 +59,12 @@ python -u .claude/skills/zepeto-face-rig/scripts/run_face_rig.py --work <這張�
 | `iris_rgb` | 深棕 `[0.26, 0.15, 0.10]` | 照片眼睛顏色 | `shade` |
 | `gloss` | `{rough: 0.5, sss: 0.15}` | 質感 | `shade` |
 | `body` | `auto` | `none`＝短髮不用調、想省時間；或指定身體檔 | `rig` |
+| `neck_slim` | `0.38` | 修細脖子的目標（脖子寬 ÷ 頭寬；超過 0.40 才修）。`null`＝不修。目標是和身體端對齊的，要改先問身體端 | `rig` |
 | `name` | 資料夾名 | 影格資料夾名 | — |
 
 ## 驗收（每次都要看圖，不要只看「完成」）
 
-1. `check/summary.json`：`total_issues` 0、`rest_nonzero` 0、`rig_ok` true、`hairfit.inside_after` 0。
+1. `check/summary.json`：`total_issues` 0、`rest_nonzero` 0、`rig_ok` true、`hairfit.inside_after` 0、`zepeto_ratio.items.neck.ok` true（其他比例項參考，照實回報）。
 2. `preview/mat_front_ai.png` 對 `mat_front_new.png`（`mat_34_*` 同）：成品就是 AI 頭本身，應該幾乎一樣。
 3. `check/report.html`：表情總表、嘴巴近照（正面＋兩側斜面）、眼睛眉毛近照、張嘴序列與正中切片、眼睛偵測。
 4. `preview/sheet_keys.png`：52 個單一表情（`tongueOut`、`mouthClose` 照 ARKit 規格配張嘴）。單格原圖在 `D:/render-work/blender-work/zepeto-rig/<name>/keys/`。
@@ -75,7 +77,7 @@ python -u .claude/skills/zepeto-face-rig/scripts/run_face_rig.py --work <這張�
 
 | 物件／材質 | 內容 |
 | --- | --- |
-| `Head` | AI 網格的臉＋脖子＋自建口腔袋，49 個 ARKit 形態鍵（眨眼改用材質，網格的 `eyeBlink*_geo` 停用）；**脖子接口環**：點屬性 `neck_ring`（1＝正前 −Y、俯視逆時針 13＝+X、25＝正後、37＝−X，其他 0）、物件屬性 `neck_ring_ver`（1）、`neck_ring_n`（48）、`neck_ring_z`、`neck_ring_yc`（本地座標＝頭檔座標）；後頸被分給頭髮的頭會鋪一片**後頸墊底皮**（從環到耳朵下面，有臉皮的地方墊在下面、缺口直接露出；點屬性 `nape_underlay`、物件屬性 `nape_patch_top`／`nape_patch_ang`） |
+| `Head` | AI 網格的臉＋脖子＋自建口腔袋，49 個 ARKit 形態鍵（眨眼改用材質，網格的 `eyeBlink*_geo` 停用）；**脖子接口環**：點屬性 `neck_ring`（1＝正前 −Y、俯視逆時針 13＝+X、25＝正後、37＝−X，其他 0）、物件屬性 `neck_ring_ver`（1）、`neck_ring_n`（48）、`neck_ring_z`、`neck_ring_yc`（本地座標＝頭檔座標）、`neck_chin_bottom`（下巴底，身體端放頭用）；後頸被分給頭髮的頭會鋪一片**後頸墊底皮**（從環到耳朵下面，有臉皮的地方墊在下面、缺口直接露出；點屬性 `nape_underlay`、物件屬性 `nape_patch_top`／`nape_patch_ang`） |
 | `Hair` | 頭髮＋臉旁細髮絲（`strand` 屬性），同樣的形態鍵（瀏海、鬢角跟表情動）；長髮已避開身體（`hairfit_done`） |
 | `Ears` | 兩隻耳朵（服裝端找耳垂掛耳環） |
 | `upper_teeth`、`bottom_teeth`、`upper_gum`、`bottom_gum`、`Tongue` | 籠子的，每個表情都推到皮後；舌頭跟下顎剛體轉 |
@@ -90,17 +92,37 @@ python -u .claude/skills/zepeto-face-rig/scripts/run_face_rig.py --work <這張�
 
 ## 已知限制
 
-- 驗證過兩張臉：新娘（新描述生成、長髮、腮紅、閉嘴微笑）、攝影師（舊描述生成、短髮、圓眼、粗黑眉）。第三種臉型第一次跑仍要逐張看。
+- 驗證過的臉型都在回歸測試組（下一節）：新娘（新描述、長髮、腮紅）、攝影師 v1（舊描述、短髮、圓眼、粗黑眉）、攝影師 v2（新描述、鼻子長、側分瀏海、V 字臉）。新郎是產線建好前的舊流程（黏土風）做的，使用者 2026-10-14 說先不納入，等用新流程重跑新郎再決定。新的臉型第一次跑仍要逐張看。
 - 「閉嘴下巴」（`CTRL_MouthClose`）嘴角有一點拉扯；張到最大時下唇邊緣有一點點不平（放大才看得到）。
 - 鼻子沒有專門檢查；人中有幾道 AI 網格本身的摺線。
 - 右斜前方看脖子旁頭髮內側邊緣有一點不規則（AI 頭髮殼原本的切口）。
 - 眼睛一律是產線的統一畫法（杏仁形程式眼珠），不照 AI 原本畫的眼珠。
+- **短髮的頭後頸露出一長段**（2026-10-14 攝影師 v2）：耳垂到接口環約 0.3 個頭高，三顆測試頭都差不多（新娘被長髮蓋住看不到），修細到 38% 後從側面、背面看像細柱子。脖子**粗細**有統一標準（38%），**長度**還沒有。試過「縮短後頸」（後面的點往下拉）：後腦被拉出尖尾巴、後頸多一道黑色月牙，不採用。官方脖子長度在研究中（見 ai-mesh-route.md「修細脖子」）。
+
+## 改了產線程式之後：回歸測試（`scripts/regress/`）
+
+偵測規則照一兩張臉調，換一種臉型就可能出錯（攝影師 v2：嘴巴抓成鼻孔）；修了新的臉又可能把舊的臉弄壞。所以**改了 `scripts/` 底下任何程式，都要跑回歸測試**：拿測試組裡每一顆頭重跑，跟上次確認過的基準比。
+
+```bash
+cd .claude/skills/zepeto-face-rig/scripts/regress
+python regress.py --init        # 第一次（或換電腦）：把測試頭從 heads.json 的 source 複製到 D:/render-work/zepeto-face-regress/heads/
+python regress.py               # 快速（約 1 分鐘）：只跑找眼睛、找五官，比五官位置（改了 eyes_find／detect_landmarks 一定要跑）
+python regress.py --full        # 完整（約 15～20 分鐘）：整條跑完，再比檢查數字（問題數、骨架、接口環、脖子、長髮）和成品正面圖
+python regress.py --heads ph2   # 只跑某幾顆
+python regress.py --full --reuse --accept   # 不重跑：上一次的結果看過沒問題，直接存成基準（省一次 15 分鐘）
+```
+
+- 結果：主控台表格＋`D:/render-work/zepeto-face-regress/report.html`（完整模式有「基準｜這次」正面圖並排）。全部「一樣」結束代碼 0；有差異 1。
+- **有差異不一定是壞事**：可能是這次故意改的（例：修細脖子改了接口環寬）。逐項看是不是預期的、看圖確認沒變差，再 `python regress.py [--full] --accept` 存成新的基準（寫 `baseline.json`，完整模式也存正面圖）。不是預期的 → 改程式。
+- 容許範圍：五官位置 0.01（約 2.5 mm）、眉毛厚度 0.02、比例 0.02、正面圖平均像素差 3。
+- **什麼頭要加進測試組**（`heads.json` 加一筆 → `--init` → 跑 → 看過圖 → `--accept`）：① 讓產線出錯、改了程式才過的頭（它代表一種已知會出事的臉）；② 測試組還沒有的類型（眼鏡、鬍子、捲髮、小孩、長者…），就算第一次就過也加。順利跑過又跟現有某顆很像的不用加（完整回歸每多一顆約多 5 分鐘）。
+- 測試頭複製一份放 `D:/render-work/zepeto-face-regress/heads/`（不進版控、不跟著原檔變）；原檔不動。舊流程（黏土風）做的頭不放進來（使用者 2026-10-14：新郎等用新流程重跑再說）。
 
 ## 文件與工具
 
 - 流程、痛點總覽、每一步的做法與坑、五官檢查工具、截圖分析修正流程：[references/ai-mesh-route.md](references/ai-mesh-route.md)。
 - 籠子程式（`scripts/cage/`，舊路線留下來的包覆與 52 表情）的細節與坑：[references/cage-pipeline.md](references/cage-pipeline.md)。
 - 研究報告：[research-zepeto-face.md](references/research-zepeto-face.md)（ZEPETO 臉比例、舊路線為什麼不像）、[research-keep-ai-look.md](references/research-keep-ai-look.md)（保住 AI 外觀做表情的做法比較）。
-- 頭和身體怎麼無縫接合（業界做法、標準脖子接口環方案、後頸深色鋸齒的實測）：[research-head-body-seam.md](references/research-head-body-seam.md)。還沒實作，等使用者決定。
+- 頭和身體怎麼無縫接合（業界做法、標準脖子接口環方案、後頸深色鋸齒的實測）：[research-head-body-seam.md](references/research-head-body-seam.md)。2026-10-14 已實作方案 A（`neck_ring.py`）。
 - 除錯、近照工具在 `scripts/tools/`（用法見 ai-mesh-route.md 第 3 節；接身體之後的檢查順序見 4.1）：五官近照 `scripts/closeup.py`；耳朵 `ear_closeup.py`、後頸 `nape_closeup.py`、缺皮 `nohair_view.py`、截面 `neck_section.py`、頭髮體檢 `hair_check.py`、近照找部位 `probe_pick.py`、張嘴喉嚨 `jaw_side.py`。改了 `check.py` 要用壞版本 `D:/render-work/blender-work/zepeto-sculpt-trial/bride/route_badcage/` 驗證仍抓得到問題。
 - `cage/prep_template.py` 只在換模板時跑一次（整理模板、找模板的五官）；`cage/preview_wrap.py` 是包覆比對圖。
